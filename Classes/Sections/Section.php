@@ -1,0 +1,254 @@
+<?php
+
+namespace ChefSections\Sections;
+
+use ChefSections\Wrappers\Column;
+use ChefSections\Wrappers\SectionsBuilder;
+use Cuisine\Wrappers\Field;
+
+/**
+ * Admin Section-meta
+ * @package ChefSections\Admin
+ */
+class Section {
+
+	/**
+	 * Unique Id for this section, prefixed by the post_id
+	 * 
+	 * @var string
+	 */
+	private $id = '';
+
+	/**
+	 * Position of this section
+	 * 
+	 * @var integer
+	 */
+	private $position = 0;
+
+	/**
+	 * The post ID this section is tied to
+	 * 
+	 * @var integer
+	 */
+	public $post_id;
+
+	/**
+	 * Title of this section
+	 * 
+	 * @var string
+	 */
+	private $title = '';
+
+
+	/**
+	 * Viewmode of this section
+	 * 
+	 * @var string
+	 */
+	private $view = '';
+
+
+	/**
+	 * All columns in this section
+	 * 
+	 * @var array
+	 */
+	private $columns = array();
+
+
+
+	function __construct( $args ){
+
+		$this->id = $args['id'];
+
+		$this->post_id = $args['post_id'];
+
+		$this->position = $args['position'];
+
+		$this->title = $args['title'];
+
+		$this->view = $args['view'];
+
+		$this->columns = $this->getColumns( $args['columns'] );
+
+	}
+	
+
+	/*=============================================================*/
+	/**             Backend                                        */
+	/*=============================================================*/
+
+
+	/**
+	 * Build this Section
+	 * 
+	 * @return String (html, echoed)
+	 */
+	public function build(){
+
+		if( is_admin() ){
+
+			echo '<div class="section-wrapper section-'.$this->id.'">';
+	
+				$this->buildControls();
+	
+				foreach( $this->columns as $column ){
+	
+					echo $column->getPreview();
+	
+				}
+
+				echo '<div class="clearfix"></div>';
+	
+			echo '</div>';
+		}
+	}
+
+	/**
+	 * Build the top of this Section
+	 * 
+	 * @return String ( html, echoed )
+	 */
+	private function buildControls(){
+
+		$fields = $this->getControlFields();
+
+
+		echo '<div class="section-controls">';
+			
+			foreach( $fields as $field ){
+
+				$field->render();
+
+			}
+
+		echo '</div>';
+	}
+
+
+
+	/*=============================================================*/
+	/**             Saving                                         */
+	/*=============================================================*/
+
+
+	/**
+	 * Save all information contained in this section
+	 * 
+	 * @return void
+	 */
+	public function save(){
+
+	}
+
+
+
+	/*=============================================================*/
+	/**             Getters & Setters                              */
+	/*=============================================================*/
+
+
+	/**
+	 * Get the Columns in an array
+	 * 
+	 * @return array
+	 */
+	private function getColumns( $columns ){
+
+		$arr = array();
+
+		//populate the columns array with actual column objects
+		foreach( $columns as $col_key => $type ){
+
+			$arr[] = Column::$type( $col_key, $this );
+
+		}
+
+		return $arr;
+
+	}
+
+	/**
+	 * Returns the array of fields for this section
+	 * 
+	 * @return array
+	 */
+	private function getControlFields(){
+
+		$prefix = 'section['.$this->id.']';
+		$types = array_fill_keys( SectionsBuilder::getViewTypes(), false );
+
+
+		$title = Field::text( 
+			$prefix.'[title]',
+			'', //no label,
+			array( 
+				'placeholder'  => 'Titel',
+				'defaultValue' => $this->title
+			)
+		);
+
+
+		$views = Field::radio(
+			$prefix.'[view]',
+			'', //no label
+			$types,
+			array(
+				'defaultValue' => $this->view
+			)
+		);
+
+
+		$position = Field::hidden(
+			$prefix.'[position]',
+			array(
+				'defaultValue' => $this->position
+			)
+		);
+
+		$post_id = Field::hidden(
+			$prefix.'[post_id]',
+			array(
+				'defaultValue' => $this->post_id
+			)
+		);
+
+		$id = Field::hidden(
+			$prefix.'[id]',
+			array(
+				'defaultValue' => $this->id
+			)
+		);
+
+		$fields = array(
+
+			$title,
+			$views,
+			$position,
+			$post_id,
+			$id
+
+		);
+
+		$fields = apply_filters( 'chef_sections_section_controls', $fields );
+		return $fields;
+	}
+
+
+	/**
+	 * Get this sections's template slug
+	 * 
+	 * @return String
+	 */
+	public function getSlug(){
+
+		global $post;
+		return $post->post_name.'-'.sanitize_title( $this->title );
+
+	}
+
+
+
+}
+

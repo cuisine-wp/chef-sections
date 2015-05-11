@@ -1,6 +1,7 @@
 <?php
 namespace ChefSections\Columns;
 
+
 /**
  * Collection column.
  * @package ChefSections\Columns

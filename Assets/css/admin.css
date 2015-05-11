@@ -1,0 +1,49 @@
+.section-wrapper{
+
+	border:1px solid #e5e5e5;
+	box-shadow:0 1px 1px rgba(0,0,0,0.04);
+	background:#fff;
+	margin-top:30px;
+
+}
+
+.section-wrapper .section-controls{
+	padding:8px 12px;
+	border-bottom:1px solid #e5e5e5;
+	height:50px;
+}
+
+.section-wrapper .section-controls .field-wrapper{
+	width:47.5%;
+	float:left;
+}
+
+.section-wrapper .section-controls .radio{
+	float:right;
+	text-align:right;
+}
+
+.section-wrapper .section-controls .subfield-wrapper{
+	display:inline-block;
+	width:20px;
+	height:20px;
+}
+
+
+
+
+
+
+.section-wrapper.msg p{
+	font-weight:bold;
+	text-align:center;
+	font-size:18px;
+}
+
+.section-wrapper.dotted-bg{
+	padding:15px 0;
+	background:none;
+	border:3px dashed #ccc;
+	text-align:center;
+	box-shadow:0;
+}

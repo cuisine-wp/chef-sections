@@ -58,9 +58,11 @@ abstract class Wrapper {
 
 
     private static function getFacadeName( $name ) {
+        
         $aliases = array(
-            'column'             => 'ChefSections\Columns\ColumnBuilder',
-            'section'            => 'Cuisine\Sections\Section'
+            'column'                  => 'ChefSections\Columns\ColumnBuilder',
+            'section'                 => 'ChefSections\Sections\Section',
+            'sectionsbuilder'         => 'ChefSections\Sections\SectionsBuilder'
         );
 
         return $aliases[ $name ];

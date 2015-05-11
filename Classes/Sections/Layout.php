@@ -1,9 +1,9 @@
 <?php
-namespace ChefSections\Sections;
+namespace ChefSections\View;
 
 /**
  * Layout class.
- * @package ChefSections\Sections
+ * @package ChefSections\View
  */
 class Layout {
 

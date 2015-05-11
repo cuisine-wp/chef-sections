@@ -8,20 +8,19 @@ namespace ChefSections\Columns;
 class ColumnBuilder {
 
 
-
 	/**
 	 * Call the appropriate field class.
 	 *
 	 * @param string $class The custom field class name.
-	 * @param array $fieldProperties The defined field properties. Muse be an associative array.
+	 * @param array $colProperties The defined field properties. Muse be an associative array.
 	 * @throws Exception
 	 * @return object ChefSections\Columns\ColumnBuilder
 	 */
-	public function make( $class, array $fieldProperties ){
+	public function make( $class, $id, $section, array $colProperties ){
 
 	    try {
 	        // Return the called class.
-	        $class =  new $class( $fieldProperties );
+	        $class =  new $class( $id, $section, $colProperties );
 
 	    } catch(\Exception $e){
 
@@ -41,9 +40,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\ContentColumn
 	 */
-	public function content( $id, array $properties = array() ){
+	public function content( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\ContentColumn', $id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\ContentColumn', $id, $section, $properties );
 
 	}
 
@@ -55,9 +54,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\GalleryColumn
 	 */
-	public function content( $id, array $properties = array() ){
+	public function gallery( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\GalleryColumn', $id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\GalleryColumn', $id, $section, $properties );
 
 	}
 
@@ -69,9 +68,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\ImageColumn
 	 */
-	public function image( $id, array $properties = array() ){
+	public function image( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\ImageColumn', $id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\ImageColumn', $id, $section, $properties );
 
 	}
 
@@ -83,9 +82,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\VideoColumn
 	 */
-	public function content( $id, array $properties = array() ){
+	public function video( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\VideoColumn', $id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\VideoColumn', $id, $section, $properties );
 
 	}
 
@@ -97,9 +96,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\CollectionColumn
 	 */
-	public function content( $id, array $properties = array() ){
+	public function collection( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\CollectionColumn', $id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\CollectionColumn', $id, $section, $properties );
 
 	}
 
@@ -111,9 +110,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\RelatedColumn
 	 */
-	public function content( $id, array $properties = array() ){
+	public function related( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\RelatedColumn', $id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\RelatedColumn', $id, $section, $properties );
 
 	}
 
