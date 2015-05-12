@@ -225,9 +225,9 @@ class SectionsBuilder {
 				'id'		=> $this->highestId,
 				'position'	=> ( count( $this->sections ) + 1 ),
 				'post_id'	=> $post->ID,
-				'title'		=> __( 'Sectie', 'chefsections' ),
-				'view'		=> 'fullwidth',
-				'columns'	=> array()
+				'title'		=> __( 'Sectie titel', 'chefsections' ),
+				'view'		=> 'sidebar-left',
+				'columns'	=> array( 1 => 'content', 2 => 'content' )
 		);
 
 		$args = apply_filters( 'chef_sections_default_section_args', $args );

@@ -62,7 +62,8 @@ abstract class Wrapper {
         $aliases = array(
             'column'                  => 'ChefSections\Columns\ColumnBuilder',
             'section'                 => 'ChefSections\Sections\Section',
-            'sectionsbuilder'         => 'ChefSections\Sections\SectionsBuilder'
+            'sectionsbuilder'         => 'ChefSections\Sections\SectionsBuilder',
+            'template'                => 'ChefSections\View\Template'
         );
 
         return $aliases[ $name ];

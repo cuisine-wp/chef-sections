@@ -21,7 +21,7 @@ class ImageColumn extends DefaultColumn{
 	 * 
 	 * @var String
 	 */
-	private $type;
+	public $type;
 
 
 	/**

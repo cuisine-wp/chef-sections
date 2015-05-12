@@ -19,7 +19,7 @@ class VideoColumn extends DefaultColumn{
 	 * 
 	 * @var String
 	 */
-	private $type;
+	public $type;
 
 
 	/**

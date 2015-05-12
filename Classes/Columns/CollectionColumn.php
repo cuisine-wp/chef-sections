@@ -20,7 +20,7 @@ class CollectionColumn extends DefaultColumn{
 	 * 
 	 * @var String
 	 */
-	private $type;
+	public $type;
 
 
 	/**

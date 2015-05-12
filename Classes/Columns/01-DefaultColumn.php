@@ -2,6 +2,7 @@
 namespace ChefSections\Columns;
 
 use Cuisine\Utilities\Url;
+use ChefSections\Wrappers\Template;
 
 /**
  * Default column.
@@ -37,7 +38,15 @@ class DefaultColumn {
 	 * 
 	 * @var String
 	 */
-	private $type;
+	public $type;
+
+
+	/**
+	 * The parent section for this column
+	 * 
+	 * @var ChefSections\Sections\Section
+	 */
+	public $section;
 
 
 	/**
@@ -114,8 +123,11 @@ class DefaultColumn {
 
 
 		$this->type = $type;
-
 		$this->previewData = $previewData;
+
+
+		$defaults = $this->getDefaultColumnArgs();
+		$props = wp_parse_args( $props, $defaults );
 
 		$this->properties = $props;
 
@@ -131,7 +143,12 @@ class DefaultColumn {
 	 * 
 	 * @return String (html)
 	 */
-	function getPreview(){
+	function buildPreview(){
+
+		echo '<div class="column '.$this->type.'">';
+			echo '...Column inhoud...';
+
+		echo '</div>';
 
 	}
 
@@ -148,54 +165,30 @@ class DefaultColumn {
 	 */
 	function render(){
 
-		$located = $this->locateTemplate();
-
-		add_action( 'chef_sections_before_column_template', $templateName );
-		add_action( 'chef_sections_before_column_template_'.$this->type, $templateName );
-
-			include( $located );
-
-		add_action( 'chef_sections_after_column_template', $templateName );
-		add_action( 'chef_sections_after_column_template_'.$this->type, $templateName );
+		Template::column( $this, $this->section )->display();
 
 	}
 
 
-	/**
-	 * Locate a template
-	 * 
-	 * @return String (url)
-	 */
-	function locateTemplate(){
 
-		$templatePath = 'views/';
-		$defaultPath = Url::path( 'chef-sections', 'templates/columns', true );
-		
-		$templateName = 'column-'.$this->type;
-		$specificTemplateName = 'column-'.$this->id;
+	/*=============================================================*/
+	/**             Getters & Setters                              */
+	/*=============================================================*/
 
-		// Look within passed path within the theme - this is priority
-		$path = \trailingslashit( $templatePath );
+	private function getDefaultColumnArgs(){
 
-		$template = \locate_template(
-			array(
-				
-				$path . 'column-'.$this->section->getSlug().'-'.$this->fullId,
-				$path . 'column-'.$this->section->getSlug().'-'.$this->type,
-				$path . $templateName,
-				$templateName
-			)
+		$args = array(
+
+				'hasLightbox'	=>  true,
+				'buttonText'	=> __( 'Bewerken', 'chef_sections' )
 		);
-				
-				
-		// Get default template
-		if ( ! $template )
-			$template = $defaultPath . $templateName;
-				
-		// Return what we found
-		$template = \apply_filters( 'chef_sections_column_template', $template, $this );
-		return $template;
+
+		$args = apply_filters( 'chef_sections_default_column_args', $args );
+
+		return $args;
+
 	}
+
 
 
 }

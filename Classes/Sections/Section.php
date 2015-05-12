@@ -17,7 +17,7 @@ class Section {
 	 * 
 	 * @var string
 	 */
-	private $id = '';
+	public $id = '';
 
 	/**
 	 * Position of this section
@@ -92,15 +92,18 @@ class Section {
 			echo '<div class="section-wrapper section-'.$this->id.'">';
 	
 				$this->buildControls();
+
+				echo '<div class="section-columns '.$this->view.'">';
 	
 				foreach( $this->columns as $column ){
 	
-					echo $column->getPreview();
+					echo $column->buildPreview();
 	
 				}
 
 				echo '<div class="clearfix"></div>';
-	
+				echo '</div>';
+			
 			echo '</div>';
 		}
 	}
@@ -124,6 +127,9 @@ class Section {
 			}
 
 		echo '</div>';
+	
+		echo '<div class="clearfix"></div>';
+
 	}
 
 
@@ -192,7 +198,7 @@ class Section {
 
 		$views = Field::radio(
 			$prefix.'[view]',
-			'', //no label
+			'Weergave',
 			$types,
 			array(
 				'defaultValue' => $this->view

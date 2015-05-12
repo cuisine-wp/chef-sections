@@ -19,7 +19,7 @@ class RelatedColumn extends CollectionColumn{
 	 * 
 	 * @var String
 	 */
-	private $type;
+	public $type;
 
 
 	/**

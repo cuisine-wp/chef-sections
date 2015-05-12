@@ -19,7 +19,7 @@ class ContentColumn extends DefaultColumn{
 	 * 
 	 * @var String
 	 */
-	private $type;
+	public $type;
 
 
 	/**
