@@ -2,6 +2,8 @@
 namespace ChefSections\Columns;
 
 use Cuisine\Utilities\Url;
+use Cuisine\Wrappers\Field;
+use ChefSections\Wrappers\Column;
 use ChefSections\Wrappers\Template;
 
 /**
@@ -59,7 +61,7 @@ class DefaultColumn {
 
 	/**
 	 * The preview data of this column
-	 *
+	 *;0
 	 * @var Array
 	 */
 
@@ -96,12 +98,13 @@ class DefaultColumn {
 	}
 
 
+
 	/**
 	 * Get the column properties from the database
 	 * 
 	 * @return void
 	 */
-	function getProperties(){
+	private function getProperties(){
 
 		$type = get_post_meta( 
 			$this->post_id, 
@@ -143,14 +146,57 @@ class DefaultColumn {
 	 * 
 	 * @return String (html)
 	 */
-	function buildPreview(){
+	public function build(){
 
 		echo '<div class="column '.$this->type.'">';
-			echo '...Column inhoud...';
+
+			$this->buildControls();
+
+			$this->buildPreview();
+
+			$this->buildLightbox();
 
 		echo '</div>';
 
 	}
+
+
+	/**
+	 * Build the top controls of a column
+	 * 
+	 * @return string
+	 */
+	private function buildControls(){
+
+		$types = array_keys( Column::getAvailableTypes() );
+		$typeSelector = Field::select()
+
+	}
+
+	/**
+	 * Create the preview image or text for this column
+	 * 
+	 * @return string
+	 */
+	private function buildPreview(){
+
+	}
+
+
+	/**
+	 * This function will be different for every column,
+	 * It generates the lightbox of an admin column
+	 * 
+	 * @return string
+	 */
+	private function buildLightbox(){
+
+		//nothing here
+	
+	}
+
+
+
 
 
 	/*=============================================================*/
@@ -163,7 +209,7 @@ class DefaultColumn {
 	 * 
 	 * @return void
 	 */
-	function render(){
+	public function render(){
 
 		Template::column( $this, $this->section )->display();
 
@@ -175,6 +221,12 @@ class DefaultColumn {
 	/**             Getters & Setters                              */
 	/*=============================================================*/
 
+	/**
+	 * Get the default arguments for this column
+	 *
+	 * @filter 'chef_sections_default_column_args'
+	 * @return array
+	 */
 	private function getDefaultColumnArgs(){
 
 		$args = array(
@@ -186,6 +238,14 @@ class DefaultColumn {
 		$args = apply_filters( 'chef_sections_default_column_args', $args );
 
 		return $args;
+
+	}
+
+
+	private function getColumnTypes(){
+
+
+
 
 	}
 

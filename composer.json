@@ -1,0 +1,24 @@
+{
+  "name": "chefduweb/chef-sections",
+  "description": "Create sections with content-columns in your WordPress pages",
+  "keywords": ["wordpress", "plugin", "sections", "flexible", "layouts"],
+  "homepage": "http://www.chefduweb.nl/plugins/chef-sections",
+  "license": "GPLv3",
+  "authors": [
+    {
+      "name": "Luc Princen",
+      "email": "luc@chefduweb.nl",
+      "homepage": "http://www.chefduweb.nl"
+    },
+    {
+      "name": "Remy Bakker",
+      "email": "remy@chefduweb.nl",
+      "homepage": "http://www.chefduweb.nl"
+    },
+  ],
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=5.3.2",
+    "chefduweb/cuisine": "dev-master"
+  }
+}

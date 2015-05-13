@@ -97,7 +97,7 @@ class Section {
 	
 				foreach( $this->columns as $column ){
 	
-					echo $column->buildPreview();
+					echo $column->build();
 	
 				}
 

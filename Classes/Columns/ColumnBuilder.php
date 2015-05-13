@@ -117,5 +117,29 @@ class ColumnBuilder {
 	}
 
 
+	/**
+	 * Returns a filterable array of column types
+	 *
+	 * @filter chef_sections_column_types
+	 * @return array
+	 */
+	public function getAvailableTypes(){
+
+		$arr = array(
+
+			'content' 		=> 'ChefSections\\Columns\\ContentColumn',
+			'gallery' 		=> 'ChefSections\\Columns\\GalleryColumn',
+			'image'			=> 'ChefSections\\Columns\\ImageColumn',			
+			'video'			=> 'ChefSections\\Columns\\VideoColumn',
+			'collection'	=> 'ChefSections\\Columns\\CollectionColumn',
+			'related'		=> 'ChefSections\\Columns\\RelatedColumn'
+		);
+
+
+		$arr = apply_filters( 'chef_sections_column_types', $arr );
+		return $arr;
+
+	}
+
 
 }
