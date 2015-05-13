@@ -226,7 +226,7 @@ class SectionsBuilder {
 				'position'	=> ( count( $this->sections ) + 1 ),
 				'post_id'	=> $post->ID,
 				'title'		=> __( 'Sectie titel', 'chefsections' ),
-				'view'		=> 'sidebar-left',
+				'view'		=> 'four-columns',
 				'columns'	=> array( 1 => 'content', 2 => 'content' )
 		);
 
@@ -268,13 +268,14 @@ class SectionsBuilder {
 	 */
 	public function getViewTypes(){
 
+		//name - column count
 		$arr = array(
-						'fullwidth',
-						'half-half',
-						'sidebar-left',
-						'sidebar-right',
-						'three-columns',
-						'four-columns'
+						'fullwidth' => 1,
+						'half-half' => 2,
+						'sidebar-left' => 2,
+						'sidebar-right' => 2,
+						'three-columns' => 3,
+						'four-columns' => 4
 		);
 
 		$arr = apply_filters( 'chef_sections_section_types', $arr );

@@ -106,11 +106,6 @@ class DefaultColumn {
 	 */
 	private function getProperties(){
 
-		$type = get_post_meta( 
-			$this->post_id, 
-			'_column_type_'.$this->fullId, 
-			true
-		);
 
 		$previewData = get_post_meta( 
 			$this->post_id, 
@@ -120,12 +115,11 @@ class DefaultColumn {
 
 		$props = get_post_meta( 
 			$this->post_id, 
-			'_column_props_'.$this->id, 
+			'_column_props_'.$this->fullId, 
 			true
 		);
 
 
-		$this->type = $type;
 		$this->previewData = $previewData;
 
 
@@ -144,7 +138,7 @@ class DefaultColumn {
 	/**
 	 * Generate the preview for the backend
 	 * 
-	 * @return String (html)
+	 * @return String (html, echoed)
 	 */
 	public function build(){
 
@@ -154,7 +148,9 @@ class DefaultColumn {
 
 			$this->buildPreview();
 
-			$this->buildLightbox();
+			echo '<div class="lightbox lightbox-'.$this->type.'">';
+				$this->buildLightbox();
+			echo '</div>';
 
 		echo '</div>';
 
@@ -164,37 +160,58 @@ class DefaultColumn {
 	/**
 	 * Build the top controls of a column
 	 * 
-	 * @return string
+	 * @return string ( html, echoed )
 	 */
 	private function buildControls(){
 
-		$types = array_keys( Column::getAvailableTypes() );
-		$typeSelector = Field::select()
+		$types = array_column( Column::getAvailableTypes(), 'name' );
+		$typeSelector = Field::select( 
+			'_column_type_'.$this->fullId, 
+			'',
+			$types,
+			array(
+				'defaultValue' => $this->type
+			)
+		);
+
+		$typeSelector->render();
 
 	}
 
 	/**
 	 * Create the preview image or text for this column
 	 * 
-	 * @return string
+	 * @return string (html, echoed)
 	 */
 	private function buildPreview(){
+
+		echo '<div class="btn-row">';
+
+			$class = 'edit-btn section-btn';
+			if( !$this->hasLightbox )
+				$class .= ' no-lightbox';
+
+			echo '<button class="'.$class.'" id="lightbox-btn">'.__( 'Bewerken', 'chefsections' ).'</button>';
+
+		echo '</div>';
 
 	}
 
 
 	/**
-	 * This function will be different for every column,
-	 * It generates the lightbox of an admin column
+	 * Create the save button in the lightbox
 	 * 
-	 * @return string
+	 * @return string (html, echoed )
 	 */
-	private function buildLightbox(){
+	public function saveButton(){
 
-		//nothing here
-	
+		echo '<div class="save-btn-container">';
+
+			echo '<button id="save-column" class="save-btn section-btn">'.$this->properties['buttonText'].'</button>';
+
+		echo '</div>';
+
 	}
-
 
 
 
@@ -232,7 +249,7 @@ class DefaultColumn {
 		$args = array(
 
 				'hasLightbox'	=>  true,
-				'buttonText'	=> __( 'Bewerken', 'chef_sections' )
+				'buttonText'	=> __( 'Kolom opslaan', 'chef_sections' )
 		);
 
 		$args = apply_filters( 'chef_sections_default_column_args', $args );

@@ -183,7 +183,7 @@ class Section {
 	private function getControlFields(){
 
 		$prefix = 'section['.$this->id.']';
-		$types = array_fill_keys( SectionsBuilder::getViewTypes(), false );
+		$types = array_fill_keys( array_keys( SectionsBuilder::getViewTypes() ), false );
 
 
 		$title = Field::text( 

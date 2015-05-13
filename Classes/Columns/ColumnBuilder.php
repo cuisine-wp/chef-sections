@@ -127,18 +127,62 @@ class ColumnBuilder {
 
 		$arr = array(
 
-			'content' 		=> 'ChefSections\\Columns\\ContentColumn',
-			'gallery' 		=> 'ChefSections\\Columns\\GalleryColumn',
-			'image'			=> 'ChefSections\\Columns\\ImageColumn',			
-			'video'			=> 'ChefSections\\Columns\\VideoColumn',
-			'collection'	=> 'ChefSections\\Columns\\CollectionColumn',
-			'related'		=> 'ChefSections\\Columns\\RelatedColumn'
+			'content' 		=> array(
+
+				'name'		=> __( 'Tekst', 'chefsections' ),
+				'class' 	=> 'ChefSections\\Columns\\ContentColumn'
+			),
+
+			'gallery' 		=> array(
+				'name'		=> __( 'Gallerij', 'chefsections' ),
+				'class'		=> 'ChefSections\\Columns\\GalleryColumn'
+			),
+
+			'image'			=> array(
+				'name'		=> __( 'Afbeelding', 'chefsections' ),
+				'class' 	=> 'ChefSections\\Columns\\ImageColumn',			
+			),
+
+			'video'			=> array(
+
+				'name'		=> __( 'Video', 'chefsections' ),
+				'class' 	=> 'ChefSections\\Columns\\VideoColumn',
+			),
+
+			'collection'	=> array(
+
+				'name'		=> __( 'Collectie', 'chefsections' ),
+				'class'		=> 'ChefSections\\Columns\\CollectionColumn'
+			),
+
+			'related'		=> array( 
+
+				'name'		=> __( 'Gerelateerd', 'chefsections' ),
+				'class'		=> 'ChefSections\\Columns\\RelatedColumn'
+			)
 		);
 
 
 		$arr = apply_filters( 'chef_sections_column_types', $arr );
 		return $arr;
+	}
 
+
+	/**
+	 * Save column data, for any column
+	 * 
+	 * @return bool
+	 */
+	public function save(){
+
+		$id = $_POST['column_id'];
+		$post_id = $_POST['post_id'];
+
+		unset( $_POST['column_id'] );
+		unset( $_POST['post_id'] );
+		unset( $_POST['action'] );
+
+		update_post_meta( $post_id, '_column_props_'.$id, $_POST );
 	}
 
 

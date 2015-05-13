@@ -21,16 +21,9 @@ module.exports = function(grunt) {
       }
     },
 
-    cssmin: {
-      combine: {
-        files: {
-          'Assets/css/admin.min.css': 'Assets/css/admin.css'
-        }
-      }
-    },
     watch: {
       css: {
-        files: ['Assets/sass/*.scss', 'Assets/sass/**/*.scss'],
+        files: ['Assets/sass/*.scss'],
         tasks: ['sass']
       }
     }
@@ -39,12 +32,12 @@ module.exports = function(grunt) {
 
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
   
   // Default task(s).
-  grunt.registerTask('default', ['watch'] );
-
+  grunt.registerTask('default', ['sass'] );
+  grunt.registerTask('watch', ['watch'] );
   grunt.registerTask('minify-js', ['concat', 'uglify']);
   grunt.registerTask('minify-css', ['concat'])
 

@@ -51,8 +51,8 @@
 			add_action( 'admin_init', function(){
 
 				$url = Url::plugin( 'chef-sections', true ).'assets';
-				wp_enqueue_script( 'sections', $url.'/js/Section.js' );
-				wp_enqueue_script( 'sections', $url.'/js/Column.js' );
+				wp_enqueue_script( 'sections_section', $url.'/js/Section.js', array( 'backbone' ) );
+				wp_enqueue_script( 'sections_column', $url.'/js/Column.js', array( 'backbone' ) );
 				wp_enqueue_style( 'sections', $url.'/css/admin.css' );
 				
 			});
