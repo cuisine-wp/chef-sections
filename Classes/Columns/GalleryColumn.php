@@ -8,26 +8,12 @@ namespace ChefSections\Columns;
 class GalleryColumn extends DefaultColumn{
 
 	/**
-	 * The unique number for this column, on this page
-	 * 
-	 * @var Int
-	 */
-	private $id;
-
-	/**
 	 * The type of column
 	 * 
 	 * @var String
 	 */
-	public $type;
+	public $type = 'gallery';
 
-
-	/**
-	 * Preview-data
-	 *
-	 * @var String
-	 */
-	private $preview;
 
 
 }

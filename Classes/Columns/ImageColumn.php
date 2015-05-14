@@ -10,26 +10,19 @@ use Cuisine\Wrapper\Image;
 class ImageColumn extends DefaultColumn{
 
 	/**
-	 * The unique number for this column, on this page
-	 * 
-	 * @var Int
-	 */
-	private $id;
-
-	/**
 	 * The type of column
 	 * 
 	 * @var String
 	 */
-	public $type;
+	public $type = 'image';
 
 
 	/**
-	 * Preview-data
-	 *
-	 * @var String
+	 * Lightbox boolean
+	 * 
+	 * @var boolean
 	 */
-	private $preview;
+	public $hasLightbox = false;
 
 
 }

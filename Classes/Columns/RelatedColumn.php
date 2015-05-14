@@ -7,27 +7,15 @@ namespace ChefSections\Columns;
  */
 class RelatedColumn extends CollectionColumn{
 
-	/**
-	 * The unique number for this column, on this page
-	 * 
-	 * @var Int
-	 */
-	private $id;
+
 
 	/**
 	 * The type of column
 	 * 
 	 * @var String
 	 */
-	public $type;
+	public $type = 'related';
 
-
-	/**
-	 * Preview-data
-	 *
-	 * @var String
-	 */
-	private $preview;
 
 
 }

@@ -71,6 +71,13 @@
 
 			});
 
+
+			add_action( 'save_post', function( $post_id ){
+
+				SectionsBuilder::save( $post_id );
+
+			});
+
 		}
 
 	}

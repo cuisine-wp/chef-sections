@@ -121,6 +121,8 @@
 					width:75%;
 					padding:30px;
 					float:left;
+					max-height: 100%;
+					overflow-y: scroll;
 				}
 
 				.side-content{
@@ -183,6 +185,8 @@
 
 			}
 		}
+
+		&.fullwidth .column{width:100%;}
 
 		&.half-half .column{width:47.5%;}
 		&.half-half .column:first-child{margin-right:5%;}

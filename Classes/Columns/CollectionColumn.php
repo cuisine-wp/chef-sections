@@ -9,26 +9,11 @@ namespace ChefSections\Columns;
 class CollectionColumn extends DefaultColumn{
 
 	/**
-	 * The unique number for this column, on this page
-	 * 
-	 * @var Int
-	 */
-	private $id;
-
-	/**
 	 * The type of column
 	 * 
 	 * @var String
 	 */
-	public $type;
-
-
-	/**
-	 * Preview-data
-	 *
-	 * @var String
-	 */
-	private $preview;
+	public $type = 'collection';
 
 
 }

@@ -8,6 +8,11 @@ namespace ChefSections\Columns;
 class ColumnBuilder {
 
 
+	/*=============================================================*/
+	/**             Make functions                                 */
+	/*=============================================================*/
+
+
 	/**
 	 * Call the appropriate field class.
 	 *
@@ -16,11 +21,11 @@ class ColumnBuilder {
 	 * @throws Exception
 	 * @return object ChefSections\Columns\ColumnBuilder
 	 */
-	public function make( $class, $id, $section, array $colProperties ){
+	public function make( $class, $id, $section_id, array $colProperties ){
 
 	    try {
 	        // Return the called class.
-	        $class =  new $class( $id, $section, $colProperties );
+	        $class =  new $class( $id, $section_id, $colProperties );
 
 	    } catch(\Exception $e){
 
@@ -40,9 +45,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\ContentColumn
 	 */
-	public function content( $id, $section, array $properties = array() ){
+	public function content( $id, $section_id, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\ContentColumn', $id, $section, $properties );
+	    return $this->make( 'ChefSections\\Columns\\ContentColumn', $id, $section_id, $properties );
 
 	}
 
@@ -54,9 +59,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\GalleryColumn
 	 */
-	public function gallery( $id, $section, array $properties = array() ){
+	public function gallery( $id, $section_id, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\GalleryColumn', $id, $section, $properties );
+	    return $this->make( 'ChefSections\\Columns\\GalleryColumn', $id, $section_id, $properties );
 
 	}
 
@@ -68,9 +73,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\ImageColumn
 	 */
-	public function image( $id, $section, array $properties = array() ){
+	public function image( $id, $section_id, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\ImageColumn', $id, $section, $properties );
+	    return $this->make( 'ChefSections\\Columns\\ImageColumn', $id, $section_id, $properties );
 
 	}
 
@@ -82,9 +87,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\VideoColumn
 	 */
-	public function video( $id, $section, array $properties = array() ){
+	public function video( $id, $section_id, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\VideoColumn', $id, $section, $properties );
+	    return $this->make( 'ChefSections\\Columns\\VideoColumn', $id, $section_id, $properties );
 
 	}
 
@@ -96,9 +101,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\CollectionColumn
 	 */
-	public function collection( $id, $section, array $properties = array() ){
+	public function collection( $id, $section_id, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\CollectionColumn', $id, $section, $properties );
+	    return $this->make( 'ChefSections\\Columns\\CollectionColumn', $id, $section_id, $properties );
 
 	}
 
@@ -110,11 +115,16 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\RelatedColumn
 	 */
-	public function related( $id, $section, array $properties = array() ){
+	public function related( $id, $section_id, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\RelatedColumn', $id, $section, $properties );
+	    return $this->make( 'ChefSections\\Columns\\RelatedColumn', $id, $section_id, $properties );
 
 	}
+
+
+	/*=============================================================*/
+	/**             GETTERS & SETTERS                              */
+	/*=============================================================*/
 
 
 	/**
@@ -168,21 +178,47 @@ class ColumnBuilder {
 	}
 
 
+
+
+	/*=============================================================*/
+	/**             AJAX                                           */
+	/*=============================================================*/
+
+
+
 	/**
 	 * Save column data, for any column
 	 * 
 	 * @return bool
 	 */
-	public function save(){
+	public function saveProperties(){
+
+
 
 		$id = $_POST['column_id'];
 		$post_id = $_POST['post_id'];
 
-		unset( $_POST['column_id'] );
-		unset( $_POST['post_id'] );
-		unset( $_POST['action'] );
+		update_post_meta( $post_id, '_column_props_'.$id, $_POST['properties'] );
+		cuisine_dump( get_post_meta( $post_id, '_column_props_'.$id, true ) );
+		die();
+	}
 
-		update_post_meta( $post_id, '_column_props_'.$id, $_POST );
+
+
+	/**
+	 * Save column type, for any column
+	 * 
+	 * @return bool
+	 */
+	public function saveColumnType(){
+
+		$id = $_POST['column_id'];
+		$post_id = $_POST['post_id'];
+		$type = $_POST['type'];
+
+		update_post_meta( $post_id, '_column_type_'.$id, $type );
+		die();
+
 	}
 
 

@@ -46,14 +46,16 @@
 		$('#addSection').on( 'click', function(){
 
 			var data = {
-				action: 'create_section'
+				action: 'createSection',
+				post_id: $( this ).data('post_id')
 			}
 
 			$.post( ajaxurl, data, function( response ){
 
-				console.log( response );
+				$('#section-container').append( response );
 
-
+				setColumns();
+				
 			});
 
 		});

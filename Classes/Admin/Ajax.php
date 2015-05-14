@@ -3,6 +3,8 @@
 	namespace ChefSections\Admin;
 
 	use \ChefSections\Wrappers\SectionsBuilder;
+	use \ChefSections\Wrappers\Column;
+	use \stdClass;
 
 	class Ajax{
 
@@ -46,13 +48,39 @@
 		private function addEvents(){
 
 
-			add_action( 'wp_ajax_create_section', function(){
+			add_action( 'wp_ajax_createSection', function(){
 
-				echo SectionsBuilder::addSection();
+				$this->setPostGlobal();
+
+				echo SectionsBuilder::addSection(  );
+				die();
+
+			});
+
+			add_action( 'wp_ajax_saveColumnProperties', function(){
+
+				echo Column::saveProperties();
 				die();
 
 			});
 		}
+
+
+		/**
+		 * WordPress doesn't keep the post-global around, so we do it this way
+		 *
+		 * @return void
+		 */
+		private function setPostGlobal(){
+			
+			global $post;
+			if( !isset( $post ) ){
+				$GLOBALS['post'] = new stdClass();
+				$GLOBALS['post']->ID = $_POST['post_id'];
+
+			} 
+		}
+
 
 	}
 

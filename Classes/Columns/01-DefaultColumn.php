@@ -80,20 +80,20 @@ class DefaultColumn {
 	 * @param Int $id      Column ID
 	 * @param Int $post_id \ChefSections\Sections\Section
 	 */
-	function __construct( $id, $section, $props = array() ){
+	function __construct( $id, $section_id, $props = array() ){
+
+		global $post;
 
 		$this->id = $id;
 
-		$this->section = $section;
+		$this->section_id = $section_id;
 
-		$this->post_id = $section->post_id;
+		$this->fullId = $this->section_id.'_'.$this->id;
 
-		$this->fullId = $section->id.'_'.$this->id;
+		$this->post_id = ( isset( $post ) ? $post->ID : null );
 
 		//get the properties of this column:
 		$this->getProperties();
-
-		$this->hasLightbox = $this->properties['hasLightbox'];
 
 	}
 
@@ -105,7 +105,6 @@ class DefaultColumn {
 	 * @return void
 	 */
 	private function getProperties(){
-
 
 		$previewData = get_post_meta( 
 			$this->post_id, 
@@ -142,15 +141,21 @@ class DefaultColumn {
 	 */
 	public function build(){
 
-		echo '<div class="column '.$this->type.'">';
+		echo '<div class="column '.$this->type.'" ';
+		echo $this->buildIds().'>';
 
 			$this->buildControls();
 
 			$this->buildPreview();
 
-			echo '<div class="lightbox lightbox-'.$this->type.'">';
-				$this->buildLightbox();
-			echo '</div>';
+
+			cuisine_dump( $this->hasLightbox );
+
+			if( $this->hasLightbox ){
+				echo '<div class="lightbox lightbox-'.$this->type.'">';
+					$this->buildLightbox();
+				echo '</div>';
+			}
 
 		echo '</div>';
 
@@ -164,7 +169,11 @@ class DefaultColumn {
 	 */
 	private function buildControls(){
 
-		$types = array_column( Column::getAvailableTypes(), 'name' );
+		//create key - label pairs for this dropdown:
+		$keys = array_keys( Column::getAvailableTypes() );
+		$labels = array_column( Column::getAvailableTypes(), 'name' );
+		$types = array_combine( $keys, $labels );
+
 		$typeSelector = Field::select( 
 			'_column_type_'.$this->fullId, 
 			'',
@@ -184,6 +193,9 @@ class DefaultColumn {
 	 * @return string (html, echoed)
 	 */
 	private function buildPreview(){
+		
+		echo '<p> '.$this->type.' -- preview </p>';
+
 
 		echo '<div class="btn-row">';
 
@@ -211,10 +223,26 @@ class DefaultColumn {
 
 		echo '<div class="save-btn-container">';
 
+			echo '<span class="spinner"></span>';
 			echo '<button id="save-column" class="save-btn section-btn">'.$this->properties['buttonText'].'</button>';
 
 		echo '</div>';
 
+	}
+
+
+	/**
+	 * Add the Id's for javascript use
+	 * 
+	 * @return string
+	 */
+	private function buildIds(){
+
+		$string = 'data-id="'.$this->fullId.'" ';
+		$string .= 'data-section_id="'.$this->section_id.'" ';
+		$string .= 'data-post_id="'.$this->post_id.'" ';
+
+		return $string;
 	}
 
 

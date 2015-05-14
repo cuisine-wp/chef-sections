@@ -3,6 +3,7 @@
 namespace ChefSections\Sections;
 
 use ChefSections\Sections\Section;
+use Cuisine\Utilities\Session;
 
 /**
  * Set admin meta boxes per section.
@@ -43,13 +44,23 @@ class SectionsBuilder {
 	 */
 	function __construct(){
 
-		global $post;
-		$this->postId = $post->ID;
-		$this->sections = $this->getSections();
-
-		$this->highestId = $this->getHighestId();
+		$this->init();
 	}
 
+
+	/**
+	 * Initiate this class
+	 * 
+	 * @param  int $post_id
+	 * @return void
+	 */
+	function init(){
+		global $post;
+
+		$this->postId = $post->ID;
+		$this->sections = $this->getSections();
+		$this->highestId = $this->getHighestId();
+	}
 
 
 	/*=============================================================*/
@@ -63,8 +74,12 @@ class SectionsBuilder {
 	 */
 	public function build(){
 
-		if( !$this->validPostType() )
+
+		if( !$this->validPostType( $this->postId ) )
 			return false;
+
+		wp_nonce_field( Session::nonceAction, Session::nonceName );
+
 
 		if( !empty( $this->sections ) ){
 
@@ -96,11 +111,9 @@ class SectionsBuilder {
 	 */
 	private function addSectionButton(){
 
-		echo SectionsBuilder::addSection();
-
 		echo '<div class="section-wrapper dotted-bg">';
 
-			echo '<div id="addSection" class="button">';
+			echo '<div id="addSection" class="button" data-post_id="'.$this->postId.'">';
 				_e( 'Sectie toevoegen', 'chefsections' );
 			echo '</div>';
 
@@ -120,22 +133,52 @@ class SectionsBuilder {
 	 * 
 	 * @return bool
 	 */
-	public function saveSections(){
+	public function save( $post_id ){
 
-		if( !$this->validPostType() )
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+
+	    $nonceName = (isset($_POST[Session::nonceName])) ? $_POST[Session::nonceName] : Session::nonceName;
+	    if (!wp_verify_nonce($nonceName, Session::nonceAction)) return;
+
+
+		if( !$this->validPostType( $post_id ) )
 			return false;
 
 
-		$no_problems = true;
+		if( isset( $_POST['section'] ) ){
 
-		foreach( $this->sections as $section ){
+			$sections = $_POST['section'];
 
-			if( ! $section->save() )
-				$no_problems = false;
+			//save columns and types
+			foreach( $sections as $section ){
 
+				$columns = array();
+				$types = $this->getViewTypes();
+				$count = $types[ $section['view'] ];
+
+				for( $i = 1; $i <= $count; $i++ ){
+
+					$string = '_column_type_'.$section['id'].'_'.$i;
+
+					if( isset( $_POST[$string] ) ){
+						$columns[ $i ] = $_POST[$string];
+					}else{
+						$columns[ $i ] = 'content';
+					}
+				}
+
+				$sections[ $section['id'] ]['post_id'] = $post_id;
+				$sections[ $section['id'] ]['columns'] = $columns;
+			}
+
+
+
+			//save the main section meta:
+			update_post_meta( $post_id, 'sections', $sections );	
 		}
+			
 
-		return $no_problems;
+		return true;
 	}
 
 
@@ -148,6 +191,7 @@ class SectionsBuilder {
 	 */
 	public function addSection( $datas = array() ){
 
+		$this->init();
 		$this->highestId += 1;
 
 		//get the defaults:
@@ -165,6 +209,16 @@ class SectionsBuilder {
 
 		return $section->build();
 	}
+
+
+
+	public function switchView(){
+
+//		$sections = get_post_meta( $this->postId, 'sections', true );
+
+
+	}
+
 
 
 	/**
@@ -192,6 +246,7 @@ class SectionsBuilder {
 	private function getSections(){
 
 		$sections = get_post_meta( $this->postId, 'sections', true );
+
 		$array = array();
 
 		if( $sections ){
@@ -205,6 +260,7 @@ class SectionsBuilder {
 						'position'	=> $section['position'],
 						'title'		=> $section['title'],
 						'view'		=> $section['view'],
+						'post_id'	=> $section['post_id'],
 						'columns'	=> $section['columns']
 				);
 
@@ -226,14 +282,16 @@ class SectionsBuilder {
 	private function getDefaultSectionArgs(){
 
 		global $post;
+		if( isset( $post ) )
+			$post_id = $post->ID;
+
 		$args = array(
 
 				'id'		=> $this->highestId,
 				'position'	=> ( count( $this->sections ) + 1 ),
-				'post_id'	=> $post->ID,
+				'post_id'	=> $post_id,
 				'title'		=> __( 'Sectie titel', 'chefsections' ),
-				'view'		=> 'half-half',
-				'columns'	=> array(),
+				'view'		=> 'fullwidth'
 		);
 
 		$args = apply_filters( 'chef_sections_default_section_args', $args );
@@ -279,8 +337,8 @@ class SectionsBuilder {
 
 			foreach( $this->sections as $section ){
 
-				if( $section['id'] > $highID )
-					$highID = $section['id'];
+				if( $section->id > $highID )
+					$highID = $section->id;
 
 			}
 
@@ -320,12 +378,12 @@ class SectionsBuilder {
 	 * @filter 'chef_sections_post_types'
 	 * @return bool
 	 */
-	private function validPostType(){
+	private function validPostType( $post_id ){
 
 		$post_types = array( 'page' );
 		$post_types = apply_filters( 'chef_sections_post_types', $post_types );
 
-		return in_array( get_post_type( $this->postId ), $post_types );
+		return in_array( get_post_type( $post_id ), $post_types );
 	}
 
 

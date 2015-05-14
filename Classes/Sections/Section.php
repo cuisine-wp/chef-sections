@@ -134,20 +134,6 @@ class Section {
 
 
 
-	/*=============================================================*/
-	/**             Saving                                         */
-	/*=============================================================*/
-
-
-	/**
-	 * Save all information contained in this section
-	 * 
-	 * @return void
-	 */
-	public function save(){
-
-	}
-
 
 
 	/*=============================================================*/
@@ -167,7 +153,7 @@ class Section {
 		//populate the columns array with actual column objects
 		foreach( $columns as $col_key => $type ){
 
-			$arr[] = Column::$type( $col_key, $this );
+			$arr[] = Column::$type( $col_key, $this->id );
 
 		}
 

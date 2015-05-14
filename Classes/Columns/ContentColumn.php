@@ -49,25 +49,23 @@ class ContentColumn extends DefaultColumn{
 	 */
 	private function getFields(){
 
-		$title = ( isset( $this->properties['title'] ) ? $this->properties['title'] : '' );
-		$editor = ( isset( $this->properties['content'] ) ? $this->properties['content'] : '' ); 
 
 		$fields = array(
 			'title' => Field::text( 
 				'title', 
 				'',
 				array(
-					'label' 		=> false,
-					'placeholder' 	=> 'Titel',
-					'defaultValue'	=> $title,
+					'label' 				=> false,
+					'placeholder' 			=> 'Titel',
+					'defaultValue'			=> $this->getField( 'title' ),
 				)
 			),
 			'editor' => Field::editor( 
 				'content_'.$this->fullId, //this needs a unique id 
 				'', 
 				array(
-					'label'			=> false,
-					'defaultValue' 	=> $editor
+					'label'				=> false,
+					'defaultValue' 		=> $this->getField( 'content' )
 				)
 			)
 		);

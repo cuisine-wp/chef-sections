@@ -100,6 +100,8 @@
   width: 75%;
   padding: 30px;
   float: left;
+  max-height: 100%;
+  overflow-y: scroll;
 }
 .section-wrapper .section-columns .column .lightbox .side-content {
   box-sizing: border-box;
@@ -151,6 +153,9 @@
 }
 .section-wrapper .section-columns .column .lightbox .side-content .save-btn-container button {
   padding: 15px 20px;
+}
+.section-wrapper .section-columns.fullwidth .column {
+  width: 100%;
 }
 .section-wrapper .section-columns.half-half .column {
   width: 47.5%;
