@@ -1,28 +1,44 @@
 
 
 
-	var Section = {
+	var Section = Backbone.View.extend({
 
-		el: '',
+		hasLightbox: true,
 
-		init: function( $el ){
+		events: {
 
-			self = this;
-			self.el = $el;
+			'change .type-radio': 'changeView',
+
+		},
+
+		initialize: function(){
+
+			var self = this;
+
 
 
 		},
 
 
-	}
+		changeView: function( el ){
 
+
+			console.log( jQuery( el.target ).val() );
+
+
+		}
+
+	});
 
 
 	jQuery( document ).ready( function( $ ){
 
-		$('.section-wrapper').each( function(){
+		var sections = [];
 
-			Section.init( $( this ) );
+		$('.section-wrapper').each( function( index, obj ){
+
+			var col = new Section( { el: obj } );
+			sections.push( col );
 
 		});
 

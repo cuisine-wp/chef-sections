@@ -154,6 +154,12 @@ class SectionsBuilder {
 		$args = $this->getDefaultSectionArgs();
 		$args = wp_parse_args( $datas, $args );
 
+		$columns = $this->getDefaultColumns( $args['view'] );
+		if( isset( $datas['columns'] ) ){
+			$args['columns'] = wp_parse_args( $datas['columns'], $columns );
+		}else{
+			$args['columns'] = $columns;
+		}
 
 		$section = new Section( $args );
 
@@ -226,13 +232,36 @@ class SectionsBuilder {
 				'position'	=> ( count( $this->sections ) + 1 ),
 				'post_id'	=> $post->ID,
 				'title'		=> __( 'Sectie titel', 'chefsections' ),
-				'view'		=> 'four-columns',
-				'columns'	=> array( 1 => 'content', 2 => 'content' )
+				'view'		=> 'half-half',
+				'columns'	=> array(),
 		);
 
 		$args = apply_filters( 'chef_sections_default_section_args', $args );
 
 		return $args;
+	}
+
+	/**
+	 * Get the default columns, based on the view
+	 * 
+	 * @param  string $view
+	 * @return array
+	 */
+	private function getDefaultColumns( $view ){
+
+		$viewTypes = $this->getViewTypes();
+		$colCount = $viewTypes[ $view ];
+
+		$arr = array();
+
+		for( $i = 0; $i < $colCount; $i++ ){
+
+			$key = $i + 1;
+			$arr[ $key ] = 'content';
+
+		}
+
+		return $arr;
 	}
 
 

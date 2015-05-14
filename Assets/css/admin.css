@@ -113,6 +113,36 @@
   border-left: 1px solid #eee;
   bottom: 0;
 }
+.section-wrapper .section-columns .column .lightbox .side-content .lightbox-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  text-decoration: none;
+}
+.section-wrapper .section-columns .column .lightbox .side-content .lightbox-modal-close .media-modal-icon {
+  display: block;
+  margin-top: 5px;
+  width: 30px;
+  height: 15px;
+  background-image: none;
+  text-align: center;
+  border: 0;
+}
+.section-wrapper .section-columns .column .lightbox .side-content .lightbox-modal-close .media-modal-icon:before {
+  content: '\f158';
+  font: normal 20px/1 'dashicons';
+  speak: none;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #666;
+}
+.section-wrapper .section-columns .column .lightbox .side-content .lightbox-modal-close:hover .media-modal-icon:before {
+  color: #2ea2cc !important;
+}
 .section-wrapper .section-columns .column .lightbox .side-content .save-btn-container {
   position: absolute;
   bottom: 30px;

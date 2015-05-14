@@ -7,13 +7,16 @@
 
 		events: {
 
-			'click .edit-btn': 'launchLightbox'
+			'click .edit-btn': 'launchLightbox',
+			'click .lightbox-modal-close': 'closeLightbox'
 
 		},
 
 		initialize: function(){
 
 			var self = this;
+
+
 
 		},
 
@@ -24,17 +27,38 @@
 			var self = this;
 			e.preventDefault();
 
-		//	if( self.$('.edit-btn' ).hasClass( 'no-lightbox' ) ){
+			setTimeout( function(){
+				console.log( 'editor: '+ tinyMCE.activeEditor.getContent() );
+					
+			}, 1000 );
+
+
+			setTimeout( function(){
+				console.log( 'editor: '+ tinyMCE.activeEditor.getContent() );
+					
+			}, 4000 );
+			//console.log(  );
+
+			if( self.$('.edit-btn' ).hasClass( 'no-lightbox' ) ){
 				//open the media-modal
 
-		//	}else{
+			}else{
 
 				self.$('.lightbox').addClass('active');
 
 				console.log( 'wank' );
-		//	}
+			}
 
 		},
+
+		closeLightbox: function( e ){
+
+			var self = this;
+			e.preventDefault();
+
+			self.$('.lightbox').removeClass( 'active' );
+
+		}
 
 
 	});

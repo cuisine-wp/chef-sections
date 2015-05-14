@@ -63,7 +63,7 @@ class ContentColumn extends DefaultColumn{
 				)
 			),
 			'editor' => Field::editor( 
-				'content', 
+				'content_'.$this->fullId, //this needs a unique id 
 				'', 
 				array(
 					'label'			=> false,

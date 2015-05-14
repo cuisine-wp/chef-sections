@@ -24,7 +24,7 @@ class DefaultColumn {
 	 * 
 	 * @var String
 	 */
-	private $fullId;
+	public $fullId;
 
 
 	/**
@@ -205,6 +205,10 @@ class DefaultColumn {
 	 */
 	public function saveButton(){
 
+		echo '<a class="lightbox-modal-close" href="#">';
+			echo '<span class="media-modal-icon"></span>';
+		echo '</a>';
+
 		echo '<div class="save-btn-container">';
 
 			echo '<button id="save-column" class="save-btn section-btn">'.$this->properties['buttonText'].'</button>';
@@ -237,6 +241,36 @@ class DefaultColumn {
 	/*=============================================================*/
 	/**             Getters & Setters                              */
 	/*=============================================================*/
+
+
+	/**
+	 * Returns the value of a field in this column
+	 * 
+	 * @param  string $name
+	 * @return string / bool (returns false if this content does not exist )
+	 */
+	public function getField( $name ){
+
+		if( !isset( $this->properties[ $name ] ) )
+			return false;
+
+		return $this->properties[$name];
+
+	}
+
+
+	/**
+	 * Simple echo function for the getField method
+	 * 
+	 * @param  string $name
+	 * @return string ( html, echoed )
+	 */
+	public function theField( $name ){
+
+		if( $this->getField( $name ) )
+			echo $this->getField( $name );
+	}
+
 
 	/**
 	 * Get the default arguments for this column
