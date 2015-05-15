@@ -17,7 +17,7 @@ class DefaultColumn {
 	 * 
 	 * @var Int
 	 */
-	private $id;
+	public $id;
 
 	/**
 	 * The Id of this column prefixed by the section id
@@ -148,14 +148,13 @@ class DefaultColumn {
 
 			$this->buildPreview();
 
-
-			cuisine_dump( $this->hasLightbox );
-
 			if( $this->hasLightbox ){
 				echo '<div class="lightbox lightbox-'.$this->type.'">';
 					$this->buildLightbox();
 				echo '</div>';
 			}
+
+			$this->bottomControls();
 
 		echo '</div>';
 
@@ -186,6 +185,19 @@ class DefaultColumn {
 		$typeSelector->render();
 
 	}
+
+	/**
+	 * Create the footer of this column
+	 * 
+	 * @return string (html,echoed)
+	 */
+	private function bottomControls(){
+
+		echo '<div class="column-footer">';
+			$this->buildTemplateSnitch();
+		echo '</div>';
+	}
+
 
 	/**
 	 * Create the preview image or text for this column
@@ -243,6 +255,30 @@ class DefaultColumn {
 		$string .= 'data-post_id="'.$this->post_id.'" ';
 
 		return $string;
+	}
+
+
+	/**
+	 * Generate the templates for this section
+	 * 
+	 * @return string ( html, echoed )
+	 */
+	private function buildTemplateSnitch(){
+
+		$templates = Template::column( $this  )->files;
+		echo '<span class="template-snitch">';
+			echo '<span class="dashicons dashicons-media-text"></span>';
+			echo '<span class="tooltip">';
+
+				echo '<strong>Templates:</strong>';
+				foreach( $templates as $template ){
+
+					echo '<p>'.$template.'</p>';
+
+				}
+
+			echo '</span>';
+		echo '</span>';
 	}
 
 

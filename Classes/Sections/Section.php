@@ -4,6 +4,7 @@ namespace ChefSections\Sections;
 
 use ChefSections\Wrappers\Column;
 use ChefSections\Wrappers\SectionsBuilder;
+use ChefSections\Wrappers\Template;
 use Cuisine\Wrappers\Field;
 
 /**
@@ -38,7 +39,7 @@ class Section {
 	 * 
 	 * @var string
 	 */
-	private $title = '';
+	public $title = '';
 
 
 	/**
@@ -46,7 +47,7 @@ class Section {
 	 * 
 	 * @var string
 	 */
-	private $view = '';
+	public $view = '';
 
 
 	/**
@@ -106,6 +107,8 @@ class Section {
 
 				echo '<div class="clearfix"></div>';
 				echo '</div>';
+
+				$this->bottomControls();
 			
 			echo '<div class="loader"><span class="spinner"></span></div>';
 			echo '</div>';
@@ -135,6 +138,24 @@ class Section {
 		echo '</div>';
 	
 		echo '<div class="clearfix"></div>';
+	}
+
+
+	/**
+	 * Create the controls on the bottom
+	 * 
+	 * @return string (html, echoed)
+	 */
+	private function bottomControls(){
+
+		echo '<div class="section-footer">';
+			echo '<p class="delete-section">';
+				echo '<span class="dashicons dashicons-trash"></span>';
+			echo __( 'Verwijder', 'chefsections' ).'</p>';
+
+			$this->buildTemplateSnitch();
+
+		echo '</div>';
 
 	}
 
@@ -152,6 +173,28 @@ class Section {
 	}
 
 
+	/**
+	 * Generate the templates for this section
+	 * 
+	 * @return string ( html, echoed )
+	 */
+	private function buildTemplateSnitch(){
+
+		$templates = Template::section( $this )->files;
+		echo '<span class="template-snitch">';
+			echo '<span class="dashicons dashicons-media-text"></span>';
+			echo '<span class="tooltip">';
+
+				echo '<strong>Templates:</strong>';
+				foreach( $templates as $template ){
+
+					echo '<p>'.$template.'</p>';
+
+				}
+
+			echo '</span>';
+		echo '</span>';
+	}
 
 
 	/*=============================================================*/

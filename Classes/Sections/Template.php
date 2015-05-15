@@ -13,7 +13,7 @@ class Template {
 	 * 
 	 * @var array
 	 */
-	private $files;
+	public $files;
 
 
 	/**
@@ -49,9 +49,9 @@ class Template {
 	 * @param  \ChefSections\Sections\Section 	$section
 	 * @return \ChefSections\View\Template ( chainable )
 	 */
-	public function column( $column, $section ){
+	public function column( $column ){
 
-
+		$this->getFiles( $column );
 
 		return $this;
 	}
@@ -66,7 +66,7 @@ class Template {
 	 */
 	public function section( $section ){
 
-
+		$this->getFiles( $section );
 
 		return $this;
 	}
@@ -96,7 +96,36 @@ class Template {
 	 * 
 	 * @return array
 	 */
-	public function getFiles(){
+	public function getFiles( $obj ){
+
+		if( !isset( $obj->fullId ) ){
+
+			$base = 'views/sections/';
+
+			$array = array(
+							$base.'section_'.$obj->id,
+							$base.'section_'.sanitize_title( $obj->title ),
+							$base.'section_'.$obj->view
+			);
+
+
+		
+		}else{
+
+			$base = 'elements/columns/';
+
+			if( $obj->type == 'collection' )
+				$base = 'views/collections/';
+
+
+			$array = array(
+							$base.'column_'.$obj->id,
+							$base.'column_'.$obj->type
+			);	
+		}
+
+		$this->files = $array;
+
 
 	}
 
