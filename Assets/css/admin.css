@@ -26,13 +26,90 @@
   display: block;
 }
 .section-wrapper .section-controls {
+  width: 90%;
   padding: 8px 12px;
   border-bottom: 1px solid #e5e5e5;
   height: 50px;
+  position: relative;
+}
+.section-wrapper .section-controls .pin {
+  position: absolute;
+  right: -35px;
+  top: 15px;
+  font-size: 32px;
+  color: #444;
+  cursor: pointer;
+}
+.section-wrapper .section-controls .pin:hover {
+  color: #00a3cf;
 }
 .section-wrapper .section-controls .field-wrapper {
-  width: 47.5%;
   float: left;
+  text-align: center;
+}
+.section-wrapper .section-controls .field-wrapper.text {
+  width: 35%;
+}
+.section-wrapper .section-controls .field-wrapper.checkbox {
+  box-sizing: border-box;
+  width: 5%;
+  position: relative;
+  padding: 20px 0 0 15px;
+}
+.section-wrapper .section-controls .field-wrapper.checkbox .input-field {
+  width: 0px;
+  height: 0px;
+  margin-right: 10px;
+  display: block;
+  border: 0;
+  outline: none;
+  overflow: none;
+}
+.section-wrapper .section-controls .field-wrapper.checkbox .input-field:after {
+  display: inline-block;
+  content: "\f177";
+  font: normal 20px/1 'dashicons';
+  speak: none;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #666;
+}
+.section-wrapper .section-controls .field-wrapper.checkbox .input-field:checked {
+  background: #fff;
+}
+.section-wrapper .section-controls .field-wrapper.checkbox .input-field:checked:after {
+  content: "\f153";
+}
+.section-wrapper .section-controls .field-wrapper.checkbox .input-field:checked:before {
+  display: none;
+}
+.section-wrapper .section-controls .field-wrapper.checkbox .input-field:hover:after {
+  color: #00a3cf;
+}
+.section-wrapper .section-controls .field-wrapper.checkbox label {
+  position: absolute;
+  top: -55px;
+  left: -5%;
+  display: inline-block;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  display: none;
+}
+.section-wrapper .section-controls .field-wrapper.checkbox label:after {
+  position: absolute;
+  top: 100%;
+  left: 20px;
+  content: '';
+  border: 6px solid rgba(0, 0, 0, 0.8);
+  border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+}
+.section-wrapper .section-controls .field-wrapper.checkbox .input-field:hover + label {
+  display: block;
+}
+.section-wrapper .section-controls .field-wrapper.radio {
+  width: 60%;
 }
 .section-wrapper .section-controls .radio {
   float: right;
@@ -223,6 +300,15 @@
   border: 3px dashed #ccc;
   text-align: center;
   box-shadow: 0;
+}
+
+.section-placeholder {
+  display: block;
+  width: 100%;
+  height: 150px;
+  border: 5px dashed #2ea2cc;
+  background: none;
+  margin-top: 30px;
 }
 
 .lightbox label {

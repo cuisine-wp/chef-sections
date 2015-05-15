@@ -89,7 +89,8 @@ class Section {
 
 		if( is_admin() ){
 
-			echo '<div class="section-wrapper section-'.$this->id.'" ';
+			echo '<div class="section-wrapper ui-state-default section-'.$this->id.'" ';
+				echo 'id="'.$this->id.'" ';
 				$this->buildIds();
 			echo '>';
 	
@@ -128,6 +129,8 @@ class Section {
 				$field->render();
 
 			}
+
+			echo '<span class="dashicons dashicons-randomize pin"></span>';
 
 		echo '</div>';
 	
@@ -196,6 +199,14 @@ class Section {
 			)
 		);
 
+		$check = Field::checkbox(
+			$prefix.'[show_title]',
+			'Laat titel zien',
+			array(
+				'defaultValue'	=> true
+			)
+		);
+
 
 		$views = Field::radio(
 			$prefix.'[view]',
@@ -231,6 +242,7 @@ class Section {
 		$fields = array(
 
 			$title,
+			$check,
 			$views,
 			$position,
 			$post_id,

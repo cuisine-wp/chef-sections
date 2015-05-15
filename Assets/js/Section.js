@@ -92,6 +92,27 @@
 
 		});
 
+		var _post_id = $( '.section-wrapper' ).first().data('post_id');
+		$('#section-container').sortable({
+			handle: '.pin',
+			placeholder: 'section-placeholder',
+			update: function (event, ui) {
+
+				var positions = $( "#section-container" ).sortable( "toArray" );
+				
+				var data = {
+					action: 'sortSections',
+					post_id: _post_id,
+					section_ids: positions
+				}
+
+				$.post( ajaxurl, data, function( response ){
+				
+				});
+
+			}
+		})
+
 	});
 
 

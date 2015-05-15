@@ -4,6 +4,7 @@ namespace ChefSections\Sections;
 
 use ChefSections\Sections\Section;
 use Cuisine\Utilities\Session;
+use Cuisine\Utilities\Sort;
 
 /**
  * Set admin meta boxes per section.
@@ -262,13 +263,22 @@ class SectionsBuilder {
 	/**
 	 * Save the order of metaboxes
 	 * 
-	 * @param  Array $order 
 	 * @return bool (success / no success)
 	 */
-	public function saveOrder( $order ){
+	public function sortSections(){
 
+		$ids = $_POST['section_ids'];
 
+		//save this section:
+		$_sections = get_post_meta( $this->postId, 'sections', true );
+		
+		$i = 1;
+		foreach( $ids as $section_id ){
+			$_sections[ $section_id ]['position'] = $i;
+			$i++;
+		}
 
+		update_post_meta( $this->postId, 'sections', $_sections );
 	}
 
 
@@ -284,6 +294,7 @@ class SectionsBuilder {
 	private function getSections(){
 
 		$sections = get_post_meta( $this->postId, 'sections', true );
+		$sections = Sort::byField( $sections, 'position', 'ASC' );
 
 		$array = array();
 
@@ -325,11 +336,12 @@ class SectionsBuilder {
 
 		$args = array(
 
-				'id'		=> $this->highestId,
-				'position'	=> ( count( $this->sections ) + 1 ),
-				'post_id'	=> $post_id,
-				'title'		=> __( 'Sectie titel', 'chefsections' ),
-				'view'		=> 'fullwidth'
+				'id'			=> $this->highestId,
+				'position'		=> ( count( $this->sections ) + 1 ),
+				'post_id'		=> $post_id,
+				'title'			=> __( 'Sectie titel', 'chefsections' ),
+				'show_title'	=> false,
+				'view'			=> 'fullwidth'
 		);
 
 		$args = apply_filters( 'chef_sections_default_section_args', $args );
