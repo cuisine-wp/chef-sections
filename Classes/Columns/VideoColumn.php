@@ -15,6 +15,11 @@ class VideoColumn extends DefaultColumn{
 	public $type = 'video';
 
 
-
+	/**
+	 * Lightbox boolean
+	 * 
+	 * @var boolean
+	 */
+	public $hasLightbox = false;
 
 }

@@ -5,9 +5,12 @@
 
 		hasLightbox: true,
 
+		sectionId: '',
+		postId: '',
+
 		events: {
 
-			'change .type-radio': 'changeView',
+			'change .section-controls .type-radio': 'changeView',
 
 		},
 
@@ -15,33 +18,61 @@
 
 			var self = this;
 
+			self.sectionId = self.$el.data( 'section_id' );
+			self.postId = self.$el.data( 'post_id' );
 
 
 		},
 
-
+		/**
+		 * Change the view of a section
+		 * 
+		 * @param  Element el
+		 * @return void
+		 */
 		changeView: function( el ){
 
+			var self = this;
+			self.showLoader( jQuery );
+			
+			var view = jQuery( el.target ).val();
 
-			console.log( jQuery( el.target ).val() );
+			var data = {
+
+				action: 'changeView',
+				section_id: self.sectionId,
+				post_id: self.postId,
+				view: view
+
+			}
+
+			jQuery.post( ajaxurl, data, function( response ){
+				//console.log( response );				
+				self.$el.replaceWith( response );
+
+				setSections();
+				setColumns();
+
+			});
+		},
 
 
+		showLoader: function( $ ){
+
+			var self = this;
+			self.$( '.loader' ).addClass( 'show' );
 		}
+
 
 	});
 
 
+
+
+
 	jQuery( document ).ready( function( $ ){
 
-		var sections = [];
-
-		$('.section-wrapper').each( function( index, obj ){
-
-			var col = new Section( { el: obj } );
-			sections.push( col );
-
-		});
-
+		setSections();
 
 		$('#addSection').on( 'click', function(){
 
@@ -54,11 +85,22 @@
 
 				$('#section-container').append( response );
 
+				setSections();
 				setColumns();
 				
 			});
 
 		});
 
-
 	});
+
+
+
+	function setSections(){
+
+		jQuery('.section-wrapper').each( function( index, obj ){
+
+			var sec = new Section( { el: obj } );
+
+		});
+	}

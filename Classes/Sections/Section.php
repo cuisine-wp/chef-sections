@@ -89,7 +89,9 @@ class Section {
 
 		if( is_admin() ){
 
-			echo '<div class="section-wrapper section-'.$this->id.'">';
+			echo '<div class="section-wrapper section-'.$this->id.'" ';
+				$this->buildIds();
+			echo '>';
 	
 				$this->buildControls();
 
@@ -104,6 +106,7 @@ class Section {
 				echo '<div class="clearfix"></div>';
 				echo '</div>';
 			
+			echo '<div class="loader"><span class="spinner"></span></div>';
 			echo '</div>';
 		}
 	}
@@ -132,6 +135,18 @@ class Section {
 
 	}
 
+
+	/**
+	 * Generate the data-tags with id's
+	 * 
+	 * @return string ( html, echoed )
+	 */
+	private function buildIds(){
+
+		echo 'data-section_id="'.$this->id.'" ';
+		echo 'data-post_id="'.$this->post_id.'"';
+
+	}
 
 
 

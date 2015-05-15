@@ -199,7 +199,7 @@ class ColumnBuilder {
 		$post_id = $_POST['post_id'];
 
 		update_post_meta( $post_id, '_column_props_'.$id, $_POST['properties'] );
-		cuisine_dump( get_post_meta( $post_id, '_column_props_'.$id, true ) );
+		//cuisine_dump( get_post_meta( $post_id, '_column_props_'.$id, true ) );
 		die();
 	}
 
@@ -208,16 +208,25 @@ class ColumnBuilder {
 	/**
 	 * Save column type, for any column
 	 * 
-	 * @return bool
+	 * @return string, echoed
 	 */
-	public function saveColumnType(){
+	public function saveType(){
+
+		global $post;
 
 		$id = $_POST['column_id'];
-		$post_id = $_POST['post_id'];
+		$section_id = $_POST['section_id'];
 		$type = $_POST['type'];
 
-		update_post_meta( $post_id, '_column_type_'.$id, $type );
-		die();
+		update_post_meta( $post->ID, '_column_type_'.$id, $type );
+
+
+		$_sections = get_post_meta( $post->ID, 'sections', true );
+		$_sections[ $section_id ]['columns'][ $id ] = $type;
+		update_post_meta( $post->ID, 'sections', $_sections );
+
+		$newColumn = $this->$type( $id, $section_id, array() );
+		$newColumn->build();
 
 	}
 

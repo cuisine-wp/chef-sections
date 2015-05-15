@@ -6,6 +6,7 @@
 		hasLightbox: true,
 
 		columnId: '',
+		fullId: '',
 		sectionId: '',
 		postId: '',
 
@@ -18,6 +19,7 @@
 			'click .edit-btn': 'launchLightbox',
 			'click .lightbox-modal-close': 'closeLightbox',
 			'click #save-column': 'saveColumn',
+			'change > .field-wrapper .type-select': 'changeType',
 
 		},
 
@@ -30,9 +32,16 @@
 
 			var self = this;
 
-			self.columnId = self.$el.data( 'id' );
+			self.fullId = self.$el.data('id');
+			self.columnId = self.$el.data( 'column_id' );
 			self.sectionId = self.$el.data( 'section_id' );
 			self.postId = self.$el.data( 'post_id' );
+
+			if( self.$( '.lightbox .editor textarea' ).length > 0 ){
+			
+			//	console.log( tinyMCE.init() );
+
+			}
 
 			return this;
 		},
@@ -50,7 +59,14 @@
 
 		
 			if( self.$('.edit-btn' ).hasClass( 'no-lightbox' ) ){
-				//open the media-modal
+					
+				var options = Media.sanitize_uploader_options( [] );
+				Media.uploader( options, function( attachments ){
+
+					console.log( attachments );
+
+				});
+
 
 			}else{
 
@@ -68,7 +84,9 @@
 		closeLightbox: function( e ){
 
 			var self = this;
-			e.preventDefault();
+
+			if( e !== undefined )
+				e.preventDefault();
 
 			self.$('.lightbox').removeClass( 'active' );
 
@@ -87,8 +105,9 @@
 
 			
 			var properties = {};
-			var inputs = self.$('.lightbox .field-wrapper .field');
+			var inputs = self.$('.lightbox .field-wrapper .field, .lightbox .field-wrapper .subfield:checked');
 
+			
 			for( var i = 0; i <= inputs.length; i++ ){
 
 				var input = jQuery( inputs[ i ] );
@@ -97,6 +116,7 @@
 					properties[ input.attr( 'name' ) ] = input.val();
 
 			}
+
 
 			//add the editor content
 			if( self.$( '.lightbox .editor' ).length > 0 ){
@@ -107,7 +127,7 @@
 			var data = {
 						'action' 		: 'saveColumnProperties',
 						'post_id' 		: self.postId,
-						'column_id'		: self.columnId,
+						'column_id'		: self.fullId,
 						'properties'	: properties
 			};
 
@@ -115,25 +135,56 @@
 			jQuery.post( ajaxurl, data, function( response ){
 
 				//error handeling
+				self.closeLightbox();
 
+			});
+		},
+
+		/**
+		 * Change the type of a column
+		 * 
+		 * @return void
+		 */
+		changeType: function( el ){
+
+			var self = this;
+			var type = jQuery( el.target ).val();
+
+			var data = {
+						'action' 		: 'saveColumnType',
+						'post_id' 		: self.postId,
+						'column_id'		: self.columnId,
+						'section_id'	: self.sectionId,
+						'type'			: type
+			};
+
+
+
+			jQuery.post( ajaxurl, data, function( response ){
+
+				self.$el.replaceWith( response );
+				setColumns();
 
 			});
 
-
 		}
-	});
 
+	});
 
 
 	jQuery( document ).ready( function( $ ){
 
-		var columns = [];
 
-		$('.section-wrapper .column' ).each( function( index, obj ){
-
-			var col = new Column( { el: obj } );
-			columns.push( col );
-
-		});
+		setColumns();
 
 	});
+
+
+	function setColumns(){
+
+		jQuery('.column' ).each( function( index, obj ){
+
+			var col = new Column( { el: obj } );
+
+		});
+	}

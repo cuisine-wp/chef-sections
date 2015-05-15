@@ -26,7 +26,7 @@ class SectionsBuilder {
 	 *
 	 * @var int
 	 */
-	private $postId;
+	private $postId = null;
 
 	/**
 	 * Keep the sections id's unique and get the highest
@@ -57,7 +57,9 @@ class SectionsBuilder {
 	function init(){
 		global $post;
 
-		$this->postId = $post->ID;
+		if( isset( $post ) )
+			$this->postId = $post->ID;
+		
 		$this->sections = $this->getSections();
 		$this->highestId = $this->getHighestId();
 	}
@@ -80,17 +82,16 @@ class SectionsBuilder {
 
 		wp_nonce_field( Session::nonceAction, Session::nonceName );
 
+		echo '<div class="section-container" id="section-container">';
 
 		if( !empty( $this->sections ) ){
 
-			echo '<div class="section-container" id="section-container">';
-
+			
 			foreach( $this->sections as $section ){
 
 				$section->build();
 			}
 
-			echo '</div>';
 
 		}else{
 
@@ -99,6 +100,8 @@ class SectionsBuilder {
 			echo '</div>';
 		
 		}
+
+		echo '</div>';
 
 		$this->addSectionButton();
 	}
@@ -205,6 +208,12 @@ class SectionsBuilder {
 			$args['columns'] = $columns;
 		}
 
+		//save this section:
+		$_sections = get_post_meta( $this->postId, 'sections', true );
+		$_sections[ $args['id'] ] = $args;
+		update_post_meta( $this->postId, 'sections', $_sections );
+
+
 		$section = new Section( $args );
 
 		return $section->build();
@@ -212,11 +221,40 @@ class SectionsBuilder {
 
 
 
-	public function switchView(){
+	/**
+	 * Get the new section view 
+	 * 
+	 * @return string
+	 */
+	public function changeView(){
 
-//		$sections = get_post_meta( $this->postId, 'sections', true );
+		$section_id = $_POST['section_id'];
+		$view = $_POST['view'];
 
+		$_sections = get_post_meta( $this->postId, 'sections', true );
+		$_sections[ $section_id ]['view'] = $view;
 
+		//add columns if needed:
+		$default = $this->getDefaultColumns( $view );
+		$existing = $_sections[ $section_id ]['columns'];
+		$new = array();
+
+		foreach( $default as $key => $col ){
+
+			if( !isset( $existing[ $key ] ) ){
+				$new[ $key ] = $default[ $key ];
+			}else{
+				$new[ $key ] = $existing[ $key ];
+			}
+		}
+		
+		$_sections[ $section_id ]['columns'] = $new;
+
+		update_post_meta( $this->postId, 'sections', $_sections );
+
+		$section = new Section( $_sections[ $section_id ] );
+		return $section->build();
+	
 	}
 
 

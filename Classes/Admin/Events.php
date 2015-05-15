@@ -67,7 +67,11 @@
 
 			add_action( 'edit_form_after_editor', function(){
 
-				SectionsBuilder::build();
+				global $post;
+
+				if( isset( $post ) ){
+					SectionsBuilder::build();
+				}
 
 			});
 

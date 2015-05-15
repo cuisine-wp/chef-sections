@@ -1,8 +1,29 @@
 .section-wrapper {
+  position: relative;
   border: 1px solid #e5e5e5;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   background: #fff;
   margin-top: 30px;
+}
+.section-wrapper .loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  z-index: 999;
+  display: none;
+}
+.section-wrapper .loader .spinner {
+  position: absolute;
+  left: 47.5%;
+  top: 45%;
+  display: inline-block;
+}
+.section-wrapper .loader.show {
+  display: block;
 }
 .section-wrapper .section-controls {
   padding: 8px 12px;
@@ -202,6 +223,24 @@
   border: 3px dashed #ccc;
   text-align: center;
   box-shadow: 0;
+}
+
+.lightbox label {
+  text-align: left;
+}
+.lightbox .side-content .subfield-wrapper {
+  text-align: left;
+  width: 100%;
+  display: block;
+  clear: both;
+}
+.lightbox .side-content .subfield-wrapper label, .lightbox .side-content .subfield-wrapper input {
+  display: inline-block;
+  width: auto !important;
+}
+.lightbox .side-content .field-wrapper.radio {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
 }
 
 .section-btn {

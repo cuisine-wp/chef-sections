@@ -196,7 +196,6 @@ class DefaultColumn {
 		
 		echo '<p> '.$this->type.' -- preview </p>';
 
-
 		echo '<div class="btn-row">';
 
 			$class = 'edit-btn section-btn';
@@ -239,6 +238,7 @@ class DefaultColumn {
 	private function buildIds(){
 
 		$string = 'data-id="'.$this->fullId.'" ';
+		$string .= 'data-column_id="'.$this->id.'" ';
 		$string .= 'data-section_id="'.$this->section_id.'" ';
 		$string .= 'data-post_id="'.$this->post_id.'" ';
 
@@ -275,12 +275,20 @@ class DefaultColumn {
 	 * Returns the value of a field in this column
 	 * 
 	 * @param  string $name
+	 * @param  string $default (optional)
 	 * @return string / bool (returns false if this content does not exist )
 	 */
-	public function getField( $name ){
+	public function getField( $name, $default = null ){
 
-		if( !isset( $this->properties[ $name ] ) )
+		if( !isset( $this->properties[ $name ] ) ){
+			
+			if( $default !== null )
+				return $default;
+
+
 			return false;
+
+		}
 
 		return $this->properties[$name];
 
