@@ -66,6 +66,14 @@ class Section {
 	public $columns = array();
 
 
+	/**
+	 * Simple boolean to display or not display a section title
+	 *
+	 * @var boolean
+	 */
+	public $show_title;
+
+
 
 	function __construct( $args ){
 		
@@ -80,6 +88,8 @@ class Section {
 		$this->title = $args['title'];
 
 		$this->view = $args['view'];
+
+		$this->show_title = ( isset( $args['show_title'] ) ? $args['show_title'] : true );
 
 		$this->columns = $this->getColumns( $args['columns'] );
 
@@ -263,7 +273,7 @@ class Section {
 			$prefix.'[show_title]',
 			'Laat titel zien',
 			array(
-				'defaultValue'	=> true
+				'defaultValue'	=> $this->show_title
 			)
 		);
 

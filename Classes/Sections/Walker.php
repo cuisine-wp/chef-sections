@@ -15,11 +15,12 @@
 		 */
 		public function walk(){
 
+
 			ob_start();
 
 			foreach( $this->sections as $section ){
 
-				Template::section( $section );
+				Template::section( $section )->display();
 
 			}
 
@@ -39,7 +40,7 @@
 
 			foreach( $section->columns as $column ){
 
-				Template::column( $column );
+				Template::column( $column )->display();
 
 			}
 

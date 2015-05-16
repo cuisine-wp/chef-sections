@@ -20,11 +20,11 @@ class Template {
 
 
 	/**
-	 * The first found file
+	 * The object being queried
 	 * 
 	 * @var string
 	 */
-	private $located;
+	private $obj;
 
 
 	/**
@@ -55,8 +55,10 @@ class Template {
 	public function column( $column ){
 
 		$this->type = 'column';
+		$this->obj = $column;
+
 		$section_template = Walker::getTemplateName( $column->section_id );
-		$this->getFiles( $column, $section_template );
+		$this->getFiles( $section_template );
 
 		return $this;
 	}
@@ -72,7 +74,9 @@ class Template {
 	public function section( $section ){
 
 		$this->type = 'section';
-		$this->getFiles( $section );
+		$this->obj = $section;
+
+		$this->getFiles();
 
 		return $this;
 	}
@@ -88,14 +92,34 @@ class Template {
 	public function display(){
 
 		//check if the theme contains overwrites:
-		$this->checkTheme();
+		$located = $this->checkTheme();
 
+		//fall back on own templates:
+		if( !$located ){
 
-		//add_action( 'chef_sections_before_'.$this->type.'_template', $this->templateName );
+			$base = Url::path( 'plugin', 'chef-sections/templates', true );
+			if( $this->type == 'section' ){
+				$located = $base.'Sections/default.php';
+			}else{
+				$located .= $base.'Columns/'.$this->obj->type.'.php';
+			}
 
-		//	include( $located );
+		}
 
-		//add_action( 'chef_sections_after_'.$this->type.'_template', $this->templateName );
+		//set vars:
+		if( $this->type == 'column' ){
+			$type = 'column';
+			$column = $this->obj;
+		}else{
+			$type = 'section';
+			$section = $this->obj;
+		}
+
+		add_action( 'chef_sections_before_'.$this->type.'_template', $this->obj );
+
+			include( $located );
+
+		add_action( 'chef_sections_after_'.$this->type.'_template', $this->obj );
 
 	}
 
@@ -111,10 +135,9 @@ class Template {
 		//the root path of our theme:
 		$base = Url::path( 'theme' );
 		$templates = Sort::prependValues( $this->files, $base );
+		$templates = Sort::appendValues( $templates, '.php' );
 
-		cuisine_dump( $templates );
-		$located = false;
-
+		$located = locate_template( $templates );
 
 		return $located; 
 	}
@@ -126,7 +149,7 @@ class Template {
 	 * 
 	 * @return array
 	 */
-	public function getFiles( $obj, $template_prefix = false ){
+	public function getFiles( $template_prefix = false ){
 
 		if( $this->type == 'section' ){
 
@@ -137,10 +160,9 @@ class Template {
 			
 
 			$array = array(
-							$base.$obj->template.$obj->id,
-							$base.$obj->template.sanitize_title( $obj->title ),
-							$base.$obj->template.$obj->view,
-							$base.$obj->view
+							$base.$this->obj->template.sanitize_title( $this->obj->title ),
+							$base.$this->obj->template.$this->obj->view,
+							$base.$this->obj->view
 			);
 
 		
@@ -148,22 +170,19 @@ class Template {
 
 			$base = 'elements/columns/';
 
-			if( $obj->type == 'collection' )
+			if( $this->obj->type == 'collection' )
 				$base = 'views/collections/';
-
-			if( $template_prefix )
-				$base .= $template_prefix.'-';
 
 
 			$array = array(
-							$base.$obj->id,
-							$base.$obj->type
+							$base.$template_prefix.'-'.$this->obj->id,
+							$base.$template_prefix.'-'.$this->obj->type,
+							$base.$this->obj->type
 			);	
 		}
 
 		$this->files = $array;
-
-
+		return $array;
 	}
 
 
