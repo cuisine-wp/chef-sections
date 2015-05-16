@@ -10,7 +10,7 @@
 
 		/**
 		 * Walk through all sections, get templates
-		 * 
+		 *
 		 * @return string ( html )
 		 */
 		public function walk(){
@@ -29,9 +29,11 @@
 		}
 
 
+
 		/**
 		 * Walk through all columns of this section & get templates
-		 * 
+		 *
+		 * @param  \ChefSections\Columns\Column
 		 * @return string ( html )
 		 */
 		public function columns( $section ){
@@ -45,6 +47,17 @@
 			}
 
 			return ob_get_clean();
+		}
+
+		/**
+		 * Get a template for a collection-block
+		 * 
+		 * @param  \ChefSections\Columns\Column
+		 * @return string ( html )
+		 */
+		public function block( $column ){
+
+			Template::block( $column )->display();
 		}
 
 

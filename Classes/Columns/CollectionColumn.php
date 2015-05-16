@@ -2,6 +2,7 @@
 namespace ChefSections\Columns;
 
 use Cuisine\Wrappers\Field;
+use WP_Query;
 
 /**
  * Collection column.
@@ -15,6 +16,29 @@ class CollectionColumn extends DefaultColumn{
 	 * @var String
 	 */
 	public $type = 'collection';
+
+
+	/**
+	 * Get the query for this collection 
+	 * 
+	 * @return WP_Query
+	 */
+	public function getQuery(){
+
+		$args = array(
+
+					'post_type'			=> $this->getField( 'post_type', 'post' ),
+					'posts_per_page'	=> $this->getField( 'posts_per_page', 4 ),
+					'orderby'			=> $this->getField( 'orderby', 'date' ),
+		);
+
+		if( $this->getField( 'orderby', 'date' ) == 'title' )
+			$args['order'] = 'ASC';
+
+
+		return new WP_Query( $args );
+
+	}
 
 
 	/**

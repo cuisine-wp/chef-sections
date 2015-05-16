@@ -49,7 +49,6 @@ class Template {
 	 * Get the template for a column
 	 * 
 	 * @param  \ChefSections\Columns\Column 	$column
-	 * @param  \ChefSections\Sections\Section 	$section
 	 * @return \ChefSections\View\Template ( chainable )
 	 */
 	public function column( $column ){
@@ -63,6 +62,22 @@ class Template {
 		return $this;
 	}
 
+	/**
+	 * Get the template for a single collection block
+	 * 
+	 * @param  \ChefSections\Columns\Column 	$column
+	 * @return \ChefSections\View\Template ( chainable )
+	 */
+	public function block( $column ){
+
+		$this->type = 'block';
+		$this->obj = $column;
+
+		$section_template = Walker::getTemplateName( $column->section_id );
+		$this->getFiles( $section_template );
+
+		return $this;
+	}
 
 
 	/**
@@ -100,19 +115,24 @@ class Template {
 			$base = Url::path( 'plugin', 'chef-sections/templates', true );
 			if( $this->type == 'section' ){
 				$located = $base.'Sections/default.php';
-			}else{
-				$located .= $base.'Columns/'.$this->obj->type.'.php';
+			
+			}else if( $this->type == 'column' ){
+				$located = $base.'Columns/'.$this->obj->type.'.php';
+			
+			}else if( $this->type == 'block' ){
+				$located = $base.'Columns/collection-block.php';
+
 			}
 
 		}
 
 		//set vars:
-		if( $this->type == 'column' ){
+		if( $this->type == 'section' ){
+			$type = 'section';
+			$section = $this->obj;	
+		}else{
 			$type = 'column';
 			$column = $this->obj;
-		}else{
-			$type = 'section';
-			$section = $this->obj;
 		}
 
 		add_action( 'chef_sections_before_'.$this->type.'_template', $this->obj );
@@ -151,35 +171,55 @@ class Template {
 	 */
 	public function getFiles( $template_prefix = false ){
 
-		if( $this->type == 'section' ){
+		switch( $this->type ){
 
-			$base = 'views/sections/';
+			case 'section':
 
-			if( $template_prefix )
-				$base .= $section_template.'-';
-			
+				$base = 'views/sections/';
 
-			$array = array(
-							$base.$this->obj->template.sanitize_title( $this->obj->title ),
-							$base.$this->obj->template.$this->obj->view,
-							$base.$this->obj->view
-			);
+				if( $template_prefix )
+					$base .= $section_template.'-';
+				
 
-		
-		}else{
+				$array = array(
+								$base.$this->obj->template.sanitize_title( $this->obj->title ),
+								$base.$this->obj->template.$this->obj->view,
+								$base.$this->obj->view
+				);
 
-			$base = 'elements/columns/';
+			break;
 
-			if( $this->obj->type == 'collection' )
-				$base = 'views/collections/';
+			case 'column':
+
+				$base = 'elements/columns/';
+
+				if( $this->obj->type == 'collection' )
+					$base = 'views/collections/';
 
 
-			$array = array(
-							$base.$template_prefix.'-'.$this->obj->id,
-							$base.$template_prefix.'-'.$this->obj->type,
-							$base.$this->obj->type
-			);	
+				$array = array(
+								$base.$template_prefix.'-'.$this->obj->id,
+								$base.$template_prefix.'-'.$this->obj->type,
+								$base.$this->obj->type
+				);	
+
+			break;
+
+
+			case 'block':
+
+				$base = 'elements/blocks/';
+
+				$array = array(
+							$base.$template_prefix.'-'.get_post_type(),
+							$base.get_post_type()
+				);
+
+			break;
+
+
 		}
+		
 
 		$this->files = $array;
 		return $array;

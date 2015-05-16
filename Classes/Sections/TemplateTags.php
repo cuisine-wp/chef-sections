@@ -64,3 +64,16 @@ function get_columns( $section ){
 	return Walker::columns( $section );
 
 }
+
+
+/**
+ * Needs to be called inside a loop, and needs column information.
+ * 
+ * @param  \ChefSections\Columns\Column $column
+ * @return string ( html )
+ */
+function get_block_template( $column ){
+
+	return Walker::block( $column );
+
+}

@@ -14,7 +14,7 @@
 
 		echo '<div class="container">';
 
-			echo '<div class="column-wrapper '.$section->view.'">';
+			echo '<div class="column-wrapper column-row '.$section->view.'">';
 				
 				the_columns( $section );
 
