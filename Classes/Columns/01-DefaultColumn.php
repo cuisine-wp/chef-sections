@@ -44,11 +44,11 @@ class DefaultColumn {
 
 
 	/**
-	 * The parent section for this column
+	 * The section id for this column
 	 * 
-	 * @var ChefSections\Sections\Section
+	 * @var int
 	 */
-	public $section;
+	public $section_id;
 
 
 	/**
@@ -58,12 +58,6 @@ class DefaultColumn {
 	 */
 	private $properties;
 
-
-	/**
-	 * The preview data of this column
-	 *;0
-	 * @var Array
-	 */
 
 
 	/**
@@ -183,6 +177,7 @@ class DefaultColumn {
 		//create key - label pairs for this dropdown:
 		$keys = array_keys( Column::getAvailableTypes() );
 		$labels = array_column( Column::getAvailableTypes(), 'name' );
+
 		$types = array_combine( $keys, $labels );
 
 		$typeSelector = Field::select( 
@@ -264,7 +259,7 @@ class DefaultColumn {
 	 */
 	private function buildTemplateSnitch(){
 
-		$templates = Template::column( $this  )->files;
+		$templates = Template::column( $this )->files;
 		echo '<span class="template-snitch">';
 			echo '<span class="dashicons dashicons-media-text"></span>';
 			echo '<span class="tooltip">';
@@ -280,24 +275,6 @@ class DefaultColumn {
 		echo '</span>';
 	}
 
-
-
-
-	/*=============================================================*/
-	/**             Frontend                                       */
-	/*=============================================================*/
-
-
-	/**
-	 * Render this column
-	 * 
-	 * @return void
-	 */
-	public function render(){
-
-		Template::column( $this, $this->section )->display();
-
-	}
 
 
 

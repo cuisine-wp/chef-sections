@@ -37,6 +37,7 @@
 			self.sectionId = self.$el.data( 'section_id' );
 			self.postId = self.$el.data( 'post_id' );
 
+
 			if( self.$( '.lightbox .editor textarea' ).length > 0 ){
 			
 			//	console.log( tinyMCE.init() );
@@ -68,7 +69,8 @@
 			}
 
 			jQuery.post( ajaxurl, data, function( response ){
-				//console.log( response );				
+
+				console.log( response );				
 				self.$el.replaceWith( response );
 				setColumns();
 
@@ -86,6 +88,8 @@
 
 			var self = this;
 			e.preventDefault();
+
+			console.log( 'lightbox for: '+ self.fullId );
 
 		
 			if( self.$('.edit-btn' ).hasClass( 'no-lightbox' ) ){
@@ -108,23 +112,42 @@
 		mediaLightbox: function(){
 			
 			var self = this;
-			var options = Media.sanitize_uploader_options( [] );
-			Media.uploader( options, function( attachment ){
 
+			console.log( 'medialightbox for: '+ self.fullId );
+
+			var options = {
+				title:'Uploaden',
+				button:'Opslaan',
+				//media_type:'image',
+				multiple:false,
+				self: self,	
+			}
+
+			console.log( options.self );
+
+			var properties = {};
+			var fullId = self.fullId;
+
+			Media.uploader( options, function( attachment, options ){
+				console.log( 'callback!' );
+				console.log( options.self );
 				var properties = {
 
 					id: attachment.id,
-					thumb: attachment.sizes.thumbnail.url,
-					medium: attachment.sizes.medium.url,
-					large: attachment.sizes.large.url,
-					full: attachment.sizes.full.url,
+					thumb:  ( attachment.sizes.thumbnail !== undefined ) ?
+							  attachment.sizes.thumbnail.url : 'false',
+					medium: ( attachment.sizes.medium !== undefined ) ?
+							  attachment.sizes.medium.url : 'false',
+					large:  ( attachment.sizes.large !== undefined ) ?
+							  attachment.sizes.large.url : 'false',
+					full:   ( attachment.sizes.full !== undefined ) ?
+							  attachment.sizes.full.url : 'false',
+
 					orientation: attachment.sizes.full.orientation
 
 				}
-					
-								
-				self.saveProperties( properties );
-
+				console.log( options.self );			
+				options.self.saveProperties( properties );
 			});
 		},
 
@@ -189,20 +212,32 @@
 		saveProperties: function( properties ){
 
 			var self = this;
+			self.$( '.loader' ).addClass( 'show' );
+
 			var data = {
 						'action' 		: 'saveColumnProperties',
-						'post_id' 		: self.postId,
-						'column_id'		: self.fullId,
+						'column_id'		: self.columnId,
+						'post_id'		: self.postId,
+						'section_id'	: self.sectionId,
+						'full_id'		: self.fullId,
+						'type' 			: self.$( '.column-controls .type-select' ).val(),
 						'properties'	: properties
 			};
 
 
+			console.log( data );
+
+
 			jQuery.post( ajaxurl, data, function( response ){
 
+				//console.log( 'response: '+response );
+				//console.log( self.$el );
 				//error handeling
 				self.closeLightbox();
 
-				self.refresh();
+				self.$el.replaceWith( response );
+				setColumns();
+				setSections();
 
 			});
 		},
@@ -233,7 +268,7 @@
 
 				self.$el.replaceWith( response );
 				setColumns();
-
+				setSections();
 			});
 
 		}
@@ -249,11 +284,14 @@
 	});
 
 
+	var _cols = [];
+
 	function setColumns(){
 
+		_cols = [];
+
 		jQuery('.column' ).each( function( index, obj ){
-
 			var col = new Column( { el: obj } );
-
+			_cols.push( col );
 		});
 	}

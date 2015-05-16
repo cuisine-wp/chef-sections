@@ -1,12 +1,15 @@
 <?php
 namespace ChefSections\View;
 
+use \ChefSections\Wrappers\Walker;
+use \Cuisine\Utilities\Url;
+use \Cuisine\Utilities\Sort;
+
 /**
  * The Template class locates templates
  * @package ChefSections\View
  */
 class Template {
-
 
 	/**
 	 * Array of files to look for
@@ -51,7 +54,9 @@ class Template {
 	 */
 	public function column( $column ){
 
-		$this->getFiles( $column );
+		$this->type = 'column';
+		$section_template = Walker::getTemplateName( $column->section_id );
+		$this->getFiles( $column, $section_template );
 
 		return $this;
 	}
@@ -66,10 +71,12 @@ class Template {
 	 */
 	public function section( $section ){
 
+		$this->type = 'section';
 		$this->getFiles( $section );
 
 		return $this;
 	}
+
 
 
 
@@ -80,13 +87,36 @@ class Template {
 	 */
 	public function display(){
 
-//		add_action( 'chef_sections_before_'.$this->type.'_template', $this->templateName );
-
-//			include( $located );
-
-//		add_action( 'chef_sections_after_'.$this->type.'_template', $this->templateName );
+		//check if the theme contains overwrites:
+		$this->checkTheme();
 
 
+		//add_action( 'chef_sections_before_'.$this->type.'_template', $this->templateName );
+
+		//	include( $located );
+
+		//add_action( 'chef_sections_after_'.$this->type.'_template', $this->templateName );
+
+	}
+
+
+
+	/**
+	 * Check the theme for these files
+	 * 
+	 * @return located
+	 */
+	private function checkTheme(){
+
+		//the root path of our theme:
+		$base = Url::path( 'theme' );
+		$templates = Sort::prependValues( $this->files, $base );
+
+		cuisine_dump( $templates );
+		$located = false;
+
+
+		return $located; 
 	}
 
 
@@ -96,18 +126,22 @@ class Template {
 	 * 
 	 * @return array
 	 */
-	public function getFiles( $obj ){
+	public function getFiles( $obj, $template_prefix = false ){
 
-		if( !isset( $obj->fullId ) ){
+		if( $this->type == 'section' ){
 
 			$base = 'views/sections/';
 
-			$array = array(
-							$base.'section_'.$obj->id,
-							$base.'section_'.sanitize_title( $obj->title ),
-							$base.'section_'.$obj->view
-			);
+			if( $template_prefix )
+				$base .= $section_template.'-';
+			
 
+			$array = array(
+							$base.$obj->template.$obj->id,
+							$base.$obj->template.sanitize_title( $obj->title ),
+							$base.$obj->template.$obj->view,
+							$base.$obj->view
+			);
 
 		
 		}else{
@@ -117,10 +151,13 @@ class Template {
 			if( $obj->type == 'collection' )
 				$base = 'views/collections/';
 
+			if( $template_prefix )
+				$base .= $template_prefix.'-';
+
 
 			$array = array(
-							$base.'column_'.$obj->id,
-							$base.'column_'.$obj->type
+							$base.$obj->id,
+							$base.$obj->type
 			);	
 		}
 

@@ -51,15 +51,25 @@ class Section {
 
 
 	/**
+	 * Template prefix
+	 * 
+	 * @var string
+	 */
+	public $template = '';
+
+
+	/**
 	 * All columns in this section
 	 * 
 	 * @var array
 	 */
-	private $columns = array();
+	public $columns = array();
 
 
 
 	function __construct( $args ){
+		
+		global $post;
 
 		$this->id = $args['id'];
 
@@ -73,8 +83,15 @@ class Section {
 
 		$this->columns = $this->getColumns( $args['columns'] );
 
+		$name = 'page-';
+		if( isset( $post->post_name ) )
+			$name = $post->post_name.'-';
+
+		$this->template = $name;
+
 	}
 	
+
 
 	/*=============================================================*/
 	/**             Backend                                        */

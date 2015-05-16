@@ -19,7 +19,7 @@ class SectionsBuilder {
 	 * 
 	 * @var array
 	 */
-	private $sections = array();
+	public $sections = array();
 
 
 	/**
@@ -55,7 +55,7 @@ class SectionsBuilder {
 	 * @param  int $post_id
 	 * @return void
 	 */
-	function init(){
+	public function init(){
 		global $post;
 
 		if( isset( $post ) )
@@ -63,6 +63,8 @@ class SectionsBuilder {
 		
 		$this->sections = $this->getSections();
 		$this->highestId = $this->getHighestId();
+
+		return $this;
 	}
 
 
@@ -434,6 +436,24 @@ class SectionsBuilder {
 		$arr = apply_filters( 'chef_sections_section_types', $arr );
 		return $arr;
 
+	}
+
+
+	/**
+	 * Return a section template name
+	 * 
+	 * @param  int $section_id
+	 * @return string ( template name )
+	 */
+	public function getTemplateName( $section_id ){
+
+		if( isset( $this->sections[ $section_id ]->title ) ){
+		
+			return sanitize_title( $this->sections[ $section_id ]->title );
+		
+		}
+		
+		return '';
 	}
 
 

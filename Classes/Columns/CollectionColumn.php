@@ -55,7 +55,10 @@ class CollectionColumn extends DefaultColumn{
 				break;
 		}
 
-		echo '<span class="cpt">Post type: '.$this->getField( 'post_type' ).'</span>';
+		$details = 'Post type: '.$this->getField( 'post_type' ).' | ';
+		$details .= 'Aantal berichten: '.$this->getField( 'posts_per_page' );
+
+		echo '<span class="details">'.$details.'</span>';
 	}
 
 	/**

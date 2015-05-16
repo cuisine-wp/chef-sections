@@ -26,7 +26,7 @@ class ContentColumn extends DefaultColumn{
 	public function buildPreview(){
 
 		echo '<h2>'.$this->getField( 'title' ).'</h2>';
-		echo '<p>'.Excerpt::get( $this->getField( 'content' ), 300, ' ', '' ).'...</p>';
+		echo '<p>'.Excerpt::get( $this->getField( 'content' ), 150, ' ', '' ).'...</p>';
 
 	}
 

@@ -18,11 +18,10 @@
 		initialize: function(){
 
 			var self = this;
-
+			
 			self.sectionId = self.$el.data( 'section_id' );
 			self.postId = self.$el.data( 'post_id' );
 
-			console.log( self.sectionId );
 
 		},
 

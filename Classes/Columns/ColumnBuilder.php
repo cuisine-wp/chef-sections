@@ -121,6 +121,29 @@ class ColumnBuilder {
 
 	}
 
+	/**
+	 * If a column doesn't exist, try to locate it.
+	 *
+	 * @param string $name Name of the method
+	 * @param  array $attr
+	 * @return self::$name(), if it exists.
+	 */
+	public function __call( $name, $attr ){
+
+		$types = $this->getAvailableTypes();
+		$names = array_keys( $types );
+
+		//if method can be found:
+		if( in_array( $name, $names ) ){
+
+			$method = $types[ $name ];
+			$props = ( isset( $attr[2] ) ? $attr[2] : array() );
+			return $this->make( $method['class'], $attr[0], $attr[1], $props );
+		}
+
+		return false;
+	}
+
 
 	/*=============================================================*/
 	/**             GETTERS & SETTERS                              */
@@ -193,11 +216,12 @@ class ColumnBuilder {
 	 */
 	public function saveProperties(){
 
-		$id = $_POST['column_id'];
+		$id = $_POST['full_id'];
 		$post_id = $_POST['post_id'];
 
 		update_post_meta( $post_id, '_column_props_'.$id, $_POST['properties'] );
-		//cuisine_dump( get_post_meta( $post_id, '_column_props_'.$id, true ) );
+
+		$this->refreshColumn();
 		die();
 	}
 

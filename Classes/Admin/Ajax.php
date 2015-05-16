@@ -114,7 +114,6 @@
 			add_action( 'wp_ajax_saveColumnProperties', function(){
 
 				$this->setPostGlobal();
-
 				echo Column::saveProperties();
 				die();
 
