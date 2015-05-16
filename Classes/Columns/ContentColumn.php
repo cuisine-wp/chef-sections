@@ -2,6 +2,7 @@
 namespace ChefSections\Columns;
 
 use Cuisine\Wrappers\Field;
+use Cuisine\View\Excerpt;
 
 /**
  * Content column.
@@ -15,6 +16,19 @@ class ContentColumn extends DefaultColumn{
 	 * @var String
 	 */
 	public $type = 'content';
+
+
+	/**
+	 * Create the preview for this column
+	 * 
+	 * @return string (html,echoed)
+	 */
+	public function buildPreview(){
+
+		echo '<h2>'.$this->getField( 'title' ).'</h2>';
+		echo '<p>'.Excerpt::get( $this->getField( 'content' ), 300, ' ', '' ).'...</p>';
+
+	}
 
 
 	/**

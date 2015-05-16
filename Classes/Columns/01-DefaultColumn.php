@@ -146,7 +146,11 @@ class DefaultColumn {
 
 			$this->buildControls();
 
-			$this->buildPreview();
+			echo '<div class="preview-col">';
+				$this->buildPreview();
+			echo '</div>';
+
+			$this->buildBottomControls();
 
 			if( $this->hasLightbox ){
 				echo '<div class="lightbox lightbox-'.$this->type.'">';
@@ -154,10 +158,18 @@ class DefaultColumn {
 				echo '</div>';
 			}
 
-			$this->bottomControls();
-
+			echo '<div class="loader"><span class="spinner"></span></div>';
 		echo '</div>';
 
+	}
+
+	/**
+	 * Builds the column preview
+	 * 
+	 * @return void
+	 */
+	public function buildPreview(){
+		//empty
 	}
 
 
@@ -182,32 +194,20 @@ class DefaultColumn {
 			)
 		);
 
-		$typeSelector->render();
-
-	}
-
-	/**
-	 * Create the footer of this column
-	 * 
-	 * @return string (html,echoed)
-	 */
-	private function bottomControls(){
-
-		echo '<div class="column-footer">';
+		echo '<div class="column-controls">';
+			$typeSelector->render();
 			$this->buildTemplateSnitch();
 		echo '</div>';
+
 	}
 
 
 	/**
-	 * Create the preview image or text for this column
+	 * Build the edit button
 	 * 
 	 * @return string (html, echoed)
 	 */
-	private function buildPreview(){
-		
-		echo '<p> '.$this->type.' -- preview </p>';
-
+	private function buildBottomControls(){
 		echo '<div class="btn-row">';
 
 			$class = 'edit-btn section-btn';
@@ -217,7 +217,6 @@ class DefaultColumn {
 			echo '<button class="'.$class.'" id="lightbox-btn">'.__( 'Bewerken', 'chefsections' ).'</button>';
 
 		echo '</div>';
-
 	}
 
 

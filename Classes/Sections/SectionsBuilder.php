@@ -220,6 +220,19 @@ class SectionsBuilder {
 		return $section->build();
 	}
 
+	/**
+	 * Delete section
+	 * 
+	 * @return void
+	 */
+	public function deleteSection(){
+
+		$section_id = $_POST['section_id'];
+		$_sections = get_post_meta( $this->postId, 'sections', true );
+		unset( $_sections[ $section_id ] );
+		update_post_meta( $this->postId, 'sections', $_sections );
+		echo 'true';
+	}
 
 
 	/**
@@ -294,27 +307,30 @@ class SectionsBuilder {
 	private function getSections(){
 
 		$sections = get_post_meta( $this->postId, 'sections', true );
-		$sections = Sort::byField( $sections, 'position', 'ASC' );
-
 		$array = array();
-
-		if( $sections ){
-
-			foreach( $sections as $section ){
-
-				//temp $args === $section
-				$args = array(
-
-						'id'		=> $section['id'],
-						'position'	=> $section['position'],
-						'title'		=> $section['title'],
-						'view'		=> $section['view'],
-						'post_id'	=> $section['post_id'],
-						'columns'	=> $section['columns']
-				);
-
-				$array[] = new Section( $args );
 		
+		if( is_array( $sections ) ){
+		
+			$sections = Sort::byField( $sections, 'position', 'ASC' );
+		
+			if( $sections ){
+	
+				foreach( $sections as $section ){
+	
+					//temp $args === $section
+					$args = array(
+	
+							'id'		=> $section['id'],
+							'position'	=> $section['position'],
+							'title'		=> $section['title'],
+							'view'		=> $section['view'],
+							'post_id'	=> $section['post_id'],
+							'columns'	=> $section['columns']
+					);
+	
+					$array[] = new Section( $args );
+			
+				}
 			}
 		}
 

@@ -193,8 +193,6 @@ class ColumnBuilder {
 	 */
 	public function saveProperties(){
 
-
-
 		$id = $_POST['column_id'];
 		$post_id = $_POST['post_id'];
 
@@ -225,9 +223,23 @@ class ColumnBuilder {
 		$_sections[ $section_id ]['columns'][ $id ] = $type;
 		update_post_meta( $post->ID, 'sections', $_sections );
 
+		$this->refreshColumn();
+
+	}
+
+	/**
+	 * Refresh a column
+	 * 
+	 * @return void
+	 */
+	public function refreshColumn(){
+
+		$id = $_POST['column_id'];
+		$section_id = $_POST['section_id'];
+		$type = $_POST['type'];
+
 		$newColumn = $this->$type( $id, $section_id, array() );
 		$newColumn->build();
-
 	}
 
 

@@ -11,6 +11,7 @@
 		events: {
 
 			'change .section-controls .type-radio': 'changeView',
+			'click .delete-section': 'deleteSection',
 
 		},
 
@@ -21,6 +22,7 @@
 			self.sectionId = self.$el.data( 'section_id' );
 			self.postId = self.$el.data( 'post_id' );
 
+			console.log( self.sectionId );
 
 		},
 
@@ -57,10 +59,46 @@
 		},
 
 
+		/**
+		 * Delete a section
+		 * 
+		 * @return void
+		 */
+		deleteSection: function(){
+
+			var self = this;
+
+			self.initialize();
+			var data = {
+
+				action: 'deleteSection',
+				section_id: self.sectionId,
+				post_id: self.postId,
+
+			}
+
+			if( confirm( "Weet je zeker dat je deze sectie wil verwijderen?" ) ){
+				jQuery.post( ajaxurl, data, function( response ){
+					
+					if( response === 'true' ){
+	
+						self.$el.slideUp( 'slow', function(){
+							self.$el.remove();
+						});
+	
+						setSections();
+						setColumns();
+					}
+	
+				});
+			}
+		},
+
+
 		showLoader: function( $ ){
 
 			var self = this;
-			self.$( '.loader' ).addClass( 'show' );
+			self.$( '> .loader' ).addClass( 'show' );
 		}
 
 

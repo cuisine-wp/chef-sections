@@ -19,7 +19,7 @@
 			'click .edit-btn': 'launchLightbox',
 			'click .lightbox-modal-close': 'closeLightbox',
 			'click #save-column': 'saveColumn',
-			'change > .field-wrapper .type-select': 'changeType',
+			'change .column-controls .type-select': 'changeType',
 
 		},
 
@@ -48,6 +48,36 @@
 
 
 		/**
+		 * Refresh the column html 
+		 * 
+		 * @return void
+		 */
+		refresh: function(){
+
+			var self = this;
+
+			self.$( '.loader' ).addClass( 'show' );
+
+			var data = {
+
+				action: 'refreshColumn',
+				column_id: self.columnId,
+				post_id: self.postId,
+				section_id: self.sectionId,
+				type: self.$( '.column-controls .type-select' ).val()
+			}
+
+			jQuery.post( ajaxurl, data, function( response ){
+				//console.log( response );				
+				self.$el.replaceWith( response );
+				setColumns();
+
+			});
+
+		},
+
+
+		/**
 		 * Launch this columns lightbox
 		 * @param  event e 
 		 * @return void
@@ -60,13 +90,7 @@
 		
 			if( self.$('.edit-btn' ).hasClass( 'no-lightbox' ) ){
 					
-				var options = Media.sanitize_uploader_options( [] );
-				Media.uploader( options, function( attachments ){
-
-					console.log( attachments );
-
-				});
-
+				self.mediaLightbox();
 
 			}else{
 
@@ -74,6 +98,34 @@
 
 			}
 
+		},
+
+		/**
+		 * Show a media lightbox
+		 * 
+		 * @return void
+		 */
+		mediaLightbox: function(){
+			
+			var self = this;
+			var options = Media.sanitize_uploader_options( [] );
+			Media.uploader( options, function( attachment ){
+
+				var properties = {
+
+					id: attachment.id,
+					thumb: attachment.sizes.thumbnail.url,
+					medium: attachment.sizes.medium.url,
+					large: attachment.sizes.large.url,
+					full: attachment.sizes.full.url,
+					orientation: attachment.sizes.full.orientation
+
+				}
+					
+								
+				self.saveProperties( properties );
+
+			});
 		},
 
 		/**
@@ -124,6 +176,19 @@
 			}
 
 
+			self.saveProperties( properties );
+
+		},
+
+		/**
+		 * Save a media column 
+		 * 
+		 * @param  {[type]} properties [description]
+		 * @return {[type]}            [description]
+		 */
+		saveProperties: function( properties ){
+
+			var self = this;
 			var data = {
 						'action' 		: 'saveColumnProperties',
 						'post_id' 		: self.postId,
@@ -137,8 +202,12 @@
 				//error handeling
 				self.closeLightbox();
 
+				self.refresh();
+
 			});
 		},
+
+
 
 		/**
 		 * Change the type of a column
@@ -150,6 +219,8 @@
 			var self = this;
 			var type = jQuery( el.target ).val();
 
+			self.$( '.loader' ).addClass( 'show' );
+
 			var data = {
 						'action' 		: 'saveColumnType',
 						'post_id' 		: self.postId,
@@ -157,8 +228,6 @@
 						'section_id'	: self.sectionId,
 						'type'			: type
 			};
-
-
 
 			jQuery.post( ajaxurl, data, function( response ){
 

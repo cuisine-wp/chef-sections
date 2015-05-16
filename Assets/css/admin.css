@@ -1,11 +1,7 @@
-.section-wrapper {
+.section-wrapper, .section-wrapper .column {
   position: relative;
-  border: 1px solid #e5e5e5;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-  background: #fff;
-  margin-top: 30px;
 }
-.section-wrapper .loader {
+.section-wrapper .loader, .section-wrapper .column .loader {
   position: absolute;
   top: 0;
   left: 0;
@@ -16,14 +12,21 @@
   z-index: 999;
   display: none;
 }
-.section-wrapper .loader .spinner {
+.section-wrapper .loader .spinner, .section-wrapper .column .loader .spinner {
   position: absolute;
   left: 47.5%;
   top: 45%;
   display: inline-block;
 }
-.section-wrapper .loader.show {
+.section-wrapper .loader.show, .section-wrapper .column .loader.show {
   display: block;
+}
+
+.section-wrapper {
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  background: #fff;
+  margin-top: 30px;
 }
 .section-wrapper .section-footer {
   -webkit-transition: opacity .3s;
@@ -191,36 +194,97 @@
 .section-wrapper .section-columns {
   padding: 15px;
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
 }
 .section-wrapper .section-columns .column {
   box-sizing: border-box;
+  flex: 1;
   background: #f9f9f9;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 3px;
   border: 1px solid #ccc;
-  padding: 15px;
+  position: relative;
+  padding: 15px 15px 55px 15px;
   float: left;
   text-align: center;
   font-weight: bold;
 }
-.section-wrapper .section-columns .column .column-footer {
-  -webkit-transition: opacity .3s;
-  /* Safari */
-  transition: opacity .3s;
-  padding: 0;
+.section-wrapper .section-columns .column .btn-row {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  padding: 10px 0 0 0;
   border-top: 1px solid #ccc;
   display: block;
+}
+.section-wrapper .section-columns .column .preview-col {
+  position: relative;
+  display: block;
+  text-align: left;
+}
+.section-wrapper .section-columns .column .preview-col h1, .section-wrapper .section-columns .column .preview-col h2, .section-wrapper .section-columns .column .preview-col h3, .section-wrapper .section-columns .column .preview-col h4, .section-wrapper .section-columns .column .preview-col p {
+  color: #666;
+  padding: 0;
+  margin: 0 0 10px 0;
+}
+.section-wrapper .section-columns .column .preview-col p {
+  color: #bbb;
+}
+.section-wrapper .section-columns .column .preview-col strong {
+  display: block;
   width: 100%;
-  margin-top: 15px;
-  opacity: .5;
+  text-align: center;
+  padding-bottom: 10px;
 }
-.section-wrapper .section-columns .column .column-footer:hover {
-  opacity: 1;
+.section-wrapper .section-columns .column .preview-col .blocks-preview {
+  text-align: center;
+  margin-bottom: 10px;
 }
-.section-wrapper .section-columns .column .column-footer .template-snitch {
-  right: 0;
+.section-wrapper .section-columns .column .preview-col .blocks-preview .brick {
+  display: inline-block;
+  width: 55px;
+  height: 55px;
+  background: #444;
+  margin-right: 4px;
 }
-.section-wrapper .section-columns .column .column-footer .template-snitch .tooltip {
+.section-wrapper .section-columns .column .preview-col .cpt {
+  position: absolute;
+  right: 2px;
+  bottom: 10px;
+  font-size: 14px;
+  font-weight: normal;
+}
+.section-wrapper .section-columns .column .preview-col .dashicons {
+  height: 110px;
+  font-size: 90px;
+  color: #444;
+  width: 100%;
+  text-align: center;
+}
+.section-wrapper .section-columns .column .preview-col .img-wrapper {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 15px;
+}
+.section-wrapper .section-columns .column .preview-col .img-wrapper img {
+  border: 5px solid #fff;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+.section-wrapper .section-columns .column .column-controls {
+  position: relative;
+}
+.section-wrapper .section-columns .column .column-controls .field-wrapper {
+  width: 90%;
+}
+.section-wrapper .section-columns .column .column-controls .template-snitch {
+  position: absolute;
+  top: -5px;
+  right: -20px;
+}
+.section-wrapper .section-columns .column .column-controls .template-snitch .tooltip {
   text-align: left;
 }
 .section-wrapper .section-columns .column .lightbox {
@@ -246,6 +310,9 @@
   float: left;
   max-height: 100%;
   overflow-y: scroll;
+}
+.section-wrapper .section-columns .column .lightbox .main-content .mce-edit-area {
+  min-height: 300px;
 }
 .section-wrapper .section-columns .column .lightbox .side-content {
   box-sizing: border-box;

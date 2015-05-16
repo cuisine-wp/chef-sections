@@ -17,6 +17,46 @@ class CollectionColumn extends DefaultColumn{
 	public $type = 'collection';
 
 
+	/**
+	 * Generate a graphic depiction of the collection
+	 * 
+	 * @return string ( html, echoed )
+	 */
+	public function buildPreview(){
+
+		$view = $this->getField( 'view', 'blocks' );
+		$grid = $this->getField( 'grid', 'stretch' );
+
+		if( $this->getField( 'title' ) )	
+			echo '<strong>'.$this->getField( 'title' ).'</strong>';
+
+		switch( $view ){
+
+			case 'list':
+				echo '<span class="dashicons dashicons-editor-ul"></span>';
+				break;
+
+			case 'blocks':
+				echo '<div class="blocks-preview">';
+					echo '<span class="brick"></span>';
+					echo '<span class="brick"></span>';
+					echo '<span class="brick"></span>';
+					echo '<span class="brick"></span>';
+				echo '</div>';
+				break;
+
+			case 'overview':
+
+				if( $grid == 'masonry' ){
+					echo '<span class="dashicons dashicons-tagcloud"></span>';
+				}else{
+					echo '<span class="dashicons dashicons-screenoptions"></span>';
+				}
+				break;
+		}
+
+		echo '<span class="cpt">Post type: '.$this->getField( 'post_type' ).'</span>';
+	}
 
 	/**
 	 * Build the contents of the lightbox for this column

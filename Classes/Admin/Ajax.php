@@ -59,6 +59,16 @@
 
 			});
 
+			//delete section:
+			add_action( 'wp_ajax_deleteSection', function(){
+
+				$this->setPostGlobal();
+
+				SectionsBuilder::deleteSection();
+				die();
+
+			});
+
 			//sorting sections:
 			add_action( 'wp_ajax_sortSections', function(){
 
@@ -106,6 +116,16 @@
 				$this->setPostGlobal();
 
 				echo Column::saveProperties();
+				die();
+
+			});
+
+
+			add_action( 'wp_ajax_refreshColumn', function(){
+
+				$this->setPostGlobal();
+
+				Column::refreshColumn();
 				die();
 
 			});
