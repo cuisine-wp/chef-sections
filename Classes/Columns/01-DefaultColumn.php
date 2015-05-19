@@ -128,6 +128,27 @@ class DefaultColumn {
 	/**             Backend                                        */
 	/*=============================================================*/
 
+
+	/**
+	 * Save the properties of this column
+	 * 
+	 * @return bool
+	 */
+	public function saveProperties(){
+
+		$props = $_POST['properties'];
+		$saved = update_post_meta( 
+			$this->post_id, 
+			'_column_props_'.$this->fullId, 
+			$props
+		);
+
+		//set the new properties in this class
+		$this->properties = $props;
+		return $saved;
+	}
+
+
 	/**
 	 * Generate the preview for the backend
 	 * 
@@ -163,7 +184,7 @@ class DefaultColumn {
 	 * @return void
 	 */
 	public function buildPreview(){
-		//empty
+		//empty, every column needs to do this on there own.
 	}
 
 
@@ -337,14 +358,6 @@ class DefaultColumn {
 		$args = apply_filters( 'chef_sections_default_column_args', $args );
 
 		return $args;
-
-	}
-
-
-	private function getColumnTypes(){
-
-
-
 
 	}
 

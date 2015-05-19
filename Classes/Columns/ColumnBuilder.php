@@ -216,12 +216,13 @@ class ColumnBuilder {
 	 */
 	public function saveProperties(){
 
-		$id = $_POST['full_id'];
-		$post_id = $_POST['post_id'];
+		$id = $_POST['column_id'];
+		$section_id = $_POST['section_id'];	
+		$type = $_POST['type'];
 
-		update_post_meta( $post_id, '_column_props_'.$id, $_POST['properties'] );
-
-		$this->refreshColumn();
+		$column = $this->$type( $id, $section_id, array() );
+		$column->saveProperties();
+		$column->build();
 		die();
 	}
 
