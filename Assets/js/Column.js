@@ -70,7 +70,7 @@
 
 			jQuery.post( ajaxurl, data, function( response ){
 
-				console.log( response );				
+				
 				self.$el.replaceWith( response );
 				setColumns();
 
@@ -88,8 +88,6 @@
 
 			var self = this;
 			e.preventDefault();
-
-			console.log( 'lightbox for: '+ self.fullId );
 
 		
 			if( self.$('.edit-btn' ).hasClass( 'no-lightbox' ) ){
@@ -113,8 +111,6 @@
 			
 			var self = this;
 
-			console.log( 'medialightbox for: '+ self.fullId );
-
 			var options = {
 				title:'Uploaden',
 				button:'Opslaan',
@@ -123,14 +119,12 @@
 				self: self,	
 			}
 
-			console.log( options.self );
 
 			var properties = {};
 			var fullId = self.fullId;
 
 			Media.uploader( options, function( attachment, options ){
-				console.log( 'callback!' );
-				console.log( options.self );
+				console.log( attachment );
 				var properties = {
 
 					id: attachment.id,
@@ -146,7 +140,6 @@
 					orientation: attachment.sizes.full.orientation
 
 				}
-				console.log( options.self );			
 				options.self.saveProperties( properties );
 			});
 		},
@@ -224,8 +217,6 @@
 						'properties'	: properties
 			};
 
-
-			console.log( data );
 
 
 			jQuery.post( ajaxurl, data, function( response ){

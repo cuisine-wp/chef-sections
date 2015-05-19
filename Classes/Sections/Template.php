@@ -2,6 +2,7 @@
 namespace ChefSections\View;
 
 use \ChefSections\Wrappers\Walker;
+use \ChefSections\Wrappers\Column;
 use \Cuisine\Utilities\Url;
 use \Cuisine\Utilities\Sort;
 
@@ -110,21 +111,9 @@ class Template {
 		$located = $this->checkTheme();
 
 		//fall back on own templates:
-		if( !$located ){
+		if( !$located )
+			$located = $this->getDefault();
 
-			$base = Url::path( 'plugin', 'chef-sections/templates', true );
-			if( $this->type == 'section' ){
-				$located = $base.'Sections/default.php';
-			
-			}else if( $this->type == 'column' ){
-				$located = $base.'Columns/'.$this->obj->type.'.php';
-			
-			}else if( $this->type == 'block' ){
-				$located = $base.'Columns/collection-block.php';
-
-			}
-
-		}
 
 		//set vars:
 		if( $this->type == 'section' ){
@@ -143,6 +132,37 @@ class Template {
 
 	}
 
+	/**
+	 * Get the default template:
+	 * 
+	 * @return void
+	 */
+	private function getDefault(){
+
+		$base = Url::path( 'plugin', 'chef-sections/templates', true );
+
+		if( $this->type == 'column' ){
+
+			$types = Column::getAvailableTypes();
+			$col = $types[ $this->obj->type ];
+
+			if( !isset( $col['template'] ) || $col['template'] == '' ){
+				$default = $base.'Columns/'.$this->obj->type.'.php';
+
+			}else{
+				$default = $col['template'];
+
+			}
+
+		}else if( $this->type == 'section' ){
+			$default = $base.'Sections/default.php';
+	
+		}else if( $this->type == 'block' ){
+			$default = $base.'Columns/collection-block.php';
+		}
+
+		return $default;
+	}
 
 
 	/**
