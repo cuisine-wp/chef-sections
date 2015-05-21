@@ -3,6 +3,7 @@ namespace ChefSections\View;
 
 use \ChefSections\Wrappers\Walker;
 use \ChefSections\Wrappers\Column;
+use \ChefSections\Wrappers\SectionsBuilder;
 use \Cuisine\Utilities\Url;
 use \Cuisine\Utilities\Sort;
 
@@ -57,7 +58,7 @@ class Template {
 		$this->type = 'column';
 		$this->obj = $column;
 
-		$section_template = Walker::getTemplateName( $column->section_id );
+		$section_template = SectionsBuilder::getTemplateName( $column->section_id );
 		$this->getFiles( $section_template );
 
 		return $this;
@@ -74,7 +75,7 @@ class Template {
 		$this->type = 'block';
 		$this->obj = $column;
 
-		$section_template = Walker::getTemplateName( $column->section_id );
+		$section_template = SectionsBuilder::getTemplateName( $column->section_id );
 		$this->getFiles( $section_template );
 
 		return $this;
