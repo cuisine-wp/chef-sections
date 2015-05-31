@@ -2,6 +2,8 @@
 namespace ChefSections\Columns;
 
 use Cuisine\Wrappers\Field;
+use Cuisine\Wrappers\Scripts;
+use Cuisine\Utilities\Url;
 use WP_Query;
 
 /**
@@ -16,6 +18,28 @@ class CollectionColumn extends DefaultColumn{
 	 * @var String
 	 */
 	public $type = 'collection';
+
+
+	/**
+	 * Add javascripts to the footer, before the template
+	 * 
+	 * @return void
+	 */
+	public function afterTemplate(){
+
+		$url = Url::plugin( 'chef-sections', true ).'Assets/js/collections/';
+		$grid = $this->getField( 'grid', 'grid' );
+		$nav = $this->getField( 'nav', 'pagination' );
+
+		if( $grid == 'masonry' )
+			Scripts::register( 'masonry_blocks', $url.'masonry', true );	
+		
+
+		if( $nav == 'autoload' )
+			Scripts::register( 'autoload_blocks', $url.'autoload', true );
+
+	}
+
 
 
 	/**

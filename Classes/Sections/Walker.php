@@ -42,7 +42,11 @@
 
 			foreach( $section->columns as $column ){
 
+				$column->beforeTemplate();
+
 				Template::column( $column )->display();
+
+				$column->afterTemplate();
 
 			}
 

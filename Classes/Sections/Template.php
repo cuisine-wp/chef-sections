@@ -173,11 +173,7 @@ class Template {
 	 */
 	private function checkTheme(){
 
-		//the root path of our theme:
-		$base = Url::path( 'theme' );
-		$templates = Sort::prependValues( $this->files, $base );
-		$templates = Sort::appendValues( $templates, '.php' );
-
+		$templates = Sort::appendValues( $this->files, '.php' );
 		$located = locate_template( $templates );
 
 		return $located; 
@@ -222,7 +218,7 @@ class Template {
 								$base.$template_prefix.'-'.$this->obj->id,
 								$base.$template_prefix.'-'.$this->obj->type,
 								$base.$this->obj->type
-				);	
+				);
 
 			break;
 

@@ -123,6 +123,23 @@ class DefaultColumn {
 
 	}
 
+	/**
+	 * Function runs before the template gets fired
+	 * 
+	 * @return void
+	 */
+	public function beforeTemplate(){
+		//defaults to empty
+	}
+
+	/**
+	 * Function runs after the template gets fired
+	 * 
+	 * @return void
+	 */
+	public function afterTemplate(){
+		//defaults to empty
+	}
 
 	/*=============================================================*/
 	/**             Backend                                        */
