@@ -87,6 +87,7 @@ class SectionsBuilder {
 
 		echo '<div class="section-container" id="section-container">';
 
+
 		if( !empty( $this->sections ) ){
 
 			
@@ -171,6 +172,13 @@ class SectionsBuilder {
 					}else{
 						$columns[ $i ] = 'content';
 					}
+				}
+
+				//hide titles
+				if( isset( $section['hide_title'] ) ){
+					$sections[ $section['id'] ]['hide_title'] = true;
+				}else{
+					$sections[ $section['id'] ]['hide_title'] = false;
 				}
 
 				$sections[ $section['id'] ]['post_id'] = $post_id;
@@ -316,19 +324,25 @@ class SectionsBuilder {
 			$sections = Sort::byField( $sections, 'position', 'ASC' );
 		
 			if( $sections ){
+
 	
 				foreach( $sections as $section ){
 	
 					//temp $args === $section
 					$args = array(
 	
-							'id'		=> $section['id'],
-							'position'	=> $section['position'],
-							'title'		=> $section['title'],
-							'view'		=> $section['view'],
-							'post_id'	=> $section['post_id'],
-							'columns'	=> $section['columns']
+							'id'			=> $section['id'],
+							'position'		=> $section['position'],
+							'title'			=> $section['title'],
+							'view'			=> $section['view'],
+							'post_id'		=> $section['post_id'],
+							'columns'		=> $section['columns']
 					);
+
+					if( isset( $section['hide_title'] ) ){
+						$args['hide_title'] = $section['hide_title'];
+					}
+
 	
 					$array[] = new Section( $args );
 			
@@ -358,7 +372,7 @@ class SectionsBuilder {
 				'position'		=> ( count( $this->sections ) + 1 ),
 				'post_id'		=> $post_id,
 				'title'			=> __( 'Sectie titel', 'chefsections' ),
-				'show_title'	=> false,
+				'hide_title'	=> false,
 				'view'			=> 'fullwidth'
 		);
 

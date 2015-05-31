@@ -6,7 +6,7 @@
 
 	echo '<div class="'.$class.'" id="section-'.$section->id.'">';
 
-		if( $section->show_title ){
+		if( $section->hide_title === false ){
 			echo '<h2 class="section-title">';
 				echo $section->title;
 			echo '</h2>';

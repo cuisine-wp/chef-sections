@@ -71,7 +71,7 @@ class Section {
 	 *
 	 * @var boolean
 	 */
-	public $show_title;
+	public $hide_title;
 
 
 
@@ -89,7 +89,8 @@ class Section {
 
 		$this->view = $args['view'];
 
-		$this->show_title = ( isset( $args['show_title'] ) ? $args['show_title'] : true );
+		$this->hide_title = ( isset( $args['hide_title'] ) ? (bool)$args['hide_title'] : false );
+
 
 		$this->columns = $this->getColumns( $args['columns'] );
 
@@ -270,10 +271,10 @@ class Section {
 		);
 
 		$check = Field::checkbox(
-			$prefix.'[show_title]',
+			$prefix.'[hide_title]',
 			'Laat titel zien',
 			array(
-				'defaultValue'	=> $this->show_title
+				'defaultValue'	=> $this->hide_title
 			)
 		);
 

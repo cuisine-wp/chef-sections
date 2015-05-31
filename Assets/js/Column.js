@@ -124,7 +124,6 @@
 			var fullId = self.fullId;
 
 			Media.uploader( options, function( attachment, options ){
-				console.log( attachment );
 				var properties = {
 
 					id: attachment.id,
@@ -171,12 +170,12 @@
 			var self = this;
 			e.preventDefault();
 
-			
+			console.log( 'test' );
+
 			var properties = {};
 			var inputs = self.$('.lightbox .field-wrapper .field, .lightbox .field-wrapper .subfield:checked');
 			//var inputs = self.$('.lightbox').serializeArray();
 			
-			console.log( inputs );
 
 			for( var i = 0; i <= inputs.length; i++ ){
 
@@ -195,12 +194,12 @@
 
 
 			//add multi-dimensional arrays:
-			if( self.$('.multi').length > 0 ){
-				properties = self.getMultiFields( properties );
-			}
+			//if( self.$('.multi').length > 0 ){
+			//	properties = self.getMultiFields( properties );
+			//}
 
 
-		//	self.saveProperties( properties );
+			self.saveProperties( properties );
 
 		},
 

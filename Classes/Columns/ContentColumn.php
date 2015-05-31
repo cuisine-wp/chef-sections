@@ -19,6 +19,29 @@ class ContentColumn extends DefaultColumn{
 
 
 	/**
+	 * Simple echo function for the getField method
+	 * 
+	 * @param  string $name
+	 * @return string ( html, echoed )
+	 */
+	public function theField( $name ){
+
+		if( $this->getField( $name ) ){
+
+			if( $name == 'content' ){
+
+				echo apply_filters( 'the_content', $this->getField( $name ) );
+
+			}else{
+				
+				echo $this->getField( $name );
+
+			}
+		}
+	}
+
+
+	/**
 	 * Create the preview for this column
 	 * 
 	 * @return string (html,echoed)
