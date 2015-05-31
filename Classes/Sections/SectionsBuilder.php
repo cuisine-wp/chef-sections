@@ -447,13 +447,18 @@ class SectionsBuilder {
 	 */
 	public function getTemplateName( $section_id ){
 
-		if( isset( $this->sections[ $section_id ]->title ) ){
-		
-			return sanitize_title( $this->sections[ $section_id ]->title );
-		
+		foreach( $this->sections as $section ){
+
+			if( $section->id === $section_id ){
+				if( isset( $section->title ) && $section->title != '' ){
+					return sanitize_title( $section->title );
+				}
+			}
+
 		}
-		
-		return '';
+
+
+		return 'section-'.$section_id;
 	}
 
 

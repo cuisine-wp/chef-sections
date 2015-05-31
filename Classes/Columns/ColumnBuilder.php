@@ -53,20 +53,6 @@ class ColumnBuilder {
 
 
 	/**
-	 * Return a Gallery Column instance.
-	 *
-	 * @param int $id The ID for this column.
-	 * @param array $extras Extra column properties.
-	 * @return \ChefSections\Columns\GalleryColumn
-	 */
-	public function gallery( $id, $section_id, array $properties = array() ){
-
-	    return $this->make( 'ChefSections\\Columns\\GalleryColumn', $id, $section_id, $properties );
-
-	}
-
-
-	/**
 	 * Return an Image Column instance.
 	 *
 	 * @param int $id The ID for this column.
@@ -121,6 +107,21 @@ class ColumnBuilder {
 
 	}
 
+
+
+	/**
+	 * Return a Socials-Column instance.
+	 *
+	 * @param int $id The ID for this column.
+	 * @param array $extras Extra column properties.
+	 * @return \ChefSections\Columns\RelatedColumn
+	 */
+	public function socials( $id, $section_id, array $properties = array() ){
+
+	    return $this->make( 'ChefSections\\Columns\\SocialsColumn', $id, $section_id, $properties );
+
+	}
+
 	/**
 	 * If a column doesn't exist, try to locate it.
 	 *
@@ -166,11 +167,6 @@ class ColumnBuilder {
 				'class' 	=> 'ChefSections\\Columns\\ContentColumn'
 			),
 
-			'gallery' 		=> array(
-				'name'		=> __( 'Gallerij', 'chefsections' ),
-				'class'		=> 'ChefSections\\Columns\\GalleryColumn'
-			),
-
 			'image'			=> array(
 				'name'		=> __( 'Afbeelding', 'chefsections' ),
 				'class' 	=> 'ChefSections\\Columns\\ImageColumn',			
@@ -192,7 +188,12 @@ class ColumnBuilder {
 
 				'name'		=> __( 'Gerelateerd', 'chefsections' ),
 				'class'		=> 'ChefSections\\Columns\\RelatedColumn'
-			)
+			),
+
+			'socials' 		=> array(
+				'name'		=> __( 'Social knoppen', 'chefsections' ),
+				'class'		=> 'ChefSections\\Columns\\SocialsColumn'
+			),
 		);
 
 

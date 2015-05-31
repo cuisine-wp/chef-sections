@@ -194,9 +194,57 @@
 			}
 
 
-			self.saveProperties( properties );
+			//add multi-dimensional arrays:
+			if( self.$('.multi').length > 0 ){
+				properties = self.getMultiFields( properties );
+			}
+
+
+		//	self.saveProperties( properties );
 
 		},
+
+
+		getMultiFields: function( properties ){
+
+			var self = this;
+			var inputs = self.$('.lightbox .field-wrapper .multi');
+			var ret = {};
+/*
+			retloop: for( var i = 0; i <= inputs.length; i++ ){
+
+				var input = jQuery( inputs[ i ] );
+				var val = input.val();
+				var name = input.attr('name');
+
+       			var parts = name.split('[');       
+       			var last = ret;
+		
+        		for (var i in parts) {
+        		    var part = parts[i];
+        		    if (part.substr(-1) == ']') {
+        		        part = part.substr(0, part.length - 1);
+        		    }
+		
+        		    if (i == parts.length - 1) {
+        		        last[part] = val;
+        		        continue retloop;
+        		    } else if (!last.hasOwnProperty(part)) {
+        		        last[part] = {};
+        		    }
+        		    last = last[part];
+        		}
+       			console.log( last );
+
+			}
+*/
+			console.log( ret );
+
+
+			return properties;
+		},
+
+
 
 		/**
 		 * Save a media column 
