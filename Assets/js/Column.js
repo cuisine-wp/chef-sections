@@ -174,8 +174,10 @@
 			
 			var properties = {};
 			var inputs = self.$('.lightbox .field-wrapper .field, .lightbox .field-wrapper .subfield:checked');
-
+			//var inputs = self.$('.lightbox').serializeArray();
 			
+			console.log( inputs );
+
 			for( var i = 0; i <= inputs.length; i++ ){
 
 				var input = jQuery( inputs[ i ] );
