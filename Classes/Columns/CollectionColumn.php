@@ -35,26 +35,8 @@ class CollectionColumn extends DefaultColumn{
 	private $query = false;
 
 
-	/**
-	 * Add javascripts to the footer, before the template
-	 * 
-	 * @return void
-	 */
-	public function afterTemplate(){
-
-		$url = Url::plugin( 'chef-sections', true ).'Assets/js/collections/';
-		$grid = $this->getField( 'grid', 'grid' );
-		$nav = $this->getField( 'nav', 'pagination' );
-
-		if( $grid == 'masonry' )
-			Scripts::register( 'masonry_blocks', $url.'masonry', true );	
-		
-
-		if( $nav == 'autoload' )
-			Scripts::register( 'autoload_blocks', $url.'autoload', true );
-
-	}
-
+	/*=======================================*/
+	/*=========== Query =====================*/
 
 
 	/**
@@ -92,6 +74,65 @@ class CollectionColumn extends DefaultColumn{
 	public function setPage( $num = 1 ){
 		$this->page = $num;
 	}
+
+
+
+	/*=====
+				TEMPLATE
+	*/
+
+
+	/**
+	 * Start the collection wrapper
+	 * 
+	 * @return string ( html, echoed )
+	 */
+	public function beforeTemplate(){
+
+		$nav = $this->getField( 'nav', 'pagination' );
+		$datas = $this->getDatas();
+
+		//get the class:
+		$class = 'collection ';
+		$class .= $this->getField( 'view', 'blocks' ).' ';
+		$class .= $this->getField( 'grid', 'grid' );
+
+		if( $nav == 'autoload' )
+			$class .= ' autoload';
+
+		if( $nav !== 'autoload' || $this->page == 1 )
+			echo '<div class="'.$class.'" '.$datas.'>';
+
+	}
+
+
+
+	/**
+	 * Add javascripts to the footer, before the template
+	 * and close the div wrapper
+	 * 
+	 * @return string ( html, echoed )
+	 */
+	public function afterTemplate(){
+
+		$url = Url::plugin( 'chef-sections', true ).'Assets/js/collections/';
+		$grid = $this->getField( 'grid', 'grid' );
+		$nav = $this->getField( 'nav', 'pagination' );
+
+		if( $grid == 'masonry' )
+			Scripts::register( 'masonry_blocks', $url.'masonry', true );	
+					
+
+		if( $nav == 'autoload' )
+			Scripts::register( 'autoload_blocks', $url.'autoload', true );
+
+	
+		if( $nav !== 'autoload' || $this->page == 1 )
+			echo '</div>';
+
+
+	}
+
 
 	/**
 	 * Get the data attributes for this column

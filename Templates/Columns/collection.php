@@ -5,19 +5,6 @@
 	$maxPosts = $column->getField( 'posts_per_page' );
 	$view = $column->getField( 'view', 'blocks' );
 	$grid = $column->getField( 'grid', 'grid' );
-	$nav = $column->getField( 'nav', 'pagination' );
-	$datas = $column->getDatas();
-
-	//get the class:
-	$class = 'collection ';
-	$class .= $view.' ';
-	$class .= $grid;
-
-	if( $nav == 'autoload' )
-		$class .= ' autoload';
-
-	if( $nav !== 'autoload' || $column->page == 1 )
-		echo '<div class="'.$class.'" '.$datas.'>';
 
 	if( $query->have_posts() && $view !== 'list' ){
 
@@ -45,6 +32,3 @@
 
 
 	}
-
-	if( $nav !== 'autoload' || $column->page == 1 )
-		echo '</div>';
