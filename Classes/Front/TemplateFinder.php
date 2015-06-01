@@ -1,5 +1,5 @@
 <?php
-namespace ChefSections\View;
+namespace ChefSections\Front;
 
 use \ChefSections\Wrappers\Walker;
 use \ChefSections\Wrappers\Column;
@@ -9,9 +9,9 @@ use \Cuisine\Utilities\Sort;
 
 /**
  * The Template class locates templates
- * @package ChefSections\View
+ * @package ChefSections\Front
  */
-class Template {
+class TemplateFinder {
 
 	/**
 	 * Array of files to look for
@@ -51,7 +51,7 @@ class Template {
 	 * Get the template for a column
 	 * 
 	 * @param  \ChefSections\Columns\Column 	$column
-	 * @return \ChefSections\View\Template ( chainable )
+	 * @return \ChefSections\Front\Template ( chainable )
 	 */
 	public function column( $column ){
 
@@ -68,7 +68,7 @@ class Template {
 	 * Get the template for a single collection block
 	 * 
 	 * @param  \ChefSections\Columns\Column 	$column
-	 * @return \ChefSections\View\Template ( chainable )
+	 * @return \ChefSections\Front\Template ( chainable )
 	 */
 	public function block( $column ){
 
@@ -86,7 +86,7 @@ class Template {
 	 * Get the template for a section
 	 * 
 	 * @param  \ChefSections\Sections\Section 	$section
-	 * @return \ChefSections\View\Template ( chainable )
+	 * @return \ChefSections\Front\Template ( chainable )
 	 */
 	public function section( $section ){
 

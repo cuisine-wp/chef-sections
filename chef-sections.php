@@ -116,6 +116,7 @@ if (!class_exists('ChefSections')) {
         		'Classes',
                 'Classes/Columns',
                 'Classes/Sections',
+                'Classes/Front',
                 'Classes/Admin',
                 'Classes/Wrappers'
 			);

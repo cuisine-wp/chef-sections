@@ -19,6 +19,21 @@ class CollectionColumn extends DefaultColumn{
 	 */
 	public $type = 'collection';
 
+	/**
+	 * Current page number
+	 *
+	 * @var int
+	 */
+	public $page = 1;
+
+
+	/**
+	 * Cache queries made for this column
+	 * 
+	 * @var boolean/WP_Query
+	 */
+	private $query = false;
+
 
 	/**
 	 * Add javascripts to the footer, before the template
@@ -49,8 +64,12 @@ class CollectionColumn extends DefaultColumn{
 	 */
 	public function getQuery(){
 
-		$args = array(
+		if( $this->query )
+			return $this->query;
 
+
+		$args = array(
+					'paged'				=> $this->page,
 					'post_type'			=> $this->getField( 'post_type', 'post' ),
 					'posts_per_page'	=> $this->getField( 'posts_per_page', 4 ),
 					'orderby'			=> $this->getField( 'orderby', 'date' ),
@@ -60,8 +79,47 @@ class CollectionColumn extends DefaultColumn{
 			$args['order'] = 'ASC';
 
 
-		return new WP_Query( $args );
 
+		$this->query = new WP_Query( $args );
+		return $this->query;
+	}
+	
+	/**
+	 * Set the page number
+	 * 
+	 * @param integer $num
+	 */
+	public function setPage( $num = 1 ){
+		$this->page = $num;
+	}
+
+	/**
+	 * Get the data attributes for this column
+	 * 
+	 * @return string
+	 */
+	public function getDatas(){
+
+		global $post;
+
+		$post_type = $this->getField( 'post_type', 'post' );
+		$types = $this->getPostTypes();
+		$amount = $this->getField( 'posts_per_page', 4 );
+
+		$msg = 'Geen '.strtolower( $types[ $post_type ] ).' meer gevonden';
+		$msg = apply_filters( 'chef_sections_autoload_message', $msg, $this );
+
+		$html = '';
+
+		$html .= 'data-id="'.$this->id.'" ';
+		$html .= 'data-section_id="'.$this->section_id.'" ';
+		$html .= 'data-page="'.$this->page.'" ';
+		$html .= 'data-type="'.$post_type.'" ';
+		$html .= 'data-amount="'.$amount.'" ';
+		$html .= 'data-post="'.$post->ID.'" ';
+		$html .= 'data-msg="'.$msg.'" ';
+
+		return $html;
 	}
 
 

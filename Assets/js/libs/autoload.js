@@ -13,11 +13,11 @@
 		var defaults = {
 				loaderClass: 'autoload-loader',
 				pageNumber: 1,
-				postType: 'post',
-				template: 'row',
-				postsPerPage: 12,
+				column: '',
+				section: '',
 				message: 'Geen berichten gevonden',
-				wrap: false,
+				wrap: true,
+				postId: 0,
 				beforeLoad: null,
 				afterLoad: null,
 				afterPlacement: null,
@@ -81,11 +81,11 @@
 					self.settings.pageNumber++;
 
 					var data = {
-						action: 'chef_autoload',
-						page_number: this.settings.pageNumber,
-						post_type: this.settings.postType,
-						template: this.settings.template,
-						posts_per_page: this.settings.PostsPerPage,
+						action: 'autoload',
+						page: this.settings.pageNumber,
+						section: this.settings.section,
+						column: this.settings.column,
+						post_id: this.settings.postId,
 						message: this.settings.message,
 						wrap: this.settings.wrap
 					};
@@ -94,7 +94,7 @@
 						self.settings.beforeLoad( self, data );
 				
 					//post with ajax:
-					$.post( ajaxurl, data, function(response) {
+					$.post( Cuisine.ajax, data, function(response) {
 
 						//Handle a 'no more posts' message:
 						if( response === 0 || response === 'message' ){
@@ -117,7 +117,7 @@
 							$( '.'+self.settings.loaderClass ).remove();
 							$( self.element ).append( response );
 
-							if( self.settings.afterPlacemnet !== null )
+							if( self.settings.afterPlacement !== null )
 								self.settings.afterPlacement( self, response );
 
 							self.reset();

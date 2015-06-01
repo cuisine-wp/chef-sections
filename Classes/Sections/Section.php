@@ -181,6 +181,8 @@ class Section {
 				echo '<span class="dashicons dashicons-trash"></span>';
 			echo __( 'Verwijder', 'chefsections' ).'</p>';
 
+			do_action( 'chef_sections_bottom_controls' );
+
 			$this->buildTemplateSnitch();
 
 		echo '</div>';

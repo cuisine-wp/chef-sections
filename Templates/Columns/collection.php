@@ -6,33 +6,38 @@
 	$view = $column->getField( 'view', 'blocks' );
 	$grid = $column->getField( 'grid', 'grid' );
 	$nav = $column->getField( 'nav', 'pagination' );
-	
+	$datas = $column->getDatas();
+
 	//get the class:
 	$class = 'collection ';
 	$class .= $view.' ';
 	$class .= $grid;
 
-	echo '<div class="'.$class.'">';
+	if( $nav == 'autoload' )
+		$class .= ' autoload';
+
+	if( $nav !== 'autoload' || $column->page == 1 )
+		echo '<div class="'.$class.'" '.$datas.'>';
 
 	if( $query->have_posts() && $view !== 'list' ){
 
 		$i = 0;
 		$inRow = 0;
-
+	
 		while( $query->have_posts() ){
 			$query->the_post();
-
+	
 			if( $inRow == 0 && $grid !== 'masonry' )
 				echo '<div class="block-row column-row">';
-
+	
 					get_block_template( $column );
-
+	
 			$i++; $inRow++;
 			if( ( $inRow == $maxRow || $i == $maxPosts ) && $grid !== 'masonry' ){
 				echo '</div>';
 				$inRow = 0;
 			}
-
+	
 		}
 
 	}else if( $query->have_posts() && $view === 'list' ){
@@ -41,4 +46,5 @@
 
 	}
 
-	echo '</div>';
+	if( $nav !== 'autoload' || $column->page == 1 )
+		echo '</div>';

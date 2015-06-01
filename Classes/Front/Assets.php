@@ -1,6 +1,6 @@
 <?php
 
-	namespace ChefSections\Sections;
+	namespace ChefSections\Front;
 
 	use Cuisine\Utilities\Url;
 	use Cuisine\Wrappers\Scripts;
@@ -10,7 +10,7 @@
 		/**
 		 * Assets instance.
 		 *
-		 * @var \ChefSections\Sections
+		 * @var \ChefSections\Front
 		 */
 		private static $instance = null;
 
@@ -27,7 +27,7 @@
 		/**
 		 * Init the Assets classes
 		 *
-		 * @return \ChefSections\Sections
+		 * @return \ChefSections\Front\Assets
 		 */
 		public static function getInstance(){
 
@@ -52,7 +52,7 @@
 	
 				Scripts::register( 'isotope', $libs.'isotope.min.js', false );
 				Scripts::register( 'imagesloaded', $libs.'imagesloaded.min.js', false );
-				Scripts::register( 'autoload', $libs.'autoload.min.js', false );
+				Scripts::register( 'autoload', $libs.'autoload.js', false );
 			
 			});
 		}
@@ -62,4 +62,4 @@
 	}
 
 	if( !is_admin() )
-		\ChefSections\Sections\Assets::getInstance();
+		\ChefSections\Front\Assets::getInstance();

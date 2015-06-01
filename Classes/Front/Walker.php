@@ -1,6 +1,6 @@
 <?php
 
-	namespace ChefSections\Sections;
+	namespace ChefSections\Front;
 
 	use \ChefSections\Sections\SectionsBuilder;
 	use \ChefSections\Wrappers\Template;

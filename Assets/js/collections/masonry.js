@@ -17,7 +17,8 @@ define([
 			itemSelector: '.block',
 			layoutMode: 'masonry',
 			masonry: {
-				gutter: 15
+				gutter: 15,
+				columnWidth: '.block'
 		  	}
 		});
 	
