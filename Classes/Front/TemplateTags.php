@@ -20,7 +20,7 @@ function the_sections(){
 
 /**
  * Get current sections
- * @return string ( html )
+ * @return ChefSections\Front\Walker ( html )
  */
 function get_sections(){
 
@@ -57,7 +57,7 @@ function the_columns( $section ){
  * Get columns in a section 
  *
  * @param  \ChefSections\Sections\Section
- * @return string ( html )
+ * @return ChefSections\Front\Walker ( html )
  */
 function get_columns( $section ){
 
@@ -70,7 +70,7 @@ function get_columns( $section ){
  * Needs to be called inside a loop, and needs column information.
  * 
  * @param  \ChefSections\Columns\Column $column
- * @return string ( html )
+ * @return ChefSections\Front\Walker ( html )
  */
 function get_block_template( $column ){
 

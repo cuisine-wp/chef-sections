@@ -61,17 +61,21 @@
 			$id = $_POST['column'];
 			$section = $_POST['section'];
 
+			//fetch the column
 			$column = Column::collection( $id, $section );
+
+			//set the new page-number:
 			$column->setPage( $_POST['page'] );
 
-			//first, check if there are posts:
+			//then, check if there are posts:
 			$q = $column->getQuery();
 			if( !$q->have_posts() ){
 				
 				echo 'message';
 
 			}else{
-			
+				
+				//if there are posts, load the template:
 				Template::column( $column, $section )->display();
 			
 			}

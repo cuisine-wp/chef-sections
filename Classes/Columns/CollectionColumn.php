@@ -35,9 +35,9 @@ class CollectionColumn extends DefaultColumn{
 	private $query = false;
 
 
-	/*=======================================*/
-	/*=========== Query =====================*/
-
+	/*=============================================================*/
+	/**             Query                                          */
+	/*=============================================================*/
 
 	/**
 	 * Get the query for this collection 
@@ -46,10 +46,12 @@ class CollectionColumn extends DefaultColumn{
 	 */
 	public function getQuery(){
 
+		//return the cached query if it exists:
 		if( $this->query )
 			return $this->query;
 
 
+		//else, create a new query
 		$args = array(
 					'paged'				=> $this->page,
 					'post_type'			=> $this->getField( 'post_type', 'post' ),
@@ -66,20 +68,11 @@ class CollectionColumn extends DefaultColumn{
 		return $this->query;
 	}
 	
-	/**
-	 * Set the page number
-	 * 
-	 * @param integer $num
-	 */
-	public function setPage( $num = 1 ){
-		$this->page = $num;
-	}
 
 
-
-	/*=====
-				TEMPLATE
-	*/
+	/*=============================================================*/
+	/**             Template                                       */
+	/*=============================================================*/
 
 
 	/**
@@ -130,7 +123,6 @@ class CollectionColumn extends DefaultColumn{
 		if( $nav !== 'autoload' || $this->page == 1 )
 			echo '</div>';
 
-
 	}
 
 
@@ -155,13 +147,16 @@ class CollectionColumn extends DefaultColumn{
 		$html .= 'data-id="'.$this->id.'" ';
 		$html .= 'data-section_id="'.$this->section_id.'" ';
 		$html .= 'data-page="'.$this->page.'" ';
-		$html .= 'data-type="'.$post_type.'" ';
-		$html .= 'data-amount="'.$amount.'" ';
 		$html .= 'data-post="'.$post->ID.'" ';
 		$html .= 'data-msg="'.$msg.'" ';
 
 		return $html;
 	}
+
+
+	/*=============================================================*/
+	/**             Backend                                        */
+	/*=============================================================*/
 
 
 	/**
@@ -382,6 +377,21 @@ class CollectionColumn extends DefaultColumn{
 		$fields = apply_filters( 'chef_sections_collection_side_fields', $fields );
 		return $fields;
 
+	}
+
+
+	/*=============================================================*/
+	/**             Getters, Setters                               */
+	/*=============================================================*/
+
+
+	/**
+	 * Set the page number
+	 * 
+	 * @param integer $num
+	 */
+	public function setPage( $num = 1 ){
+		$this->page = $num;
 	}
 
 
