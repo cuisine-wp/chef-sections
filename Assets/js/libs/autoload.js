@@ -19,9 +19,10 @@
 				message: 'Geen berichten gevonden',
 				wrap: true,
 				postId: 0,
-				beforeLoad: null,
-				afterLoad: null,
-				afterPlacement: null,
+				onTrigger: null,
+				onLoaded: null,
+				onComplete: null,
+				onAllComplete: null
 		};
 
 		// The actual plugin constructor
@@ -92,8 +93,8 @@
 						wrap: this.settings.wrap
 					};
 
-					if( self.settings.beforeLoad !== null )
-						self.settings.beforeLoad( self, data );
+					if( self.settings.onTrigger !== null )
+						self.settings.onTrigger( self, data );
 				
 					//post with ajax:
 					$.post( Cuisine.ajax, data, function(response) {
@@ -111,16 +112,19 @@
 
 							$( self.element ).append( msg );
 
+							if( self.settings.onAllComplete !== null )
+								self.settings.onAllComplete( self, response );
+
 						}else{
 
-							if( self.settings.afterLoad !== null )
-								self.settings.afterLoad( self, response );
+							if( self.settings.onLoaded !== null )
+								self.settings.onLoaded( self, response );
 
 							$( '.'+self.settings.loaderClass ).remove();
 							$( self.element ).append( response );
 
-							if( self.settings.afterPlacement !== null )
-								self.settings.afterPlacement( self, response );
+							if( self.settings.onComplete !== null )
+								self.settings.onComplete( self, response );
 
 							self.reset();
 						}
@@ -152,6 +156,16 @@
 						html += '</div>';
 
 						$( this.element ).append( html );
+
+						if( $( this.element ).hasClass( 'masonry' ) ){
+
+							$( '.'+this.settings.loaderClass ).css({
+								'position': 'absolute',
+								'bottom': '-30px',
+								'left': '40%'
+							});
+						}
+
 
 						this.calculateTrigger();
 					}

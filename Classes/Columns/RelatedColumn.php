@@ -16,6 +16,6 @@ class RelatedColumn extends CollectionColumn{
 	 */
 	public $type = 'related';
 
-
+	
 
 }

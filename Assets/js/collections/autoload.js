@@ -4,7 +4,7 @@ define([
 	'autoload',
 	'isotope',
 
-], function( $, Autoload ){
+], function( $, Autoload, Isotope ){
 
 	var loader = $('#autoloader').clone();
 	$('#autoloader').remove();
@@ -17,12 +17,13 @@ define([
 		section: $('.autoload').data('section_id'),
 		pageNumber: $( '.autoload' ).data('page'),
 		loaderContent: loader[0].outerHTML,
+
 		onComplete: function(){
 
 			var page = parseInt( $( '.autoload' ).data('page') ) + 1;
 			$( '.autoload' ).data('page', page );
 
-			if( $( '.autoload' ).hasClass( '.masonry' ) ){
+			if( $( '.autoload' ).hasClass( 'masonry' ) ){
 
 				//recalculate masonry:
 				var iso = new Isotope( '.masonry', {

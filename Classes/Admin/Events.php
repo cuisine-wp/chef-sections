@@ -66,6 +66,8 @@
 				wp_enqueue_style( 'sections', $url.'/css/admin.css' );
 				
 			});
+
+			
 		}
 
 
@@ -74,6 +76,21 @@
 		 * @return [type] [description]
 		 */
 		private function adminEvents(){
+
+			add_action( 'admin_init', function(){
+
+				//remove editors from the post-types:
+				$post_types = array( 'page' );
+				$post_types = apply_filters( 'chef_sections_post_types', $post_types );
+
+				foreach( $post_types as $type ){
+
+					remove_post_type_support( $type ,'editor' );
+				
+				}				
+
+			});
+
 
 			add_action( 'edit_form_after_editor', function(){
 
