@@ -140,7 +140,7 @@ class TemplateFinder {
 	 */
 	private function getDefault(){
 
-		$base = Url::path( 'plugin', 'chef-sections/templates', true );
+		$base = Url::path( 'plugin', 'chef-sections/Templates', true );
 
 		if( $this->type == 'column' ){
 

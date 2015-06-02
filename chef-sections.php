@@ -113,7 +113,6 @@ if (!class_exists('ChefSections')) {
 
 			//auto-loads all .php files in these directories.
         	$includes = array( 
-        		'Classes',
                 'Classes/Columns',
                 'Classes/Sections',
                 'Classes/Front',
@@ -122,6 +121,7 @@ if (!class_exists('ChefSections')) {
 			);
 
         	$includes = apply_filters( 'chef_sections_autoload_dirs', $includes );
+
 
 			foreach( $includes as $inc ){
 				
