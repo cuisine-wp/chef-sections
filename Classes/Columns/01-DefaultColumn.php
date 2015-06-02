@@ -159,6 +159,7 @@ class DefaultColumn {
 	public function saveProperties(){
 
 		$props = $_POST['properties'];
+
 		$saved = update_post_meta( 
 			$this->post_id, 
 			'_column_props_'.$this->fullId, 
@@ -264,6 +265,10 @@ class DefaultColumn {
 	 * @return string (html, echoed )
 	 */
 	public function saveButton(){
+
+		//get the properties of this column:
+		if( !isset( $this->properties['buttonText'] ) )
+			$this->getProperties();
 
 		echo '<a class="lightbox-modal-close" href="#">';
 			echo '<span class="media-modal-icon"></span>';

@@ -170,8 +170,6 @@
 			var self = this;
 			e.preventDefault();
 
-			console.log( 'test' );
-
 			var properties = {};
 			var inputs = self.$('.lightbox .field-wrapper .field, .lightbox .field-wrapper .subfield:checked');
 			//var inputs = self.$('.lightbox').serializeArray();
@@ -194,51 +192,63 @@
 
 
 			//add multi-dimensional arrays:
-			//if( self.$('.multi').length > 0 ){
-			//	properties = self.getMultiFields( properties );
-			//}
-
+			if( self.$('.multi').length > 0 ){
+			
+				properties = self.getMultiFields( properties );
+			
+			}
 
 			self.saveProperties( properties );
 
 		},
 
-
+		/**
+		 * Save multidimensional arrays of fields
+		 *  
+		 * @param  object properties
+		 * @return multidimensional object
+		 */
 		getMultiFields: function( properties ){
 
 			var self = this;
 			var inputs = self.$('.lightbox .field-wrapper .multi');
-			var ret = {};
-/*
-			retloop: for( var i = 0; i <= inputs.length; i++ ){
 
-				var input = jQuery( inputs[ i ] );
+			retloop: for( var a = 0; a <= inputs.length; a++ ){
+
+				var input = jQuery( inputs[ a ] );
 				var val = input.val();
 				var name = input.attr('name');
 
-       			var parts = name.split('[');       
-       			var last = ret;
-		
-        		for (var i in parts) {
-        		    var part = parts[i];
-        		    if (part.substr(-1) == ']') {
-        		        part = part.substr(0, part.length - 1);
-        		    }
-		
-        		    if (i == parts.length - 1) {
-        		        last[part] = val;
-        		        continue retloop;
-        		    } else if (!last.hasOwnProperty(part)) {
-        		        last[part] = {};
-        		    }
-        		    last = last[part];
-        		}
-       			console.log( last );
+				if( name !== undefined ){
 
+       				var parts = name.split('[');   
+       				var last = properties;
+			
+        			for (var i in parts) {
+	
+        			    var part = parts[i];
+        			    if (part.substr(-1) == ']') {
+        			        part = part.substr(0, part.length - 1);
+        			    }
+			
+        			    if (i == parts.length - 1) {
+
+        			    	if( last[part] === undefined )
+        			    		last[part] = {} 
+
+        			        last[part] = val;
+        			        continue retloop;
+
+        			    } else if (!last.hasOwnProperty(part)) {
+        			        last[part] = {}
+
+        			    }
+        			    
+        			    last = last[part];
+        			
+        			}
+       			}
 			}
-*/
-			console.log( ret );
-
 
 			return properties;
 		},
