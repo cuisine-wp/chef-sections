@@ -81,11 +81,13 @@
 
 				//remove editors from the post-types:
 				$post_types = array( 'page' );
+				$include = apply_filters( 'chef_sections_remove_editor', $post_types );
 				$post_types = apply_filters( 'chef_sections_post_types', $post_types );
 
 				foreach( $post_types as $type ){
 
-					remove_post_type_support( $type ,'editor' );
+					if( in_array( $type, $include ) )
+						remove_post_type_support( $type ,'editor' );
 				
 				}				
 

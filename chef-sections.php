@@ -36,7 +36,7 @@ if (!class_exists('ChefSections')) {
          *
          * @var float
          */
-        const VERSION = '1.4';
+        const VERSION = '1.2';
 
 
         /**

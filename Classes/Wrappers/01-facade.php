@@ -4,13 +4,6 @@ namespace ChefSections\Wrappers;
 abstract class Wrapper {
 
     /**
-     * The Application instance.
-     *
-     * @var \Cuisine\Core\Application
-     */
-    protected static $app;
-
-    /**
      * The resolved object instances.
      *
      * @var array
