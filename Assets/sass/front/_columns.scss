@@ -1,0 +1,29 @@
+.column-row{
+	@include flex-row();
+	padding:30px 0;
+
+	.column{
+		@include flex( 1 );
+		margin-right:30px;
+
+		img{
+			max-width:100%;
+		}
+
+		&:last-of-type{
+			margin-right:0;
+		}
+	}
+
+	&.sidebar-right{
+		.column:first-of-type{
+			@include flex( 2 );
+		}
+	}
+
+	&.sidebar-left{
+		.column:last-of-type{
+			@include flex( 2 );
+		}
+	}
+}

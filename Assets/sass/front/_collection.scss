@@ -1,0 +1,62 @@
+/**
+ * Isotope styling:
+ */
+
+.overview.collection{
+
+	@include row();
+	display:block;
+	width:100%;
+
+	.block{
+		@include box-sizing( border-box );
+		@include omega();
+		width:32%;
+
+		&.medium{
+			@include omega();
+			width:65%;
+		}
+
+		&.large{
+			@include omega();
+			width:100%;
+		}
+
+
+	}
+
+	.block-row{
+		width:100%;
+		margin-bottom:0;
+		padding-bottom:0;
+		@include flex-row();
+
+		.block{
+			@include flex( 1 );
+			margin-right:30px;
+
+			&:last-of-type{
+				margin-right:0;
+			}
+		}
+	}
+
+	.autoload-msg{
+		
+		@include font-size( 22px );
+		font-family:$head-stack;
+		font-weight:bold;
+		margin:45px 0 0 0;
+		color:rgba( 0, 0, 0, .5 );
+		text-align:center;
+
+	}
+
+	&.masonry .autoload-msg{
+		position:absolute;
+		width:100%;
+	}
+
+
+}
