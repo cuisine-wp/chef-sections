@@ -2,6 +2,7 @@
 namespace ChefSections\Columns;
 
 use Cuisine\Utilities\Url;
+use Cuisine\Utilities\Sort;
 use Cuisine\Wrappers\Field;
 use ChefSections\Wrappers\Column;
 use ChefSections\Wrappers\Template;
@@ -220,7 +221,7 @@ class DefaultColumn {
 
 		//create key - label pairs for this dropdown:
 		$keys = array_keys( Column::getAvailableTypes() );
-		$labels = array_column( Column::getAvailableTypes(), 'name' );
+		$labels = Sort::pluck( Column::getAvailableTypes(), 'name' );
 
 		$types = array_combine( $keys, $labels );
 
