@@ -3,6 +3,7 @@ namespace ChefSections\Columns;
 
 use Cuisine\Wrappers\Field;
 use Cuisine\Wrappers\Scripts;
+use ChefSections\Wrappers\Template;
 use Cuisine\Utilities\Url;
 use WP_Query;
 
@@ -120,9 +121,14 @@ class CollectionColumn extends DefaultColumn{
 			Scripts::register( 'autoload_blocks', $url.'autoload', true );
 
 	
-		if( $nav !== 'autoload' || $this->page == 1 )
-			echo '</div>';
+		if( $nav !== 'autoload' || $this->page == 1 ){
 
+			if( $nav === 'autoload' )
+				Template::element( 'loader' )->display();
+
+			//closing div:
+			echo '</div>';
+		}
 	}
 
 

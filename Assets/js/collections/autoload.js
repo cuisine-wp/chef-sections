@@ -6,6 +6,9 @@ define([
 
 ], function( $, Autoload ){
 
+	var loader = $('#autoloader').clone();
+	$('#autoloader').remove();
+
 	$('.autoload').AutoLoad({
 
 		message: $('.autoload').data('msg'),
@@ -13,7 +16,7 @@ define([
 		column: $('.autoload').data('id'),
 		section: $('.autoload').data('section_id'),
 		pageNumber: $( '.autoload' ).data('page'),
-		loaderContent: '<div class="spinner"><div class="mask"><div class="line"></div></div></div>',
+		loaderContent: loader[0].outerHTML,
 		onComplete: function(){
 
 			var page = parseInt( $( '.autoload' ).data('page') ) + 1;
@@ -35,6 +38,5 @@ define([
 		}
 
 	});
-
 
 });

@@ -51,7 +51,7 @@ class TemplateFinder {
 	 * Get the template for a column
 	 * 
 	 * @param  \ChefSections\Columns\Column 	$column
-	 * @return \ChefSections\Front\Template ( chainable )
+	 * @return \ChefSections\Front\TemplateFinder ( chainable )
 	 */
 	public function column( $column ){
 
@@ -68,7 +68,7 @@ class TemplateFinder {
 	 * Get the template for a single collection block
 	 * 
 	 * @param  \ChefSections\Columns\Column 	$column
-	 * @return \ChefSections\Front\Template ( chainable )
+	 * @return \ChefSections\Front\TemplateFinder ( chainable )
 	 */
 	public function block( $column ){
 
@@ -86,7 +86,7 @@ class TemplateFinder {
 	 * Get the template for a section
 	 * 
 	 * @param  \ChefSections\Sections\Section 	$section
-	 * @return \ChefSections\Front\Template ( chainable )
+	 * @return \ChefSections\Front\TemplateFinder ( chainable )
 	 */
 	public function section( $section ){
 
@@ -98,6 +98,23 @@ class TemplateFinder {
 		return $this;
 	}
 
+
+	/**
+	 * Get a template for a regular element
+	 * 
+	 * @param  string $name name of the template
+	 * @return ChefSections\Front\TemplateFinderFinder
+	 */
+	public function element( $name ){
+
+		$this->type = 'element';
+		$this->obj = $name;
+
+		$this->getFiles();
+
+		return $this;
+
+	}
 
 
 
@@ -160,6 +177,10 @@ class TemplateFinder {
 	
 		}else if( $this->type == 'block' ){
 			$default = $base.'Columns/collection-block.php';
+		
+		}else if( $this->type == 'element' ){
+			$default = $base.'Elements/'.$this->obj.'.php';
+
 		}
 
 		return $default;
@@ -187,6 +208,7 @@ class TemplateFinder {
 	 * @return array
 	 */
 	public function getFiles( $template_prefix = false ){
+
 
 		switch( $this->type ){
 
@@ -230,6 +252,15 @@ class TemplateFinder {
 				$array = array(
 							$base.$template_prefix.'-'.get_post_type(),
 							$base.get_post_type()
+				);
+			break;
+
+			case 'element':
+
+				$base = 'elements/';
+
+				$array = array(
+							$base.$this->obj
 				);
 
 			break;

@@ -1,5 +1,7 @@
 <?php
 
+	use ChefSections\Wrappers\Template;
+
 	$query = $column->getQuery();
 	$maxRow = $column->getField( 'posts_per_row' );
 	$maxPosts = $column->getField( 'posts_per_page' );

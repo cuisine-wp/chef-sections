@@ -12,6 +12,7 @@
 		var pluginName = "AutoLoad";
 		var defaults = {
 				loaderClass: 'autoload-loader',
+				loaderContent: '',
 				pageNumber: 1,
 				column: '',
 				section: '',
@@ -66,6 +67,7 @@
 							if( scrollPos >= self.triggerY && self.updating === false ){
 							
 								self.updating = true;
+								self.updateLoader();
 								self.autoload();
 	
 							}
@@ -146,6 +148,7 @@
 
 						var html = ''
 						html += '<div class="'+this.settings.loaderClass+'">';
+						html += this.settings.loaderContent;
 						html += '</div>';
 
 						$( this.element ).append( html );
@@ -153,6 +156,15 @@
 						this.calculateTrigger();
 					}
 
+				},
+
+				updateLoader: function(){
+
+					if( this.updating ){
+						$('.'+this.settings.loaderClass).addClass( 'visible' );
+					}else{
+						$('.'+this.settings.loaderClass).removeClass( 'visible');
+					}
 				},
 
 				calculateTrigger: function(){
