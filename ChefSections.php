@@ -59,7 +59,51 @@ if (!class_exists('ChefSections')) {
 
             // Load plugin.
             $this->load();
+        
         }
+
+
+        /**
+         * Load the chef sections classes.
+         *
+         * @return void
+         */
+        private function load(){
+
+            //auto-loads all .php files in these directories.
+            $includes = array(
+                'Classes/Wrappers',
+                'Classes/Columns',
+                'Classes/Sections',
+                'Classes/Admin',
+                'Classes/Front'
+            );
+
+            $includes = apply_filters( 'chef_sections_autoload_dirs', $includes );
+
+
+            foreach( $includes as $inc ){
+                
+                $root = static::getPluginPath();
+                $files = glob( $root.$inc.'/*.php' );
+
+                foreach ( $files as $file ){
+
+                    require_once( $file );
+
+                }
+            }
+
+            do_action( 'chef_sections_loaded' );
+
+        }
+
+
+
+
+        /*=============================================================*/
+        /**             Getters & Setters                              */
+        /*=============================================================*/
 
 
         /**
@@ -111,41 +155,6 @@ if (!class_exists('ChefSections')) {
             return 'plugins';
         }
 
-
-        /**
-         * Load the chef sections classes.
-         *
-         * @return void
-         */
-        private function load(){
-
-			//auto-loads all .php files in these directories.
-        	$includes = array(
-                'Classes/Wrappers',
-                'Classes/Columns',
-                'Classes/Sections',
-                'Classes/Admin',
-                'Classes/Front'
-			);
-
-        	$includes = apply_filters( 'chef_sections_autoload_dirs', $includes );
-
-
-			foreach( $includes as $inc ){
-				
-				$root = static::getPluginPath();
-				$files = glob( $root.$inc.'/*.php' );
-
-				foreach ( $files as $file ){
-
-					require_once( $file );
-
-        	    }
-        	}
-
-            do_action( 'chef_sections_loaded' );
-
-        }
 
         /**
          * Get the path for this plugin
