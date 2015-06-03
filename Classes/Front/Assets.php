@@ -4,7 +4,7 @@
 
 	use ChefSections\Wrappers\StaticInstance;
 	use Cuisine\Utilities\Url;
-	use Cuisine\Wrappers\Scripts;
+	use Cuisine\Wrappers\Script;
 	use Cuisine\Wrappers\Sass;
 
 
@@ -33,9 +33,9 @@
 				//scripts:
 				$url = Url::plugin( 'chef-sections', true ).'Assets/js/libs/';
 				
-				Scripts::register( 'isotope', $url.'isotope.min', false );
-				Scripts::register( 'imagesloaded', $url.'imagesloaded.min', false );
-				Scripts::register( 'autoload', $url.'autoload', false );
+				Script::register( 'isotope', $url.'isotope.min', false );
+				Script::register( 'imagesloaded', $url.'imagesloaded.min', false );
+				Script::register( 'autoload', $url.'autoload', false );
 
 				//sass:
 				$url = 'chef-sections/Assets/sass/front/';

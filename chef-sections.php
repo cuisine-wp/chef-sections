@@ -13,6 +13,10 @@
  * @author Chef du Web
  */
 
+namespace ChefSections;
+
+use Cuisine\Wrappers\StaticInstance;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 defined('DS') ? DS : define('DS', DIRECTORY_SEPARATOR);
 
@@ -22,14 +26,15 @@ defined('DS') ? DS : define('DS', DIRECTORY_SEPARATOR);
  */
 if (!class_exists('ChefSections')) {
 
-    class ChefSections {
-    
+
+    class ChefSections{
+
         /**
-         * Sections bootstrap instance.
+         * Static bootstrapped ChefSections instance.
          *
-         * @var \ChefSections
+         * @var \ChefSections\ChefSections
          */
-        private static $instance = null;
+        public static $instance = null;
 
 
         /**
@@ -47,6 +52,7 @@ if (!class_exists('ChefSections')) {
          */
         private static $dirName = '';
 
+
         private function __construct(){
 
             static::$dirName = static::setDirName(__DIR__);
@@ -55,18 +61,18 @@ if (!class_exists('ChefSections')) {
             $this->load();
         }
 
+
         /**
-         * Init the framework classes
+         * Init the ChefSections Class
          *
-         * @return \ChefSections
+         * @return \ChefSections\ChefSections
          */
         public static function getInstance(){
-
-            if ( is_null( static::$instance ) ){
-                static::$instance = new static();
-            }
-            return static::$instance;
+            
+            return static::$instance = new static();
+            
         }
+
 
         /**
          * Set the plugin directory property. This property
@@ -105,6 +111,7 @@ if (!class_exists('ChefSections')) {
             return 'plugins';
         }
 
+
         /**
          * Load the chef sections classes.
          *
@@ -140,7 +147,11 @@ if (!class_exists('ChefSections')) {
 
         }
 
-
+        /**
+         * Get the path for this plugin
+         * 
+         * @return string
+         */
         public static function getPluginPath(){
         	return __DIR__.DS;
         }
