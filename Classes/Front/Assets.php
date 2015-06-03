@@ -2,19 +2,13 @@
 
 	namespace ChefSections\Front;
 
+	use ChefSections\Wrappers\StaticInstance;
 	use Cuisine\Utilities\Url;
 	use Cuisine\Wrappers\Scripts;
 	use Cuisine\Wrappers\Sass;
 
 
-	class Assets{
-
-		/**
-		 * Assets instance.
-		 *
-		 * @var \ChefSections\Front
-		 */
-		private static $instance = null;
+	class Assets extends StaticInstance{
 
 
 		/**
@@ -24,19 +18,6 @@
 
 			$this->enqueues();
 
-		}
-
-		/**
-		 * Init the Assets classes
-		 *
-		 * @return \ChefSections\Front\Assets
-		 */
-		public static function getInstance(){
-
-		    if ( is_null( static::$instance ) ){
-		        static::$instance = new static();
-		    }
-		    return static::$instance;
 		}
 
 
@@ -50,20 +31,19 @@
 			add_action( 'init', function(){
 
 				//scripts:
-				$url = Url::plugin( 'chef-sections', true ).'Assets/js/';
-				$libs = $url.'libs/';
+				$url = Url::plugin( 'chef-sections', true ).'Assets/js/libs/';
 				
-				Scripts::register( 'isotope', $libs.'isotope.min.js', false );
-				Scripts::register( 'imagesloaded', $libs.'imagesloaded.min.js', false );
-				Scripts::register( 'autoload', $libs.'autoload.js', false );
+				Scripts::register( 'isotope', $url.'isotope.min', false );
+				Scripts::register( 'imagesloaded', $url.'imagesloaded.min', false );
+				Scripts::register( 'autoload', $url.'autoload', false );
 
 				//sass:
 				$url = 'chef-sections/Assets/sass/front/';
 				
-				Sass::register( 'columns', $url.'_columns.scss', true );
-				Sass::register( 'collection', $url.'_collection.scss', true );
-				Sass::register( 'loader', $url.'_loader.scss', true );
-			
+				Sass::register( 'columns', $url.'_columns.scss', false );
+				Sass::register( 'collection', $url.'_collection.scss', false );
+				Sass::register( 'loader', $url.'_loader.scss', false );
+				
 			});
 		}
 

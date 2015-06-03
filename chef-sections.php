@@ -18,7 +18,7 @@ defined('DS') ? DS : define('DS', DIRECTORY_SEPARATOR);
 
 
 /**
- * Main class that bootstraps the framework.
+ * Main class that bootstraps Chef Sections.
  */
 if (!class_exists('ChefSections')) {
 
@@ -30,6 +30,7 @@ if (!class_exists('ChefSections')) {
          * @var \ChefSections
          */
         private static $instance = null;
+
 
         /**
          * Sections version.
@@ -112,12 +113,12 @@ if (!class_exists('ChefSections')) {
         private function load(){
 
 			//auto-loads all .php files in these directories.
-        	$includes = array( 
+        	$includes = array(
+                'Classes/Wrappers',
                 'Classes/Columns',
                 'Classes/Sections',
-                'Classes/Front',
                 'Classes/Admin',
-                'Classes/Wrappers'
+                'Classes/Front'
 			);
 
         	$includes = apply_filters( 'chef_sections_autoload_dirs', $includes );
@@ -137,19 +138,6 @@ if (!class_exists('ChefSections')) {
 
             do_action( 'chef_sections_loaded' );
 
-        }
-
-
-        /**
-         * Set all admin assets
-         * 
-         * @return void
-         */
-        function admin_assets(){
-
-           // wp_enqueue_style( 'cuisine', plugins_url( 'Assets/css/admin.css', __FILE__ ) );
-            //wp_enqueue_script( 'FieldMedia', admin_url( 'Assets/js/MediaField.js', __FILE__ ) );
-        
         }
 
 

@@ -2,41 +2,21 @@
 
 	namespace ChefSections\Admin;
 
-	use \ChefSections\Wrappers\SectionsBuilder;
-	use \ChefSections\Wrappers\Column;
-	use \stdClass;
+	use ChefSections\Wrappers\AjaxInstance;
+	use ChefSections\Wrappers\SectionsBuilder;
+	use ChefSections\Wrappers\Column;
 
-	class Ajax{
-
-		/**
-		 * Sections bootstrap instance.
-		 *
-		 * @var \ChefSections
-		 */
-		private static $instance = null;
-
+	class Ajax extends AjaxInstance{
 
 		/**
 		 * Init admin events & vars
 		 */
 		function __construct(){
 
+
 			$this->addSectionEvents();
 			$this->addColumnEvents();
 
-		}
-
-		/**gatherSections
-		 * Init the framework classes
-		 *
-		 * @return \ChefSections
-		 */
-		public static function getInstance(){
-
-		    if ( is_null( static::$instance ) ){
-		        static::$instance = new static();
-		    }
-		    return static::$instance;
 		}
 
 
@@ -130,24 +110,6 @@
 			});
 
 		}
-
-
-
-		/**
-		 * WordPress doesn't keep the post-global around, so we do it this way
-		 *
-		 * @return void
-		 */
-		private function setPostGlobal(){
-			
-			global $post;
-			if( !isset( $post ) ){
-				$GLOBALS['post'] = new stdClass();
-				$GLOBALS['post']->ID = $_POST['post_id'];
-
-			} 
-		}
-
 
 	}
 
