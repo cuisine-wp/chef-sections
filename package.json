@@ -4,10 +4,10 @@
   "description": "Package for Chef Sections plugin",
   "author": "Luc Princen @ Chef du Web <luc@chefduweb.nl>",
   "private": true,
-  "repository" :
-      { "type" : "git"
-      , "url" : "http://bitbucket.org/chefduweb/chef-sections.git"
-      },
+  "repository" : { 
+        "type" : "git",
+        "url" : "http://bitbucket.org/chefduweb/chef-sections.git"
+  },
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-contrib-cssmin":"0.12.3",

@@ -33,7 +33,7 @@ class DefaultColumn {
 	 * 
 	 * @var Int
 	 */
-	private $post_id;
+	public $post_id;
 
 
 	/**
