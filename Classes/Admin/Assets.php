@@ -38,6 +38,7 @@
 					$url.'/js/Column.js', 
 					array( 'backbone', 'media-editor' ) 
 				);
+
 				
 				wp_enqueue_style( 'sections', $url.'/css/admin.css' );
 				

@@ -5,6 +5,7 @@
 	use ChefSections\Wrappers\AjaxInstance;
 	use ChefSections\Wrappers\SectionsBuilder;
 	use ChefSections\Wrappers\Column;
+	use Cuisine\Wrappers\PostType;
 
 	class Ajax extends AjaxInstance{
 
@@ -75,7 +76,7 @@
 		/**
 		 * Alle ajax events for columns on the backend 
 		 *
-		 * return string, echoed
+		 * @return string, echoed
 		 */
 		private function addColumnEvents(){
 
@@ -110,7 +111,6 @@
 			});
 
 		}
-
 	}
 
 

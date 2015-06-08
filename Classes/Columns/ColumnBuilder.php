@@ -94,20 +94,6 @@ class ColumnBuilder {
 	}
 
 
-	/**
-	 * Return a Related Column instance.
-	 *
-	 * @param int $id The ID for this column.
-	 * @param array $extras Extra column properties.
-	 * @return \ChefSections\Columns\RelatedColumn
-	 */
-	public function related( $id, $section_id, array $properties = array() ){
-
-	    return $this->make( 'ChefSections\\Columns\\RelatedColumn', $id, $section_id, $properties );
-
-	}
-
-
 
 	/**
 	 * Return a Socials-Column instance.
