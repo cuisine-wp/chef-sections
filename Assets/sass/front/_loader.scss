@@ -12,7 +12,7 @@
 .loader > div {
 	width: 18px;
 	height: 18px;
-	background-color: darken( $aqua, 20 );
+	background-color: rgba(0,0,0,.2);
 	border-radius: 100%;
 	display: inline-block;
 	-webkit-animation: bouncedelay 1.4s infinite ease-in-out;
