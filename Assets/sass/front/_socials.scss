@@ -1,0 +1,32 @@
+.socials .social{
+
+	width:44px;
+	height:44px;
+	font-size:rem( 24px );
+	padding-top:8px;
+	text-align:center;
+	color:#fff;
+	display:inline-block;
+	background:#3b539b;
+
+	i{
+		color:#fff;
+	}
+
+	&.tw{
+		background:#00c2f5;
+	}
+
+	&.pin{
+		background:#ff001d;
+	}
+
+	&.in{
+		background:#0080c9;
+	}
+
+	&.gp{
+		background:#d62020;
+	}
+
+}

@@ -40,9 +40,10 @@
 				//sass:
 				$url = 'chef-sections/Assets/sass/front/';
 				
-				Sass::register( 'columns', $url.'_columns.scss', false );
-				Sass::register( 'collection', $url.'_collection.scss', false );
-				Sass::register( 'loader', $url.'_loader.scss', false );
+				Sass::register( 'columns', $url.'_columns', false );
+				Sass::register( 'collection', $url.'_collection', false );
+				Sass::register( 'loader', $url.'_loader', false );
+				Sass::register('socials', $url.'_socials', false );
 				
 			});
 		}
@@ -51,5 +52,4 @@
 
 	}
 
-	if( !is_admin() )
-		\ChefSections\Front\Assets::getInstance();
+	\ChefSections\Front\Assets::getInstance();
