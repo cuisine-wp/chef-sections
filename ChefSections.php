@@ -95,7 +95,7 @@ if (!class_exists('ChefSections')) {
 
                 }
             }
-
+            
             do_action( 'chef_sections_loaded' );
 
         }

@@ -179,9 +179,17 @@
 
 				var input = jQuery( inputs[ i ] );
 
-				if( input.val() !== undefined && input.attr( 'name' ) !== undefined )
-					properties[ input.attr( 'name' ) ] = input.val();
+				if( input.val() !== undefined && input.attr( 'name' ) !== undefined ){
 
+					var value = input.val();
+
+					if( input.hasClass( 'type-checkbox' ) && input.is(':checked') === false )
+						value = 'false';
+
+					properties[ input.attr( 'name' ) ] = value;
+
+
+				}
 			}
 
 
@@ -199,7 +207,6 @@
 			}
 
 			self.saveProperties( properties );
-
 		},
 
 		/**
