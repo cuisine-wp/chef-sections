@@ -145,6 +145,16 @@
 
 				$.post( ajaxurl, data, function( response ){
 				
+					var i = 0;
+					jQuery( '.section-wrapper').each( function(){
+
+						var field = jQuery( this ).find( '.section-position' );
+						var _val = field.val();
+						field.val( i );
+						i++;
+						
+					});
+
 				});
 
 			}

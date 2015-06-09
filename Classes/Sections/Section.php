@@ -294,7 +294,8 @@ class Section {
 		$position = Field::hidden(
 			$prefix.'[position]',
 			array(
-				'defaultValue' => $this->position
+				'defaultValue' => $this->position,
+				'class' => array( 'field', 'input-field', 'hidden-field', 'section-position' )
 			)
 		);
 

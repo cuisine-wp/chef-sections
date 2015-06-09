@@ -43,7 +43,7 @@
 				Sass::register( 'columns', $url.'_columns', false );
 				Sass::register( 'collection', $url.'_collection', false );
 				Sass::register( 'loader', $url.'_loader', false );
-				Sass::register('socials', $url.'_socials', false );
+				Sass::register( 'socials', $url.'_socials', false );
 				
 			});
 		}
