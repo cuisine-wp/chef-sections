@@ -171,9 +171,7 @@
 			e.preventDefault();
 
 			var properties = {};
-			var inputs = self.$('.lightbox .field-wrapper .field, .lightbox .field-wrapper .subfield:checked');
-			//var inputs = self.$('.lightbox').serializeArray();
-			
+			var inputs = self.$('.lightbox .field-wrapper .field, .lightbox .field-wrapper .subfield:checked');			
 
 			for( var i = 0; i <= inputs.length; i++ ){
 
@@ -188,10 +186,8 @@
 
 					properties[ input.attr( 'name' ) ] = value;
 
-
 				}
 			}
-
 
 			//add the editor content
 			if( self.$( '.lightbox .editor' ).length > 0 ){
@@ -287,9 +283,6 @@
 
 			jQuery.post( ajaxurl, data, function( response ){
 
-				//console.log( 'response: '+response );
-				//console.log( self.$el );
-				//error handeling
 				self.closeLightbox();
 
 				self.$el.replaceWith( response );
