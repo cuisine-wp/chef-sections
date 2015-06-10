@@ -47,9 +47,6 @@
 				
 			});
 		}
-
-
-
 	}
 
 	\ChefSections\Front\Assets::getInstance();
