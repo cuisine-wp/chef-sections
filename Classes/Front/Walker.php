@@ -20,8 +20,11 @@
 
 			foreach( $this->sections as $section ){
 
+				$section->beforeTemplate();
+
 				Template::section( $section )->display();
 
+				$section->afterTemplate();
 			}
 
 
