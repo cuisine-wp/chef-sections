@@ -217,7 +217,7 @@ class TemplateFinder {
 				$base = 'views/sections/';
 
 				if( $template_prefix )
-					$base .= $section_template.'-';
+					$base .= $template_prefix.'-';
 				
 
 				$array = array(

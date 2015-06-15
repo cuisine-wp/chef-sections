@@ -188,4 +188,4 @@ add_action('cuisine_loaded', function(){
 
 	ChefSections::getInstance();
 
-});
+}, 0, 200 );

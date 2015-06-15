@@ -161,7 +161,7 @@ class Section {
 
 			}
 
-			echo '<span class="dashicons dashicons-randomize pin"></span>';
+			echo '<span class="dashicons dashicons-sort pin"></span>';
 
 		echo '</div>';
 	

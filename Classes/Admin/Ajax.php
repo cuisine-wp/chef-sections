@@ -82,7 +82,7 @@
 
 			add_action( 'wp_ajax_saveColumnType', function(){
 
-				$this->setPostGlobal();
+				parent::setPostGlobal();
 
 				Column::saveType();
 				die();
