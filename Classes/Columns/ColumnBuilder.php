@@ -100,13 +100,28 @@ class ColumnBuilder {
 	 *
 	 * @param int $id The ID for this column.
 	 * @param array $extras Extra column properties.
-	 * @return \ChefSections\Columns\RelatedColumn
+	 * @return \ChefSections\Columns\SocialsColumn
 	 */
 	public function socials( $id, $section_id, array $properties = array() ){
 
 	    return $this->make( 'ChefSections\\Columns\\SocialsColumn', $id, $section_id, $properties );
 
 	}
+
+
+	/**
+	 * Return an empty column instance
+	 *
+	 * @param int $id The ID for this column.
+	 * @param array $extras Extra column properties.
+	 * @return \ChefSections\Columns\EmptyColumn
+	 */
+	public function empty( $id, $section_id, array $properties = array() ){
+
+	    return $this->make( 'ChefSections\\Columns\\EmptyColumn', $id, $section_id, $properties );
+
+	}
+
 
 	/**
 	 * If a column doesn't exist, try to locate it.

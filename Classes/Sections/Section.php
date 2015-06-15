@@ -102,6 +102,32 @@ class Section {
 
 	}
 	
+	/*=============================================================*/
+	/**             Template                                       */
+	/*=============================================================*/
+
+	/**
+	 * This function runs just before the template
+	 * 
+	 * @return void
+	 */
+	public function beforeTemplate(){
+
+		//nothing here
+
+	}
+
+	/**
+	 * This function runs just after the template
+	 * 
+	 * @return void
+	 */
+	public function afterTemplate(){
+
+		//nothing here
+
+	}
+
 
 
 	/*=============================================================*/
