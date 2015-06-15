@@ -5,7 +5,7 @@ namespace ChefSections\Columns;
  * Empty column.
  * @package ChefSections\Columns
  */
-class EmptyColumn extends DefaultColumn{
+class ClearColumn extends DefaultColumn{
 
 	/**
 	 * The type of column

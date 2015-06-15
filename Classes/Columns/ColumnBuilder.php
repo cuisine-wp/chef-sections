@@ -110,15 +110,15 @@ class ColumnBuilder {
 
 
 	/**
-	 * Return an empty column instance
+	 * Return an clear column instance
 	 *
 	 * @param int $id The ID for this column.
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\EmptyColumn
 	 */
-	public function empty( $id, $section_id, array $properties = array() ){
+	public function clear( $id, $section_id, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\EmptyColumn', $id, $section_id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\ClearColumn', $id, $section_id, $properties );
 
 	}
 
