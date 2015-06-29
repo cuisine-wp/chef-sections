@@ -185,12 +185,6 @@ class ColumnBuilder {
 				'class'		=> 'ChefSections\\Columns\\CollectionColumn'
 			),
 
-			'related'		=> array( 
-
-				'name'		=> __( 'Gerelateerd', 'chefsections' ),
-				'class'		=> 'ChefSections\\Columns\\RelatedColumn'
-			),
-
 			'socials' 		=> array(
 				'name'		=> __( 'Social knoppen', 'chefsections' ),
 				'class'		=> 'ChefSections\\Columns\\SocialsColumn'

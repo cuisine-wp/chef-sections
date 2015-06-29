@@ -2,7 +2,7 @@
 
 	$url = $column->getField( 'large' );
 
-	if( (bool)$url == false )
+	if( $url == false || $url == 'false' )
 		$url = $column->getField( 'full' );
 
 ?>

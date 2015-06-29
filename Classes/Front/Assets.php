@@ -40,10 +40,11 @@
 				//sass:
 				$url = 'chef-sections/Assets/sass/front/';
 				
-				Sass::register( 'columns', $url.'_columns', false );
-				Sass::register( 'collection', $url.'_collection', false );
-				Sass::register( 'loader', $url.'_loader', false );
-				Sass::register( 'socials', $url.'_socials', false );
+				Sass::register( 'sections-columns', $url.'_columns', false );
+				Sass::register( 'sections-collection', $url.'_collection', false );
+				Sass::register( 'sections-loader', $url.'_loader', false );
+				Sass::register( 'sections-socials', $url.'_socials', false );
+				Sass::register( 'sections-responsive', $url.'_responsive', false );
 				
 			});
 		}
