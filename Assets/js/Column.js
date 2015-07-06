@@ -190,8 +190,17 @@
 			}
 
 			//add the editor content
-			if( self.$( '.lightbox .editor' ).length > 0 ){
-				properties[ 'content' ] = tinyMCE.activeEditor.getContent();
+			if( self.$( '.lightbox .editor-wrapper' ).length > 0 ){
+
+				self.$( '.lightbox .editor-wrapper' ).each( function( item ){
+
+					var _id = jQuery( this ).data( 'id' );
+					var _name = jQuery( this ).data( 'name' );
+					properties[ _name ] = tinyMCE.get( _id ).getContent({ format : 'raw' });
+
+				});
+
+				
 			}
 
 
@@ -287,6 +296,7 @@
 
 				self.$el.replaceWith( response );
 				setColumns();
+				refreshFields();
 				setSections();
 
 			});
@@ -318,7 +328,9 @@
 
 				self.$el.replaceWith( response );
 				setColumns();
+				refreshFields();
 				setSections();
+
 			});
 
 		}
@@ -327,7 +339,6 @@
 
 
 	jQuery( document ).ready( function( $ ){
-
 
 		setColumns();
 

@@ -98,11 +98,12 @@ class ContentColumn extends DefaultColumn{
 				)
 			),
 			'editor' => Field::editor( 
-				'content_'.$this->fullId, //this needs a unique id 
+				'content', //this needs a unique id 
 				'', 
 				array(
 					'label'				=> false,
-					'defaultValue' 		=> $this->getField( 'content' )
+					'defaultValue' 		=> $this->getField( 'content' ),
+					'column'			=> $this->fullId
 				)
 			)
 		);
