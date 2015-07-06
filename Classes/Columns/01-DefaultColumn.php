@@ -57,7 +57,7 @@ class DefaultColumn {
 	 * 
 	 * @var Array
 	 */
-	private $properties;
+	public $properties;
 
 
 
