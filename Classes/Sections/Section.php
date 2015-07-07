@@ -270,7 +270,11 @@ class Section {
 		//populate the columns array with actual column objects
 		foreach( $columns as $col_key => $type ){
 
-			$arr[] = Column::$type( $col_key, $this->id );
+			$props = array(
+				'post_id'	=>	 $this->post_id
+			);
+
+			$arr[] = Column::$type( $col_key, $this->id, $props );
 
 		}
 

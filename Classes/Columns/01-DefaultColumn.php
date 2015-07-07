@@ -87,6 +87,12 @@ class DefaultColumn {
 
 		$this->post_id = ( isset( $post ) ? $post->ID : null );
 
+		//allow sections to overwrite post_id via the properties,
+		//so we don't have to lean on a global:
+		if( isset( $props['post_id'] ) ){
+			$this->post_id = $props['post_id'];
+		}
+
 		//get the properties of this column:
 		$this->getProperties();
 

@@ -49,7 +49,6 @@
 										
 				foreach( $sections as $section ){
 				
-
 					//if this section in the loop matches 
 					//the one we're looking for:		
 					if( $section['id'] == $section_id ){
@@ -68,9 +67,6 @@
 							$args['hide_title'] = $section['hide_title'];
 						}
 
-						//small hack, sadly
-						$GLOBALS['post'] = new stdClass();
-						$GLOBALS['post']->ID = $post_id;
 
 						//setup section object
 						$section = new Section( $args );
@@ -80,9 +76,7 @@
 							Template::section( $section )->display();
 
 						$template = ob_get_clean();
-						
-						//put the globals back:
-						\wp_reset_postdata();	
+
 					}
 				}
 			}
