@@ -28,6 +28,20 @@ function get_sections(){
 
 }
 
+/**
+ * Get a section from an external post
+ * 
+ * @param  int $post_id    
+ * @param  int $section_id 
+ * @return string (html)
+ */
+function get_section( $post_id, $section_id ){
+
+	$section = Walker::get_section( $post_id, $section_id );
+	return $section;
+
+}
+
 
 /**
  * Check if this post has sections

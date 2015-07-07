@@ -3,7 +3,9 @@
 	namespace ChefSections\Front;
 
 	use \ChefSections\Sections\SectionsBuilder;
+	use \ChefSections\Sections\Section;
 	use \ChefSections\Wrappers\Template;
+	use \stdClass;
 
 	class Walker extends SectionsBuilder{
 
@@ -29,6 +31,63 @@
 
 
 			return ob_get_clean();
+		}
+
+		/**
+		* Get a single section
+		*
+		* @param int $post_id
+		* @param int $section_id
+		* @return string (html)
+		*/
+		public function get_section( $post_id, $section_id ){
+
+			$template = false;
+			$sections = get_post_meta( $post_id, 'sections', true );
+
+			if( is_array( $sections ) ){
+										
+				foreach( $sections as $section ){
+				
+
+					//if this section in the loop matches 
+					//the one we're looking for:		
+					if( $section['id'] == $section_id ){
+
+						$args = array(
+								'id'			=> $section['id'],
+								'position'		=> $section['position'],
+								'title'			=> $section['title'],
+								'view'			=> $section['view'],
+								'post_id'		=> $section['post_id'],
+								'columns'		=> $section['columns']
+						);
+
+
+						if( isset( $section['hide_title'] ) ){
+							$args['hide_title'] = $section['hide_title'];
+						}
+
+						//small hack, sadly
+						$GLOBALS['post'] = new stdClass();
+						$GLOBALS['post']->ID = $post_id;
+
+						//setup section object
+						$section = new Section( $args );
+						
+						ob_start();
+							//render it's template:
+							Template::section( $section )->display();
+
+						$template = ob_get_clean();
+						
+						//put the globals back:
+						\wp_reset_postdata();	
+					}
+				}
+			}
+
+			return $template;
 		}
 
 
