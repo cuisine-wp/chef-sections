@@ -210,6 +210,7 @@ class Section {
 			do_action( 'chef_sections_bottom_controls' );
 
 			$this->buildTemplateSnitch();
+			$this->buildCodeSnitch();
 
 		echo '</div>';
 
@@ -226,6 +227,25 @@ class Section {
 		echo 'data-section_id="'.$this->id.'" ';
 		echo 'data-post_id="'.$this->post_id.'"';
 
+	}
+
+	/**
+	 * Generate the code needed to fetch this section
+	 * 
+	 * @return string ( html, echoed )
+	 */
+	private function buildCodeSnitch(){
+
+
+		echo '<span class="template-snitch code-snitch">';
+			echo '<span class="dashicons dashicons-editor-code"></span>';
+			echo '<span class="tooltip">';
+
+				echo '<strong>Code:</strong><br/>';
+				echo '<span class="copy">echo Loop::section( '.$this->post_id.', '.$this->id.' );</span>';
+
+			echo '</span>';
+		echo '</span>';
 	}
 
 

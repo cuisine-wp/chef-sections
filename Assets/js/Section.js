@@ -12,6 +12,7 @@
 
 			'change .section-controls .type-radio': 'changeView',
 			'click .delete-section': 'deleteSection',
+			'click .code-snitch': 'copyCode',
 
 		},
 
@@ -100,6 +101,23 @@
 
 			var self = this;
 			self.$( '> .loader' ).addClass( 'show' );
+		},
+
+		copyCode: function( evt ){
+
+			var self = this;
+			var string = self.$el.find( '.copy' ).html();
+			self.copyToClipboard( string );
+
+		},
+
+
+		copyToClipboard: function( _value ){
+			console.log( _value )
+			jQuery( 'body' ).append("<input type='text' id='temp' style='position:absolute;opacity:0;'>");
+			jQuery( '#temp' ).val( _value ).select();
+			document.execCommand( 'copy' );
+			jQuery( '#temp' ).remove();
 		}
 
 
