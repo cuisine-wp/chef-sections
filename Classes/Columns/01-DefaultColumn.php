@@ -4,6 +4,7 @@ namespace ChefSections\Columns;
 use Cuisine\Utilities\Url;
 use Cuisine\Utilities\Sort;
 use Cuisine\Wrappers\Field;
+use Cuisine\Wrappers\User;
 use ChefSections\Wrappers\Column;
 use ChefSections\Wrappers\Template;
 
@@ -315,19 +316,24 @@ class DefaultColumn {
 	private function buildTemplateSnitch(){
 
 		$templates = Template::column( $this )->files;
-		echo '<span class="template-snitch">';
-			echo '<span class="dashicons dashicons-media-text"></span>';
-			echo '<span class="tooltip">';
 
-				echo '<strong>Templates:</strong>';
-				foreach( $templates as $template ){
+		if( User::hasRole( 'administrator' ) ){
 
-					echo '<p>'.$template.'</p>';
-
-				}
-
+			echo '<span class="template-snitch">';
+				echo '<span class="dashicons dashicons-media-text"></span>';
+				echo '<span class="tooltip">';
+	
+					echo '<strong>Templates:</strong>';
+					foreach( $templates as $template ){
+	
+						echo '<p>'.$template.'</p>';
+	
+					}
+	
+				echo '</span>';
 			echo '</span>';
-		echo '</span>';
+
+		}
 	}
 
 

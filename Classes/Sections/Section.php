@@ -6,6 +6,7 @@ use ChefSections\Wrappers\Column;
 use ChefSections\Wrappers\SectionsBuilder;
 use ChefSections\Wrappers\Template;
 use Cuisine\Wrappers\Field;
+use Cuisine\Wrappers\User;
 
 /**
  * Admin Section-meta
@@ -148,8 +149,9 @@ class Section {
 				echo 'id="'.$this->id.'" ';
 				$this->buildIds();
 			echo '>';
-	
-				$this->buildControls();
+
+				if( User::hasRole( 'administrator' ) )
+					$this->buildControls();
 
 				echo '<div class="section-columns '.$this->view.'">';
 	
@@ -162,7 +164,8 @@ class Section {
 				echo '<div class="clearfix"></div>';
 				echo '</div>';
 
-				$this->bottomControls();
+				if( User::hasRole( 'administrator' ) )
+					$this->bottomControls();
 			
 			echo '<div class="loader"><span class="spinner"></span></div>';
 			echo '</div>';
@@ -235,7 +238,6 @@ class Section {
 	 * @return string ( html, echoed )
 	 */
 	private function buildCodeSnitch(){
-
 
 		echo '<span class="template-snitch code-snitch">';
 			echo '<span class="dashicons dashicons-editor-code"></span>';
