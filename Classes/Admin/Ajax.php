@@ -33,7 +33,7 @@
 			//creating a section:
 			add_action( 'wp_ajax_createSection', function(){
 
-				$this->setPostGlobal();
+				parent::setPostGlobal();
 
 				echo SectionsBuilder::addSection();
 				die();
@@ -43,7 +43,7 @@
 			//delete section:
 			add_action( 'wp_ajax_deleteSection', function(){
 
-				$this->setPostGlobal();
+				parent::setPostGlobal();
 
 				SectionsBuilder::deleteSection();
 				die();
@@ -53,7 +53,7 @@
 			//sorting sections:
 			add_action( 'wp_ajax_sortSections', function(){
 
-				$this->setPostGlobal();
+				parent::setPostGlobal();
 
 				echo SectionsBuilder::sortSections();
 				die();
@@ -63,7 +63,7 @@
 			//change a sections' view:
 			add_action( 'wp_ajax_changeView', function(){
 
-				$this->setPostGlobal();
+				parent::setPostGlobal();
 
 				echo SectionsBuilder::changeView();
 				die();
@@ -94,7 +94,8 @@
 			//save lightbox data:
 			add_action( 'wp_ajax_saveColumnProperties', function(){
 
-				$this->setPostGlobal();
+				parent::setPostGlobal();
+				
 				echo Column::saveProperties();
 				die();
 
@@ -103,7 +104,7 @@
 
 			add_action( 'wp_ajax_refreshColumn', function(){
 
-				$this->setPostGlobal();
+				parent::setPostGlobal();
 
 				Column::refreshColumn();
 				die();

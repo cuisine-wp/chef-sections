@@ -53,6 +53,7 @@
 
 				setSections();
 				setColumns();
+				refreshFields();
 
 			});
 		},
@@ -87,6 +88,7 @@
 	
 						setSections();
 						setColumns();
+						refreshFields();
 					}
 	
 				});
@@ -124,6 +126,7 @@
 
 				setSections();
 				setColumns();
+				refreshFields();
 				
 			});
 

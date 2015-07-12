@@ -46,10 +46,10 @@
 			add_action( 'edit_form_after_editor', function(){
 
 				global $post;
-
-				if( isset( $post ) ){
+				
+				if( isset( $post ) )
 					SectionsBuilder::build();
-				}
+				
 
 			});
 
@@ -58,6 +58,18 @@
 
 				SectionsBuilder::save( $post_id );
 
+			});
+
+
+
+			//filter for WP SEO:
+			add_filter( 'wpseo_pre_analysis_post_content', function( $content ){
+
+				if( has_sections() )
+					$content = get_sections();
+
+				return $content;
+			
 			});
 
 		}
