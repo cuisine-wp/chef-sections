@@ -36,11 +36,12 @@
 				Script::register( 'isotope', $url.'isotope.min', false );
 				Script::register( 'imagesloaded', $url.'imagesloaded.min', false );
 				Script::register( 'autoload', $url.'autoload', false );
+				Script::register( 'fitvids', $url.'fitvids.min', false );
 
 				//sass:
 				$url = 'chef-sections/Assets/sass/front/';
 				
-				Sass::register( 'sections-columns', $url.'_columns', false );
+				Sass::register( 'sections-columns', $url.'_columns', true );
 				Sass::register( 'sections-collection', $url.'_collection', false );
 				Sass::register( 'sections-loader', $url.'_loader', false );
 				Sass::register( 'sections-socials', $url.'_socials', false );

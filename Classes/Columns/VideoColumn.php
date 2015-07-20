@@ -2,6 +2,8 @@
 namespace ChefSections\Columns;
 
 use Cuisine\Wrappers\Field;
+use Cuisine\Wrappers\Script;
+use Cuisine\Utilities\Url;
 
 /**
  * Video column.
@@ -15,6 +17,19 @@ class VideoColumn extends DefaultColumn{
 	 * @var String
 	 */
 	public $type = 'video';
+
+
+	/**
+	 * After the video column
+	 * 
+	 * @return void
+	 */
+	public function afterTemplate(){
+
+		$url = Url::plugin( 'chef-sections', true ).'Assets/js/collections/';
+		Script::register( 'video_column', $url.'video', true );	
+
+	}
 
 
 	/**
