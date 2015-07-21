@@ -36,6 +36,14 @@ class CollectionColumn extends DefaultColumn{
 	private $query = false;
 
 
+	/**
+	 * Cache the post global to prevent conflicts
+	 * 
+	 * @var Object
+	 */
+	private $globalPost = '';
+
+
 	/*=============================================================*/
 	/**             Query                                          */
 	/*=============================================================*/
@@ -83,6 +91,11 @@ class CollectionColumn extends DefaultColumn{
 	 */
 	public function beforeTemplate(){
 
+		//cache the post global to prevent conflicts:
+		global $post;
+		$this->globalPost = $post;
+
+
 		$nav = $this->getField( 'nav', 'pagination' );
 		$datas = $this->getDatas();
 
@@ -129,6 +142,11 @@ class CollectionColumn extends DefaultColumn{
 			//closing div:
 			echo '</div>';
 		}
+
+		//reset the post global to prevent conflicts:
+		global $post;
+		$post = $this->globalPost;
+		setup_postdata( $this->globalPost );
 	}
 
 
