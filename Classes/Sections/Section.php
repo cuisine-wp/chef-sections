@@ -115,11 +115,9 @@ class Section {
 
 		$this->name = $this->getName( $args );
 
-
 		$this->hide_title = ( isset( $args['hide_title'] ) ? (bool)$args['hide_title'] : false );
 
 		$this->hide_container = ( isset( $args['hide_container' ] ) ? (bool)$args['hide_container'] : false );
-
 
 		$this->properties = $args;
 
@@ -427,7 +425,7 @@ class Section {
 
 		$check = Field::checkbox(
 			$prefix.'[hide_title]',
-			'Laat titel zien',
+			'Sectie title verbergen',
 			array(
 				'defaultValue'	=> $this->hide_title
 			)
@@ -435,7 +433,7 @@ class Section {
 
 		$container = Field::checkbox(
 			$prefix.'[hide_container]',
-			'Laat container zien',
+			'Container verbergen',
 			array(
 				'defaultValue'	=> $this->hide_container
 			)

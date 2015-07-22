@@ -3,7 +3,7 @@ define([
 	'jquery',
 	'fitvids'
 
-], function( $ ){
+], function( $, fitVids ){
 
 	$('.video-wrapper').fitVids();
 

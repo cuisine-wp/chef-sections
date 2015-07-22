@@ -174,13 +174,6 @@ class SectionsBuilder {
 					}
 				}
 
-				//hide titles
-				if( isset( $section['hide_title'] ) ){
-					$sections[ $section['id'] ]['hide_title'] = true;
-				}else{
-					$sections[ $section['id'] ]['hide_title'] = false;
-				}
-
 				$sections[ $section['id'] ]['post_id'] = $post_id;
 				$sections[ $section['id'] ]['columns'] = $columns;
 			}
@@ -353,12 +346,13 @@ class SectionsBuilder {
 
 		$args = array(
 
-				'id'			=> $this->highestId,
-				'position'		=> ( count( $this->sections ) + 1 ),
-				'post_id'		=> $post_id,
-				'title'			=> __( 'Sectie titel', 'chefsections' ),
-				'hide_title'	=> false,
-				'view'			=> 'fullwidth'
+				'id'				=> $this->highestId,
+				'position'			=> ( count( $this->sections ) + 1 ),
+				'post_id'			=> $post_id,
+				'title'				=> __( 'Sectie titel', 'chefsections' ),
+				'hide_title'		=> false,
+				'hide_container'	=> apply_filters('chef_sections_hide_container', true ),
+				'view'				=> 'fullwidth'
 		);
 
 		$args = apply_filters( 'chef_sections_default_section_args', $args );
