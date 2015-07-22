@@ -156,7 +156,7 @@
 			}
 
 			&.radio{
-				width:60%;
+				width:80%;
 			}
 
 		}
@@ -224,6 +224,40 @@
 			}
 
 
+		}
+	}
+
+	.section-settings-btn{
+		padding-left:5px;
+		padding-right:10px;
+		margin-top:10px;
+		vertical-align:middle;
+
+		span{
+			vertical-align:middle;
+			padding-right:10px;
+		}
+	}
+
+	.section-settings{
+		box-sizing:border-box;
+		position:absolute;
+		display:none;
+		background:rgba( 0,0,0, .75 );
+		top:67px;
+		bottom:0;
+		left:0;
+		right:0;
+		padding:15px;
+		z-index:99;
+		border-radius:0 0 2px 2px;
+
+		label, p{
+			color:#fff;
+		}
+
+		&.active{
+			display:block;
 		}
 	}
 

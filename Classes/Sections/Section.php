@@ -42,6 +42,13 @@ class Section {
 	 */
 	public $title = '';
 
+	/**
+	 * Name (used in code) of this section
+	 * 
+	 * @var string
+	 */
+	public $name = '';
+
 
 	/**
 	 * Viewmode of this section
@@ -75,6 +82,22 @@ class Section {
 	public $hide_title;
 
 
+	/**
+	 * Boolean to display or not display the section container
+	 * 
+	 * @var boolean
+	 */
+	public $hide_container;
+
+
+	/**
+	 * Array containing all properties of this section
+	 * 
+	 * @var array
+	 */
+	public $properties;
+
+
 
 	function __construct( $args ){
 		
@@ -90,8 +113,15 @@ class Section {
 
 		$this->view = $args['view'];
 
+		$this->name = $this->getName( $args );
+
+
 		$this->hide_title = ( isset( $args['hide_title'] ) ? (bool)$args['hide_title'] : false );
 
+		$this->hide_container = ( isset( $args['hide_container' ] ) ? (bool)$args['hide_container'] : false );
+
+
+		$this->properties = $args;
 
 		$this->columns = $this->getColumns( $args['columns'] );
 
@@ -114,7 +144,8 @@ class Section {
 	 */
 	public function beforeTemplate(){
 
-		//nothing here
+		//add a hook
+		add_action( 'section_before_template', $this );
 
 	}
 
@@ -125,7 +156,8 @@ class Section {
 	 */
 	public function afterTemplate(){
 
-		//nothing here
+		//add a hook
+		add_action( 'section_after_template', $this );
 
 	}
 
@@ -164,8 +196,10 @@ class Section {
 				echo '<div class="clearfix"></div>';
 				echo '</div>';
 
-				if( User::hasRole( 'administrator' ) )
+				if( User::hasRole( 'administrator' ) ){
 					$this->bottomControls();
+					$this->buildSettingsPanel();
+				}
 			
 			echo '<div class="loader"><span class="spinner"></span></div>';
 			echo '</div>';
@@ -183,6 +217,11 @@ class Section {
 
 
 		echo '<div class="section-controls">';
+
+			echo '<span class="button section-settings-btn">';
+				echo '<span class="dashicons dashicons-admin-settings"></span>';
+				_e( 'Instellingen', 'chef-sections' );
+			echo '</span>';
 			
 			foreach( $fields as $field ){
 
@@ -275,10 +314,42 @@ class Section {
 	}
 
 
+	private function buildSettingsPanel(){
+
+		$fields = $this->getSettingsFields();
+
+		echo '<div class="section-settings">';
+
+			foreach( $fields as $field ){
+
+
+				$field->render();
+
+			}
+
+		echo '</div>';
+	}
+
+
+
 	/*=============================================================*/
 	/**             Getters & Setters                              */
 	/*=============================================================*/
 
+	/**
+	 * Return a property, or false if the property isn't found.
+	 * 
+	 * @param  string $name name of the property
+	 * @return mixed
+	 */
+	public function getProperty( $name ){
+
+		if( isset( $this->properties[ $name ] ) )
+			return $this->properties[ $name ];
+
+		return false;
+
+	}
 
 	/**
 	 * Get the Columns in an array
@@ -313,14 +384,44 @@ class Section {
 
 		$prefix = 'section['.$this->id.']';
 		$types = array_fill_keys( array_keys( SectionsBuilder::getViewTypes() ), false );
+		$views = Field::radio(
+			$prefix.'[view]',
+			'Weergave',
+			$types,
+			array(
+				'defaultValue' => $this->view
+			)
+		);
 
+		$fields = array( $views );
+		$fields = apply_filters( 'chef_sections_controls_fields', $fields );
 
+		return $fields;
+	}
+
+	/**
+	 * Returns the array of fields for the settings panel
+	 * 
+	 * @return array
+	 */
+	private function getSettingsFields(){
+		
+		$prefix = 'section['.$this->id.']';
+		
 		$title = Field::text( 
 			$prefix.'[title]',
-			'', //no label,
+			'Sectie titel', //no label,
 			array( 
 				'placeholder'  => 'Titel',
 				'defaultValue' => $this->title
+			)
+		);
+
+		$name = Field::text(
+			$prefix.'[name]',
+			'Sectie naam',
+			array(
+				'defaultValue'	=> $this->name
 			)
 		);
 
@@ -332,13 +433,11 @@ class Section {
 			)
 		);
 
-
-		$views = Field::radio(
-			$prefix.'[view]',
-			'Weergave',
-			$types,
+		$container = Field::checkbox(
+			$prefix.'[hide_container]',
+			'Laat container zien',
 			array(
-				'defaultValue' => $this->view
+				'defaultValue'	=> $this->hide_container
 			)
 		);
 
@@ -368,16 +467,34 @@ class Section {
 		$fields = array(
 
 			$title,
+			$name,
 			$check,
-			$views,
+			$container,
 			$position,
 			$post_id,
 			$id
 
 		);
 
-		$fields = apply_filters( 'chef_sections_section_controls', $fields );
+		$fields = apply_filters( 'chef_sections_setting_fields', $fields, $this, $prefix );
+
 		return $fields;
+	}
+
+
+
+	/**
+	 * Get the name (used in code ) for this section
+	 * 
+	 * @param  array $args
+	 * @return string
+	 */
+	public function getName( $args ){
+
+		if( isset( $args['name'] ) )
+			return $args['name'];
+
+		return sanitize_title( $this->title ).'-'.$this->id;
 	}
 
 

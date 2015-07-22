@@ -138,7 +138,7 @@
   display: block;
 }
 .section-wrapper .section-controls .field-wrapper.radio {
-  width: 60%;
+  width: 80%;
 }
 .section-wrapper .section-controls .radio {
   float: right;
@@ -190,6 +190,35 @@
   width: auto;
   border: 0;
   padding: 0 15px 0 0;
+}
+.section-wrapper .section-settings-btn {
+  padding-left: 5px;
+  padding-right: 10px;
+  margin-top: 10px;
+  vertical-align: middle;
+}
+.section-wrapper .section-settings-btn span {
+  vertical-align: middle;
+  padding-right: 10px;
+}
+.section-wrapper .section-settings {
+  box-sizing: border-box;
+  position: absolute;
+  display: none;
+  background: rgba(0, 0, 0, 0.75);
+  top: 67px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  z-index: 99;
+  border-radius: 0 0 2px 2px;
+}
+.section-wrapper .section-settings label, .section-wrapper .section-settings p {
+  color: #fff;
+}
+.section-wrapper .section-settings.active {
+  display: block;
 }
 .section-wrapper.msg p {
   font-weight: bold;

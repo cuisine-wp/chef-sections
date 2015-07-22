@@ -186,7 +186,6 @@ class SectionsBuilder {
 			}
 
 
-
 			//save the main section meta:
 			update_post_meta( $post_id, 'sections', $sections );	
 		}
@@ -329,21 +328,7 @@ class SectionsBuilder {
 				foreach( $sections as $section ){
 	
 					//temp $args === $section
-					$args = array(
-	
-							'id'			=> $section['id'],
-							'position'		=> $section['position'],
-							'title'			=> $section['title'],
-							'view'			=> $section['view'],
-							'post_id'		=> $section['post_id'],
-							'columns'		=> $section['columns']
-					);
-
-					if( isset( $section['hide_title'] ) ){
-						$args['hide_title'] = $section['hide_title'];
-					}
-
-	
+					$args = $section;
 					$array[] = new Section( $args );
 			
 				}

@@ -13,6 +13,7 @@
 			'change .section-controls .type-radio': 'changeView',
 			'click .delete-section': 'deleteSection',
 			'click .code-snitch': 'copyCode',
+			'click .section-settings-btn' : 'toggleSettings'
 
 		},
 
@@ -101,6 +102,14 @@
 
 			var self = this;
 			self.$( '> .loader' ).addClass( 'show' );
+		},
+
+		toggleSettings: function( evt ){
+
+			var self = this;
+
+			self.$el.find('.section-settings').toggleClass( 'active' );
+
 		},
 
 		copyCode: function( evt ){
