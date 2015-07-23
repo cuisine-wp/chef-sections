@@ -5,6 +5,7 @@ use Cuisine\Wrappers\Field;
 use Cuisine\Wrappers\Script;
 use ChefSections\Wrappers\Template;
 use Cuisine\Utilities\Url;
+use Cuisine\Utilities\Sort;
 use WP_Query;
 
 /**
@@ -71,6 +72,10 @@ class CollectionColumn extends DefaultColumn{
 		if( $this->getField( 'orderby', 'date' ) == 'title' )
 			$args['order'] = 'ASC';
 
+
+		$category = $this->getField( 'category', 'all' );
+		if( $category && $category !== 'all' )
+			$args['category_name'] = $category;
 
 
 		$this->query = new WP_Query( $args );
@@ -327,9 +332,28 @@ class CollectionColumn extends DefaultColumn{
 
 				)
 			)
-
-
 		);
+
+
+		if( $this->getField( 'post_type', 'post' ) === 'post' ){
+
+			$categories = get_categories();
+			$keys = Sort::pluck( $categories, 'slug' );
+			$labels = Sort::pluck( $categories, 'name' );
+			
+			$cats = array_combine( $keys, $labels );
+			$cats = array_merge( array( 'all' => 'Alles' ), $cats );
+
+			$fields['category'] = Field::select(
+					'category',
+					__( 'Categorie', 'chefsections' ),
+					$cats,
+					array(
+						'defaultValue'	=> $this->getField( 'category', 'all' )
+					)
+			);
+		}
+
 
 		$fields = apply_filters( 'chef_sections_collection_column_fields', $fields );
 		return $fields;
