@@ -4,6 +4,7 @@
 
 	use ChefSections\Wrappers\StaticInstance;
 	use ChefSections\Wrappers\SectionsBuilder;
+	use ChefSections\Sections\SectionTemplates;
 	use Cuisine\Utilities\Url;
 
 	class EventListeners extends StaticInstance{
@@ -15,6 +16,8 @@
 		public function __construct(){
 
 			$this->listen();
+
+			$this->templates();
 
 		}
 
@@ -95,6 +98,41 @@
 				return $content;
 			
 			});
+
+		}
+
+
+		/**
+		 * Listen to the section-template events:
+		 * 
+		 * @return void
+		 */
+		private function templates(){
+
+			//add the metabox on admin-init
+			add_action( 'admin_init', function(){
+
+				//metaboxes for section templates:
+				SectionTemplates::metabox();
+
+			});
+
+
+			//when creating a new post, check if we need to apply a template:
+			add_action( 'save_post', function( $post_id ){
+				
+				global $pagenow, $post;
+				$status = get_post_status( $post_id );
+
+
+				if( $status == 'auto-draft' && $pagenow == 'post-new.php' ){
+
+					SectionTemplates::applyTemplates( $post_id );
+
+				}
+			});
+
+
 
 		}
 

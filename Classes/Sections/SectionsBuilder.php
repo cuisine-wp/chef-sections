@@ -124,7 +124,9 @@ class SectionsBuilder {
 	 */
 	private function addSectionButton(){
 
-		$templates = get_posts( array( 'post_type' => 'section-template', 'posts_per_page' => -1 ) );
+		$args = array( 'multiple' => true, 'dropdown' => true );
+		$templates = SectionTemplates::getTemplates( $args );
+
 
 		echo '<div class="section-wrapper dotted-bg">';
 
@@ -332,9 +334,16 @@ class SectionsBuilder {
 	 * 
 	 * @return bool
 	 */
-	public function loadTemplate(){
+	public function loadTemplate( $templateId = null ){
 
-		$templateId = $_POST['template_id'];
+		//check for a template-id via POST
+		if( $templateId == null && isset( $_POST['template_id'] ) )
+			$templateId = $_POST['template_id'];
+
+		//no template id? though luck.
+		if( $templateId == null )
+			return false;
+
 
 		$_sections = get_post_meta( $templateId, 'sections', true );
 

@@ -32,8 +32,9 @@
 
 					'exclude_from_search'	=> true,
 					'publicly_queryable'	=> false,
-					'menu_icon' => 'dashicons-schedule',
-					'supports'	=> array( 'title' )
+					'menu_icon' 			=> 'dashicons-schedule',
+					'supports'				=> array( 'title' ),
+					'menu_position'			=> 75
 
 				);
 
