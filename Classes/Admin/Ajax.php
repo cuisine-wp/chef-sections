@@ -70,6 +70,21 @@
 
 			});
 
+
+			add_action( 'wp_ajax_loadTemplate', function(){
+
+				parent::setPostGlobal();
+
+				if( SectionsBuilder::loadTemplate() ){
+
+					echo SectionsBuilder::rebuild();
+
+				}
+
+				die();
+
+			});
+
 		}
 
 

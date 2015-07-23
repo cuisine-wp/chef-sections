@@ -25,11 +25,11 @@
 		 */
 		private function listen(){
 
-
+			//remove editor support
 			add_action( 'admin_init', function(){
 
 				//remove editors from the post-types:
-				$post_types = array( 'page' );
+				$post_types = array( 'page', 'section-template' );
 				$include = apply_filters( 'chef_sections_remove_editor', $post_types );
 				$post_types = apply_filters( 'chef_sections_post_types', $post_types );
 
@@ -42,7 +42,7 @@
 
 			});
 
-
+			//add roles
 			add_action( 'init', function(){
 
 				//set the edit_sections capability to the administrator role
@@ -52,17 +52,20 @@
 			});
 
 
+			//placing the sections builder
 			add_action( 'edit_form_after_editor', function(){
 
 				global $post;
 				
-				if( isset( $post ) )
+				if( isset( $post ) ){
+
 					SectionsBuilder::build();
 				
+				}
 
 			});
 
-
+			//saving
 			add_action( 'save_post', function( $post_id ){
 
 				SectionsBuilder::save( $post_id );
@@ -70,8 +73,20 @@
 			});
 
 
+			/**
+			 * WP SEO changes:
+			 */
 
-			//filter for WP SEO:
+			//remove the metabox from our templates:
+			add_action( 'add_meta_boxes', function(){
+
+				remove_meta_box( 'wpseo_meta', 'section-template', 'normal' );
+
+			}, 20 );
+
+
+
+			//filter for WP SEO content-check
 			add_filter( 'wpseo_pre_analysis_post_content', function( $content ){
 
 				if( has_sections() )

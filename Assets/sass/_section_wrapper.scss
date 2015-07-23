@@ -16,6 +16,7 @@
 			left:47.5%;
 			top:45%;
 			display:inline-block;
+			visibility:visible;
 		}
 
 		&.show{
@@ -273,10 +274,30 @@
 	}
 
 
-	&.msg p{
-		font-weight:bold;
-		text-align:center;
-		font-size:18px;	
+	&.msg{
+
+		position:relative;
+
+		p{
+			font-weight:bold;
+			text-align:center;
+			font-size:18px;	
+		}
+
+		&.loading{
+
+			p{
+				color:#fff;
+			}
+
+			.spinner{
+				position:absolute;
+				left:47.5%;
+				top:25%;
+				display:inline-block;
+				visibility:visible;
+			}
+		}
 	}
 
 	&.dotted-bg{
@@ -285,6 +306,15 @@
 		border:3px dashed #ccc;
 		text-align:center;
 		box-shadow:0;
+
+		.section-btn{
+			width:auto;
+			display:inline-block;
+		}
+
+		em{
+			padding:0 20px;
+		}
 	}
 }
 

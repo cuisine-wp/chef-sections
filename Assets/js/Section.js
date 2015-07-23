@@ -156,8 +156,32 @@
 				refreshFields();
 				
 			});
-
 		});
+
+
+		$('#getTemplate').on( 'change', function(){
+
+			var data = {
+				action: 'loadTemplate',
+				post_id: $( this ).data( 'post_id' ),
+				template_id: $( this ).val()
+			}
+
+			$('.section-wrapper.msg').addClass('loading');
+
+			$.post( ajaxurl, data, function( response ){
+
+				jQuery('#section-container').replaceWith( response );
+				$('.section-wrapper.msg').remove();
+
+				setSections();
+				setColumns();
+				refreshFields();
+			
+			});
+
+
+		})
 
 		var _post_id = $( '.section-wrapper' ).first().data('post_id');
 		$('#section-container').sortable({

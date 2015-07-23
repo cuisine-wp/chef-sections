@@ -32,11 +32,12 @@
 
 					'exclude_from_search'	=> true,
 					'publicly_queryable'	=> false,
-					'menu_icon' => 'dashicons-schedule'
+					'menu_icon' => 'dashicons-schedule',
+					'supports'	=> array( 'title' )
 
 				);
 
-				PostType::make( 'section-template', __( 'Sjablonen', 'chef-sections' ), __( 'Sjabloon', 'chef-sections' ) )->set( $args );
+				PostType::make( 'section-template', __( 'Sjablonen', 'chef-sections' ), __( 'Sjabloon', 'chefsections' ) )->set( $args );
 
 
 

@@ -108,20 +108,12 @@ class DefaultColumn {
 	 */
 	private function getProperties(){
 
-		$previewData = get_post_meta( 
-			$this->post_id, 
-			'_column_preview_'.$this->fullId, 
-			true
-		);
 
 		$props = get_post_meta( 
 			$this->post_id, 
 			'_column_props_'.$this->fullId, 
 			true
 		);
-
-
-		$this->previewData = $previewData;
 
 
 		$defaults = $this->getDefaultColumnArgs();

@@ -58,11 +58,14 @@ class SectionsBuilder {
 	public function init(){
 		global $post;
 
-		if( isset( $post ) )
-			$this->postId = $post->ID;
+		if( isset( $post ) ){
+			
+			$this->postId = $post->ID;	
+			
+			$this->sections = $this->getSections();
+			$this->highestId = $this->getHighestId();
 		
-		$this->sections = $this->getSections();
-		$this->highestId = $this->getHighestId();
+		}
 
 		return $this;
 	}
@@ -77,7 +80,7 @@ class SectionsBuilder {
 	 *
 	 * @return void (echoes html)
 	 */
-	public function build(){
+	public function build( $controls = true ){
 
 
 		if( !$this->validPostType( $this->postId ) )
@@ -101,13 +104,16 @@ class SectionsBuilder {
 
 			echo '<div class="section-wrapper msg">';
 				echo '<p>'.__('Nog geen secties aangemaakt.', 'chefsections').'</p>';
+				echo '<span class="spinner"></span>';
 			echo '</div>';
 		
 		}
 
 		echo '</div>';
 
-		$this->addSectionButton();
+		if( $controls )
+			$this->addSectionButton();
+
 	}
 
 
@@ -118,13 +124,56 @@ class SectionsBuilder {
 	 */
 	private function addSectionButton(){
 
+		$templates = get_posts( array( 'post_type' => 'section-template', 'posts_per_page' => -1 ) );
+
 		echo '<div class="section-wrapper dotted-bg">';
 
-			echo '<div id="addSection" class="button" data-post_id="'.$this->postId.'">';
+			echo '<div id="addSection" class="section-btn" data-post_id="'.$this->postId.'">';
 				_e( 'Sectie toevoegen', 'chefsections' );
 			echo '</div>';
 
+			echo '<em>'.__( 'Of', 'chefsections' ).'</em>';
+
+			//add templates:
+			echo '<label>'.__( 'Gebruik een sjabloon', 'chefsections' ).':</label>';
+			echo '<select id="getTemplate" data-post_id="'.$this->postId.'">';
+
+				echo '<option value="none">'.__( 'Selecteer sjabloon', 'chefsections' ).'</option>';
+
+				foreach( $templates as $template ){
+
+					if( $template->ID != $this->postId ){
+						echo '<option value="'.$template->ID.'">';
+							echo $template->post_title;
+						echo '</option>';
+					}
+				}
+
+
+			echo '</select>';
+
 		echo '</div>';
+	}
+
+
+	/**
+	 * Rebuild the sections builder after a template has been applied
+	 * 
+	 * @return string (html)
+	 */
+	public function rebuild(){
+
+		//reset everything:
+		$this->init();
+
+
+		//build all the sections up again:
+		ob_start();
+
+			$this->build( false ); //don't add the controls:
+
+		return ob_get_clean();
+
 	}
 
 
@@ -187,6 +236,10 @@ class SectionsBuilder {
 		return true;
 	}
 
+
+	/*=============================================================*/
+	/**             Ajax                                           */
+	/*=============================================================*/
 
 
 	/**
@@ -271,6 +324,47 @@ class SectionsBuilder {
 		$section = new Section( $_sections[ $section_id ] );
 		return $section->build();
 	
+	}
+
+
+	/**
+	 * Load sections from a template
+	 * 
+	 * @return bool
+	 */
+	public function loadTemplate(){
+
+		$templateId = $_POST['template_id'];
+
+		$_sections = get_post_meta( $templateId, 'sections', true );
+
+		//save the column data:
+		foreach( $_sections as $_section ){
+
+			if( !empty( $_section['columns'] ) ){
+
+				foreach( $_section['columns'] as $key => $column ){
+
+					$fullId = $_section['id'].'_'.$key;
+
+					//get the column properties:
+					$props = get_post_meta( 
+						$templateId, 
+						'_column_props_'.$fullId, 
+						true
+					);
+
+					//add 'em to the new column:
+					update_post_meta( $this->postId, '_column_props_'.$fullId, $props );
+				}
+
+			}
+		}
+
+		//save the sections as our own:
+		update_post_meta( $this->postId, 'sections', $_sections );
+
+		return true;
 	}
 
 
@@ -464,7 +558,7 @@ class SectionsBuilder {
 	 */
 	private function validPostType( $post_id ){
 
-		$post_types = array( 'page' );
+		$post_types = array( 'page', 'section-template' );
 		$post_types = apply_filters( 'chef_sections_post_types', $post_types );
 
 		return in_array( get_post_type( $post_id ), $post_types );
