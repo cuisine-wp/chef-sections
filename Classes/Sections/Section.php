@@ -101,11 +101,12 @@ class Section {
 
 	function __construct( $args ){
 		
-		global $post;
 
 		$this->id = $args['id'];
 
+		//get the post object based on the given post_id
 		$this->post_id = $args['post_id'];
+		$post = get_post( $this->post_id );
 
 		$this->position = $args['position'];
 

@@ -52,11 +52,13 @@
 			@include flex( 1 100% );
 		}
 
-		&.four-columns, &.three-columns{
-			.column{
+		&.four-columns, &.three-columns, &.half-half{
+			.column, .column:nth-child( odd ), .column:nth-child( even ){
 				@include flex( 1 100% );
 				margin-left:0;
 				margin-right:0;
+
+
 			}
 		}
 	}

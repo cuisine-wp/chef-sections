@@ -53,20 +53,7 @@
 					//the one we're looking for:		
 					if( $section['id'] == $section_id ){
 
-						$args = array(
-								'id'			=> $section['id'],
-								'position'		=> $section['position'],
-								'title'			=> $section['title'],
-								'view'			=> $section['view'],
-								'post_id'		=> $section['post_id'],
-								'columns'		=> $section['columns']
-						);
-
-
-						if( isset( $section['hide_title'] ) ){
-							$args['hide_title'] = $section['hide_title'];
-						}
-
+						$args = $section;
 
 						//setup section object
 						$section = new Section( $args );
