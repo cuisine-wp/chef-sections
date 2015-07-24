@@ -7,7 +7,7 @@
  * Author: Luc Princen
  * Author URI: http://www.chefduweb.nl/
  * License: GPLv2
- * Bitbucket Plugin URI: https://LucPrincen@bitbucket.org/chefduweb/new-chefsections
+ * Bitbucket Plugin URI: https://LucPrincen@bitbucket.org/chefduweb/chef-sections
  * Bitbucket Branch:     master
  * 
  * @package ChefSections
