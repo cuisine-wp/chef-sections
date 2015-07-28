@@ -116,9 +116,11 @@ class Section {
 
 		$this->name = $this->getName( $args );
 
-		$this->hide_title = ( isset( $args['hide_title'] ) ? (bool)$args['hide_title'] : false );
+		$this->hide_title = $args['hide_title'];
 
-		$this->hide_container = ( isset( $args['hide_container' ] ) ? (bool)$args['hide_container'] : false );
+		$this->hide_container = $args['hide_container'];
+
+		//cuisine_dump( $args );
 
 		$this->properties = $args;
 
