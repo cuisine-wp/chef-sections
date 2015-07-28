@@ -122,11 +122,14 @@
 
 
 		copyToClipboard: function( _value ){
-			console.log( _value )
 			jQuery( 'body' ).append("<input type='text' id='temp' style='position:absolute;opacity:0;'>");
 			jQuery( '#temp' ).val( _value ).select();
 			document.execCommand( 'copy' );
 			jQuery( '#temp' ).remove();
+		},
+
+		destroy: function(){
+			this.undelegateEvents();
 		}
 
 
@@ -217,8 +220,18 @@
 	});
 
 
+	var _sections = [];
 
 	function setSections(){
+
+		if( _sections.length > 1 ){
+
+			for( var i = 0; _sections.length > i; i++ ){
+				_sections[ i ].destroy();
+			}
+		}
+
+		_sections = [];
 
 		jQuery('.section-wrapper').each( function( index, obj ){
 

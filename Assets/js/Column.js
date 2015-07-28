@@ -333,6 +333,11 @@
 
 			});
 
+		},
+
+		destroy: function(){
+			console.log( 'unbind columns' );
+			this.undelegateEvents();
 		}
 
 	});
@@ -348,6 +353,16 @@
 	var _cols = [];
 
 	function setColumns(){
+
+		if( _cols.length > 0 ){
+
+			for( var i = 0; _cols.length > i; i++ ){
+				_cols[ i ].destroy();
+
+			}
+
+		}
+
 
 		_cols = [];
 
