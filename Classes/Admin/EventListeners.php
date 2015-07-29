@@ -59,8 +59,11 @@
 			add_action( 'edit_form_after_editor', function(){
 
 				global $post;
+
+				//allow sections to be turned off on a per-post basis.
+				$dontload = apply_filters( 'chef_sections_dont_load', array() );
 				
-				if( isset( $post ) ){
+				if( isset( $post ) && !in_array( $post->ID, $dontload ) ){
 
 					SectionsBuilder::build();
 				
