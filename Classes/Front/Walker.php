@@ -59,8 +59,13 @@
 						$section = new Section( $args );
 						
 						ob_start();
+
+							$section->beforeTemplate();
+
 							//render it's template:
 							Template::section( $section )->display();
+
+							$section->afterTemplate();
 
 						$template = ob_get_clean();
 

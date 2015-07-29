@@ -148,6 +148,12 @@ class Section {
 		//add a hook
 		add_action( 'section_before_template', $this );
 
+
+		$class = 'section';
+		$class .= ' '.$section->name;
+
+		echo '<div class="'.$class.'" id="'.$section->name.'">';
+
 	}
 
 	/**
@@ -156,6 +162,8 @@ class Section {
 	 * @return void
 	 */
 	public function afterTemplate(){
+
+		echo '</div>';
 
 		//add a hook
 		add_action( 'section_after_template', $this );
