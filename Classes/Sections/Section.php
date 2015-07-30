@@ -150,9 +150,9 @@ class Section {
 
 
 		$class = 'section';
-		$class .= ' '.$section->name;
+		$class .= ' '.$this->name;
 
-		echo '<div class="'.$class.'" id="'.$section->name.'">';
+		echo '<div class="'.$class.'" id="'.$this->name.'">';
 
 	}
 
