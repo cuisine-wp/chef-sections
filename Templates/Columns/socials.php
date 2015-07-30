@@ -54,6 +54,15 @@
 
 	}
 
+
+	if( $column->getField( 'is' ) ){
+
+		echo '<a href="'.$column->getField( 'is' ).'" class="social is">';
+			echo '<i class="fa fa-instagram"></i>';
+		echo '</a>';
+
+	}
+
 	echo '</div>';
 
 	echo '</div>';

@@ -52,29 +52,33 @@ class SocialsColumn extends DefaultColumn{
 
 		$fields = array(
 
-			'title' => Field::text( 
+			Field::text( 
 				'title', 
 				'Titel'
 			),
-			'fb'	=> Field::text(
+			Field::text(
 				'fb',
 				'Facebook link'
 			),
-			'tw'	=> Field::text(
+			Field::text(
 				'tw',
 				'Twitter link'
 			),
-			'in'	=> Field::text(
+			Field::text(
 				'in',
 				'LinkedIn link'
 			),
-			'gp'	=> Field::text(
+			Field::text(
 				'gp',
 				'Google Plus link'
 			),
-			'pin'	=> Field::text(
+			Field::text(
 				'pin',
 				'Pinterest link'
+			),
+			Field::text(
+				'is',
+				'Instagram link'
 			)
 		);
 
