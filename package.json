@@ -1,6 +1,6 @@
 {
   "name": "chefsections",
-  "version": "1.0.0",
+  "version": "1.2.6",
   "description": "Package for Chef Sections plugin",
   "author": "Luc Princen @ Chef du Web <luc@chefduweb.nl>",
   "private": true,
