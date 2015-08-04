@@ -150,9 +150,11 @@ class Section {
 
 
 		$class = 'section';
-		$class .= ' '.$section->name;
+		$class .= ' '.$this->name;
 
-		echo '<div class="'.$class.'" id="'.$section->name.'">';
+		$class = apply_filters( 'chef_sections_section_class', $class, $this );
+
+		echo '<div class="'.$class.'" id="'.$this->name.'">';
 
 	}
 
