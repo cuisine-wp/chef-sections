@@ -2,10 +2,10 @@ define([
 	
 	'jquery',
 	'autoload',
-	'imagesloaded',
 	'isotope',
+	'imagesloaded'
 
-], function( $, Autoload, imagesLoaded, Isotope ){
+], function( $, Autoload, Isotope ){
 
 	var loader = $('#autoloader').clone();
 	$('#autoloader').remove();

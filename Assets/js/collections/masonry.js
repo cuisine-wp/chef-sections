@@ -1,10 +1,11 @@
 define([
 	
 	'jquery',
-	'imagesloaded',
-	'isotope'
+	'isotope',
+	'imagesloaded'
+	
 
-], function( $, imagesLoaded, Isotope ){
+], function( $, Isotope ){
 
 	$('#main').imagesLoaded( function() {
 	
