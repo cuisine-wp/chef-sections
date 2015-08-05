@@ -1,4 +1,4 @@
-### 1.2.7 2015-08-05
+### 1.2.7: 2015-08-05
 
 * Sections default.php template
 * Naming conventions changed: templates & classes use section->name instead of section->title
@@ -8,7 +8,7 @@
 
 
 
-### 1.2.6 2015-08-03
+### 1.2.6: 2015-08-03
 
 * Added a dont-load section filter
 * Div-wrapping of sections moved to the section-class
