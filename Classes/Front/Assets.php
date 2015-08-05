@@ -34,7 +34,7 @@
 				$url = Url::plugin( 'chef-sections', true ).'Assets/js/libs/';
 				
 				Script::register( 'isotope', $url.'isotope.min', false );
-				Script::register( 'imagesloaded', $url.'imagesloaded.min', false );
+				Script::register( 'imagesloaded', $url.'imagesloaded', false );
 				Script::register( 'autoload', $url.'autoload', false );
 				Script::register( 'fitvids', $url.'fitvids.min', false );
 
