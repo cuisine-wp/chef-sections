@@ -546,8 +546,8 @@ class SectionsBuilder {
 		foreach( $this->sections as $section ){
 
 			if( $section->id === $section_id ){
-				if( isset( $section->title ) && $section->title != '' ){
-					return sanitize_title( $section->title );
+				if( isset( $section->name ) && $section->name != '' ){
+					return $section->name;
 				}
 			}
 
