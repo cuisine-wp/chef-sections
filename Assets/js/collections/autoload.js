@@ -7,10 +7,10 @@ define([
 
 ], function( $, Autoload, Isotope ){
 
-	var loader = $('#autoloader').clone();
-	$('#autoloader').remove();
+	$( document ).ready(function(){
 
-	$('#main').imagesLoaded( function() {
+		var loader = $('#autoloader').clone();
+		$('#autoloader').remove();
 
 		$('.autoload').AutoLoad({
 	

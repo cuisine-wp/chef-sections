@@ -7,7 +7,7 @@ define([
 
 ], function( $, Isotope ){
 
-	$('#main').imagesLoaded( function() {
+	$( document ).ready(function(){
 	
 		/**
 		*		ISOTOPE:
