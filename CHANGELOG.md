@@ -1,3 +1,13 @@
+### 1.2.8: 2015-08-06
+
+* Changed the routing of column-templates to use the section->name instead of section->title
+* Fixed the refreshing bugs in RequireJS
+* Added imagesloaded again
+* Cleaned up the javascript
+* Added this changelog
+
+
+
 ### 1.2.7: 2015-08-05
 
 * Sections default.php template
