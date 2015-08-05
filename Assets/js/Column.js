@@ -336,7 +336,6 @@
 		},
 
 		destroy: function(){
-			console.log( 'unbind columns' );
 			this.undelegateEvents();
 		}
 
