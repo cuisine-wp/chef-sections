@@ -5,24 +5,21 @@ define([
 	'imagesloaded'
 	
 
-], function( $, Isotope ){
+], function( $, Isotope, Imagesloaded ){
 
-	$('#main').imagesLoaded( function() {
+
+	Imagesloaded( '#main', function(){
 	
-		/**
-		*		ISOTOPE:
-		*
-		*/
-
+		/* ISOTOPE */
 		var iso = new Isotope( '.masonry', {
 			itemSelector: '.block',
 			layoutMode: 'masonry',
 			masonry: {
-				gutter: 15,
+				gutter: 30,
 				columnWidth: '.block'
 		  	}
 		});
-	
-	});
 
+	});
+	
 });
