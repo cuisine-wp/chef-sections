@@ -221,7 +221,7 @@ class TemplateFinder {
 				
 
 				$array = array(
-								$base.$this->obj->template.sanitize_title( $this->obj->title ),
+								$base.$this->obj->template.sanitize_title( $this->obj->name ),
 								$base.$this->obj->template.$this->obj->view,
 								$base.$this->obj->view,
 								$base.'default'
