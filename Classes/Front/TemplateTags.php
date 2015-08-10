@@ -44,6 +44,32 @@ function get_section( $post_id, $section_id ){
 
 
 /**
+ * Get the sections from a template 
+ * 
+ * @param  string $name template-name
+ * @return string (html)
+ */
+function get_sections_template( $name ){
+
+	return Walker::get_sections_template( $name );
+
+}
+
+
+/**
+ * A singular fallback for the function above
+ * 
+ * @param  string $name template-name
+ * @return string (html)
+ */
+function get_section_template( $name ){
+
+	return Walker::get_sections_template( $name );
+
+}
+
+
+/**
  * Check if this post has sections
  * @return  bool
  */

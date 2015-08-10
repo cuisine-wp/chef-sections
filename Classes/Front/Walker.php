@@ -77,6 +77,39 @@
 		}
 
 
+		/**
+		* Get all sections in a template
+		*
+		* @param string $name of the post
+		* @return string (html)
+		*/
+		public function get_sections_template( $name ){
+
+			$args = array(
+				'name' => $name,
+				'post_type' => 'section-template',
+				'post_status' => 'publish',
+				'showposts' => 1,
+			);
+			
+			$posts = get_posts($args);
+
+			if( !$posts )
+				return false;
+
+
+       		$template = $posts[0]; 	
+
+       		$this->postId = $template->ID;	
+			
+			$this->sections = $this->getSections();
+			$this->highestId = $this->getHighestId();
+
+			return self::walk();
+
+		}
+
+
 
 		/**
 		 * Walk through all columns of this section & get templates

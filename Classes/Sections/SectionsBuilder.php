@@ -27,7 +27,7 @@ class SectionsBuilder {
 	 *
 	 * @var int
 	 */
-	private $postId = null;
+	public $postId = null;
 
 	/**
 	 * Keep the sections id's unique and get the highest
@@ -409,7 +409,7 @@ class SectionsBuilder {
 	 * 
 	 * @return array
 	 */
-	private function getSections(){
+	public function getSections(){
 
 		$sections = get_post_meta( $this->postId, 'sections', true );
 		$array = array();
@@ -493,7 +493,7 @@ class SectionsBuilder {
 	 * 
 	 * @return Int
 	 */
-	private function getHighestId(){
+	public function getHighestId(){
 
 		$highID = 0;
 
