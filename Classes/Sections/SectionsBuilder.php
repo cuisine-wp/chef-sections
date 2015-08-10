@@ -453,7 +453,7 @@ class SectionsBuilder {
 				'position'			=> ( count( $this->sections ) + 1 ),
 				'post_id'			=> $post_id,
 				'title'				=> __( 'Sectie titel', 'chefsections' ),
-				'hide_title'		=> false,
+				'hide_title'		=> apply_filters('chef_sections_hide_title', false ),
 				'hide_container'	=> apply_filters('chef_sections_hide_container', true ),
 				'view'				=> 'fullwidth'
 		);

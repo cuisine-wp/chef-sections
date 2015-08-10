@@ -56,10 +56,16 @@ class CollectionColumn extends DefaultColumn{
 	 */
 	public function getQuery(){
 
+		global $wp_the_query;
+
 		//return the cached query if it exists:
 		if( $this->query )
 			return $this->query;
 
+
+		//get paged always from the global value:
+		$this->page = $wp_the_query->query_vars['paged'];
+		
 
 		//else, create a new query
 		$args = array(
