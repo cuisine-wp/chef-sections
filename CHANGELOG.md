@@ -1,3 +1,12 @@
+### 1.2.9: 2015-08-10
+
+* Added Pagination to collections
+* Added the option to call a Section-template by name.
+* Added a 'hide-section-title' defaults filter.
+* Minor bugfixes
+
+
+
 ### 1.2.8: 2015-08-06
 
 * Changed the routing of column-templates to use the section->name instead of section->title
