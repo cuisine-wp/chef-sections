@@ -167,6 +167,17 @@
 			text-align:right;
 			padding-top:10px;
 
+			label{
+				width:30px;
+				height:20px;
+				padding:3px;
+				border:1px solid #e5e5e5;
+				margin:-3px 0 0 -3px;
+				box-shadow:0 0 2px rgba(0,0,0,.1);
+				color:#fff;
+				text-align:center;
+			}
+
 			> span{
 				width:32px;
 				height:22px;
@@ -174,6 +185,12 @@
 				background-repeat:no-repeat;
 				display:inline-block;
 				margin-left:10px;
+
+				&.fullwidth, &.half-half, &.sidebar-right, &.sidebar-left, &.three-columns, &.four-columns{
+					label{
+						text-indent: -9999px;
+					}
+				}
 
 				&.half-half{
 					background:url('../images/half-half.png');
@@ -197,14 +214,9 @@
 			}
 
 
-			label{
-				width:30px;
-				height:20px;
-				padding:3px;
-				border:1px solid #e5e5e5;
-				margin:-3px 0 0 -3px;
-				box-shadow:0 0 2px rgba(0,0,0,.1);
-			}
+			
+
+		
 
 			input{
 				display:none;

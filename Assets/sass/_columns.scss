@@ -1,21 +1,22 @@
 //columns
 .section-columns{
 	padding:15px;
-	margin-bottom:15px;
 	display: flex;
 	flex-direction: row;
 	align-items: stretch;
+	flex-flow:row wrap;
+	justify-content:space-between;
 
 	.column{
-		flex: 1;
+		flex: 1 0 22%;
 		box-sizing:border-box;
 		background:#f9f9f9;
 		box-shadow:inset 0 0 10px rgba(0,0,0,.2);
 		border-radius:3px;
+		margin:0 15px 15px 0;
 		border:1px solid #ccc;
 		position:relative;
 		padding:15px 15px 55px 15px;
-		float:left;
 		text-align:center;
 		font-weight:bold;
 

@@ -146,6 +146,16 @@
   text-align: right;
   padding-top: 10px;
 }
+.section-wrapper .section-controls .radio label {
+  width: 30px;
+  height: 20px;
+  padding: 3px;
+  border: 1px solid #e5e5e5;
+  margin: -3px 0 0 -3px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  text-align: center;
+}
 .section-wrapper .section-controls .radio > span {
   width: 32px;
   height: 22px;
@@ -153,6 +163,9 @@
   background-repeat: no-repeat;
   display: inline-block;
   margin-left: 10px;
+}
+.section-wrapper .section-controls .radio > span.fullwidth label, .section-wrapper .section-controls .radio > span.half-half label, .section-wrapper .section-controls .radio > span.sidebar-right label, .section-wrapper .section-controls .radio > span.sidebar-left label, .section-wrapper .section-controls .radio > span.three-columns label, .section-wrapper .section-controls .radio > span.four-columns label {
+  text-indent: -9999px;
 }
 .section-wrapper .section-controls .radio > span.half-half {
   background: url("../images/half-half.png");
@@ -168,14 +181,6 @@
 }
 .section-wrapper .section-controls .radio > span.four-columns {
   background: url("../images/four-cols.png");
-}
-.section-wrapper .section-controls .radio label {
-  width: 30px;
-  height: 20px;
-  padding: 3px;
-  border: 1px solid #e5e5e5;
-  margin: -3px 0 0 -3px;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
 }
 .section-wrapper .section-controls .radio input {
   display: none;
@@ -337,21 +342,22 @@
 
 .section-columns {
   padding: 15px;
-  margin-bottom: 15px;
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 .section-columns .column {
-  flex: 1;
+  flex: 1 0 22%;
   box-sizing: border-box;
   background: #f9f9f9;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 3px;
+  margin: 0 15px 15px 0;
   border: 1px solid #ccc;
   position: relative;
   padding: 15px 15px 55px 15px;
-  float: left;
   text-align: center;
   font-weight: bold;
 }
