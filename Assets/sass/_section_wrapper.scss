@@ -32,6 +32,7 @@
 	margin-top:30px;
 
 
+
 	.section-footer{
 		-webkit-transition: opacity .3s; /* Safari */
 		transition: opacity .3s;
@@ -328,6 +329,34 @@
 			padding:0 20px;
 		}
 	}
+
+
+	&.reference{
+
+		.field-wrapper.radio{
+			opacity:.3;
+			pointer-events:none !important;
+		}
+
+		.section-columns{
+			background:#fff;
+
+			.button{
+				position:absolute;
+				left:50%;
+				top:50%;
+				margin:-20px 0 0 -70px;
+			}
+		}
+
+		.column{
+			opacity:.15;
+			pointer-events:none !important;
+		}
+
+		
+	}
+
 }
 
 .section-placeholder{

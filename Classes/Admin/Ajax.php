@@ -75,11 +75,13 @@
 
 				parent::setPostGlobal();
 
-				if( SectionsBuilder::loadTemplate() ){
+				SectionsBuilder::addReference();
 
-					echo SectionsBuilder::rebuild();
+			//	if( SectionsBuilder::loadTemplate() ){
 
-				}
+			//		echo SectionsBuilder::rebuild();
+
+			//	}
 
 				die();
 

@@ -4,7 +4,7 @@
 
 	use ChefSections\Wrappers\StaticInstance;
 	use ChefSections\Wrappers\SectionsBuilder;
-	use ChefSections\Sections\SectionTemplates;
+	use ChefSections\Sections\Templates;
 	use Cuisine\Utilities\Url;
 
 	class EventListeners extends StaticInstance{
@@ -116,7 +116,7 @@
 			add_action( 'admin_init', function(){
 
 				//metaboxes for section templates:
-				SectionTemplates::metabox();
+				Templates::metabox();
 
 			});
 
@@ -130,7 +130,7 @@
 
 				if( $status == 'auto-draft' && $pagenow == 'post-new.php' ){
 
-					SectionTemplates::applyTemplates( $post_id );
+					Templates::applyTemplates( $post_id );
 
 				}
 			});

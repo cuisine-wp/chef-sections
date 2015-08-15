@@ -116,6 +116,7 @@ class DefaultColumn {
 		);
 
 
+
 		$defaults = $this->getDefaultColumnArgs();
 		$props = wp_parse_args( $props, $defaults );
 

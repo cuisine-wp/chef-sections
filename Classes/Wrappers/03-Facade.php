@@ -56,6 +56,7 @@
             $aliases = array(
                 'column'                  => 'ChefSections\Columns\ColumnBuilder',
                 'section'                 => 'ChefSections\Sections\Section',
+                'reference'               => 'ChefSections\Sections\Reference',
                 'sectionsbuilder'         => 'ChefSections\Sections\SectionsBuilder',
                 'walker'                  => 'ChefSections\Front\Walker',
                 'template'                => 'ChefSections\Front\TemplateFinder',

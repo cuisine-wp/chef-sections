@@ -13,8 +13,7 @@ use stdClass;
  * Set admin meta boxes per section.
  * @package ChefSections\Admin
  */
-class SectionTemplates {
-
+class Templates {
 
 
 	/**
@@ -56,7 +55,6 @@ class SectionTemplates {
 
 		$args = array( 'post_type' => 'section-template', 'posts_per_page' => $ppp );
 
- 		
  		$mq = array();
 
  		//suited for this post type:

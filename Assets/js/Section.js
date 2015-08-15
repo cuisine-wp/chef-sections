@@ -174,7 +174,8 @@
 
 			$.post( ajaxurl, data, function( response ){
 
-				jQuery('#section-container').replaceWith( response );
+
+				jQuery('#section-container').append( response );
 				$('.section-wrapper.msg').remove();
 
 				setSections();

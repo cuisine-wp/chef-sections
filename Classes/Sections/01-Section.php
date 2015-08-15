@@ -89,6 +89,21 @@ class Section {
 	 */
 	public $hide_container;
 
+	/**
+	 * Boolean to detirmine if this is a reference section
+	 * 
+	 * @var boolean
+	 */
+	public $is_reference = false;
+
+
+	/**
+	 * The ID for this reference template
+	 * 
+	 * @var integer
+	 */
+	public $reference_id = 0;
+
 
 	/**
 	 * Array containing all properties of this section
@@ -108,6 +123,8 @@ class Section {
 		$this->post_id = $args['post_id'];
 		$post = get_post( $this->post_id );
 
+		$this->reference_id = ( isset( $args['reference_id'] ) ? $args['reference_id'] : false );
+
 		$this->position = $args['position'];
 
 		$this->title = $args['title'];
@@ -116,11 +133,9 @@ class Section {
 
 		$this->name = $this->getName( $args );
 
-		$this->hide_title = $args['hide_title'];
+		$this->hide_title = ( isset( $args['hide_title'] ) ? $args['hide_title'] : 'false' );
 
-		$this->hide_container = $args['hide_container'];
-
-		//cuisine_dump( $args );
+		$this->hide_container = ( isset( $args['hide_container'] ) ? $args['hide_container'] : 'false' );
 
 		$this->properties = $args;
 
@@ -188,7 +203,11 @@ class Section {
 
 		if( is_admin() ){
 
-			echo '<div class="section-wrapper ui-state-default section-'.$this->id.'" ';
+			$class = 'section-wrapper ui-state-default section-'.$this->id;
+			if( $this->is_reference )
+				$class .= ' reference';
+
+			echo '<div class="'.$class.'" ';
 				echo 'id="'.$this->id.'" ';
 				$this->buildIds();
 			echo '>';
@@ -198,10 +217,21 @@ class Section {
 
 				echo '<div class="section-columns '.$this->view.'">';
 	
+
 				foreach( $this->columns as $column ){
 	
 					echo $column->build();
 	
+				}
+
+				if( $this->is_reference ){
+
+					echo '<a href="'.admin_url( 'post.php?post='.$this->reference_id.'&action=edit' ).'" class="button button-primary">';
+
+						_e( 'Bewerk dit sjabloon', 'chefsections' );
+
+					echo '</a>';
+
 				}
 
 				echo '<div class="clearfix"></div>';
@@ -367,7 +397,7 @@ class Section {
 	 * 
 	 * @return array
 	 */
-	private function getColumns( $columns ){
+	public function getColumns( $columns ){
 
 		$arr = array();
 
@@ -476,6 +506,15 @@ class Section {
 			)
 		);
 
+		$ref = Field::hidden(
+		
+			$prefix.'[is_reference]',
+			array(
+				'defaultValue' => $this->is_reference
+			)
+		
+		);
+
 		$fields = array(
 
 			$title,
@@ -484,9 +523,24 @@ class Section {
 			$container,
 			$position,
 			$post_id,
+			$ref,
 			$id
 
 		);
+
+
+		if( $this->reference_id !== 0 ){
+
+			$fields[] = Field::hidden(
+			
+				$prefix.'[reference_id]',
+				array(
+					'defaultValue' => $this->reference_id
+				)
+		
+			);
+
+		}
 
 		$fields = apply_filters( 'chef_sections_setting_fields', $fields, $this, $prefix );
 

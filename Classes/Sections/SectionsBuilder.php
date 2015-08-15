@@ -63,6 +63,7 @@ class SectionsBuilder {
 			$this->postId = $post->ID;	
 			
 			$this->sections = $this->getSections();
+
 			$this->highestId = $this->getHighestId();
 		
 		}
@@ -125,7 +126,7 @@ class SectionsBuilder {
 	private function addSectionButton(){
 
 		$args = array( 'multiple' => true, 'dropdown' => true );
-		$templates = SectionTemplates::getTemplates( $args );
+		$templates = Templates::getTemplates( $args );
 
 
 		echo '<div class="section-wrapper dotted-bg">';
@@ -277,6 +278,58 @@ class SectionsBuilder {
 		return $section->build();
 	}
 
+
+	/**
+	 * Add a reference section
+	 *
+	 * @return string (html of new section)
+	 */
+	public function addReference( $templateId = null ){
+
+		//check for a template-id via POST
+		if( isset( $_POST['template_id'] ) )
+			$templateId = $_POST['template_id'];
+
+		//no template id? though luck.
+		if( $templateId == null )
+			return false;
+
+
+		$this->init();
+		$this->highestId += 1;
+
+		//get the defaults:
+		$args = $this->getDefaultSectionArgs();
+		$parent = array_values( get_post_meta( $templateId, 'sections', true ) );
+
+		//only if theres a section here:
+		if( isset( $parent[0] ) ){
+
+			$parent = $parent[0];
+			$columns = $parent['columns'];
+	
+	
+			$args['title'] = $parent['title'];
+			$args['view'] = $parent['view'];
+			$args['hide_title'] = $parent['hide_title'];
+			$args['hide_container'] = $parent['hide_container'];
+			$args['reference_id'] = $templateId;
+			$args['is_reference'] = true;
+			$args['columns'] = $parent['columns'];
+	
+
+			//save this section:
+			$_sections = get_post_meta( $this->postId, 'sections', true );
+			$_sections[ $args['id'] ] = $args;
+			update_post_meta( $this->postId, 'sections', $_sections );
+
+
+			$section = new Reference( $args );
+
+			return $section->build();
+		}
+	}
+
 	/**
 	 * Delete section
 	 * 
@@ -420,12 +473,23 @@ class SectionsBuilder {
 		
 			if( $sections ){
 
-	
 				foreach( $sections as $section ){
 	
-					//temp $args === $section
-					$args = $section;
-					$array[] = new Section( $args );
+
+					if( 
+						!isset( $section['is_reference'] ) || 
+						$section['is_reference'] == false
+					){
+						
+						$array[] = new Section( $section );						
+
+					}else{
+		
+						$array[] = new Reference( $section );
+						
+
+					}
+					
 			
 				}
 			}
