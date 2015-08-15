@@ -332,6 +332,27 @@ class SectionsBuilder {
 	}
 
 
+	/**
+	 * Save the order of metaboxes
+	 * 
+	 * @return bool (success / no success)
+	 */
+	public function sortSections(){
+
+		$ids = $_POST['section_ids'];
+
+		//save this section:
+		$_sections = get_post_meta( $this->postId, 'sections', true );
+		
+		$i = 1;
+		foreach( $ids as $section_id ){
+			$_sections[ $section_id ]['position'] = $i;
+			$i++;
+		}
+
+		update_post_meta( $this->postId, 'sections', $_sections );
+	}
+
 
 	/*=============================================================*/
 	/**             Section Templates                              */
@@ -435,29 +456,6 @@ class SectionsBuilder {
 		update_post_meta( $this->postId, 'sections', $_sections );
 
 		return true;
-	}
-
-
-
-	/**
-	 * Save the order of metaboxes
-	 * 
-	 * @return bool (success / no success)
-	 */
-	public function sortSections(){
-
-		$ids = $_POST['section_ids'];
-
-		//save this section:
-		$_sections = get_post_meta( $this->postId, 'sections', true );
-		
-		$i = 1;
-		foreach( $ids as $section_id ){
-			$_sections[ $section_id ]['position'] = $i;
-			$i++;
-		}
-
-		update_post_meta( $this->postId, 'sections', $_sections );
 	}
 
 
