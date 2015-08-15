@@ -76,13 +76,6 @@
 				parent::setPostGlobal();
 
 				SectionsBuilder::addReference();
-
-			//	if( SectionsBuilder::loadTemplate() ){
-
-			//		echo SectionsBuilder::rebuild();
-
-			//	}
-
 				die();
 
 			});
