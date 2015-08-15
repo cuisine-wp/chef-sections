@@ -1,3 +1,12 @@
+### 1.3.0: 2015-08-15
+
+* New stable tag
+* Added Template References 
+* Added support for new section view types
+* Minor bugfixes
+
+
+
 ### 1.2.9: 2015-08-10
 
 * Added Pagination to collections
