@@ -4,6 +4,8 @@ namespace ChefSections\Sections;
 
 use ChefSections\Wrappers\Column;
 
+use Cuisine\Wrappers\User;
+
 class Reference extends Section{
 
 	/**
@@ -14,6 +16,60 @@ class Reference extends Section{
 	public $is_reference = true;
 
 
+
+
+	/**
+	 * Overwrite the Build function for this reference
+	 * 
+	 * @return String (html, echoed)
+	 */
+	public function build(){
+
+		if( is_admin() ){
+
+			$class = 'section-wrapper ui-state-default section-'.$this->id;
+			if( $this->is_reference )
+				$class .= ' reference';
+
+			echo '<div class="'.$class.'" ';
+				echo 'id="'.$this->id.'" ';
+				$this->buildIds();
+			echo '>';
+
+				if( User::hasRole( 'administrator' ) )
+					$this->buildControls();
+
+				echo '<div class="section-columns '.$this->view.'">';
+	
+
+				foreach( $this->columns as $column ){
+	
+					echo $column->build();
+	
+				}
+
+				echo '<p class="template-txt">';
+					printf( __( 'Dit is het sjabloon "%s." Bij het aanpassen wordt deze op iedere pagina aangepast.', 'chefsections' ), get_the_title( $this->reference_id ) );
+				echo '</p>';
+
+				echo '<a href="'.admin_url( 'post.php?post='.$this->reference_id.'&action=edit' ).'" class="button button-primary">';
+
+					_e( 'Bewerk dit sjabloon', 'chefsections' );
+
+				echo '</a>';
+
+				echo '<div class="clearfix"></div>';
+				echo '</div>';
+
+				if( User::hasRole( 'administrator' ) ){
+					$this->bottomControls();
+					$this->buildSettingsPanel();
+				}
+			
+			echo '<div class="loader"><span class="spinner"></span></div>';
+			echo '</div>';
+		}
+	}
 
 
 	/**

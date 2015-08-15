@@ -241,7 +241,7 @@ class SectionsBuilder {
 
 
 	/*=============================================================*/
-	/**             Ajax                                           */
+	/**    Section create, delete & view-change                    */
 	/*=============================================================*/
 
 
@@ -277,6 +277,65 @@ class SectionsBuilder {
 
 		return $section->build();
 	}
+
+
+
+	/**
+	 * Delete section
+	 * 
+	 * @return void
+	 */
+	public function deleteSection(){
+
+		$section_id = $_POST['section_id'];
+		$_sections = get_post_meta( $this->postId, 'sections', true );
+		unset( $_sections[ $section_id ] );
+		update_post_meta( $this->postId, 'sections', $_sections );
+		echo 'true';
+	}
+
+
+	/**
+	 * Get the new section view 
+	 * 
+	 * @return string
+	 */
+	public function changeView(){
+
+		$section_id = $_POST['section_id'];
+		$view = $_POST['view'];
+
+		$_sections = get_post_meta( $this->postId, 'sections', true );
+		$_sections[ $section_id ]['view'] = $view;
+
+		//add columns if needed:
+		$default = $this->getDefaultColumns( $view );
+		$existing = $_sections[ $section_id ]['columns'];
+		$new = array();
+
+		foreach( $default as $key => $col ){
+
+			if( !isset( $existing[ $key ] ) ){
+				$new[ $key ] = $default[ $key ];
+			}else{
+				$new[ $key ] = $existing[ $key ];
+			}
+		}
+		
+		$_sections[ $section_id ]['columns'] = $new;
+
+		update_post_meta( $this->postId, 'sections', $_sections );
+
+		$section = new Section( $_sections[ $section_id ] );
+		return $section->build();
+	
+	}
+
+
+
+	/*=============================================================*/
+	/**             Section Templates                              */
+	/*=============================================================*/
 
 
 	/**
@@ -328,57 +387,6 @@ class SectionsBuilder {
 
 			return $section->build();
 		}
-	}
-
-	/**
-	 * Delete section
-	 * 
-	 * @return void
-	 */
-	public function deleteSection(){
-
-		$section_id = $_POST['section_id'];
-		$_sections = get_post_meta( $this->postId, 'sections', true );
-		unset( $_sections[ $section_id ] );
-		update_post_meta( $this->postId, 'sections', $_sections );
-		echo 'true';
-	}
-
-
-	/**
-	 * Get the new section view 
-	 * 
-	 * @return string
-	 */
-	public function changeView(){
-
-		$section_id = $_POST['section_id'];
-		$view = $_POST['view'];
-
-		$_sections = get_post_meta( $this->postId, 'sections', true );
-		$_sections[ $section_id ]['view'] = $view;
-
-		//add columns if needed:
-		$default = $this->getDefaultColumns( $view );
-		$existing = $_sections[ $section_id ]['columns'];
-		$new = array();
-
-		foreach( $default as $key => $col ){
-
-			if( !isset( $existing[ $key ] ) ){
-				$new[ $key ] = $default[ $key ];
-			}else{
-				$new[ $key ] = $existing[ $key ];
-			}
-		}
-		
-		$_sections[ $section_id ]['columns'] = $new;
-
-		update_post_meta( $this->postId, 'sections', $_sections );
-
-		$section = new Section( $_sections[ $section_id ] );
-		return $section->build();
-	
 	}
 
 
@@ -451,6 +459,7 @@ class SectionsBuilder {
 
 		update_post_meta( $this->postId, 'sections', $_sections );
 	}
+
 
 
 	/*=============================================================*/

@@ -203,11 +203,7 @@ class Section {
 
 		if( is_admin() ){
 
-			$class = 'section-wrapper ui-state-default section-'.$this->id;
-			if( $this->is_reference )
-				$class .= ' reference';
-
-			echo '<div class="'.$class.'" ';
+			echo '<div class="section-wrapper ui-state-default section-'.$this->id.'" ';
 				echo 'id="'.$this->id.'" ';
 				$this->buildIds();
 			echo '>';
@@ -252,7 +248,7 @@ class Section {
 	 * 
 	 * @return String ( html, echoed )
 	 */
-	private function buildControls(){
+	public function buildControls(){
 
 		$fields = $this->getControlFields();
 
@@ -283,7 +279,7 @@ class Section {
 	 * 
 	 * @return string (html, echoed)
 	 */
-	private function bottomControls(){
+	public function bottomControls(){
 
 		echo '<div class="section-footer">';
 			echo '<p class="delete-section">';
@@ -305,7 +301,7 @@ class Section {
 	 * 
 	 * @return string ( html, echoed )
 	 */
-	private function buildIds(){
+	public function buildIds(){
 
 		echo 'data-section_id="'.$this->id.'" ';
 		echo 'data-post_id="'.$this->post_id.'"';
@@ -355,7 +351,12 @@ class Section {
 	}
 
 
-	private function buildSettingsPanel(){
+	/**
+	 * Create the settings panel with it's fields
+	 * 
+	 * @return string (html, echoed)
+	 */
+	public function buildSettingsPanel(){
 
 		$fields = $this->getSettingsFields();
 

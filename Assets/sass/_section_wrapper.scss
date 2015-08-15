@@ -347,6 +347,20 @@
 				top:50%;
 				margin:-20px 0 0 -70px;
 			}
+
+			.template-txt{
+				position:absolute;
+				display:block;
+				top:25%;
+				font-size:16px;
+				font-weight:bold;
+				line-height:150%;
+				padding-left:25%;
+				padding-right:25%;
+				left:0;
+				right:0;
+				text-align:center;
+			}
 		}
 
 		.column{
