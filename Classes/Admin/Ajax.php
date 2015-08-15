@@ -70,7 +70,7 @@
 
 			});
 
-
+			//load a template with ajax:
 			add_action( 'wp_ajax_loadTemplate', function(){
 
 				parent::setPostGlobal();
