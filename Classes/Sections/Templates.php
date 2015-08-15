@@ -10,8 +10,9 @@ use WP_Query;
 use stdClass;
 
 /**
- * Set admin meta boxes per section.
- * @package ChefSections\Admin
+ * Metabox and admin-related functions for section templates
+ * 
+ * @package ChefSections\Sections
  */
 class Templates {
 
