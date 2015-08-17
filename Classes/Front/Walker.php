@@ -98,7 +98,10 @@
 				return false;
 
 
-       		$template = $posts[0]; 	
+       		$template = $posts[0];
+			
+			//set the new post global
+       		$GLOBALS['post'] = $template;
 
        		$this->postId = $template->ID;	
 			
