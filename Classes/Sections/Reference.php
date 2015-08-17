@@ -44,7 +44,8 @@ class Reference extends Section{
 
 				foreach( $this->columns as $column ){
 	
-					echo $column->build();
+					//build column with reference-mode on:
+					echo $column->build( true );
 	
 				}
 
