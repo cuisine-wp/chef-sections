@@ -1,3 +1,12 @@
+### 1.3.1: 2015-08-17
+
+* Critical bugfix in templates
+* Template-check
+* Inline docs
+* Minor bugfixes
+
+
+
 ### 1.3.0: 2015-08-15
 
 * New stable tag
