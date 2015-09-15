@@ -276,7 +276,7 @@ class CollectionColumn extends DefaultColumn{
 	 * 
 	 * @return array
 	 */
-	private function getFields(){
+	public function getFields(){
 
 
 		$orderby = array(

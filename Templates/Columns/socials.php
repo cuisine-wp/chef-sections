@@ -8,7 +8,7 @@
 
 	}
 
-
+	
 	echo '<div class="socials-icons">';
 
 	if( $column->getField( 'fb' ) ){
