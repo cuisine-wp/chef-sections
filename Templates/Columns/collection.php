@@ -35,6 +35,10 @@
 
 			Pagination::display( $query );
 
+		}else if( $column->getField( 'nav' ) == 'autoload' ){
+
+			Template::element( 'loader' )->display(); 
+
 		}
 
 	}else if( $query->have_posts() && $view === 'list' ){
