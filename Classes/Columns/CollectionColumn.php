@@ -84,7 +84,7 @@ class CollectionColumn extends DefaultColumn{
 			$args['category_name'] = $category;
 
 
-		$args = apply_filters( 'chef_sections_collection_query', $args );
+		$args = apply_filters( 'chef_sections_collection_query', $args, $this );
 		$this->query = new WP_Query( $args );
 		
 		return $this->query;
