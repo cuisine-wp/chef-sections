@@ -230,6 +230,10 @@
 				var input = jQuery( inputs[ a ] );
 				var val = input.val();
 				var name = input.attr('name');
+				var type = input.attr('type');
+
+				if( type == 'checkbox' && input.is( ':checked' ) === false )
+					continue retloop;
 
 				if( name !== undefined ){
 
