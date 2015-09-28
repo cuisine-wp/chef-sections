@@ -31,34 +31,16 @@
 		}
 
 	}else if( $query->have_posts() && $view === 'list' ){
-			
-		while( $query->have_posts() ){
-			$query->the_post();
-
-			if( $inRow == 0 && $grid !== 'masonry' )
 				
-					echo '<div class="block-row column-row">';
-						echo '<ul>';
-
-							echo'<li><a href="'.get_the_permalink().'">'.get_the_title().'</a></li>';
-
-						echo '</ul>';
-	
-			$i++; $inRow++;
-			if( ( $inRow == $maxRow || $i == $maxPosts || $i == $query->found_posts ) && $grid !== 'masonry' ){
-				echo '</div>';
-				$inRow = 0;
+		echo '<div class="block-row column-row">';
+			echo '<ul>';
+			
+			while( $query->have_posts() ){
+				$query->the_post();
+				echo'<li><a href="'.get_the_permalink().'">'.get_the_title().'</a></li>';
 			}
-
-		}
-
-		if( $column->getField( 'nav', 'pagination' ) == 'pagination' ){
-
-			Pagination::display( $query );
-
-		}else if( $column->getField( 'nav' ) == 'autoload' ){
-
-			Template::element( 'loader' )->display(); 
+			
+			echo '</ul>';
 
 		}
 
