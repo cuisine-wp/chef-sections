@@ -46,6 +46,16 @@
 
 
 	}
+	
+	if( $column->getField( 'nav', 'pagination' ) == 'pagination' ){
+
+		Pagination::display( $query );
+
+	}else if( $column->getField( 'nav' ) == 'autoload' ){
+
+		Template::element( 'loader' )->display(); 
+
+	}
 
 
 
