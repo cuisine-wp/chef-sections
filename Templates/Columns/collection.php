@@ -23,7 +23,8 @@
 					get_block_template( $column );
 	
 			$i++; $inRow++;
-			if( ( $inRow == $maxRow || $i == $maxPosts || $i == $query->found_posts ) && $grid !== 'masonry' ){
+			if( ( $inRow == $maxRow || $i == $maxPosts || $i == $query->found_posts || $i == $query->post_count ) && $grid !== 'masonry' ){
+
 				echo '</div>';
 				$inRow = 0;
 			}
