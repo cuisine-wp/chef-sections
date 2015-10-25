@@ -63,9 +63,18 @@ class CollectionColumn extends DefaultColumn{
 			return $this->query;
 
 
-		//get paged always from the global value:
-		$this->page = $wp_the_query->query_vars['paged'];
-		
+		//if our nav property is set, get pagination info:
+		if( $this->getField( 'nav', 'none' ) != 'none' ){
+
+			//get the paged variable from the original global query, else default to 0.
+			$this->page = ( isset( $wp_the_query->query_vars['paged'] ) ? $wp_the_query->query_vars['paged'] : 0 );
+			
+		}else{
+			
+			$this->page = 0;
+
+		}
+
 
 		//else, create a new query
 		$args = array(
@@ -84,7 +93,9 @@ class CollectionColumn extends DefaultColumn{
 			$args['category_name'] = $category;
 
 
+		$args = apply_filters( 'chef_sections_collection_query', $args, $this );
 		$this->query = new WP_Query( $args );
+		
 		return $this->query;
 	}
 	
