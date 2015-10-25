@@ -1,3 +1,23 @@
+### 1.3.2: 2015-09-20
+
+* Collection queries are filterable now
+* Made the Collection column field-getter overwritable
+* Default collection template now supports autoloading
+* Critical bugfix for posts with excerpts and sections
+* Critical bugfix for an error with empty columns
+* Critical bugfix for section templates
+* Minor bugfixes
+
+
+### 1.3.1: 2015-08-17
+
+* Critical bugfix in templates
+* Template-check
+* Inline docs
+* Minor bugfixes
+
+
+
 ### 1.3.0: 2015-08-15
 
 * New stable tag

@@ -402,15 +402,18 @@ class Section {
 
 		$arr = array();
 
-		//populate the columns array with actual column objects
-		foreach( $columns as $col_key => $type ){
+		if( !empty( $columns ) ){
 
-			$props = array(
-				'post_id'	=>	 $this->post_id
-			);
-
-			$arr[] = Column::$type( $col_key, $this->id, $props );
-
+			//populate the columns array with actual column objects
+			foreach( $columns as $col_key => $type ){
+	
+				$props = array(
+					'post_id'	=>	 $this->post_id
+				);
+	
+				$arr[] = Column::$type( $col_key, $this->id, $props );
+	
+			}
 		}
 
 		return $arr;

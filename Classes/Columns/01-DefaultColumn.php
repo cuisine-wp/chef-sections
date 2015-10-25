@@ -70,6 +70,15 @@ class DefaultColumn {
 	public $hasLightbox = true;
 
 
+
+	/**
+	 * Is this column in reference-mode?
+	 * 
+	 * @var boolean
+	 */
+	public $referenceMode = false;
+
+
 	/**
 	 * Start the column and feed it the right ID's
 	 * 
@@ -175,10 +184,13 @@ class DefaultColumn {
 
 	/**
 	 * Generate the preview for the backend
-	 * 
+	 *
+ 	 * @param  bool $ref Build in reference-mode
 	 * @return String (html, echoed)
 	 */
-	public function build(){
+	public function build( $ref = false ){
+
+		$this->referenceMode = $ref;
 
 		echo '<div class="column '.$this->type.'" ';
 		echo $this->buildIds().'>';
@@ -224,9 +236,14 @@ class DefaultColumn {
 		$labels = Sort::pluck( Column::getAvailableTypes(), 'name' );
 
 		$types = array_combine( $keys, $labels );
+		$name = '_column_type_'.$this->fullId;
+
+		if( $this->referenceMode )
+			$name = 'reference_'.$this->fullId;
+
 
 		$typeSelector = Field::select( 
-			'_column_type_'.$this->fullId, 
+			$name,
 			'',
 			$types,
 			array(
