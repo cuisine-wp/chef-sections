@@ -215,8 +215,9 @@ class Section {
 	
 
 				foreach( $this->columns as $column ){
-	
-					echo $column->build();
+					
+					if( $column )
+						echo $column->build();
 	
 				}
 
@@ -410,9 +411,15 @@ class Section {
 				$props = array(
 					'post_id'	=>	 $this->post_id
 				);
+
+				if( Column::typeExists( $type ) ){
+
+					$arr[] = Column::$type( $col_key, $this->id, $props );
 	
-				$arr[] = Column::$type( $col_key, $this->id, $props );
-	
+				}else{
+					$arr[] = false;
+				
+				}
 			}
 		}
 
