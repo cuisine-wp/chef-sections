@@ -1,3 +1,14 @@
+### 1.3.3: 2015-10-25
+
+* Adds a list-view to collections
+* Fixes issues with pagination in collections.
+* Checks post-count when adding the collection closing div.
+* Adds saving of multiple checkboxes in a column lightbox
+* Adds the column-object as a second parameter to the collection_query filter.
+* Minor bugfixes
+
+
+
 ### 1.3.2: 2015-09-20
 
 * Collection queries are filterable now
