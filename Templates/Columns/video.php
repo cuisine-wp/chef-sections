@@ -3,11 +3,11 @@
 		<?php 
 
 			$still = $column->getField( 'still' );
-			if( $still ){
+			if( $still && $still['full'] != '' ){
 
 				$url = $still['full'];
 
-				if( isset( $still['large'] ) )
+				if( isset( $still['large'] ) && $still['large'] != '' )
 					$url = $still['large'];
 
 				echo '<img src="'.$url.'" class="video-still"/>';
