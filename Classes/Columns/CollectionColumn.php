@@ -131,7 +131,7 @@ class CollectionColumn extends DefaultColumn{
 			$class .= ' autoload';
 
 		if( $nav !== 'autoload' || $this->page == 1 )
-			echo '<div class="'.$class.'" '.$datas.'>';
+			echo '<div id="collection_'.$this->fullId.'" class="'.$class.'" '.$datas.'>';
 
 	}
 
