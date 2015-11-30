@@ -59,7 +59,7 @@ class CollectionColumn extends DefaultColumn{
 		global $wp_the_query;
 
 		//return the cached query if it exists:
-		if( $this->query )
+		if( $this->query && ( !defined('DOING_AJAX') || DOING_AJAX === false ) )
 			return $this->query;
 
 
@@ -95,6 +95,7 @@ class CollectionColumn extends DefaultColumn{
 
 
 		$args = apply_filters( 'chef_sections_collection_query', $args, $this );
+		
 		$this->query = new WP_Query( $args );
 
 		return $this->query;
