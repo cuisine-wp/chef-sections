@@ -197,6 +197,17 @@ class ColumnBuilder {
 	}
 
 
+	/**
+	 * Check if a column-type exists:
+	 * 
+	 * @return bool
+	 */
+	public function typeExists( $type ){
+
+		$types = self::getAvailableTypes();
+		return array_key_exists( $type, $types );
+
+	}
 
 
 	/*=============================================================*/
