@@ -84,6 +84,7 @@ class CollectionColumn extends DefaultColumn{
 					'orderby'			=> $this->getField( 'orderby', 'date' ),
 		);
 
+
 		if( $this->getField( 'orderby', 'date' ) == 'title' )
 			$args['order'] = 'ASC';
 
@@ -95,7 +96,7 @@ class CollectionColumn extends DefaultColumn{
 
 		$args = apply_filters( 'chef_sections_collection_query', $args, $this );
 		$this->query = new WP_Query( $args );
-		
+
 		return $this->query;
 	}
 	
