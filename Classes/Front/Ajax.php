@@ -47,6 +47,7 @@
 
 			//then, check if there are posts:
 			$q = $column->getQuery();
+
 			if( !$q->have_posts() ){
 				
 				echo 'message';

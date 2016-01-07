@@ -59,7 +59,7 @@ class CollectionColumn extends DefaultColumn{
 		global $wp_the_query;
 
 		//return the cached query if it exists:
-		if( $this->query )
+		if( $this->query && ( !defined('DOING_AJAX') || DOING_AJAX === false ) )
 			return $this->query;
 
 
@@ -84,6 +84,7 @@ class CollectionColumn extends DefaultColumn{
 					'orderby'			=> $this->getField( 'orderby', 'date' ),
 		);
 
+
 		if( $this->getField( 'orderby', 'date' ) == 'title' )
 			$args['order'] = 'ASC';
 
@@ -94,8 +95,9 @@ class CollectionColumn extends DefaultColumn{
 
 
 		$args = apply_filters( 'chef_sections_collection_query', $args, $this );
-		$this->query = new WP_Query( $args );
 		
+		$this->query = new WP_Query( $args );
+
 		return $this->query;
 	}
 	
@@ -130,7 +132,7 @@ class CollectionColumn extends DefaultColumn{
 			$class .= ' autoload';
 
 		if( $nav !== 'autoload' || $this->page == 1 )
-			echo '<div class="'.$class.'" '.$datas.'>';
+			echo '<div id="collection_'.$this->fullId.'" class="'.$class.'" '.$datas.'>';
 
 	}
 

@@ -93,14 +93,14 @@
 
 
 			//filter for WP SEO content-check
-			add_filter( 'wpseo_pre_analysis_post_content', function( $content ){
+			/* add_filter( 'wpseo_pre_analysis_post_content', function( $content ){
 
 				if( has_sections() )
 					$content = get_sections();
 
 				return $content;
 			
-			});
+			});*/
 
 		}
 

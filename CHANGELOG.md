@@ -1,3 +1,25 @@
+### 1.3.4: 2015-12-01
+
+* Adds support for the filter column
+* Minor styling fixes.
+* Temporary fix for Yoast SEO errors
+* Fix in the video-template
+* Fixes a bug where non-existent column types could wreck a site.
+* Minor bugfixes
+
+
+
+### 1.3.3: 2015-10-25
+
+* Adds a list-view to collections
+* Fixes issues with pagination in collections.
+* Checks post-count when adding the collection closing div.
+* Adds saving of multiple checkboxes in a column lightbox
+* Adds the column-object as a second parameter to the collection_query filter.
+* Minor bugfixes
+
+
+
 ### 1.3.2: 2015-09-20
 
 * Collection queries are filterable now
