@@ -6,7 +6,7 @@
 	@include flex-row();
 	padding:30px 0;
 
-	.column{
+	.column, .collection{
 		@include flex( 1 );
 		margin-right:30px;
 
@@ -70,14 +70,19 @@
 	}
 
 	&.sidebar-right{
-		.column:first-of-type{
-			@include flex( 2 );
+		.column, .collection{
+			&:first-of-type{
+				@include flex( 2 );
+		
+			}
 		}
 	}
 
 	&.sidebar-left{
-		.column:last-of-type{
-			@include flex( 2 );
+		.column, .collection{
+			&:last-of-type{
+				@include flex( 2 );
+			}
 		}
 	}
 

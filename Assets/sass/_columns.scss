@@ -79,6 +79,22 @@
 
 	}
 
+	.field-wrapper.checkbox{
+		text-align:left;
+		> label{
+			display:block;
+			width:100%;
+		}
+
+		.subfield-wrapper{
+			display:inline-block;
+			padding-right:20px;
+			float:none;
+		}
+
+
+	}
+
 	.main-content{
 		box-sizing:border-box;
 		width:75%;

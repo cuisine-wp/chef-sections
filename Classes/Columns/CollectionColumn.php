@@ -185,7 +185,9 @@ class CollectionColumn extends DefaultColumn{
 		$types = $this->getPostTypes();
 		$amount = $this->getField( 'posts_per_page', 4 );
 
-		$msg = 'Geen '.strtolower( $types[ $post_type ] ).' meer gevonden';
+		$type = ( !is_array( $post_type ) ? $types[ $post_type ] : 'berichten' );
+
+		$msg = 'Geen '.strtolower( $type ).' meer gevonden';
 		$msg = apply_filters( 'chef_sections_autoload_message', $msg, $this );
 
 		$html = '';
@@ -243,7 +245,11 @@ class CollectionColumn extends DefaultColumn{
 				break;
 		}
 
-		$details = 'Post type: '.$this->getField( 'post_type' ).' | ';
+		$pts = $this->getField( 'post_type' );
+		if( is_array( $pts ) )
+			$pts = implode( ', ', $pts );
+
+		$details = 'Post type: '.$pts.' | ';
 		$details .= 'Aantal berichten: '.$this->getField( 'posts_per_page' );
 
 		echo '<span class="details">'.$details.'</span>';
@@ -460,6 +466,7 @@ class CollectionColumn extends DefaultColumn{
 	}
 
 
+	
 	/**
 	 * Get post types as key / value pairs
 	 * 
@@ -475,6 +482,10 @@ class CollectionColumn extends DefaultColumn{
 			$arr[$post_type] = $obj->labels->name;
 
 		}
+
+		unset( $arr['attachment'] );
+		unset( $arr['form'] );
+		unset( $arr['section-template'] );
 
 		return $arr;
 
