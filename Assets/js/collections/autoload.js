@@ -11,7 +11,7 @@ define([
 
 		var loader = $('#autoloader').clone();
 		$('#autoloader').remove();
-	
+
 		$('.autoload').AutoLoad({
 		
 			message: $('.autoload').data('msg'),
@@ -20,10 +20,11 @@ define([
 			section: $('.autoload').data('section_id'),
 			pageNumber: $( '.autoload' ).data('page'),
 			loaderContent: loader[0].outerHTML,
-		
+
 			onComplete: function(){
 		
 				var page = parseInt( $( '.autoload' ).data('page') ) + 1;
+
 				$( '.autoload' ).data('page', page );
 		
 				if( $( '.autoload' ).hasClass( 'masonry' ) ){

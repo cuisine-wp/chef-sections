@@ -63,16 +63,20 @@ class CollectionColumn extends DefaultColumn{
 			return $this->query;
 
 
-		//if our nav property is set, get pagination info:
-		if( $this->getField( 'nav', 'none' ) != 'none' ){
+		//only reset the paged global if we're not in ajax-mode
+		if( !defined( 'DOING_AJAX' ) ){
 
-			//get the paged variable from the original global query, else default to 0.
-			$this->page = ( isset( $wp_the_query->query_vars['paged'] ) ? $wp_the_query->query_vars['paged'] : 0 );
-			
-		}else{
-			
-			$this->page = 0;
-
+			//if our nav property is set, get pagination info:
+			if( $this->getField( 'nav', 'none' ) != 'none' ){
+	
+				//get the paged variable from the original global query, else default to 0.
+				$this->page = ( isset( $wp_the_query->query_vars['paged'] ) ? $wp_the_query->	query_vars['paged'] : 0 );
+				
+			}else{
+				
+				$this->page = 0;
+	
+			}
 		}
 
 

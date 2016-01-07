@@ -55,7 +55,9 @@
 
 	}else if( $column->getField( 'nav' ) == 'autoload' ){
 
-		Template::element( 'loader' )->display(); 
+		echo '<div id="autoloader" class="autoload-loader">';
+			Template::element( 'loader' )->display(); 
+		echo '</div>';
 
 	}
 
