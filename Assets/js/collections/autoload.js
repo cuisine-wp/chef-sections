@@ -11,6 +11,7 @@ define([
 
 		var loader = $('#autoloader').clone();
 		$('#autoloader').remove();
+	
 
 		$('.autoload').AutoLoad({
 		

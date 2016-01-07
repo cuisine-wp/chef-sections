@@ -69,13 +69,14 @@
 	
 						$(window).scroll( function( e ){
 	
-							if( self.doneLoading === false ){
+							if( self.doneLoading === false && $( self.element ).hasClass( 'hold-autoload') === false ){
 								
+								self.calculateTrigger();
+
 								var scrollPos = $(window).scrollTop();
 								scrollPos += $(window).height();
 								
 								if( scrollPos >= self.triggerY && self.updating === false ){
-								
 									self.updating = true;
 									self.updateLoader();
 									self.autoload();
