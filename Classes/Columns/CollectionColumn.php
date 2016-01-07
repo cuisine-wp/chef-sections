@@ -465,7 +465,7 @@ class CollectionColumn extends DefaultColumn{
 	 * 
 	 * @return array
 	 */
-	private function getPostTypes(){
+	public function getPostTypes(){
 
 		$pts = get_post_types( array( 'public' => true ) );
 		$arr = array();
