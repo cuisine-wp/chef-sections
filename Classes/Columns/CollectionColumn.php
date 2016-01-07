@@ -372,7 +372,7 @@ class CollectionColumn extends DefaultColumn{
 		}
 
 
-		$fields = apply_filters( 'chef_sections_collection_column_fields', $fields );
+		$fields = apply_filters( 'chef_sections_collection_column_fields', $fields, $this );
 		return $fields;
 
 	}
@@ -439,7 +439,7 @@ class CollectionColumn extends DefaultColumn{
 
 		);
 
-		$fields = apply_filters( 'chef_sections_collection_side_fields', $fields );
+		$fields = apply_filters( 'chef_sections_collection_side_fields', $fields, $this );
 		return $fields;
 
 	}
