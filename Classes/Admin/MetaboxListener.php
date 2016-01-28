@@ -27,11 +27,23 @@
 		 */
 		private function metaboxes(){
 
-			$fields = $this->getFields();
+			add_action( 'admin_init', function(){
 
-			$name = __( 'Instellingen', 'chefsections');
-			Metabox::make( $name, 'section-template', array( 'context' => 'side' ) )->set( $fields );
+				$fields = $this->getFields();
+				$name = __( 'Instellingen', 'chefsections');
+
+				Metabox::make( 
+			
+					$name, 
+					'section-template', 
+					array( 'context' => 'side' )
+			
+				)->set( $fields );
+			
+			});
 		}
+
+
 
 		/**
 		 * Gets the fields for our metabox

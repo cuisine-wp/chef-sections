@@ -356,58 +356,6 @@ class SectionsBuilder {
 	}
 
 
-	/*=============================================================*/
-	/**             Section Templates                              */
-	/*=============================================================*/
-
-
-	/**
-	 * Load sections from a template
-	 * 
-	 * @return bool
-	 */
-	public function loadTemplate( $templateId = null ){
-
-		//check for a template-id via POST
-		if( $templateId == null && isset( $_POST['template_id'] ) )
-			$templateId = $_POST['template_id'];
-
-		//no template id? though luck.
-		if( $templateId == null )
-			return false;
-
-
-		$_sections = get_post_meta( $templateId, 'sections', true );
-
-		//save the column data:
-		foreach( $_sections as $_section ){
-
-			if( !empty( $_section['columns'] ) ){
-
-				foreach( $_section['columns'] as $key => $column ){
-
-					$fullId = $_section['id'].'_'.$key;
-
-					//get the column properties:
-					$props = get_post_meta( 
-						$templateId, 
-						'_column_props_'.$fullId, 
-						true
-					);
-
-					//add 'em to the new column:
-					update_post_meta( $this->postId, '_column_props_'.$fullId, $props );
-				}
-
-			}
-		}
-
-		//save the sections as our own:
-		update_post_meta( $this->postId, 'sections', $_sections );
-
-		return true;
-	}
-
 
 
 	/*=============================================================*/
