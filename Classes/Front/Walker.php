@@ -128,7 +128,7 @@
 
 				$column->beforeTemplate();
 
-				Template::column( $column )->display();
+				Template::column( $column, $section->type )->display();
 
 				$column->afterTemplate();
 

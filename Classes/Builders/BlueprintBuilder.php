@@ -68,7 +68,8 @@ class BlueprintBuilder extends SectionsBuilder {
 
 			//change the post id at the start;
 			$_sections[ $key ]['post_id'] = $this->postId;
-
+			$_sections[ $key ]['type'] = 'blueprint';
+			
 
 			if( !empty( $_section['columns'] ) ){
 

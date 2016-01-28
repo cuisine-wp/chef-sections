@@ -148,6 +148,15 @@ class Section {
 
 		$this->template = $name;
 
+
+		if( $post->post_type == 'section-template' && $this->type == 'section' ){
+
+			$_type = get_post_meta( $this->post_id, 'type', true );
+			if( $_type )
+				$this->type = $_type;
+
+		}
+
 	}
 	
 	/*=============================================================*/
@@ -222,15 +231,6 @@ class Section {
 	
 				}
 
-				if( $this->type == 'reference' ){
-
-					echo '<a href="'.admin_url( 'post.php?post='.$this->template_id.'&action=edit' ).'" class="button button-primary">';
-
-						_e( 'Bewerk dit sjabloon', 'chefsections' );
-
-					echo '</a>';
-
-				}
 
 				echo '<div class="clearfix"></div>';
 				echo '</div>';
@@ -365,7 +365,6 @@ class Section {
 		echo '<div class="section-settings">';
 
 			foreach( $fields as $field ){
-
 
 				$field->render();
 
@@ -518,7 +517,7 @@ class Section {
 			)
 		);
 
-		$ref = Field::hidden(
+		$type = Field::hidden(
 		
 			$prefix.'[type]',
 			array(
@@ -535,7 +534,7 @@ class Section {
 			$container,
 			$position,
 			$post_id,
-			$ref,
+			$type,
 			$id
 
 		);

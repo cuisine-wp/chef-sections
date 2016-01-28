@@ -4,6 +4,8 @@ namespace ChefSections\Builders;
 
 use ChefSections\Sections\Section;
 use ChefSections\Sections\Reference;
+use ChefSections\Sections\Blueprint;
+use ChefSections\Sections\Stencil;
 use ChefSections\Wrappers\ReferenceBuilder;
 use Cuisine\Utilities\Session;
 use Cuisine\Utilities\Sort;
@@ -371,7 +373,8 @@ class SectionsBuilder {
 
 		$sections = get_post_meta( $this->postId, 'sections', true );
 		$array = array();
-		
+
+
 		if( is_array( $sections ) && !empty( $sections ) ){
 		
 			$sections = Sort::byField( $sections, 'position', 'ASC' );
@@ -386,9 +389,6 @@ class SectionsBuilder {
 			}
 		}
 
-		//cuisine_dump( $array );
-		//die();
-
 		return $array;
 	}
 
@@ -400,16 +400,33 @@ class SectionsBuilder {
 	 */
 	public function getSectionType( $section ){
 
-		if( 
-			!isset( $section['type'] ) || 
-			$section['type'] == 'section'
-		){
-			
-			return new Section( $section );						
+		if( !isset( $section['type'] ) )
+			$section['type'] = 'section';
 
-		}else if( $section['type'] == 'reference' ){
-		
-			return new Reference( $section );
+
+		switch( $section['type'] ){
+
+			case 'reference':
+
+				return new Reference( $section );
+
+			break;
+			case 'blueprint':
+
+				return new Blueprint( $section );
+
+			break;
+			case 'stencil':
+
+				return new Stencil( $section );
+
+			break;
+			default:
+
+				return new Section( $section );
+
+			break;
+
 
 		}
 	}
@@ -436,7 +453,8 @@ class SectionsBuilder {
 				'title'				=> __( 'Sectie titel', 'chefsections' ),
 				'hide_title'		=> apply_filters('chef_sections_hide_title', false ),
 				'hide_container'	=> apply_filters('chef_sections_hide_container', true ),
-				'view'				=> 'fullwidth'
+				'view'				=> 'fullwidth',
+				'type'				=> 'section'
 		);
 
 		$args = apply_filters( 'chef_sections_default_section_args', $args );
@@ -524,13 +542,26 @@ class SectionsBuilder {
 	 */
 	public function getTemplateName( $section_id ){
 
+		$name = '';
+
 		foreach( $this->sections as $section ){
 
 			if( $section->id === $section_id ){
-				if( isset( $section->name ) && $section->name != '' ){
-					return $section->name;
+
+				if( $section->type == 'stencil' || $section->type == 'reference' ){
+
+					$_templatePost = get_post( $section->post_id );
+					$name = $section->type.DS.$_templatePost->post_name.'-';
+
 				}
+
+				if( isset( $section->name ) && $section->name != '' )
+					$name .= $section->name;
+				
 			}
+
+
+			return $name;
 
 		}
 
