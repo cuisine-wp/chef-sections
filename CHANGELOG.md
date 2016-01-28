@@ -1,3 +1,13 @@
+### 1.3.5: 2016-01-28
+
+* IE9 Grid support added
+* Autload bugfixes
+* Added compatibility with the Multi Collection plugin
+* Extendability increase for autoload
+* Lots of big bugfixes.
+
+
+
 ### 1.3.4: 2015-12-01
 
 * Adds support for the filter column
