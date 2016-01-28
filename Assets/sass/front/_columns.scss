@@ -22,12 +22,16 @@
 		.video-wrapper{
 			position:relative;
 			width:100%;
-
-			img{
+			.video-still{
 				position:absolute;
+				top:0;
+				bottom:0;
+				left:0;
+				right:0;
+				background-size:cover;
+				background-position:center center;
 				z-index:100;
 				cursor:pointer;
-				width:100%;
 			}
 
 			&:before{

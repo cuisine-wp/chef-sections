@@ -10,7 +10,7 @@
 				if( isset( $still['large'] ) && $still['large'] != '' )
 					$url = $still['large'];
 
-				echo '<img src="'.$url.'" class="video-still"/>';
+				echo '<div style="background-image:url('.$url.')" class="video-still"></div>';
 
 			}
 
