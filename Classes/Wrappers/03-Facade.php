@@ -60,13 +60,13 @@
 
                 'sectionsbuilder'         => 'ChefSections\Builders\SectionsBuilder',
                 'stencilbuilder'          => 'ChefSections\Builders\StencilBuilder',
-                'layoutbuilder'           => 'ChefSections\Builders\LayoutBuilder',
+                'blueprintbuilder'        => 'ChefSections\Builders\BlueprintBuilder',
                 'referencebuilder'        => 'ChefSections\Builders\ReferenceBuilder',
 
                 'section'                 => 'ChefSections\Sections\Section',
                 'reference'               => 'ChefSections\Sections\Reference',
                 'stencil'                 => 'ChefSections\Sections\Stencil',
-                'layout'                  => 'ChefSections\Sections\Layout'
+                'blueprint'               => 'ChefSections\Sections\Blueprint'
             );
     
             return $aliases[ $name ];

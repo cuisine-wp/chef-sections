@@ -66,4 +66,47 @@ class ReferenceBuilder extends SectionsBuilder {
 			return $section->build();
 		}
 	}
+
+
+
+	/**
+	 * Get an array of approved templates
+	 * 
+	 * @return array
+	 */
+	public function getTemplates( $properties = array() ){
+
+		$template = false;
+
+ 		$mq = array();
+ 		$mq[] = array(
+ 			'key'		=> 'type',
+ 			'value'		=> 'reference'
+ 		);
+
+ 		//suited for this post type:
+		if( isset( $properties['post_type'] ) ){
+
+			$mq[] = array(
+							'key'		=>	 	'apply_to',
+							'value'		=>		$properties['post_type']
+			);
+
+		}
+		
+		$args = array( 
+			'post_type' => 'section-template', 
+			'posts_per_page' => -1,
+			'meta_query' => $mq
+		);
+
+		$q = new WP_Query( $args );
+
+
+		if( $q->have_posts() )
+			$template = $q->posts;
+
+
+		return $template;
+	}
 }

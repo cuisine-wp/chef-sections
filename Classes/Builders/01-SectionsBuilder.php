@@ -4,7 +4,7 @@ namespace ChefSections\Builders;
 
 use ChefSections\Sections\Section;
 use ChefSections\Sections\Reference;
-use ChefSections\Wrappers\StencilBuilder;
+use ChefSections\Wrappers\ReferenceBuilder;
 use Cuisine\Utilities\Session;
 use Cuisine\Utilities\Sort;
 
@@ -128,7 +128,7 @@ class SectionsBuilder {
 	private function addSectionButton(){
 
 		$args = array( 'multiple' => true, 'dropdown' => true );
-		$templates = StencilBuilder::getTemplates( $args );
+		$templates = ReferenceBuilder::getTemplates( $args );
 
 
 		echo '<div class="section-wrapper dotted-bg">';

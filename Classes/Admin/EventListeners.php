@@ -4,7 +4,7 @@
 
 	use ChefSections\Wrappers\StaticInstance;
 	use ChefSections\Wrappers\SectionsBuilder;
-	use ChefSections\Wrappers\StencilBuilder;
+	use ChefSections\Wrappers\BlueprintBuilder;
 	use Cuisine\Utilities\Url;
 
 	class EventListeners extends StaticInstance{
@@ -122,7 +122,7 @@
 
 				if( $status == 'auto-draft' && $pagenow == 'post-new.php' ){
 
-					StencilBuilder::applyTemplates( $post_id );
+					BlueprintBuilder::applyTemplates( $post_id );
 
 				}
 			});

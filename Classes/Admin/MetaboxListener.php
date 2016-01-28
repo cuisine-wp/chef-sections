@@ -5,6 +5,7 @@
 	use \Cuisine\Wrappers\Metabox;
 	use \Cuisine\Wrappers\Field;
 	use \Cuisine\Wrappers\PostType;
+	use \Cuisine\Utilities\Session;
 	use \ChefSections\Wrappers\StaticInstance;
 
 	class MetaboxListeners extends StaticInstance{
@@ -54,15 +55,29 @@
 
 			$postTypes = $this->getPostTypes();
 
+			$templateTypes = array(
+				'reference'	=> __( 'Referentie', 'chefsections' ),
+				'blueprint' => __( 'Blauwdruk', 'chefsections' ),
+				'stencil'	=> __( 'Stencil', 'chefsections' )
+			);
+
+			$templateTypes = apply_filters( 'chef_sections_template_types', $templateTypes );
+
+			$currentType = get_post_meta( Session::postId(), 'type', true );
+			$class = ( $currentType == 'blueprint' ? array( 'active' ) : array( 'not-visible' ) );
+
+		
+
 			//return the fields:
 			return array(
 
-				Field::checkbox(
+				Field::select(
 
-					'show_in_admin',
-					'Maak selecteerbaar',
+					'type',
+					'Sjabloontype',
+					$templateTypes,
 					array(
-						'defaultValue' => true
+						'defaultValue' => 'reference'
 					)
 
 				),
@@ -73,7 +88,8 @@
 					'Stel standaard in op',
 					$postTypes,
 					array(
-						'defaultValue'	=> 'none'
+						'defaultValue'	=> 'none',
+						'wrapper-class'	=> $class
 					)
 				)
 
