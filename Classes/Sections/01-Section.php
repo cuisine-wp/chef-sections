@@ -91,18 +91,19 @@ class Section {
 
 	/**
 	 * Boolean to detirmine if this is a reference section
-	 * 
+	 *
+	 * @possible values: section - reference - stencil - layout
 	 * @var boolean
 	 */
-	public $is_reference = false;
+	public $type = 'section';
 
 
 	/**
-	 * The ID for this reference template
+	 * The ID for the template, if this is a template-based section
 	 * 
 	 * @var integer
 	 */
-	public $reference_id = 0;
+	public $template_id = 0;
 
 
 	/**
@@ -123,7 +124,7 @@ class Section {
 		$this->post_id = $args['post_id'];
 		$post = get_post( $this->post_id );
 
-		$this->reference_id = ( isset( $args['reference_id'] ) ? $args['reference_id'] : false );
+		$this->template_id = ( isset( $args['template_id'] ) ? $args['template_id'] : false );
 
 		$this->position = $args['position'];
 
@@ -221,9 +222,9 @@ class Section {
 	
 				}
 
-				if( $this->is_reference ){
+				if( $this->type == 'reference' ){
 
-					echo '<a href="'.admin_url( 'post.php?post='.$this->reference_id.'&action=edit' ).'" class="button button-primary">';
+					echo '<a href="'.admin_url( 'post.php?post='.$this->template_id.'&action=edit' ).'" class="button button-primary">';
 
 						_e( 'Bewerk dit sjabloon', 'chefsections' );
 
@@ -519,9 +520,9 @@ class Section {
 
 		$ref = Field::hidden(
 		
-			$prefix.'[is_reference]',
+			$prefix.'[type]',
 			array(
-				'defaultValue' => $this->is_reference
+				'defaultValue' => $this->type
 			)
 		
 		);
@@ -540,13 +541,13 @@ class Section {
 		);
 
 
-		if( $this->reference_id !== 0 ){
+		if( $this->template_id !== 0 ){
 
 			$fields[] = Field::hidden(
 			
-				$prefix.'[reference_id]',
+				$prefix.'[template_id]',
 				array(
-					'defaultValue' => $this->reference_id
+					'defaultValue' => $this->template_id
 				)
 		
 			);

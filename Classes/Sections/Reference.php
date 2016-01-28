@@ -3,17 +3,19 @@
 namespace ChefSections\Sections;
 
 use ChefSections\Wrappers\Column;
-
 use Cuisine\Wrappers\User;
 
+/**
+ * References are meant for use in 'regular' section-flows.
+ */
 class Reference extends Section{
 
 	/**
-	 * This is a section reference, meaning it's a copy of a templated section
+	 * Section-type "Reference".
 	 * 
-	 * @var boolean
+	 * @var string
 	 */
-	public $is_reference = true;
+	public $type = 'reference';
 
 
 
@@ -27,9 +29,7 @@ class Reference extends Section{
 
 		if( is_admin() ){
 
-			$class = 'section-wrapper ui-state-default section-'.$this->id;
-			if( $this->is_reference )
-				$class .= ' reference';
+			$class = 'section-wrapper ui-state-default section-'.$this->id.' reference';
 
 			echo '<div class="'.$class.'" ';
 				echo 'id="'.$this->id.'" ';
@@ -50,10 +50,10 @@ class Reference extends Section{
 				}
 
 				echo '<p class="template-txt">';
-					printf( __( 'Dit is het sjabloon "%s." Bij het aanpassen wordt deze op iedere pagina aangepast.', 'chefsections' ), get_the_title( $this->reference_id ) );
+					printf( __( 'Dit is het sjabloon "%s." Bij het aanpassen wordt deze op iedere pagina aangepast.', 'chefsections' ), get_the_title( $this->template_id ) );
 				echo '</p>';
 
-				echo '<a href="'.admin_url( 'post.php?post='.$this->reference_id.'&action=edit' ).'" class="button button-primary">';
+				echo '<a href="'.admin_url( 'post.php?post='.$this->template_id.'&action=edit' ).'" class="button button-primary">';
 
 					_e( 'Bewerk dit sjabloon', 'chefsections' );
 
@@ -83,7 +83,11 @@ class Reference extends Section{
 
 
 		//get the parent's columns
-		$parent = array_values( get_post_meta( $this->reference_id, 'sections', true ) );
+		$parent = get_post_meta( $this->template_id, 'sections', true );
+	//	cuisine_dump( $parent );
+
+		
+		$parent = array_values( $parent );
 		$arr = array();
 
 
@@ -100,7 +104,7 @@ class Reference extends Section{
 			foreach( $columns as $col_key => $type ){
 	
 				$props = array(
-					'post_id'	=>	 $this->reference_id
+					'post_id'	=>	 $this->template_id
 				);
 	
 				$arr[] = Column::$type( $col_key, $parent['id'], $props );

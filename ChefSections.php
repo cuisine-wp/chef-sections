@@ -76,6 +76,7 @@ if (!class_exists('ChefSections')) {
             $includes = array(
                 'Classes/Wrappers',
                 'Classes/Columns',
+                'Classes/Builders',
                 'Classes/Sections',
                 'Classes/Admin',
                 'Classes/Front'

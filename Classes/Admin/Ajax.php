@@ -4,6 +4,7 @@
 
 	use ChefSections\Wrappers\AjaxInstance;
 	use ChefSections\Wrappers\SectionsBuilder;
+	use ChefSections\Wrappers\ReferenceBuilder;
 	use ChefSections\Wrappers\Column;
 	use Cuisine\Wrappers\PostType;
 
@@ -75,7 +76,7 @@
 
 				parent::setPostGlobal();
 
-				SectionsBuilder::addReference();
+				ReferenceBuilder::addReference();
 				die();
 
 			});

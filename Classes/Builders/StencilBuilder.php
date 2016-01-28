@@ -1,21 +1,31 @@
 <?php
 
-namespace ChefSections\Sections;
+namespace ChefSections\Builders;
 
+use ChefSections\Sections\Stencil;
 use Cuisine\Wrappers\Metabox;
 use Cuisine\Wrappers\Field;
 use Cuisine\Wrappers\PostType;
-use ChefSections\Wrappers\SectionsBuilder as Builder;
 use WP_Query;
 use stdClass;
 
-/**
- * Metabox and admin-related functions for section templates
- * 
- * @package ChefSections\Sections
- */
-class Templates {
 
+/**
+ * Stencils get there own builder:
+ */
+class StencilBuilder extends SectionsBuilder {
+
+
+	/**
+	 * Returns the correct Section class
+	 * 
+	 * @return ChefSections\Sections\Stencil
+	 */
+	public function getSectionType( $section ){
+
+		return new Stencil( $section );
+
+	}
 
 	/**
 	 * Applies templates forcefully to new posts of
@@ -26,7 +36,7 @@ class Templates {
 	public static function applyTemplates( $post_id ){
 
 		$post_type = ( isset( $_GET['post_type'] ) ? $_GET['post_type'] : 'post' );
-		$template = static::getTemplates( array( 'post_type' => $post_type ) );
+		$template = $this->getTemplates( array( 'post_type' => $post_type ) );
 
 		if( $template ){
 
@@ -34,11 +44,12 @@ class Templates {
 			$GLOBALS['post'] = new stdClass();
 			$GLOBALS['post']->ID = $post_id;
 
-			Builder::loadTemplate( $template->ID );
+			$this->loadTemplate( $template->ID );
 
 		}
 
 	}
+
 
 
 	/**
@@ -46,7 +57,6 @@ class Templates {
 	 * 
 	 * @return array
 	 */
-	
 	public static function getTemplates( $properties = array() ){
 
 		$template = false;
@@ -94,57 +104,5 @@ class Templates {
 
 
 	}
-
-
-	/**
-	 * Create the section-template metabox
-	 * @return [type] [description]
-	 */
-	public static function metabox(){
-
-		$pts = array( 'page' );
-		$pts = apply_filters( 'chef_sections_post_types', $pts );
-
-	
-		$post_types = array(
-			'none'	=> __( 'Geen specifieke bericht types', 'chefsections' )
-		);
-
-		foreach( $pts as $type ){
-
-			$post_types[ $type ] = PostType::name( $type );
-
-		}
-
-
-		$name = __( 'Instellingen', 'chefsections');
-		$fields = array(
-
-			Field::checkbox(
-
-				'show_in_admin',
-				'Maak selecteerbaar',
-				array(
-					'defaultValue' => true
-				)
-
-			),
-
-			Field::select(
-
-				'apply_to',
-				'Stel standaard in op',
-				$post_types,
-				array(
-					'defaultValue'	=> 'none'
-				)
-			)
-
-		);
-
-
-		Metabox::make( $name, 'section-template', array( 'context' => 'side' ) )->set( $fields );
-	}
-
 
 }

@@ -4,7 +4,7 @@
 
 	use ChefSections\Wrappers\StaticInstance;
 	use ChefSections\Wrappers\SectionsBuilder;
-	use ChefSections\Sections\Templates;
+	use ChefSections\Wrappers\StencilBuilder;
 	use Cuisine\Utilities\Url;
 
 	class EventListeners extends StaticInstance{
@@ -112,14 +112,6 @@
 		 */
 		private function templates(){
 
-			//add the metabox on admin-init
-			add_action( 'admin_init', function(){
-
-				//metaboxes for section templates:
-				Templates::metabox();
-
-			});
-
 
 			//when creating a new post, check if we need to apply a template:
 			add_action( 'save_post', function( $post_id ){
@@ -130,7 +122,7 @@
 
 				if( $status == 'auto-draft' && $pagenow == 'post-new.php' ){
 
-					Templates::applyTemplates( $post_id );
+					StencilBuilder::applyTemplates( $post_id );
 
 				}
 			});

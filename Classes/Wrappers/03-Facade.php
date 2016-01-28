@@ -55,11 +55,18 @@
             
             $aliases = array(
                 'column'                  => 'ChefSections\Columns\ColumnBuilder',
-                'section'                 => 'ChefSections\Sections\Section',
-                'reference'               => 'ChefSections\Sections\Reference',
-                'sectionsbuilder'         => 'ChefSections\Sections\SectionsBuilder',
                 'walker'                  => 'ChefSections\Front\Walker',
                 'template'                => 'ChefSections\Front\TemplateFinder',
+
+                'sectionsbuilder'         => 'ChefSections\Builders\SectionsBuilder',
+                'stencilbuilder'          => 'ChefSections\Builders\StencilBuilder',
+                'layoutbuilder'           => 'ChefSections\Builders\LayoutBuilder',
+                'referencebuilder'        => 'ChefSections\Builders\ReferenceBuilder',
+
+                'section'                 => 'ChefSections\Sections\Section',
+                'reference'               => 'ChefSections\Sections\Reference',
+                'stencil'                 => 'ChefSections\Sections\Stencil',
+                'layout'                  => 'ChefSections\Sections\Layout'
             );
     
             return $aliases[ $name ];

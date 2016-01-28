@@ -1,8 +1,10 @@
 <?php
 
-namespace ChefSections\Sections;
+namespace ChefSections\Builders;
 
 use ChefSections\Sections\Section;
+use ChefSections\Sections\Reference;
+use ChefSections\Wrappers\StencilBuilder;
 use Cuisine\Utilities\Session;
 use Cuisine\Utilities\Sort;
 
@@ -34,7 +36,7 @@ class SectionsBuilder {
 	 * 
 	 * @var int;
 	 */
-	private $highestId;
+	public $highestId;
 
 
 
@@ -126,7 +128,7 @@ class SectionsBuilder {
 	private function addSectionButton(){
 
 		$args = array( 'multiple' => true, 'dropdown' => true );
-		$templates = Templates::getTemplates( $args );
+		$templates = StencilBuilder::getTemplates( $args );
 
 
 		echo '<div class="section-wrapper dotted-bg">';
@@ -360,58 +362,6 @@ class SectionsBuilder {
 
 
 	/**
-	 * Add a reference section
-	 *
-	 * @return string (html of new section)
-	 */
-	public function addReference( $templateId = null ){
-
-		//check for a template-id via POST
-		if( isset( $_POST['template_id'] ) )
-			$templateId = $_POST['template_id'];
-
-		//no template id? though luck.
-		if( $templateId == null )
-			return false;
-
-
-		$this->init();
-		$this->highestId += 1;
-
-		//get the defaults:
-		$args = $this->getDefaultSectionArgs();
-		$parent = array_values( get_post_meta( $templateId, 'sections', true ) );
-
-		//only if theres a section here:
-		if( isset( $parent[0] ) ){
-
-			$parent = $parent[0];
-			$columns = $parent['columns'];
-	
-	
-			$args['title'] = $parent['title'];
-			$args['view'] = $parent['view'];
-			$args['hide_title'] = $parent['hide_title'];
-			$args['hide_container'] = $parent['hide_container'];
-			$args['reference_id'] = $templateId;
-			$args['is_reference'] = true;
-			$args['columns'] = $parent['columns'];
-	
-
-			//save this section:
-			$_sections = get_post_meta( $this->postId, 'sections', true );
-			$_sections[ $args['id'] ] = $args;
-			update_post_meta( $this->postId, 'sections', $_sections );
-
-
-			$section = new Reference( $args );
-
-			return $section->build();
-		}
-	}
-
-
-	/**
 	 * Load sections from a template
 	 * 
 	 * @return bool
@@ -481,29 +431,41 @@ class SectionsBuilder {
 			if( $sections ){
 
 				foreach( $sections as $section ){
-	
-
-					if( 
-						!isset( $section['is_reference'] ) || 
-						$section['is_reference'] == false
-					){
-						
-						$array[] = new Section( $section );						
-
-					}else{
-		
-						$array[] = new Reference( $section );
-						
-
-					}
 					
-			
+					$array[] = $this->getSectionType( $section );
+				
 				}
 			}
 		}
 
+		//cuisine_dump( $array );
+		//die();
+
 		return $array;
 	}
+
+
+	/**
+	 * Returns the correct Section class
+	 * 
+	 * @return Section / Reference / Layout / Stencil
+	 */
+	public function getSectionType( $section ){
+
+		if( 
+			!isset( $section['type'] ) || 
+			$section['type'] == 'section'
+		){
+			
+			return new Section( $section );						
+
+		}else if( $section['type'] == 'reference' ){
+		
+			return new Reference( $section );
+
+		}
+	}
+
 
 
 	/**
@@ -512,7 +474,7 @@ class SectionsBuilder {
      * @filter 'chef_sections_default_section_args'
 	 * @return array
 	 */
-	private function getDefaultSectionArgs(){
+	public function getDefaultSectionArgs(){
 
 		global $post;
 		if( isset( $post ) )
