@@ -474,7 +474,7 @@ class SectionsBuilder {
 		$sections = get_post_meta( $this->postId, 'sections', true );
 		$array = array();
 		
-		if( is_array( $sections ) ){
+		if( is_array( $sections ) && !empty( $sections ) ){
 		
 			$sections = Sort::byField( $sections, 'position', 'ASC' );
 		
