@@ -90,3 +90,35 @@
 		float:none;
 	}
 }
+
+//IE9 flexbox grid fixes:
+.no-flexbox, .no-flexboxlegacy{
+	.column-row{
+
+		&.half-half .column{
+			@include span-columns( 6 );
+		}
+
+		&.sidebar-left .column, &.sidebar-right .column{
+			@include span-columns( 8 );
+		}
+
+		&.sidebar-right .column:last-of-type, &.sidebar-left .column:first-of-type{
+			@include span-columns( 4 );
+		}
+
+		&.three-columns .column{
+			@include span-columns( 4 );
+			
+		}
+
+		&.four-columns .column{
+			@include span-columns( 3 );
+		}
+
+		.column:last-of-type{
+			@include omega();
+		}
+
+	}
+}

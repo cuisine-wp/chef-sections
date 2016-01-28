@@ -79,13 +79,16 @@ class CollectionColumn extends DefaultColumn{
 			}
 		}
 
+		//force the 'publish' post-status
+		$_status = apply_filters( 'chef_sections_collection_post_status', 'publish' );
 
 		//else, create a new query
 		$args = array(
-					'paged'				=> $this->page,
-					'post_type'			=> $this->getField( 'post_type', 'post' ),
-					'posts_per_page'	=> $this->getField( 'posts_per_page', 4 ),
-					'orderby'			=> $this->getField( 'orderby', 'date' ),
+			'paged'				=> $this->page,
+			'post_type'			=> $this->getField( 'post_type', 'post' ),
+			'posts_per_page'	=> $this->getField( 'posts_per_page', 4 ),
+			'orderby'			=> $this->getField( 'orderby', 'date' ),
+			'post_status'		=> $_status
 		);
 
 
