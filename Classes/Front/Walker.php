@@ -29,6 +29,10 @@
 				$section->afterTemplate();
 			}
 
+			//reset post-data, to be sure:
+			wp_reset_postdata();
+			wp_reset_query();
+
 
 			return ob_get_clean();
 		}
