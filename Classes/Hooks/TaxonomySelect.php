@@ -50,10 +50,10 @@
             $iteration = 1;
 
             if( !empty( $value ) ){
-                $iteration = count( $value );
+                $iteration = count( $value ) - 1;
             }
 
-            $html = '<div class="taxonomy-select-field field-wrapper" data-iteration="'.$iteration.'">';
+            $html = '<div class="taxonomy-select-field field-wrapper" data-highest-id="'.$iteration.'">';
 
 
 
@@ -72,7 +72,7 @@
             $html .= '</div>';
             
             echo $html;
-            
+
             return $html;
         }
 

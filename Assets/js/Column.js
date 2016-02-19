@@ -212,9 +212,7 @@
 			}
 
 			
-			console.log( properties );
-
-			//self.saveProperties( properties );
+			self.saveProperties( properties );
 		},
 
 		/**
