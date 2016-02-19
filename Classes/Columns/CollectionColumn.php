@@ -96,10 +96,43 @@ class CollectionColumn extends DefaultColumn{
 			$args['order'] = 'ASC';
 
 
-		$category = $this->getField( 'category', 'all' );
-		if( $category && $category !== 'all' )
-			$args['category_name'] = $category;
+		//set the tax-query:
+		if( $this->getField( 'taxonomies', false ) ){
 
+			//get the taxonomies
+			$taxonomies = $this->getField( 'taxonomies' );
+			$tax_query = false;
+			if( is_array( $taxonomies ) ){
+
+				$tax_query = array( 'relation' => 'AND' );
+
+				//reset the array to prevent problems:
+				$taxonomies = array_values( $taxonomies );
+			
+				foreach( $taxonomies as $tax ){
+
+					//add a new entry:
+					$tax_query[] = array(
+						'taxonomy' 	=> $tax['tax'],
+						'field'		=> 'slug',
+						'terms'		=> $tax['terms']
+					);
+				}
+			}
+
+			//if the tax_query array has been set:
+			if( $tax_query )
+				$args['tax_query'] = $tax_query;
+
+
+		//backwards compatibility:
+		}else{
+
+			$category = $this->getField( 'category', 'all' );
+			if( $category && $category !== 'all' )
+				$args['category_name'] = $category;
+
+		}
 
 		$args = apply_filters( 'chef_sections_collection_query', $args, $this );
 		

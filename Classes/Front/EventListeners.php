@@ -56,9 +56,6 @@
 
 				});
 
-
-				//Field::taxonomySelect( 'wop', 'Wap' )->render();
-
 			});
 		}
 
