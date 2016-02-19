@@ -52,17 +52,12 @@
 								'class'		=> 'ChefSections\Hooks\TaxonomySelect'
 					);
 
-					$types['mapper'] = array(
-								'name'		=> 'MapperField',
-								'class'		=> 'ChefForms\Hooks\MapperField'
-					);
-
 					return $types;
 
 				});
 
 
-				Field::taxonomySelect( 'wop', 'Wap' )->render();
+				//Field::taxonomySelect( 'wop', 'Wap' )->render();
 
 			});
 		}

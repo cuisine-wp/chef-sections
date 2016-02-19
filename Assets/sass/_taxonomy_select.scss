@@ -1,0 +1,50 @@
+.tax-select-wrapper{
+	width:100%;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	flex-flow:row wrap;
+	justify-content:space-between;
+	padding-bottom:100px;
+
+	select, .chosen-container{
+		margin-right:15px;
+	}
+
+	.chosen-container{
+		flex:1 0;
+	}
+
+	.chosen-container .chosen-choices{
+		border-radius:5px !important;
+	}
+
+	.chosen-container ul .default{
+		color:#eee;
+		font-weight:normal;
+		display:block !important;
+	}
+
+	.add-remove{
+		width:80px;
+
+		.add-remove-btn{
+			box-sizing:border-box;
+			width:30px;
+			height:30px;
+			border-radius:15px;
+			background:#444;
+			color:#fff;
+			padding-top:5px;
+			display:inline-block;
+			cursor:pointer;
+			font-size:18px;
+			font-weight:bold;
+			margin-left:10px;
+
+			&:hover{
+				background:#2ea2cc;
+			}
+		}
+	}
+}

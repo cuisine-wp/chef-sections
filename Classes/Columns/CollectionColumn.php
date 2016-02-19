@@ -280,6 +280,10 @@ class CollectionColumn extends DefaultColumn{
 
 				$field->render();
 
+				if( method_exists( $field, 'renderTemplate' ) ){
+					echo $field->renderTemplate();
+				}
+
 			}
 
 		echo '</div>';
@@ -363,29 +367,19 @@ class CollectionColumn extends DefaultColumn{
 					'defaultValue'		=> $this->getField( 'orderby', 'date' )
 
 				)
+			),
+
+			'taxonomies' => Field::taxonomySelect(
+				'taxonomies',
+				__( 'Filteren', 'chefsections' ),
+				array(
+					'defaultValue'		=> $this->getField( 'taxonomies', array() )
+				)
 			)
 		);
 
 
-		if( $this->getField( 'post_type', 'post' ) === 'post' ){
-
-			$categories = get_categories();
-			$keys = Sort::pluck( $categories, 'slug' );
-			$labels = Sort::pluck( $categories, 'name' );
-			
-			$cats = array_combine( $keys, $labels );
-			$cats = array_merge( array( 'all' => 'Alles' ), $cats );
-
-			$fields['category'] = Field::select(
-					'category',
-					__( 'Categorie', 'chefsections' ),
-					$cats,
-					array(
-						'defaultValue'	=> $this->getField( 'category', 'all' )
-					)
-			);
-		}
-
+	
 
 		$fields = apply_filters( 'chef_sections_collection_column_fields', $fields, $this );
 		return $fields;

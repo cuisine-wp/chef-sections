@@ -7,6 +7,7 @@
     use Cuisine\Wrappers\Field;
     use Cuisine\Wrappers\Taxonomy;
     use Cuisine\Utilities\Sort;
+    use Cuisine\Utilities\Url;
 
 
     class TaxonomySelect extends DefaultField{
@@ -19,6 +20,8 @@
         public $type = 'taxonomySelect';
 
 
+
+        public $taxonomies = array();
 
 
         /**
@@ -40,15 +43,61 @@
          */
         public function render(){
 
-            $html = '<div class="taxonomy-select-field field-wrapper">';
+            $this->taxonomies = $this->getTaxonomies();
+            $this->setScripts();
 
-                $i = 0;
-                
-                $this->makeItem( $i );
+            $value = $this->getValue();
+            $iteration = 1;
+
+            if( !empty( $value ) ){
+                $iteration = count( $value );
+            }
+
+            $html = '<div class="taxonomy-select-field field-wrapper" data-iteration="'.$iteration.'">';
+
+
+
+                if( !empty( $value ) ){
+
+                    foreach( $value as $i => $item ){
+                        $html .= $this->makeItem( $i, $item );
+                    }
+
+                }else{
+
+                    $html .= $this->makeItem( 0 );
+
+                }
         
             $html .= '</div>';
             
             echo $html;
+            
+            return $html;
+        }
+
+
+        /**
+         * Return the template, for Javascript
+         * 
+         * @return String
+         */
+        public function renderTemplate(){
+
+            $value = $this->getValue();
+            $iteration = 1;
+
+            if( !empty( $value ) ){
+                $iteration = count( $value );
+            }
+
+            //make a clonable item, for javascript:
+            $html = '<script type="text/template" id="taxonomy_select_item">';
+                $html .= $this->makeItem( '<%= iteration %>' );
+            $html .= '</script>';
+            $html .= '<script type="text/javascript">';
+                $html .= "var Taxonomies = '".json_encode( $this->taxonomies )."';";
+            $html .= '</script>';
 
             return $html;
         }
@@ -62,25 +111,46 @@
          */
         public function makeItem( $iteration, $tax = false ){
 
-            $taxonomies = $this->getTaxonomies();
-            /*$terms = $this->getTerms( $tax );
+            if( $tax === false )
+                $tax = array( 'tax' => 'category', 'terms' => array() );
+                //$tax = $this->getTaxonomies();
 
             $html = '';
-            $prefix = 'tax['.$iteration.']';
+            $prefix = $this->name.'['.$iteration.']';
             
             $html .= '<div class="tax-select-wrapper" id="tax-'.$iteration.'">';
-                $html .= '<select name="{$prefix}[tax]">';
+
+
+                $html .= '<select name="'.$prefix.'[tax]" class="taxonomy-selector multi">';
             
-                    $html .= '<option value="'.$slug.'">'.$title.'</option>';
+                    foreach( $this->taxonomies as $taxonomy => $terms ){
+
+                        $html.= '<option value="'.$taxonomy.'" ';
+                        $html.= selected( $tax['tax'], $taxonomy, false ).'>';
+
+                            $html.= Taxonomy::name( $taxonomy );
+
+                        $html.= '</option>';
+                    }
+
+
             
                 $html .= '</select>';
             
-                $html .= '<select name="{$prefix}[terms]">';
-            
-                    $html .= '<option value="'.$slug.'">'.$title.'</option>';
-                    $html .= '<option value="'.$slug.'">'.$title.'</option>';
-                    $html .= '<option value="'.$slug.'">'.$title.'</option>';
-            
+                $html .= '<select name="'.$prefix.'[terms]" class="term-selector multi" data-placeholder="'.__( 'Selecteer een of meerdere items', 'chefsections' ).'" multiple>';
+                    
+
+                    foreach( $this->taxonomies[ $tax['tax'] ] as $term ){
+
+                        $html.= '<option value="'.$term->slug.'" ';
+                        $html.= selected( in_array( $term->slug, $tax['terms'] ), true, false ).'>';
+
+                            $html.= $term->name;
+
+                        $html.= '</option>';
+
+                    }
+
             
                 $html .= '</select>';
 
@@ -93,7 +163,9 @@
 
                 $html .= '</div>';
 
-            $html .= '</div>';*/
+            $html .= '</div>';
+
+            return $html;
 
         }
 
@@ -107,31 +179,47 @@
             $tax = array();
 
             $taxonomies = Taxonomy::get();
+            $terms = get_terms( $taxonomies, array( 'hide_empty' => false ) );
 
-            if( $taxonomies ){
+            if( $terms ){
 
-                foreach( $taxonomies as $taxonomy ){
-
-                    cuisine_dump( $taxonomy );
+                foreach( $terms as $term ){
+                
+                    $tax[ $term->taxonomy ][] = $term; 
 
                 }
-                    /* foreach ($taxonomies  as $taxonomy ) {
-                       echo '<a>'. $taxonomy. '</a>';
-                       $terms = get_terms("color");
-                       $count = count($terms);
-                       if ( $count > 0 ){
-                           echo '<ul>';
-                               foreach ( $terms as $term ) {
-                                   echo "<li>" . $term->name . "</li>";
-                               }
-                           echo "</ul>";
-                       }
-                     }*/
+           
             }
 
             return $tax;
 
         }
 
+
+        /**
+         * Add the scripts to the enqueue-list
+         *
+         * @return void
+         */
+        private function setScripts(){
+
+            if( is_admin() ){
+
+                $url = Url::plugin( 'chef-sections', true ).'Assets';
+
+                wp_enqueue_script( 
+                    'chosen', 
+                    $url.'/js/libs/chosen.min.js', 
+                    array( 'jquery' ) 
+                );
+
+                wp_enqueue_script(
+                    'taxonomySelect',
+                    $url.'/js/TaxonomySelect.js',
+                    array( 'jquery', 'chosen' )
+                );
+
+            }
+        }
 
     }
