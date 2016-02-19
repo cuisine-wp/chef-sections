@@ -4,6 +4,7 @@
 
 	use ChefSections\Wrappers\StaticInstance;
 	use Cuisine\Wrappers\PostType;
+	use Cuisine\Wrappers\Field;
 	use Cuisine\Utilities\Url;
 
 	class EventListeners extends StaticInstance{
@@ -42,6 +43,26 @@
 
 
 
+				//custom field type:
+				add_filter( 'cuisine_field_types', function( $types ){
+
+
+					$types['taxonomySelect'] = array(
+								'name'		=> 'TaxonomySelect',
+								'class'		=> 'ChefSections\Hooks\TaxonomySelect'
+					);
+
+					$types['mapper'] = array(
+								'name'		=> 'MapperField',
+								'class'		=> 'ChefForms\Hooks\MapperField'
+					);
+
+					return $types;
+
+				});
+
+
+				Field::taxonomySelect( 'wop', 'Wap' )->render();
 
 			});
 		}
