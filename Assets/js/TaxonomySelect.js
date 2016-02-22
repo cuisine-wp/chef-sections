@@ -35,6 +35,9 @@ jQuery( document ).ready( function( $ ){
 
  				if( $( this ).hasClass( 'add-tax' ) ){
 
+ 					if( $('.tax-select-wrapper' ).length <= 0 )
+ 						$('.taxonomy-select-field').html('');
+ 					
  					var _newId = self.getHighestId();
 
  					var htmlTemplate = _.template( jQuery( '#taxonomy_select_item').html() );
@@ -44,6 +47,8 @@ jQuery( document ).ready( function( $ ){
 
  					self.$el.append( output );
  					self.setChosen( _newId );
+
+
 
  				}else{
 
@@ -56,7 +61,7 @@ jQuery( document ).ready( function( $ ){
  							if( $('.tax-select-wrapper' ).length <= 0 ){
 
  								var _html = '<p>Op dit moment zijn er geen extra filters actief.</p>';
- 								_html += '<span class="add-remove-btn add-tax">Maak een filter aan</span>';
+ 								_html += '<span class="add-remove-btn add-tax msg-add-remove">Maak een filter aan</span>';
  								self.$el.append( _html );
 
  							}

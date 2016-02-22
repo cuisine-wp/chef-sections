@@ -65,7 +65,9 @@
 
                 }else{
 
-                    $html .= $this->makeItem( 0 );
+                    //$html .= $this->makeItem( 0 );
+                    $html .= '<p>Op dit moment zijn er geen extra filters actief.</p>';
+                    $html .= '<span class="add-remove-btn add-tax msg-add-remove">Maak een filter aan</span>';
 
                 }
         
