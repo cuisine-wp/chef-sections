@@ -189,6 +189,15 @@
 			}
 		});
 
+
+		$('.type-select').on( 'change', function( e ){
+			if( $( e.target ).val() === 'blueprint' ){
+				$('.field-apply_to').parent().removeClass( 'not-visible' );
+			}else{
+				$('.field-apply_to').parent().addClass( 'not-visible' );
+			}
+		});
+
 		var _post_id = $( '.section-wrapper' ).first().data('post_id');
 		$('#section-container').sortable({
 			handle: '.pin',
