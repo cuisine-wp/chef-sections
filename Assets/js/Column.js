@@ -225,7 +225,6 @@
 
 			var self = this;
 			var inputs = self.$('.lightbox .field-wrapper .multi');
-			console.log( inputs );
 			retloop: for( var a = 0; a <= inputs.length; a++ ){
 
 				var input = jQuery( inputs[ a ] );
@@ -267,7 +266,6 @@
        			}
 			}
 
-			console.log( properties );
 			return properties;
 		},
 
@@ -304,6 +302,7 @@
 				setColumns();
 				refreshFields();
 				setSections();
+
 
 			});
 		},

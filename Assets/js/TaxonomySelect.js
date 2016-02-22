@@ -37,7 +37,7 @@ jQuery( document ).ready( function( $ ){
 
  					if( $('.tax-select-wrapper' ).length <= 0 )
  						$('.taxonomy-select-field').html('');
- 					
+
  					var _newId = self.getHighestId();
 
  					var htmlTemplate = _.template( jQuery( '#taxonomy_select_item').html() );
@@ -156,16 +156,23 @@ jQuery( document ).ready( function( $ ){
 
 
 
+	var _taxSelect = [];
 	chefSectionsSetTaxonomySelect();
-
 
 
 	function chefSectionsSetTaxonomySelect(){
 
+		if( _taxSelect.length > 0 ){
+			for( var i = 0; _taxSelect.length > i; i++ ){
+				_taxSelect[ i ].destroy();
+			}
+		}
+
+		_taxSelect = [];
+
 	 	jQuery('.taxonomy-select-field' ).each( function( index, obj ){
-	 		console.log( 'test' );
 	 		var ts = new TaxonomySelectField( { el: obj } );
-	 		//_mediaFields.push( mf );
+	 		_taxSelect.push( ts );
 	 	});
 		
 	}
