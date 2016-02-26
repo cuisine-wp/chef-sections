@@ -34,7 +34,7 @@
 			wp_reset_query();
 
 
-			return ob_get_clean();
+			return apply_filters( 'chef_sections_output', ob_get_clean(), $this );
 		}
 
 		/**
@@ -107,7 +107,7 @@
 			//set the new post global
        		$GLOBALS['post'] = $template;
 
-       		$this->postId = $template->ID;	
+       		$this->postId = $template->ID;
 			
 			$this->sections = $this->getSections();
 			$this->highestId = $this->getHighestId();
