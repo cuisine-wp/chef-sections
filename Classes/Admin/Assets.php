@@ -4,6 +4,7 @@
 
 	use ChefSections\Wrappers\StaticInstance;
 	use Cuisine\Utilities\Url;
+	use _WP_Editors;
 
 	class Assets extends StaticInstance{
 
@@ -45,6 +46,7 @@
 			
 			add_action( 'admin_menu', function(){
 
+
 				$url = Url::plugin( 'chef-sections', true ).'Assets';
 				wp_enqueue_script( 
 					'sections_section', 
@@ -61,6 +63,26 @@
 				
 				wp_enqueue_style( 'sections', $url.'/css/admin.css' );
 				
+			});
+
+			add_action( 'admin_footer', function(){
+			
+				//always load tinymce:
+			/*	$js_src = includes_url('js/tinymce/') . 'tinymce.min.js';
+				$css_src = includes_url('css/') . 'editor.css';
+
+				// wp_enqueue doesn't seem to work at all
+				echo '<script src="' . $js_src . '" type="text/javascript"></script>';
+
+				wp_register_style('tinymce_css', $css_src);
+				wp_enqueue_style('tinymce_css');
+
+				_WP_Editors::editor_settings( 'defaultEditor', array( 'quicktags' => false, '_content_editor_dfw' => false ) );*/
+
+				echo '<div style="display:none">';
+					wp_editor( '', 'defaultEditor' );
+				echo '</div>';
+
 			});
 			
 		}

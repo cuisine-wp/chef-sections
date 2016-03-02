@@ -40,7 +40,8 @@
 
 			if( self.$( '.lightbox .editor textarea' ).length > 0 ){
 			
-			//	console.log( tinyMCE.init() );
+				//console.log( tinyMCE.init() );
+				//tinyMCE.init();
 
 			}
 
@@ -72,7 +73,10 @@
 
 				
 				self.$el.replaceWith( response );
+
+				setSections();
 				setColumns();
+				refreshFields();
 
 			});
 

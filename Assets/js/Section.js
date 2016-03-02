@@ -154,8 +154,14 @@
 
 				$('#section-container').append( response );
 
+				//register new section here:
+				
 				setSections();
+				
+				//set new columns with parent:
 				setColumns();
+
+
 				refreshFields();
 				
 			});
