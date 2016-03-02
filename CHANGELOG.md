@@ -1,3 +1,16 @@
+### 1.3.6: 2016-03-02
+
+* Advanced taxonomy select for collections
+* Big change to Section Templates, currently in three flavours:
+ * Reference (Template to be used inside a section layout)
+ * Blueprint (Section layout meant for a specific post-type)
+ * Stencil (Section template to be used in code)
+* Walker output is now filterable
+* Big improvements to the refreshing of JS objects
+* Minor bugfixes.
+
+
+
 ### 1.3.5: 2016-01-28
 
 * IE9 Grid support added
