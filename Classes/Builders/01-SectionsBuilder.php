@@ -544,6 +544,8 @@ class SectionsBuilder {
 
 		$name = '';
 
+
+
 		foreach( $this->sections as $section ){
 
 			if( $section->id === $section_id ){
@@ -558,11 +560,9 @@ class SectionsBuilder {
 				if( isset( $section->name ) && $section->name != '' )
 					$name .= $section->name;
 				
+				return $name;
+			
 			}
-
-
-			return $name;
-
 		}
 
 
