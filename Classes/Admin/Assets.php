@@ -31,14 +31,14 @@
 				global $pagenow;
 
 				if( $pagenow == 'post.php' || $pagenow == 'post-new.php' ){
-					if( 
+					/*if( 
 						( isset( $_GET['post'] ) && get_post_type( $_GET['post'] ) == 'section-template' ) || 
 						( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'section-template' )
-					){
+					){*/
 
-						wp_enqueue_media();
+					wp_enqueue_media();
 					
-					}
+					//}
 				}
 
 			});
