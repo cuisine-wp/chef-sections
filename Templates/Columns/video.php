@@ -1,4 +1,4 @@
-<div class="column video">
+<div itemprop="video" class="column video">
 	<div class="video-wrapper">
 		<?php 
 
@@ -21,6 +21,6 @@
 	</div>
 
 	<?php if( $column->getField( 'title' ) ):?>
-		<h2><?php $column->theField( 'title' );?></h2>
+		<h2 itemscope itemtype="http://schema.org/Thing" itemprop="name"><?php $column->theField( 'title' );?></h2>
 	<?php endif;?>
 </div>

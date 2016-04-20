@@ -6,6 +6,6 @@
 		$url = $column->getField( 'full' );
 
 ?>
-<div class="column image">
+<div itemprop="image" class="column image">
 	<img src="<?php echo $url;?>"/>
 </div>
