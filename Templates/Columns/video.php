@@ -10,7 +10,7 @@
 				if( isset( $still['large'] ) && $still['large'] != '' )
 					$url = $still['large'];
 
-				echo '<div style="background-image:url('.$url.')" class="video-still"></div>';
+				echo '<div itemscope itemtype="http://schema.org/Thing" itemprop="video" style="background-image:url('.$url.')" class="video-still"></div>';
 
 			}
 

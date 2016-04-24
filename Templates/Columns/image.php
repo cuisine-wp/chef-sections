@@ -6,6 +6,6 @@
 		$url = $column->getField( 'full' );
 
 ?>
-<div itemprop="image" class="column image">
-	<img src="<?php echo $url;?>"/>
+<div class="column image">
+	<img itemscope itemtype="http://schema.org/Thing" itemprop="image" src="<?php echo $url;?>"/>
 </div>
