@@ -181,7 +181,7 @@
 
 				var input = jQuery( inputs[ i ] );
 
-				if( input.val() !== undefined && input.attr( 'name' ) !== undefined ){
+				if( input.val() !== undefined && input.attr( 'name' ) !== undefined && input.attr('disabled') == undefined ){
 
 					var value = input.val();
 
@@ -235,11 +235,12 @@
 				var val = input.val();
 				var name = input.attr('name');
 				var type = input.attr('type');
+				var disabled = input.attr('disabled');
 
 				if( type == 'checkbox' && input.is( ':checked' ) === false )
 					continue retloop;
 
-				if( name !== undefined ){
+				if( name !== undefined && disabled == undefined ){
 
        				var parts = name.split('[');   
        				var last = properties;

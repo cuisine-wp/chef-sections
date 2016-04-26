@@ -256,4 +256,17 @@
 			var sec = new Section( { el: obj } );
 
 		});
+
+		setSectionOrder();
+	}
+
+
+	function setSectionOrder(){
+
+		var i = 1;
+		jQuery('#section-container .section-wrapper').each( function(){
+			var field = jQuery( this ).find( '.section-position' );
+			field.val( i );
+			i++;
+		})
 	}
