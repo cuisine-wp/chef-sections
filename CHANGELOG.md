@@ -1,3 +1,11 @@
+### 1.3.7: 2016-04-26
+
+* Section template order bugfix
+* Support for not saving disabled fields in columns
+* Various hotfixes
+
+
+
 ### 1.3.6: 2016-03-02
 
 * Advanced taxonomy select for collections
