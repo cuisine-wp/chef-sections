@@ -197,10 +197,18 @@
 
 
 		$('.type-select').on( 'change', function( e ){
-			if( $( e.target ).val() === 'blueprint' ){
-				$('.field-apply_to').parent().removeClass( 'not-visible' );
-			}else{
-				$('.field-apply_to').parent().addClass( 'not-visible' );
+
+			if( $( this ).hasClass( 'field-apply_to') == false ){
+
+				if( $( e.target ).val() === 'blueprint' ){
+	
+					$('.field-apply_to').parent().removeClass( 'not-visible' );
+			
+				}else{
+			
+					$('.field-apply_to').parent().addClass( 'not-visible' );
+			
+				}
 			}
 		});
 
