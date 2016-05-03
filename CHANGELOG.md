@@ -1,3 +1,11 @@
+### 1.3.8: 2016-05-03
+
+* Fixes the taxonomy selector in collections
+* Fixes the dropdowns section-templates
+* Fixes the issues with featured-images
+* Various hotfixes
+
+
 ### 1.3.7: 2016-04-26
 
 * Section template order bugfix
