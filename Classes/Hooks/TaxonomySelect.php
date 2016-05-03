@@ -44,7 +44,6 @@
         public function render(){
 
             $this->taxonomies = $this->getTaxonomies();
-            $this->setScripts();
 
             $value = $this->getValue();
             $iteration = 1;
@@ -187,6 +186,7 @@
 
                 foreach( $terms as $term ){
                 
+                    $term->name = esc_html( $term->name );
                     $tax[ $term->taxonomy ][] = $term; 
 
                 }
@@ -195,33 +195,6 @@
 
             return $tax;
 
-        }
-
-
-        /**
-         * Add the scripts to the enqueue-list
-         *
-         * @return void
-         */
-        private function setScripts(){
-
-            if( is_admin() ){
-
-                $url = Url::plugin( 'chef-sections', true ).'Assets';
-
-                wp_enqueue_script( 
-                    'chosen', 
-                    $url.'/js/libs/chosen.min.js', 
-                    array( 'jquery' ) 
-                );
-
-                wp_enqueue_script(
-                    'taxonomySelect',
-                    $url.'/js/TaxonomySelect.js',
-                    array( 'jquery', 'chosen' )
-                );
-
-            }
         }
 
     }
