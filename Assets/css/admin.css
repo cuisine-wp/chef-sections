@@ -236,6 +236,22 @@
 .section-wrapper .section-settings.active {
   display: block;
 }
+.section-wrapper .section-settings .field-wrapper.checkboxes .subfield-wrapper {
+  display: inline-block;
+  width: 50%;
+}
+.section-wrapper .section-settings .field-wrapper.checkboxes > label {
+  display: block;
+  width: 100%;
+}
+.section-wrapper .section-settings .field-wrapper.checkboxes .subfield-wrapper > input {
+  width: 16px;
+  height: 16px;
+}
+.section-wrapper .section-settings .field-wrapper.checkboxes .subfield-wrapper > label {
+  display: inline-block;
+  width: auto;
+}
 .section-wrapper.msg {
   position: relative;
 }
@@ -356,7 +372,7 @@
   border-bottom: 1px solid #ddd;
 }
 
-.not-visible {
+.field-wrapper.not-visible {
   display: none !important;
 }
 

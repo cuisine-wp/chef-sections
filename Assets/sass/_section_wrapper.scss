@@ -284,6 +284,31 @@
 		&.active{
 			display:block;
 		}
+
+
+		.field-wrapper.checkboxes{
+			.subfield-wrapper{
+		  		display:inline-block;
+		  		width:50%;
+			}
+
+			> label{
+				display:block;
+				width:100%;
+			}
+
+			.subfield-wrapper{
+				> input{
+					width:16px;
+					height:16px;
+				}
+
+				> label{
+					display:inline-block;
+					width:auto;
+				}
+			}
+		}
 	}
 
 
