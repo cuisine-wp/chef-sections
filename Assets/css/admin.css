@@ -284,6 +284,14 @@
 .section-wrapper.dotted-bg em {
   padding: 0 20px;
 }
+.section-wrapper.dotted-bg .spinner {
+  display: inline-block;
+  float: none;
+  margin: 0 10px 0 0;
+}
+.section-wrapper.dotted-bg .spinner.show {
+  visibility: visible;
+}
 .section-wrapper.reference .field-wrapper.radio {
   opacity: .3;
   pointer-events: none !important;

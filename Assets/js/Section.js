@@ -17,6 +17,11 @@
 
 		},
 
+		/**
+		 * Init the section object
+		 * 
+		 * @return void
+		 */
 		initialize: function(){
 
 			var self = this;
@@ -26,6 +31,7 @@
 
 
 		},
+
 
 		/**
 		 * Change the view of a section
@@ -97,13 +103,24 @@
 			}
 		},
 
-
+		/**
+		 * Show the loader
+		 * 
+		 * @param  jQuery $
+		 * @return void
+		 */
 		showLoader: function( $ ){
 
 			var self = this;
 			self.$( '> .loader' ).addClass( 'show' );
 		},
 
+		/**
+		 * Show the settings field
+		 * 
+		 * @param  Event evt
+		 * @return void
+		 */
 		toggleSettings: function( evt ){
 
 			var self = this;
@@ -112,6 +129,12 @@
 
 		},
 
+		/**
+		 * Code copy event function
+		 * 
+		 * @param  Event evt
+		 * @return void
+		 */
 		copyCode: function( evt ){
 
 			var self = this;
@@ -120,7 +143,12 @@
 
 		},
 
-
+		/**
+		 * Copy the contents to your clipboard
+		 * 
+		 * @param  string _value
+		 * @return void
+		 */
 		copyToClipboard: function( _value ){
 			jQuery( 'body' ).append("<input type='text' id='temp' style='position:absolute;opacity:0;'>");
 			jQuery( '#temp' ).val( _value ).select();
@@ -128,6 +156,11 @@
 			jQuery( '#temp' ).remove();
 		},
 
+		/**
+		 * Remove section-events
+		 * 
+		 * @return void
+		 */
 		destroy: function(){
 			this.undelegateEvents();
 		}
@@ -143,12 +176,18 @@
 
 		setSections();
 
+		/**
+		 * Adding sections
+		 * @return html
+		 */
 		$('#addSection').on( 'click', function(){
 
 			var data = {
 				action: 'createSection',
 				post_id: $( this ).data('post_id')
 			}
+
+			$('#section-builder-ui .spinner').addClass( 'show' );
 
 			$.post( ajaxurl, data, function( response ){
 
@@ -161,13 +200,20 @@
 				//set new columns with parent:
 				setColumns();
 
-
+				//refresh the fields
 				refreshFields();
+
+				//remove the spinner:
+				$('#section-builder-ui .spinner').removeClass( 'show' );
 				
 			});
 		});
 
 
+		/**
+		 * Fetching a section-template
+		 * @return html
+		 */
 		$('#getTemplate').on( 'change', function(){
 
 
@@ -195,7 +241,12 @@
 			}
 		});
 
-
+		/**
+		 * Changing the template type:
+		 * 
+		 * @param  Event e
+		 * @return void
+		 */
 		$('.type-select').on( 'change', function( e ){
 
 			if( $( this ).hasClass( 'field-apply_to') == false ){
@@ -212,6 +263,11 @@
 			}
 		});
 
+		/**
+		 * Sort sections
+		 * 
+		 * @type void
+		 */
 		var _post_id = $( '.section-wrapper' ).first().data('post_id');
 		$('#section-container').sortable({
 			handle: '.pin',
@@ -241,9 +297,9 @@
 				});
 
 			}
-		})
-
+		});
 	});
+
 
 
 	var _sections = [];
@@ -262,6 +318,7 @@
 		jQuery('.section-wrapper').each( function( index, obj ){
 
 			var sec = new Section( { el: obj } );
+			_sections.push( sec );
 
 		});
 

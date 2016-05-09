@@ -133,8 +133,9 @@ class SectionsBuilder {
 		$templates = ReferenceBuilder::getTemplates( $args );
 
 
-		echo '<div class="section-wrapper dotted-bg">';
+		echo '<div class="section-wrapper dotted-bg" id="section-builder-ui">';
 
+			echo '<span class="spinner"></span>';
 			echo '<div id="addSection" class="section-btn" data-post_id="'.$this->postId.'">';
 				_e( 'Sectie toevoegen', 'chefsections' );
 			echo '</div>';
