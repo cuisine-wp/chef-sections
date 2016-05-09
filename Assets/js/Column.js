@@ -74,8 +74,7 @@
 				
 				self.$el.replaceWith( response );
 
-				setSections();
-				setColumns();
+				SectionBuilder.refresh();
 				refreshFields();
 
 			});
@@ -304,10 +303,9 @@
 				self.closeLightbox();
 
 				self.$el.replaceWith( response );
-				setColumns();
-				refreshFields();
-				setSections();
 
+				SectionBuilder.refresh();
+				refreshFields();
 
 			});
 		},
@@ -337,9 +335,9 @@
 			jQuery.post( ajaxurl, data, function( response ){
 
 				self.$el.replaceWith( response );
-				setColumns();
+
+				SectionBuilder.refresh();
 				refreshFields();
-				setSections();
 
 			});
 
@@ -351,32 +349,3 @@
 
 	});
 
-
-	jQuery( document ).ready( function( $ ){
-
-		setColumns();
-
-	});
-
-
-	var _cols = [];
-
-	function setColumns(){
-
-		if( _cols.length > 0 ){
-
-			for( var i = 0; _cols.length > i; i++ ){
-				_cols[ i ].destroy();
-
-			}
-
-		}
-
-
-		_cols = [];
-
-		jQuery('.column' ).each( function( index, obj ){
-			var col = new Column( { el: obj } );
-			_cols.push( col );
-		});
-	}

@@ -6,6 +6,7 @@
 	use ChefSections\Wrappers\SectionsBuilder;
 	use ChefSections\Wrappers\ReferenceBuilder;
 	use ChefSections\Wrappers\Column;
+	use ChefSections\Wrappers\Walker;
 	use Cuisine\Wrappers\PostType;
 
 	class Ajax extends AjaxInstance{
@@ -77,6 +78,15 @@
 				parent::setPostGlobal();
 
 				ReferenceBuilder::addReference();
+				die();
+
+			});
+
+			//fetch all html output
+			add_action( 'wp_ajax_getHtmlOutput', function(){
+
+				parent::setPostGlobal();
+				echo Walker::walk();
 				die();
 
 			});

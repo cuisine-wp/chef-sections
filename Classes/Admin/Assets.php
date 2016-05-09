@@ -61,6 +61,12 @@
 				);
 
 				wp_enqueue_script( 
+					'sections_builder', 
+					$url.'/js/Builder.js', 
+					array( 'backbone', 'media-editor' )
+				);
+
+				wp_enqueue_script( 
 				    'chosen', 
 				    $url.'/js/libs/chosen.min.js', 
 				    array( 'jquery' ) 
