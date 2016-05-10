@@ -126,21 +126,17 @@ class Section {
 
 		$this->template_id = ( isset( $args['template_id'] ) ? $args['template_id'] : false );
 
-		$this->position = $args['position'];
+		$this->position 		= $args['position'];
+		$this->title 			= $args['title'];
+		$this->view 			= $args['view'];
+		$this->name 			= $this->getName( $args );
+		$this->properties 		= $args;
+		$this->columns 			= $this->getColumns( $args['columns'] );
 
-		$this->title = $args['title'];
+		$this->hide_title 		= ( isset( $args['hide_title'] ) ? $args['hide_title'] : 'false' );
 
-		$this->view = $args['view'];
+		$this->hide_container 	= ( isset( $args['hide_container'] ) ? $args['hide_container'] : 'false' );
 
-		$this->name = $this->getName( $args );
-
-		$this->hide_title = ( isset( $args['hide_title'] ) ? $args['hide_title'] : 'false' );
-
-		$this->hide_container = ( isset( $args['hide_container'] ) ? $args['hide_container'] : 'false' );
-
-		$this->properties = $args;
-
-		$this->columns = $this->getColumns( $args['columns'] );
 
 		$name = 'page-';
 		if( isset( $post->post_name ) )
@@ -173,13 +169,29 @@ class Section {
 		//add a hook
 		add_action( 'section_before_template', $this );
 
-
 		$class = 'section';
 		$class .= ' '.$this->name;
 
+
+		$classes = $this->getProperty( 'classes' );
+		if( $classes ){
+
+			if( is_array( $classes ) )
+				$classes = explode( ' ', $classes );
+
+			$class .= ' '.$classes;
+		}
+
 		$class = apply_filters( 'chef_section_classes', $class, $this );
 
-		echo '<div itemscope itemtype="http://schema.org/Collection" class="'.$class.'" id="section-'.$this->id.'">';
+		//base html of a section-starting div
+		$html = '<div itemscope itemtype="http://schema.org/Collection" class="'.$class.'" id="section-'.$this->id.'">';
+
+		//so people can add data-properties and other stuff
+		$html = apply_filters( 'chef_section_beforeTemplate', $html );
+
+		echo $html;
+			do_action( 'chef_section_before_section_content', $this );
 
 	}
 
@@ -189,6 +201,8 @@ class Section {
 	 * @return void
 	 */
 	public function afterTemplate(){
+
+			do_action( 'chef_section_after_section_content', $this );
 
 		echo '</div>';
 
@@ -218,8 +232,7 @@ class Section {
 				$this->buildIds();
 			echo '>';
 
-				if( User::hasRole( 'administrator' ) )
-					$this->buildControls();
+				$this->buildControls();
 
 				echo '<div class="section-columns '.$this->view.'">';
 	
@@ -235,10 +248,9 @@ class Section {
 				echo '<div class="clearfix"></div>';
 				echo '</div>';
 
-				if( User::hasRole( 'administrator' ) ){
-					$this->bottomControls();
-					$this->buildSettingsPanel();
-				}
+				$this->bottomControls();
+				$this->buildSettingsPanels();
+				$this->buildHiddenFields();
 			
 			echo '<div class="loader"><span class="spinner"></span></div>';
 			echo '</div>';
@@ -254,13 +266,10 @@ class Section {
 
 		$fields = $this->getControlFields();
 
-
 		echo '<div class="section-controls">';
 
-			echo '<span class="button section-settings-btn">';
-				echo '<span class="dashicons dashicons-admin-settings"></span>';
-				_e( 'Instellingen', 'chef-sections' );
-			echo '</span>';
+			//section title & panel buttons
+			$this->topControls();
 			
 			foreach( $fields as $field ){
 
@@ -275,6 +284,44 @@ class Section {
 		echo '<div class="clearfix"></div>';
 	}
 
+
+	/**
+	 * Build the input top controls for this section
+	 * 
+	 * @return [type] [description]
+	 */
+	protected function topControls(){
+
+		//first the title:
+		$title = ( $this->hide_title ? '' : $this->title );
+
+		Field::text(
+			'section['.$this->id.'][title]',
+			__( 'Titel', 'chefsections' ),
+			array(
+				'placeholder'	=> __( 'Section title', 'chefsections' ),
+				'label'			=> false,
+				'defaultValue'	=> $title
+			)
+		)->render();
+
+
+		//add the top buttons:
+		echo '<div class="buttons-wrapper">';
+
+			$buttons = apply_filters( 'chef_sections_panel_buttons', array() );
+
+			foreach( $buttons as $button ){
+
+				echo '<span class="button section-'.$button['name'].'-btn with-tooltip" data-id="'.$button['name'].'">';
+					echo '<span class="dashicons '.$button['icon'].'"></span>';
+					echo '<span class="tooltip">'.$button['label'].'</span>';
+				echo '</span>';
+
+			}
+
+		echo '</div>';
+	}
 
 	/**
 	 * Create the controls on the bottom
@@ -358,19 +405,67 @@ class Section {
 	 * 
 	 * @return string (html, echoed)
 	 */
-	public function buildSettingsPanel(){
+	public function buildSettingsPanels(){
 
-		$fields = $this->getSettingsFields();
+		echo '<div class="section-setting-panels">';
 
-		echo '<div class="section-settings">';
-
-			foreach( $fields as $field ){
-
-				$field->render();
-
-			}
+			do_action( 'chef_section_setting_panels', $this );
 
 		echo '</div>';
+	}
+
+	/**
+	 * Render all hidden fields for this section
+	 * 
+	 * @return void
+	 */
+	public function buildHiddenFields(){
+
+		$prefix = 'section['.$this->id.']';
+		Field::hidden(
+			$prefix.'[position]',
+			array(
+				'defaultValue' => $this->position,
+				'class' => array( 'field', 'input-field', 'hidden-field', 'section-position' )
+			)
+		)->render();
+
+		Field::hidden(
+			$prefix.'[post_id]',
+			array(
+				'defaultValue' => $this->post_id
+			)
+		)->render();
+
+		Field::hidden(
+			$prefix.'[id]',
+			array(
+				'defaultValue' => $this->id
+			)
+		)->render();
+
+		Field::hidden(
+		
+			$prefix.'[type]',
+			array(
+				'defaultValue' => $this->type
+			)
+		
+		)->render();
+
+
+		if( $this->template_id !== 0 ){
+
+			Field::hidden(
+			
+				$prefix.'[template_id]',
+				array(
+					'defaultValue' => $this->template_id
+				)
+		
+			)->render();
+
+		}
 	}
 
 
@@ -448,112 +543,6 @@ class Section {
 
 		$fields = array( $views );
 		$fields = apply_filters( 'chef_sections_controls_fields', $fields );
-
-		return $fields;
-	}
-
-	/**
-	 * Returns the array of fields for the settings panel
-	 * 
-	 * @return array
-	 */
-	private function getSettingsFields(){
-		
-		$prefix = 'section['.$this->id.']';
-		
-		$title = Field::text( 
-			$prefix.'[title]',
-			'Sectie titel', //no label,
-			array( 
-				'placeholder'  => 'Titel',
-				'defaultValue' => $this->title
-			)
-		);
-
-		$name = Field::text(
-			$prefix.'[name]',
-			'Sectie naam',
-			array(
-				'defaultValue'	=> $this->name
-			)
-		);
-
-		$check = Field::checkbox(
-			$prefix.'[hide_title]',
-			'Sectie title verbergen',
-			array(
-				'defaultValue'	=> $this->hide_title
-			)
-		);
-
-		$container = Field::checkbox(
-			$prefix.'[hide_container]',
-			'Container verbergen',
-			array(
-				'defaultValue'	=> $this->hide_container
-			)
-		);
-
-
-		$position = Field::hidden(
-			$prefix.'[position]',
-			array(
-				'defaultValue' => $this->position,
-				'class' => array( 'field', 'input-field', 'hidden-field', 'section-position' )
-			)
-		);
-
-		$post_id = Field::hidden(
-			$prefix.'[post_id]',
-			array(
-				'defaultValue' => $this->post_id
-			)
-		);
-
-		$id = Field::hidden(
-			$prefix.'[id]',
-			array(
-				'defaultValue' => $this->id
-			)
-		);
-
-		$type = Field::hidden(
-		
-			$prefix.'[type]',
-			array(
-				'defaultValue' => $this->type
-			)
-		
-		);
-
-		$fields = array(
-
-			$title,
-			$name,
-			$check,
-			$container,
-			$position,
-			$post_id,
-			$type,
-			$id
-
-		);
-
-
-		if( $this->template_id !== 0 ){
-
-			$fields[] = Field::hidden(
-			
-				$prefix.'[template_id]',
-				array(
-					'defaultValue' => $this->template_id
-				)
-		
-			);
-
-		}
-
-		$fields = apply_filters( 'chef_sections_setting_fields', $fields, $this, $prefix );
 
 		return $fields;
 	}

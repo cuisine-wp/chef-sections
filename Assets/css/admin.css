@@ -73,20 +73,25 @@
 .section-wrapper .section-controls .pin:hover {
   color: #00a3cf;
 }
-.section-wrapper .section-controls .field-wrapper {
+.section-wrapper .section-controls .buttons-wrapper {
+  float: left;
+  width: 20%;
+  background: Red;
+}
+.section-wrapper .section-controls > .field-wrapper {
   float: left;
   text-align: center;
 }
-.section-wrapper .section-controls .field-wrapper.text {
-  width: 35%;
+.section-wrapper .section-controls > .field-wrapper.text {
+  width: 20%;
 }
-.section-wrapper .section-controls .field-wrapper.checkbox {
+.section-wrapper .section-controls > .field-wrapper.checkbox {
   box-sizing: border-box;
   width: 5%;
   position: relative;
   padding: 20px 0 0 15px;
 }
-.section-wrapper .section-controls .field-wrapper.checkbox .input-field {
+.section-wrapper .section-controls > .field-wrapper.checkbox .input-field {
   width: 0px;
   height: 0px;
   margin-right: 10px;
@@ -95,7 +100,7 @@
   outline: none;
   overflow: none;
 }
-.section-wrapper .section-controls .field-wrapper.checkbox .input-field:after {
+.section-wrapper .section-controls > .field-wrapper.checkbox .input-field:after {
   display: inline-block;
   content: "\f177";
   font: normal 20px/1 'dashicons';
@@ -105,19 +110,19 @@
   -moz-osx-font-smoothing: grayscale;
   color: #666;
 }
-.section-wrapper .section-controls .field-wrapper.checkbox .input-field:checked {
+.section-wrapper .section-controls > .field-wrapper.checkbox .input-field:checked {
   background: #fff;
 }
-.section-wrapper .section-controls .field-wrapper.checkbox .input-field:checked:after {
+.section-wrapper .section-controls > .field-wrapper.checkbox .input-field:checked:after {
   content: "\f153";
 }
-.section-wrapper .section-controls .field-wrapper.checkbox .input-field:checked:before {
+.section-wrapper .section-controls > .field-wrapper.checkbox .input-field:checked:before {
   display: none;
 }
-.section-wrapper .section-controls .field-wrapper.checkbox .input-field:hover:after {
+.section-wrapper .section-controls > .field-wrapper.checkbox .input-field:hover:after {
   color: #00a3cf;
 }
-.section-wrapper .section-controls .field-wrapper.checkbox label {
+.section-wrapper .section-controls > .field-wrapper.checkbox label {
   position: absolute;
   top: -55px;
   left: -5%;
@@ -127,7 +132,7 @@
   color: #fff;
   display: none;
 }
-.section-wrapper .section-controls .field-wrapper.checkbox label:after {
+.section-wrapper .section-controls > .field-wrapper.checkbox label:after {
   position: absolute;
   top: 100%;
   left: 20px;
@@ -135,11 +140,14 @@
   border: 6px solid rgba(0, 0, 0, 0.8);
   border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
 }
-.section-wrapper .section-controls .field-wrapper.checkbox .input-field:hover + label {
+.section-wrapper .section-controls > .field-wrapper.checkbox .input-field:hover + label {
   display: block;
 }
-.section-wrapper .section-controls .field-wrapper.radio {
-  width: 80%;
+.section-wrapper .section-controls > .field-wrapper.radio {
+  width: 50%;
+}
+.section-wrapper .section-controls > .field-wrapper.radio label {
+  display: none;
 }
 .section-wrapper .section-controls .radio {
   float: right;

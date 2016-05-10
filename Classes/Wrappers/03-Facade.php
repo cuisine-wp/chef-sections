@@ -64,6 +64,7 @@
                 'referencebuilder'        => 'ChefSections\Builders\ReferenceBuilder',
 
                 'section'                 => 'ChefSections\Sections\Section',
+                'settingspanel'           => 'ChefSections\Sections\SettingsPanels\SettingsPanel',
                 'reference'               => 'ChefSections\Sections\Reference',
                 'stencil'                 => 'ChefSections\Sections\Stencil',
                 'blueprint'               => 'ChefSections\Sections\Blueprint'

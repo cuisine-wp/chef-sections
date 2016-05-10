@@ -82,11 +82,20 @@
 			}
 		}
 
-		.field-wrapper{
+		.buttons-wrapper{
+			box-sizing:border-box;
+			float:left;
+			width:30%;
+			padding-left:15px;
+
+			
+		}
+
+		> .field-wrapper{
 			float:left;
 			text-align:center;
 			&.text{
-				width:35%;
+				width:20%;
 			}
 			&.checkbox{
 				box-sizing:border-box;
@@ -158,7 +167,8 @@
 			}
 
 			&.radio{
-				width:80%;
+				width:40%;
+				label{display:none;}
 			}
 
 		}

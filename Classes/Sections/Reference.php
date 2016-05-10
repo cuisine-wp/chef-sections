@@ -94,8 +94,7 @@ class Reference extends Section{
 				$this->buildIds();
 			echo '>';
 
-				if( User::hasRole( 'administrator' ) )
-					$this->buildControls();
+				$this->buildControls();
 
 				echo '<div class="section-columns '.$this->view.'">';
 	
@@ -127,11 +126,11 @@ class Reference extends Section{
 				echo '<div class="clearfix"></div>';
 				echo '</div>';
 
-				if( User::hasRole( 'administrator' ) ){
-					$this->bottomControls();
-					$this->buildSettingsPanel();
-				}
-			
+				$this->bottomControls();
+				$this->buildSettingsPanels();
+				$this->buildHiddenFields();
+				
+
 			echo '<div class="loader"><span class="spinner"></span></div>';
 			echo '</div>';
 		}
