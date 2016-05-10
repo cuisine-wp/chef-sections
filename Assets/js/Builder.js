@@ -4,9 +4,7 @@ var SectionBuilder = new function(){
 	var _columns;
 	var _sections;
 	var _postId;
-
 	var _htmlOutput;
-	var _yoastActive;
 
 	/****************************************/
 	/***	Public callable functions
@@ -28,14 +26,8 @@ var SectionBuilder = new function(){
 
 
 		//yoast support:
-		if( typeof( YoastSEO ) != 'undefined' ){
-
-			self._yoastActive = true;
+		if( typeof( YoastSEO ) != 'undefined' )
 			self.initYoastSupport();
-
-		}else{
-			self._yoastActive = false;
-		}
 
 		//events:
 		self.setEvents();
@@ -314,16 +306,20 @@ var SectionBuilder = new function(){
 		var self = this;
 
 		YoastSEO.app.registerPlugin( 'chefSections', {status: 'loading'} );
-		self.updateHtmlOutput( function(){
+		YoastSEO.app.pluginReady( 'chefSections' );
 
-			//register the content modification:
-			YoastSEO.app.registerModification( 'content', function( _data ){
+		//register the content modification:
+		YoastSEO.app.registerModification( 'content', function( _data ){
 
+			if( self._htmlOutput !== '' )
 				return self._htmlOutput;
 
-			}, 'chefSections', 5 );
-		
-		});
+			return _data;
+
+		}, 'chefSections', 5 );
+
+
+		self.updateHtmlOutput();
 	}
 
 	/**
@@ -331,7 +327,7 @@ var SectionBuilder = new function(){
 	 * 
 	 * @return void
 	 */
-	this.updateHtmlOutput = function( _callback ){
+	this.updateHtmlOutput = function(){
 
 		var self = this;
 		
@@ -343,20 +339,10 @@ var SectionBuilder = new function(){
 
 		$.post( ajaxurl, data, function( response ){
 
-
 			self._htmlOutput = response;
 
-
-			if( typeof( _callback ) != 'undefined' ){
-
-				YoastSEO.app.pluginReady( 'chefSections' );
-				_callback();
-
-			}else{
-
-				YoastSEO.app.pluginReloaded( 'chefSections' );
-
-			}
+			//reload the plugin:
+			YoastSEO.app.pluginReloaded( 'chefSections' );
 
 		});
 	}
