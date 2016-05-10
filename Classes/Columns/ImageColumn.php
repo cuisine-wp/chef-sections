@@ -32,9 +32,15 @@ class ImageColumn extends DefaultColumn{
 	 */
 	public function buildPreview(){
 
+		$url = $this->getField( 'medium' );
+
+		if( !$url || $url == 'false' || $url == '' )
+			$url = $this->getField( 'full' );
+
+
 		echo '<div class="img-wrapper">';
 
-			echo '<img src="'.$this->getField( 'medium' ).'"/>';
+			echo '<img src="'.$url.'"/>';
 
 		echo '</div>';
 		
