@@ -342,7 +342,9 @@ var SectionBuilder = new function(){
 			self._htmlOutput = response;
 
 			//reload the plugin:
-			YoastSEO.app.pluginReloaded( 'chefSections' );
+			if( typeof( YoastSEO ) != 'undefined' )
+				YoastSEO.app.pluginReloaded( 'chefSections' );
+
 
 		});
 	}
