@@ -4,6 +4,7 @@
 
 	use ChefSections\Wrappers\StaticInstance;
 	use Cuisine\Utilities\Url;
+	use Cuisine\Utilities\Session;
 	use _WP_Editors;
 
 	class Assets extends StaticInstance{
@@ -51,31 +52,49 @@
 				wp_enqueue_script( 
 					'sections_section', 
 					$url.'/js/Section.js', 
-					array( 'backbone', 'media-editor' )
+					array( 'backbone', 'media-editor' ),
+					false,
+				    true
 				);
 
 				wp_enqueue_script( 
 					'sections_column', 
 					$url.'/js/Column.js', 
-					array( 'backbone', 'media-editor' ) 
+					array( 'backbone', 'media-editor' ),
+					false,
+				    true
 				);
 
 				wp_enqueue_script( 
 					'sections_builder', 
 					$url.'/js/Builder.js', 
-					array( 'backbone', 'media-editor' )
+					array( 'backbone', 'media-editor' ),
+					false,
+				    true
 				);
 
 				wp_enqueue_script( 
 				    'chosen', 
 				    $url.'/js/libs/chosen.min.js', 
-				    array( 'jquery' ) 
+				    array( 'jquery' ),
+				    false,
+				    true
 				);
 
 				wp_enqueue_script(
 				    'taxonomySelect',
 				    $url.'/js/TaxonomySelect.js',
-				    array( 'jquery', 'chosen' )
+				    array( 'jquery', 'chosen' ),
+				    false,
+				    true
+				);
+
+				wp_localize_script(
+					'taxonomySelect',
+					'ChefSections',
+					array(
+						'postId' => Session::postId()
+					)
 				);
 
 				

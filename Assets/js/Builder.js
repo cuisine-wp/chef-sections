@@ -3,6 +3,8 @@ var SectionBuilder = new function(){
 
 	var _columns;
 	var _sections;
+	var _postId;
+
 	var _htmlOutput;
 	var _yoastActive;
 
@@ -22,8 +24,9 @@ var SectionBuilder = new function(){
 		self._columns = new Array();
 		self._sections = new Array();
 		self._htmlOutput = '';
+		self._postId = ChefSections.postId;
 
-		console.log( typeof( YoastSEO ) );
+
 		//yoast support:
 		if( typeof( YoastSEO ) != 'undefined' ){
 
@@ -54,6 +57,9 @@ var SectionBuilder = new function(){
 
 		self.setColumns();
 		self.setSections();
+
+		//update the eventual output:
+		self.updateHtmlOutput();
 
 	}
 
@@ -148,7 +154,6 @@ var SectionBuilder = new function(){
 	 */
 	this.setSectionsSortable = function(){
 
-		var _post_id = $( '.section-wrapper' ).first().data('post_id');
 		
 		$('#section-container').sortable({
 			handle: '.pin',
@@ -160,7 +165,7 @@ var SectionBuilder = new function(){
 						
 				var data = {
 					action: 'sortSections',
-					post_id: _post_id,
+					post_id: self._postId,
 					section_ids: positions
 				}
 
@@ -309,8 +314,16 @@ var SectionBuilder = new function(){
 		var self = this;
 
 		YoastSEO.app.registerPlugin( 'chefSections', {status: 'loading'} );
-		self.updateHtmlOutput();
-	
+		self.updateHtmlOutput( function(){
+
+			//register the content modification:
+			YoastSEO.app.registerModification( 'content', function( _data ){
+
+				return self._htmlOutput;
+
+			}, 'chefSections', 5 );
+		
+		});
 	}
 
 	/**
@@ -318,16 +331,34 @@ var SectionBuilder = new function(){
 	 * 
 	 * @return void
 	 */
-	this.updateHtmlOutput = function(){
+	this.updateHtmlOutput = function( _callback ){
 
-		console.log( 'updating output' );
+		var self = this;
+		
 		var data = {
-			action: 'getHtmlOutput'
+			action: 'getHtmlOutput',
+			post_id: self._postId
 		}
 
+
 		$.post( ajaxurl, data, function( response ){
-			console.log( response );
-		})
+
+
+			self._htmlOutput = response;
+
+
+			if( typeof( _callback ) != 'undefined' ){
+
+				YoastSEO.app.pluginReady( 'chefSections' );
+				_callback();
+
+			}else{
+
+				YoastSEO.app.pluginReloaded( 'chefSections' );
+
+			}
+
+		});
 	}
 
 
@@ -336,7 +367,7 @@ var SectionBuilder = new function(){
 
 
 //init sections builder
-jQuery( document ).ready( function( $ ){
+jQuery( window ).load( function( $ ){
 
 	SectionBuilder.init();
 	
