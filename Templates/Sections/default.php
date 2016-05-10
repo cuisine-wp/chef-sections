@@ -1,7 +1,7 @@
 <?php
 	
 	if( $section->hide_title === 'false' ){
-		echo '<h2 class="section-title">';
+		echo '<h2  itemscope itemtype="http://schema.org/Thing" itemprop="alternateName" class="section-title">';
 			echo $section->title;
 		echo '</h2>';
 	}

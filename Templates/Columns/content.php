@@ -1,6 +1,6 @@
 <div class="column content">
 	<?php if( $column->getField( 'title' ) ):?>
-		<h2><?php $column->theField( 'title' );?></h2>
+		<h2 itemprop="name"><?php $column->theField( 'title' );?></h2>
 	<?php endif;?>
-	<?php $column->theField( 'content' );?>
+	<?php echo '<span itemprop="text">'.$column->getField( 'content' ).'</span>';?>
 </div>

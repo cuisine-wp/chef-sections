@@ -18,7 +18,7 @@
 			$query->the_post();
 	
 			if( $inRow == 0 && $grid !== 'masonry' )
-				echo '<div class="block-row column-row">';
+				echo '<div itemscope itemtype="http://schema.org/Collection" class="block-row column-row">';
 	
 					get_block_template( $column );
 	

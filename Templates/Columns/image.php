@@ -1,11 +1,19 @@
 <?php
+/**
+ * Image column
+ *
+ * @package ChefOehlala
+ * @since 2016
+ */
 
-	$url = $column->getField( 'large' );
 
-	if( $url == false || $url == 'false' || $url == '' )
+	$url = $column->getField( 'medium' );
+	if( !$url || $url == '' )
 		$url = $column->getField( 'full' );
 
-?>
-<div class="column image">
-	<img src="<?php echo $url;?>"/>
-</div>
+	echo '<div class="column image">';
+		echo '<meta itemprop="image" content="'.$url.'">';
+		echo '<img src="'. $url. '"/>';
+	echo '</div>';
+
+	
