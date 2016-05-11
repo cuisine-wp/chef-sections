@@ -257,27 +257,64 @@ class Section {
 		}
 	}
 
+
+
 	/**
 	 * Build the top of this Section
+	 * 
 	 * 
 	 * @return String ( html, echoed )
 	 */
 	public function buildControls(){
 
-		$fields = $this->getControlFields();
-
 		echo '<div class="section-controls">';
 
-			//section title & panel buttons
-			$this->topControls();
+			//first the title:
+			$title = ( $this->hide_title ? '' : $this->title );
+
+			Field::text(
+				'section['.$this->id.'][title]',
+				__( 'Titel', 'chefsections' ),
+				array(
+					'placeholder'	=> __( 'Section title', 'chefsections' ),
+					'label'			=> false,
+					'defaultValue'	=> $title
+				)
+			)->render();
+
+
+			//add the top buttons for panels:
+			echo '<div class="buttons-wrapper">';
+
+				$buttons = apply_filters( 'chef_sections_panel_buttons', array() );
+
+				foreach( $buttons as $button ){
+
+					echo '<span class="button section-'.$button['name'].'-btn with-tooltip" data-id="'.$button['name'].'">';
+						echo '<span class="dashicons '.$button['icon'].'"></span>';
+						echo '<span class="tooltip">'.$button['label'].'</span>';
+					echo '</span>';
+
+				}
+
+			echo '</div>';
 			
-			foreach( $fields as $field ){
 
-				$field->render();
+			//view-switcher:
+			$types = SectionsBuilder::getViewTypes();
 
-			}
+			Field::radio(
+				'section['.$this->id.'][view]',
+				'Weergave',
+				$types,
+				array(
+					'defaultValue' => $this->view
+				)
+			)->render();
 
+			//sorting pin:
 			echo '<span class="dashicons dashicons-sort pin"></span>';
+
 
 		echo '</div>';
 	
@@ -292,35 +329,7 @@ class Section {
 	 */
 	protected function topControls(){
 
-		//first the title:
-		$title = ( $this->hide_title ? '' : $this->title );
-
-		Field::text(
-			'section['.$this->id.'][title]',
-			__( 'Titel', 'chefsections' ),
-			array(
-				'placeholder'	=> __( 'Section title', 'chefsections' ),
-				'label'			=> false,
-				'defaultValue'	=> $title
-			)
-		)->render();
-
-
-		//add the top buttons:
-		echo '<div class="buttons-wrapper">';
-
-			$buttons = apply_filters( 'chef_sections_panel_buttons', array() );
-
-			foreach( $buttons as $button ){
-
-				echo '<span class="button section-'.$button['name'].'-btn with-tooltip" data-id="'.$button['name'].'">';
-					echo '<span class="dashicons '.$button['icon'].'"></span>';
-					echo '<span class="tooltip">'.$button['label'].'</span>';
-				echo '</span>';
-
-			}
-
-		echo '</div>';
+		
 	}
 
 	/**
@@ -521,32 +530,6 @@ class Section {
 		return $arr;
 
 	}
-
-	/**
-	 * Returns the array of fields for this section
-	 * 
-	 * @return array
-	 */
-	private function getControlFields(){
-
-		$prefix = 'section['.$this->id.']';
-		$types = SectionsBuilder::getViewTypes();
-
-		$views = Field::radio(
-			$prefix.'[view]',
-			'Weergave',
-			$types,
-			array(
-				'defaultValue' => $this->view
-			)
-		);
-
-		$fields = array( $views );
-		$fields = apply_filters( 'chef_sections_controls_fields', $fields );
-
-		return $fields;
-	}
-
 
 
 	/**
