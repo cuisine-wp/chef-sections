@@ -1,3 +1,13 @@
+### 1.3.9: 2016-05-11
+
+* Adds Schema.org support
+* Yoast SEO 3.0+ support
+* Fixes to column previes
+* JS stability fixes
+* Various hotfixes
+
+
+
 ### 1.3.8: 2016-05-03
 
 * Fixes the taxonomy selector in collections
