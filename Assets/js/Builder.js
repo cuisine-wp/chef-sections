@@ -72,6 +72,11 @@ var SectionBuilder = new function(){
 
 	}
 
+	/**
+	 * Set the width of the builder-ui
+	 *
+	 * @return void
+	 */
 	this.setBuilder = function(){
 
 		var _w = $('.section-container').innerWidth() + 30;
