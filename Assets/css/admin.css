@@ -330,26 +330,29 @@
   display: inline-block;
   visibility: visible;
 }
-.section-wrapper.dotted-bg {
+.section-wrapper#section-builder-ui {
   padding: 15px 0;
-  background: none;
-  border: 3px dashed #ccc;
   text-align: center;
-  box-shadow: 0;
+  position: fixed;
+  top: 0px;
+  margin-left: -15px;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }
-.section-wrapper.dotted-bg .section-btn {
+.section-wrapper#section-builder-ui .section-btn {
   width: auto;
   display: inline-block;
 }
-.section-wrapper.dotted-bg em {
+.section-wrapper#section-builder-ui em {
   padding: 0 20px;
 }
-.section-wrapper.dotted-bg .spinner {
+.section-wrapper#section-builder-ui .spinner {
   display: inline-block;
   float: none;
   margin: 0 10px 0 0;
 }
-.section-wrapper.dotted-bg .spinner.show {
+.section-wrapper#section-builder-ui .spinner.show {
   visibility: visible;
 }
 .section-wrapper.reference .field-wrapper.radio {

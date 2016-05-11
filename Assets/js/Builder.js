@@ -33,6 +33,7 @@ var SectionBuilder = new function(){
 		self.setEvents();
 
 		//column and section arrays:
+		self.setBuilder();
 		self.setColumns();
 		self.setSections();
 
@@ -69,6 +70,14 @@ var SectionBuilder = new function(){
 		self.setAddSectionButton();
 		self.setSectionsSortable();
 
+	}
+
+	this.setBuilder = function(){
+
+		var _w = $('.section-container').innerWidth() + 30;
+		$( '#section-builder-ui' ).css({
+			width: _w+'px'
+		});
 	}
 	
 

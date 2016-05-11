@@ -407,12 +407,16 @@
 		}
 	}
 
-	&.dotted-bg{
+	&#section-builder-ui{
 		padding:15px 0;
-		background:none;
-		border:3px dashed #ccc;
 		text-align:center;
-		box-shadow:0;
+		position: fixed;
+		top: 0px;
+		margin-left: -15px;
+		background: #fff;
+		border: 1px solid #ccc;
+		box-shadow: 0 0 4px rgba(0,0,0,.3);
+
 
 		.section-btn{
 			width:auto;
