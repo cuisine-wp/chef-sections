@@ -39,6 +39,7 @@ class ImageColumn extends DefaultColumn{
 
 
 		echo '<div class="img-wrapper">';
+		cuisine_dump( $this->getField( 'position' ) );
 
 			echo '<img src="'.$url.'"/>';
 

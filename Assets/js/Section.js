@@ -28,9 +28,38 @@
 			self.sectionId = self.$el.data( 'section_id' );
 			self.postId = self.$el.data( 'post_id' );
 
-
+			self.setEvents();
 		},
 
+		/**
+		 * Make columns sortable:
+		 *
+		 * @return void
+		 */
+		setEvents: function(){
+
+			self.$('.section-columns').sortable({
+				handle: '.sort',
+				placeholder: 'section-placeholder',
+				update: function (event, ui) {
+					
+					//self.setSectionOrder();
+					var positions = new Array();
+					var i = 0;
+
+					self.el.find('.section-columns .column').each(function(){
+						positions.push( $( this ).data('column_id') );
+
+						$( this ).find( '.column-position' ).val( i );
+						i++;
+					});
+					
+					console.log( positions );
+
+				}
+			});
+
+		},
 
 		/**
 		 * Change the view of a section
@@ -40,7 +69,6 @@
 		 */
 		changeView: function( el ){
 
-			console.log( 'view change' );
 			var self = this;
 			self.showLoader( jQuery );
 			

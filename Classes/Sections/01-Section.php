@@ -7,6 +7,7 @@ use ChefSections\Wrappers\SectionsBuilder;
 use ChefSections\Wrappers\Template;
 use Cuisine\Wrappers\Field;
 use Cuisine\Wrappers\User;
+use Cuisine\Utilities\Sort;
 
 /**
  * Admin Section-meta
@@ -528,6 +529,10 @@ class Section {
 				
 				}
 			}
+
+			//sort by column position:
+			$arr = Sort::byField( $arr, 'position', 'ASC' );
+
 		}
 
 		return $arr;

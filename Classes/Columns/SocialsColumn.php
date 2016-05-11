@@ -33,7 +33,7 @@ class SocialsColumn extends DefaultColumn{
 		
 			foreach( $props as $key => $link ){
 
-				if( $key !== 'title' ){
+				if( $key !== 'title' && $key !== 'position' ){
 
 					if( $link != '' ){				
 						//filter the link:

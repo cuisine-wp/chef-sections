@@ -362,6 +362,32 @@ class SectionsBuilder {
 		update_post_meta( $this->postId, 'sections', $_sections );
 	}
 
+	/**
+	 * Sort columns
+	 * 
+	 * @return bool (success / no success)
+	 */
+	public function sortColumns(){
+
+		$id = $_POST['section_id'];
+		$ids = $_POST['column_ids'];
+		$i = 0;
+
+		foreach( $ids as $col ){
+
+			$key = '_column_props_'.$id.'_'.$col;
+			$column = get_post_meta( $this->postId, $key, true );
+
+			$column['position'] = $i;
+
+			//update the position:
+			update_post_meta( $this->postId, $key, $column );
+
+			$i++;
+		}
+
+		return true;
+	}
 
 
 

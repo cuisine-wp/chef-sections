@@ -193,6 +193,10 @@
 				}
 			}
 
+			//add the position:
+			var _val = self.$('.column-position').val();
+			properties[ 'position' ] = _val;
+
 			//add the editor content
 			if( self.$( '.lightbox .editor-wrapper' ).length > 0 ){
 
@@ -215,8 +219,9 @@
 			
 			}
 
+			console.log( properties );
 			
-			self.saveProperties( properties );
+			//self.saveProperties( properties );
 		},
 
 		/**
@@ -345,7 +350,7 @@
 		},
 
 		/**
-		 * Set the chosen library for sections
+		 * Set the chosen library for column selection
 		 */
 		setChosen: function(){
 

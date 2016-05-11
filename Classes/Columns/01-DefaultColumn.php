@@ -52,6 +52,13 @@ class DefaultColumn {
 	 */
 	public $section_id;
 
+	/**
+	 * Column position within the section
+	 * 
+	 * @var int;
+	 */
+	public $position;
+
 
 	/**
 	 * The properties of this column
@@ -105,6 +112,8 @@ class DefaultColumn {
 
 		//get the properties of this column:
 		$this->getProperties();
+
+		$this->position = $this->getField( 'position', $this->id );
 
 	}
 
@@ -204,10 +213,23 @@ class DefaultColumn {
 			$this->buildBottomControls();
 
 			if( $this->hasLightbox ){
+
 				echo '<div class="lightbox lightbox-'.$this->type.'">';
+			
 					$this->buildLightbox();
+
 				echo '</div>';
+			
 			}
+
+			Field::text(
+				'position', 
+				'Postion',
+				array(
+					'defaultValue' => $this->position,
+					'class' => 'column-position'
+				)
+			)->render();
 
 			echo '<div class="loader"><span class="spinner"></span></div>';
 		echo '</div>';
