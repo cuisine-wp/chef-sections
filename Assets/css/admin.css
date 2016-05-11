@@ -29,6 +29,17 @@
   background: #fff;
   margin-top: 30px;
 }
+.section-wrapper .buttons-wrapper, .section-wrapper .section-controls .field-wrapper.radio,
+.section-wrapper .section-controls .dashicons-sort {
+  -webkit-transition: opacity .3s;
+  /* Safari */
+  transition: opacity .3s;
+  opacity: .15;
+}
+.section-wrapper:hover .buttons-wrapper, .section-wrapper:hover .section-controls .field-wrapper.radio,
+.section-wrapper:hover .section-controls .dashicons-sort {
+  opacity: 1;
+}
 .section-wrapper .section-footer {
   -webkit-transition: opacity .3s;
   /* Safari */

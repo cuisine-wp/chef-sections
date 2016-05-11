@@ -32,6 +32,20 @@
 	margin-top:30px;
 
 
+	.buttons-wrapper, .section-controls .field-wrapper.radio, 
+	.section-controls .dashicons-sort{
+		-webkit-transition: opacity .3s; /* Safari */
+		transition: opacity .3s;
+		opacity:.15;
+	}
+
+	&:hover{
+		.buttons-wrapper, .section-controls .field-wrapper.radio, 
+		.section-controls .dashicons-sort{
+			opacity:1;
+		}		
+	}
+
 
 	.section-footer{
 		-webkit-transition: opacity .3s; /* Safari */
