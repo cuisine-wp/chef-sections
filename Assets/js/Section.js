@@ -38,24 +38,34 @@
 		 */
 		setEvents: function(){
 
+			var self = this;
+
 			self.$('.section-columns').sortable({
 				handle: '.sort',
-				placeholder: 'section-placeholder',
+				placeholder: 'placeholder-column',
 				update: function (event, ui) {
 					
 					//self.setSectionOrder();
 					var positions = new Array();
-					var i = 0;
+					var i = 1;
 
-					self.el.find('.section-columns .column').each(function(){
+					self.$el.find('.section-columns .column').each(function(){
 						positions.push( $( this ).data('column_id') );
-
 						$( this ).find( '.column-position' ).val( i );
 						i++;
 					});
-					
-					console.log( positions );
 
+					var data = {
+						action: 'sortColumns',
+						post_id: self.$el.data( 'post_id' ),
+						column_ids: positions,
+						section_id: self.sectionId
+					}
+
+					$.post( ajaxurl, data, function( response ){
+						
+						console.log( response );
+					});
 				}
 			});
 

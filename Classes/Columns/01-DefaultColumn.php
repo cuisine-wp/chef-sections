@@ -222,9 +222,8 @@ class DefaultColumn {
 			
 			}
 
-			Field::text(
+			Field::hidden(
 				'position', 
-				'Postion',
 				array(
 					'defaultValue' => $this->position,
 					'class' => 'column-position'

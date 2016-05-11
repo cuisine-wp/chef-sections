@@ -7,6 +7,15 @@
 	flex-flow:row wrap;
 	justify-content:space-between;
 
+	.placeholder-column{
+		flex: 1 0 22%;
+		box-sizing:border-box;
+		border:2px dashed #2ea2cc;
+		background:none;
+		box-shadow:none;
+		margin:0 15px 15px 0;
+	}
+
 	.column{
 		flex: 1 0 22%;
 		box-sizing:border-box;
@@ -19,6 +28,7 @@
 		padding:15px 15px 55px 15px;
 		text-align:center;
 		font-weight:bold;
+
 
 		.chosen-container-single{
 			.chosen-single{
@@ -83,9 +93,22 @@
 
 			.sort{
 				position:absolute;
-				top:4px;
+				top:0;
 				right:0;
 				font-size:18px;
+				cursor:col-resize;
+				padding:5px 6px;
+				text-align:center;
+				margin-left:0;
+				margin-right:0;
+				border-radius:3px;
+				border:1px solid transparent;
+
+				&:hover{
+					background:#2ea2cc;
+					border-color:darken( #2ea2cc, 20% );
+					color:#fff;
+				}
 			}
 
 		}

@@ -371,20 +371,24 @@ class SectionsBuilder {
 
 		$id = $_POST['section_id'];
 		$ids = $_POST['column_ids'];
-		$i = 0;
+		$i = 1;
+		$columns = array();
 
 		foreach( $ids as $col ){
 
 			$key = '_column_props_'.$id.'_'.$col;
-			$column = get_post_meta( $this->postId, $key, true );
 
+			$column = get_post_meta( $this->postId, $key, true );
 			$column['position'] = $i;
+			$columns[] = $column;
 
 			//update the position:
 			update_post_meta( $this->postId, $key, $column );
 
 			$i++;
 		}
+
+		cuisine_dump( $columns );
 
 		return true;
 	}
