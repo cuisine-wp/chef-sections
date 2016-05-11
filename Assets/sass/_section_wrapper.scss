@@ -88,7 +88,55 @@
 			width:30%;
 			padding-left:15px;
 
-			
+			.button{
+				padding:10px 10px 10px 5px;
+				vertical-align:middle;
+				position:relative;
+				background:transparent;
+				border:0;
+				box-shadow:none;
+				cursor:pointer;
+
+				span{
+					pointer-events:none;
+				}
+
+				.dashicons{
+					display:inline-block;
+					font-size:28px;
+				}
+
+				.tooltip{
+					background:rgba( 0,0,0, .75 );
+					position:absolute;
+					top:-31px;
+					left:-12px;
+					color:#fff;
+					padding:4px 8px;
+					display:none;
+					&:after{
+						content:'';
+						width:0;
+						height:0;
+						border:5px solid rgba(0, 0, 0, 0.75);
+						border-color:rgba(0,0,0,.75) transparent transparent transparent;
+						position:absolute;
+						top:34px;
+						left:27px;
+						
+					}
+				}
+
+				&:hover{
+					.tooltip{
+						display:block;
+					}
+
+					.dashicons{
+						color:#00a3cf;
+					}
+				}
+			}
 		}
 
 		> .field-wrapper{
@@ -251,24 +299,12 @@
 		}
 	}
 
-	.section-settings-btn{
-		padding-left:5px;
-		padding-right:10px;
-		margin-top:10px;
-		vertical-align:middle;
-
-		span{
-			vertical-align:middle;
-			padding-right:10px;
-		}
-	}
-
-	.section-settings{
+	.settings-panel{
 		box-sizing:border-box;
 		position:absolute;
 		display:none;
 		background:rgba( 0,0,0, .75 );
-		top:72px;
+		top:30px;
 		left:2%;
 		width:96%;
 		height:auto;
@@ -276,7 +312,29 @@
 		z-index:99;
 		border-radius:5px;
 
-		&:before{
+		h2{
+			color:#fff;
+			padding:0 0 10px 0 !important;
+			margin-bottom:20px !important;
+			border-bottom:1px solid #fff;
+			font-size:22px;
+			display:block;
+
+			i{
+				float:right;
+				font-size:22px;
+				font-style:normal;
+				cursor:pointer;
+				font-size:28px;
+				margin-top:-8px;
+
+				&:hover{
+					opacity:.8;
+				}
+			}
+		}
+
+		.arrow{
 			content:'';
 			width:0;
 			height:0;

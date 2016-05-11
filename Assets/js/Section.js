@@ -11,7 +11,8 @@
 			'change .section-controls .type-radio': 'changeView',
 			'click .delete-section': 'deleteSection',
 			'click .code-snitch': 'copyCode',
-			'click .section-settings-btn' : 'toggleSettings'
+			'click .section-controls .buttons-wrapper .button' : 'toggleSettingPanel',
+			'click #close-panel' : 'hideSettingPanel'
 
 		},
 
@@ -39,6 +40,7 @@
 		 */
 		changeView: function( el ){
 
+			console.log( 'view change' );
 			var self = this;
 			self.showLoader( jQuery );
 			
@@ -112,16 +114,46 @@
 		},
 
 		/**
-		 * Show the settings field
+		 * Show a settings panel
 		 * 
 		 * @param  Event evt
 		 * @return void
 		 */
-		toggleSettings: function( evt ){
+		toggleSettingPanel: function( evt ){
 
 			var self = this;
+			var _id = $( evt.target ).data('id');
+			
+			var _offset = $( evt.target ).position().left;
+			_offset = parseInt( _offset ) + 27;
 
-			self.$el.find('.section-settings').toggleClass( 'active' );
+			var _panel = self.$el.find('#panel-'+_id);
+
+			if( _panel.hasClass('active' ) === false ){
+
+				$('.section-setting-panels > div' ).removeClass( 'active' );
+
+				_panel.addClass( 'active' );
+				_panel.find('.arrow').css({
+					left: _offset+'px'
+				})
+
+			}else{
+				_panel.removeClass( 'active' );
+			}
+
+
+		},
+
+		/**
+		 * Show a settings panel
+		 * 
+		 * @param  Event evt
+		 * @return void
+		 */
+		hideSettingPanel: function( evt ){
+
+			$('.section-setting-panels > div' ).removeClass( 'active' );
 
 		},
 

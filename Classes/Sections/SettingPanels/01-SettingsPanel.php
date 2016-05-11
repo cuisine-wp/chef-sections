@@ -87,9 +87,9 @@ class SettingsPanel{
 	 */
 	public function build( $section ){
 		
-		echo '<div class="settings-panel '.sanitize_title( $this->slug ).'">';
-
-			echo '<h2>'.$this->title.'</h2>';
+		echo '<div class="settings-panel '.sanitize_title( $this->slug ).'" id="panel-'.$this->slug.'">';
+			echo '<span class="arrow"></span>';
+			echo '<h2>'.$this->title.'<i id="close-panel">&times;</i></h2>';
 
 			foreach( $this->fields as $field ){
 
@@ -97,8 +97,11 @@ class SettingsPanel{
 				$_name = $field->name;
 				$value = $section->getProperty( $_name );
 
-				if( $value )
+				if( $value ){
 					$field->properties['defaultValue'] = $value;
+				}else{
+					$field->properties['defaultValue'] = '';
+				}
 
 				$field->setName( 'section['.$section->id.']['. $_name .']' );
 				$field->render();

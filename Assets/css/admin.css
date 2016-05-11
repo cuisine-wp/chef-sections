@@ -74,9 +74,51 @@
   color: #00a3cf;
 }
 .section-wrapper .section-controls .buttons-wrapper {
+  box-sizing: border-box;
   float: left;
-  width: 20%;
-  background: Red;
+  width: 30%;
+  padding-left: 15px;
+}
+.section-wrapper .section-controls .buttons-wrapper .button {
+  padding: 10px 10px 10px 5px;
+  vertical-align: middle;
+  position: relative;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  cursor: pointer;
+}
+.section-wrapper .section-controls .buttons-wrapper .button span {
+  pointer-events: none;
+}
+.section-wrapper .section-controls .buttons-wrapper .button .dashicons {
+  display: inline-block;
+  font-size: 28px;
+}
+.section-wrapper .section-controls .buttons-wrapper .button .tooltip {
+  background: rgba(0, 0, 0, 0.75);
+  position: absolute;
+  top: -31px;
+  left: -12px;
+  color: #fff;
+  padding: 4px 8px;
+  display: none;
+}
+.section-wrapper .section-controls .buttons-wrapper .button .tooltip:after {
+  content: '';
+  width: 0;
+  height: 0;
+  border: 5px solid rgba(0, 0, 0, 0.75);
+  border-color: rgba(0, 0, 0, 0.75) transparent transparent transparent;
+  position: absolute;
+  top: 34px;
+  left: 27px;
+}
+.section-wrapper .section-controls .buttons-wrapper .button:hover .tooltip {
+  display: block;
+}
+.section-wrapper .section-controls .buttons-wrapper .button:hover .dashicons {
+  color: #00a3cf;
 }
 .section-wrapper .section-controls > .field-wrapper {
   float: left;
@@ -144,7 +186,7 @@
   display: block;
 }
 .section-wrapper .section-controls > .field-wrapper.radio {
-  width: 50%;
+  width: 40%;
 }
 .section-wrapper .section-controls > .field-wrapper.radio label {
   display: none;
@@ -205,22 +247,12 @@
   border: 0;
   padding: 0 15px 0 0;
 }
-.section-wrapper .section-settings-btn {
-  padding-left: 5px;
-  padding-right: 10px;
-  margin-top: 10px;
-  vertical-align: middle;
-}
-.section-wrapper .section-settings-btn span {
-  vertical-align: middle;
-  padding-right: 10px;
-}
-.section-wrapper .section-settings {
+.section-wrapper .settings-panel {
   box-sizing: border-box;
   position: absolute;
   display: none;
   background: rgba(0, 0, 0, 0.75);
-  top: 72px;
+  top: 30px;
   left: 2%;
   width: 96%;
   height: auto;
@@ -228,7 +260,26 @@
   z-index: 99;
   border-radius: 5px;
 }
-.section-wrapper .section-settings:before {
+.section-wrapper .settings-panel h2 {
+  color: #fff;
+  padding: 0 0 10px 0 !important;
+  margin-bottom: 20px !important;
+  border-bottom: 1px solid #fff;
+  font-size: 22px;
+  display: block;
+}
+.section-wrapper .settings-panel h2 i {
+  float: right;
+  font-size: 22px;
+  font-style: normal;
+  cursor: pointer;
+  font-size: 28px;
+  margin-top: -8px;
+}
+.section-wrapper .settings-panel h2 i:hover {
+  opacity: .8;
+}
+.section-wrapper .settings-panel .arrow {
   content: '';
   width: 0;
   height: 0;
@@ -238,25 +289,25 @@
   top: -18px;
   left: 30px;
 }
-.section-wrapper .section-settings label, .section-wrapper .section-settings p {
+.section-wrapper .settings-panel label, .section-wrapper .settings-panel p {
   color: #fff;
 }
-.section-wrapper .section-settings.active {
+.section-wrapper .settings-panel.active {
   display: block;
 }
-.section-wrapper .section-settings .field-wrapper.checkboxes .subfield-wrapper {
+.section-wrapper .settings-panel .field-wrapper.checkboxes .subfield-wrapper {
   display: inline-block;
   width: 50%;
 }
-.section-wrapper .section-settings .field-wrapper.checkboxes > label {
+.section-wrapper .settings-panel .field-wrapper.checkboxes > label {
   display: block;
   width: 100%;
 }
-.section-wrapper .section-settings .field-wrapper.checkboxes .subfield-wrapper > input {
+.section-wrapper .settings-panel .field-wrapper.checkboxes .subfield-wrapper > input {
   width: 16px;
   height: 16px;
 }
-.section-wrapper .section-settings .field-wrapper.checkboxes .subfield-wrapper > label {
+.section-wrapper .settings-panel .field-wrapper.checkboxes .subfield-wrapper > label {
   display: inline-block;
   width: auto;
 }
