@@ -73,15 +73,50 @@ var SectionBuilder = new function(){
 	}
 
 	/**
-	 * Set the width of the builder-ui
+	 * Set the width and stickyness of the builder-ui
 	 *
 	 * @return void
 	 */
 	this.setBuilder = function(){
 
-		var _w = $('.section-container').innerWidth() + 30;
-		$( '#section-builder-ui' ).css({
+		//set width:
+		var _w = $('.section-container').innerWidth();
+		var _builder = $('#section-builder-ui');
+		var _container = $('#section-container');
+		var _offset = _builder.offset().top;
+
+		_builder.css({
 			width: _w+'px'
+		});
+
+
+
+		//set the builder as sticky:
+		$( window ).on( 'scroll', function(){
+
+			var _scrollPos = $( window ).scrollTop();
+			_scrollPos += $( '#wpadminbar' ).outerHeight();
+
+
+			if( _scrollPos > _offset && _builder.hasClass( 'sticky' ) == false ){
+				
+				var _padding = _builder.outerHeight() + 40;
+				_builder.addClass( 'sticky' );
+				_container.css({
+					'padding-top' : _padding+'px'
+				});
+			}else if( _scrollPos < _offset && _builder.hasClass( 'sticky' ) == true ){
+				_builder.removeClass( 'sticky' );
+				_container.css({
+					'padding-top' : '0px'
+				});
+			}
+
+		});
+
+		$('#updatePost').on( 'click tap', function(){
+			$('#section-builder-ui .spinner').addClass( 'show' );
+			$('#publish').trigger( 'click' );
 		});
 	}
 	

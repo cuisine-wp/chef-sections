@@ -127,13 +127,16 @@ class Section {
 		$this->template_id = ( isset( $args['template_id'] ) ? $args['template_id'] : false );
 
 		$this->position 		= $args['position'];
-		$this->title 			= ( $args['title'] == 'Sectie titel' ? '' : $args['title'] );
+		$this->title 			= $args['title'];
 		$this->view 			= $args['view'];
 		$this->name 			= $this->getName( $args );
 		$this->properties 		= $args;
 		$this->columns 			= $this->getColumns( $args['columns'] );
 
-		$this->hide_title 		= ( isset( $args['hide_title'] ) ? $args['hide_title'] : 'false' );
+		if( strtolower( $this->title ) == 'sectie titel' )
+			$this->title = '';
+
+		$this->hide_title 		= ( $this->title == '' ? true : false );
 
 		$this->hide_container 	= ( isset( $args['hide_container'] ) ? $args['hide_container'] : 'false' );
 

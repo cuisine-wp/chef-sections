@@ -93,6 +93,9 @@ class SectionsBuilder {
 
 		wp_nonce_field( Session::nonceAction, Session::nonceName );
 
+		if( $controls )
+			$this->addSectionButton();
+
 		echo '<div class="section-container" id="section-container">';
 
 
@@ -116,9 +119,6 @@ class SectionsBuilder {
 
 		echo '</div>';
 
-		if( $controls )
-			$this->addSectionButton();
-
 	}
 
 
@@ -135,7 +135,6 @@ class SectionsBuilder {
 
 		echo '<div class="section-wrapper dotted-bg" id="section-builder-ui">';
 
-			echo '<span class="spinner"></span>';
 			echo '<div id="addSection" class="section-btn" data-post_id="'.$this->postId.'">';
 				_e( 'Sectie toevoegen', 'chefsections' );
 			echo '</div>';
@@ -143,10 +142,9 @@ class SectionsBuilder {
 			echo '<em>'.__( 'Of', 'chefsections' ).'</em>';
 
 			//add templates:
-			echo '<label>'.__( 'Gebruik een sjabloon', 'chefsections' ).':</label>';
 			echo '<select id="getTemplate" data-post_id="'.$this->postId.'">';
 
-				echo '<option value="none">'.__( 'Selecteer sjabloon', 'chefsections' ).'</option>';
+				echo '<option value="none">'.__( 'Select section template', 'chefsections' ).'</option>';
 
 				foreach( $templates as $template ){
 
@@ -159,6 +157,12 @@ class SectionsBuilder {
 
 
 			echo '</select>';
+
+			echo '<span class="update-btn-wrapper">';
+				echo '<span class="update-btn" id="updatePost">'.__( 'Update' ).'</span>';
+			echo '</span>';
+			echo '<span class="spinner"></span>';
+
 
 		echo '</div>';
 	}
