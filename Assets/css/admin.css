@@ -56,15 +56,16 @@
   opacity: 1;
 }
 .section-wrapper .section-controls {
-  width: 90%;
-  padding: 8px 12px;
+  width: 100%;
+  padding: 8px 10% 8px 12px;
   border-bottom: 1px solid #e5e5e5;
-  height: 50px;
+  height: 63px;
   position: relative;
+  box-sizing: border-box;
 }
 .section-wrapper .section-controls .pin {
   position: absolute;
-  right: -35px;
+  right: 30px;
   top: 15px;
   font-size: 32px;
   color: #444;
