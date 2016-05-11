@@ -70,7 +70,7 @@
 		height:63px;
 		position:relative;
 		box-sizing:border-box;
-		
+
 		.pin{
 			position:absolute;
 			right:30px;
@@ -476,7 +476,7 @@
 
 }
 
-.section-placeholder{
+.section-placeholder, #section-container .placeholder-block{
 	display:block;
 	width:100%;
 	height:150px;
@@ -484,6 +484,7 @@
 	background:none;
 	margin-top:30px;
 }
+
 
 
 .template-snitch{
@@ -564,4 +565,22 @@
   	&:hover{
   		background:#1e8cbe;
   	}
+}
+
+#section-container .placeholder-block{
+	box-sizing:border-box;
+	background:transparent;
+	color:#0074a2;
+	text-align:center;
+	padding:50px 0 60px 0;
+	box-shadow:none;
+	max-width:100% !important;
+	width:100% !important;
+
+	.spinner{
+		float:none;
+		display:inline-block;
+		visibility:visible;
+		margin-top:-3px;
+	}
 }

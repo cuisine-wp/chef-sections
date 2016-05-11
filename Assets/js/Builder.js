@@ -146,37 +146,15 @@ var SectionBuilder = new function(){
 	 */
 	this.setSectionsSortable = function(){
 
-		
+		var self = this;
 		$('#section-container').sortable({
 			handle: '.pin',
 			placeholder: 'section-placeholder',
 			update: function (event, ui) {
-
-
-				var positions = $( "#section-container" ).sortable( "toArray" );
-						
-				var data = {
-					action: 'sortSections',
-					post_id: self._postId,
-					section_ids: positions
-				}
-
-				$.post( ajaxurl, data, function( response ){
-						
-					var i = 0;
-					jQuery( '.section-wrapper').each( function(){
-
-						var field = jQuery( this ).find( '.section-position' );
-						var _val = field.val();
-						field.val( i );
-						i++;
-								
-					});
-
-				});
-
+				self.setSectionOrder();
 			}
 		});
+
 	}
 
 	/**
@@ -258,7 +236,7 @@ var SectionBuilder = new function(){
 	}
 
 	/**
-	 * Adding sections
+	 * Adding sections 
 	 * 
 	 * @return html
 	 */
@@ -266,6 +244,7 @@ var SectionBuilder = new function(){
 
 		var self = this;
 
+		//add on click:
 		$('#addSection').on( 'click', function(){
 
 			var data = {
@@ -289,6 +268,39 @@ var SectionBuilder = new function(){
 				$('#section-builder-ui .spinner').removeClass( 'show' );
 				
 			});
+		});
+
+
+		$('#addSection').draggable({
+			connectToSortable: '#section-container',
+			helper: 'clone',
+			stop: function( event, ui ){
+				
+				var _placeholder = $('#section-container .section-btn.ui-draggable-handle' );
+				_placeholder.addClass('placeholder-block');
+				_placeholder.html( '<span class="spinner"></span> Adding section...' );
+
+				//_placeholder.replaceWith('pants!');
+				var data = {
+					action: 'createSection',
+					post_id: _placeholder.data('post_id')
+				}
+
+				$.post( ajaxurl, data, function( response ){
+
+					_placeholder.replaceWith( response );
+
+					//order items:
+					self.setSectionOrder();
+
+					//register new section here:
+					self.refresh();
+
+					//refresh the fields
+					refreshFields();
+
+				});
+			}
 		});
 	}
 

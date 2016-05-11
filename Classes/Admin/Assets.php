@@ -68,7 +68,7 @@
 				wp_enqueue_script( 
 					'sections_builder', 
 					$url.'/js/Builder.js', 
-					array( 'backbone', 'media-editor' ),
+					array( 'backbone', 'media-editor', 'jquery-ui-draggable' ),
 					false,
 				    true
 				);
