@@ -121,10 +121,15 @@
 	}
 
 	&.half-half .column:first-child{margin-right:5%;}
+
+	&.sidebar-right .column{flex:1;margin-right:0;}	
 	&.sidebar-right .column:first-child{flex:2;margin-right:5%;}
+
 	&.sidebar-left .column{flex: 2;}
 	&.sidebar-left .column:first-child{flex:1;margin-right:5%;}
+
 	&.three-columns .column:nth-child(2){margin-right:5%;margin-left:5%;}
+	
 	&.four-columns .column{margin-right:2%;}
 	&.four-columns .column:last-of-type{margin-right:0;}
 }
