@@ -85,6 +85,9 @@
 			}
 
 			if( confirm( "Weet je zeker dat je deze sectie wil verwijderen?" ) ){
+				
+				self.$el.addClass('deleting');
+
 				jQuery.post( ajaxurl, data, function( response ){
 					
 					if( response === 'true' ){

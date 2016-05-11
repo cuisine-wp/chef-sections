@@ -37,6 +37,7 @@
 			self.sectionId = self.$el.data( 'section_id' );
 			self.postId = self.$el.data( 'post_id' );
 
+			self.setChosen();
 
 			if( self.$( '.lightbox .editor textarea' ).length > 0 ){
 			
@@ -341,6 +342,15 @@
 
 			});
 
+		},
+
+		/**
+		 * Set the chosen library for sections
+		 */
+		setChosen: function(){
+
+			var self = this;
+			self.$el.find('.column-controls .type-select').chosen();
 		},
 
 		destroy: function(){

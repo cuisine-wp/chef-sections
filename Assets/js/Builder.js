@@ -100,7 +100,7 @@ var SectionBuilder = new function(){
 
 			if( _scrollPos > _offset && _builder.hasClass( 'sticky' ) == false ){
 				
-				var _padding = _builder.outerHeight() + 40;
+				var _padding = _builder.outerHeight() + 30;
 				_builder.addClass( 'sticky' );
 				_container.css({
 					'padding-top' : _padding+'px'

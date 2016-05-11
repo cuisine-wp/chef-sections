@@ -287,14 +287,6 @@ class CollectionColumn extends DefaultColumn{
 				break;
 		}
 
-		$pts = $this->getField( 'post_type' );
-		if( is_array( $pts ) )
-			$pts = implode( ', ', $pts );
-
-		$details = 'Post type: '.$pts.' | ';
-		$details .= 'Aantal berichten: '.$this->getField( 'posts_per_page' );
-
-		echo '<span class="details">'.$details.'</span>';
 	}
 
 	/**

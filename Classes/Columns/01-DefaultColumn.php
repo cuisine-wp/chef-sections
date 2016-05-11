@@ -252,8 +252,13 @@ class DefaultColumn {
 		);
 
 		echo '<div class="column-controls">';
+
+			//render the dropdown:
 			$typeSelector->render();
-			$this->buildTemplateSnitch();
+			
+			//sorter
+			echo '<span class="sort dashicons dashicons-leftright"></span>';
+
 		echo '</div>';
 
 	}
@@ -271,7 +276,12 @@ class DefaultColumn {
 			if( !$this->hasLightbox )
 				$class .= ' no-lightbox';
 
-			echo '<button class="'.$class.'" id="lightbox-btn">'.__( 'Bewerken', 'chefsections' ).'</button>';
+			echo '<button class="'.$class.'" id="lightbox-btn">';
+				echo '<span class="dashicons dashicons-edit"></span>';
+				_e( 'Edit', 'chefsections' );
+			echo '</button>';
+
+			$this->buildTemplateSnitch();
 
 		echo '</div>';
 	}

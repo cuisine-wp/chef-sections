@@ -1,5 +1,15 @@
 .section-wrapper, .section-wrapper .column{
 	position:relative;
+
+	.section-btn{
+		float:left;
+		margin-left:15px;
+	}
+
+	.template-snitch{
+		margin-right:0;
+	}
+
 	.loader{
 		position:absolute;
 		top:0;
@@ -26,6 +36,8 @@
 }
 
 .section-wrapper{
+	-webkit-transition: opacity .3s; /* Safari */
+	transition: opacity .3s;
 	border:1px solid #e5e5e5;
 	box-shadow:0 1px 1px rgba(0,0,0,0.04);
 	background:#fff;
@@ -46,6 +58,9 @@
 		}		
 	}
 
+	&.deleting{
+		opacity:.5;
+	}
 
 	.section-footer{
 		-webkit-transition: opacity .3s; /* Safari */
@@ -435,7 +450,7 @@
 			box-sizing:content-box;
 			position: fixed;
 			margin-left: -15px;
-			z-index:900;
+			z-index:1020;
 		}
 
 		.section-btn{

@@ -60,7 +60,7 @@
 				wp_enqueue_script( 
 					'sections_column', 
 					$url.'/js/Column.js', 
-					array( 'backbone', 'media-editor' ),
+					array( 'backbone', 'media-editor', 'chosen' ),
 					false,
 				    true
 				);
