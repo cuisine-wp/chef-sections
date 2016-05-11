@@ -127,7 +127,7 @@ class Section {
 		$this->template_id = ( isset( $args['template_id'] ) ? $args['template_id'] : false );
 
 		$this->position 		= $args['position'];
-		$this->title 			= $args['title'];
+		$this->title 			= ( $args['title'] == 'Sectie titel' ? '' : $args['title'] );
 		$this->view 			= $args['view'];
 		$this->name 			= $this->getName( $args );
 		$this->properties 		= $args;

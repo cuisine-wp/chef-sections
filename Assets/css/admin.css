@@ -188,7 +188,7 @@
 .section-wrapper .section-controls > .field-wrapper.radio {
   width: 40%;
 }
-.section-wrapper .section-controls > .field-wrapper.radio label {
+.section-wrapper .section-controls > .field-wrapper.radio > label {
   display: none;
 }
 .section-wrapper .section-controls .radio {
