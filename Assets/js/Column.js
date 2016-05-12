@@ -218,10 +218,8 @@
 				properties = self.getMultiFields( properties );
 			
 			}
-
-			console.log( properties );
 			
-			//self.saveProperties( properties );
+			self.saveProperties( properties );
 		},
 
 		/**

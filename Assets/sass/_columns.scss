@@ -4,7 +4,7 @@
 	display: flex;
 	flex-direction: row;
 	align-items: stretch;
-	flex-flow:row wrap;
+	flex-flow:row no-wrap;
 	justify-content:space-between;
 
 	.placeholder-column{
@@ -120,7 +120,7 @@
 		}
 	}
 
-	&.half-half .column:first-child{margin-right:5%;}
+	&.half-half .column:first-child{margin-right:30px;}
 
 	&.sidebar-right .column{flex:1;margin-right:0;}	
 	&.sidebar-right .column:first-child{flex:2;margin-right:5%;}
@@ -129,7 +129,7 @@
 	&.sidebar-left .column:first-child{flex:1;margin-right:5%;}
 
 	&.three-columns .column:nth-child(2){margin-right:5%;margin-left:5%;}
-	
+
 	&.four-columns .column{margin-right:2%;}
 	&.four-columns .column:last-of-type{margin-right:0;}
 }
