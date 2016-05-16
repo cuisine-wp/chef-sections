@@ -418,6 +418,7 @@ var SectionBuilder = new function(){
 //init sections builder
 jQuery( window ).load( function( $ ){
 
-	SectionBuilder.init();
+	if( $('.section-container').length > 0 )
+		SectionBuilder.init();
 	
 });

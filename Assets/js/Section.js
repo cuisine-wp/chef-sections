@@ -42,6 +42,7 @@
 
 			self.$('.section-columns').sortable({
 				handle: '.sort',
+				tolerance: 'pointer',
 				placeholder: 'placeholder-column',
 				update: function (event, ui) {
 					
