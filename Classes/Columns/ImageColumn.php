@@ -40,7 +40,7 @@ class ImageColumn extends DefaultColumn{
 
 		echo '<div class="img-wrapper">';
 
-			echo '<img src="'.$url.'"/>';
+			echo '<img src="'.esc_attr( $url ).'"/>';
 
 		echo '</div>';
 		

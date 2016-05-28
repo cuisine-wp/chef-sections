@@ -136,20 +136,22 @@ class SectionsBuilder {
 		echo '<div class="section-wrapper dotted-bg" id="section-builder-ui">';
 
 			echo '<div id="addSection" class="section-btn" data-post_id="'.$this->postId.'">';
-				_e( 'Sectie toevoegen', 'chefsections' );
+				_e( 'Add Section', 'chefsections' );
 			echo '</div>';
 
-			echo '<em>'.__( 'Of', 'chefsections' ).'</em>';
+			echo '<em>'.__( 'Or', 'chefsections' ).'</em>';
 
 			//add templates:
-			echo '<select id="getTemplate" data-post_id="'.$this->postId.'">';
+			echo '<select id="getTemplate" data-post_id="'.esc_attr( $this->postId ).'">';
 
-				echo '<option value="none">'.__( 'Select section template', 'chefsections' ).'</option>';
+				echo '<option value="none">';
+					_e( 'Select section template', 'chefsections' );
+				echo '</option>';
 
 				foreach( $templates as $template ){
 
 					if( $template->ID != $this->postId ){
-						echo '<option value="'.$template->ID.'">';
+						echo '<option value="'.esc_attr( $template->ID ).'">';
 							echo $template->post_title;
 						echo '</option>';
 					}
@@ -159,8 +161,14 @@ class SectionsBuilder {
 			echo '</select>';
 
 			echo '<span class="update-btn-wrapper">';
-				echo '<span class="update-btn" id="updatePost">'.__( 'Update' ).'</span>';
+				
+				echo '<span class="update-btn" id="updatePost">';
+					_e( 'Update' );
+				echo '</span>';
+
 			echo '</span>';
+
+			//loader
 			echo '<span class="spinner"></span>';
 
 

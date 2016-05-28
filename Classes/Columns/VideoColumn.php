@@ -42,12 +42,12 @@ class VideoColumn extends DefaultColumn{
 		$still = $this->getField( 'still' );
 
 		if( $this->getField( 'title' ) )	
-			echo '<strong>'.$this->getField( 'title' ).'</strong>';
+			echo '<strong>'.esc_html( $this->getField( 'title' ) ).'</strong>';
 
 		if( $still['thumb'] != '' ){
 
 			echo '<div class="img-wrapper">';
-				echo '<img src="'.$still['thumb'].'"/>';
+				echo '<img src="'.esc_attr( $still['thumb'] ).'"/>';
 			echo '</div>';
 			
 		}

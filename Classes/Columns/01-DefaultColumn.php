@@ -201,7 +201,7 @@ class DefaultColumn {
 
 		$this->referenceMode = $ref;
 
-		echo '<div class="column '.$this->type.'" ';
+		echo '<div class="column '.esc_attr( $this->type ).'" ';
 		echo $this->buildIds().'>';
 
 			$this->buildControls();
@@ -214,7 +214,7 @@ class DefaultColumn {
 
 			if( $this->hasLightbox ){
 
-				echo '<div class="lightbox lightbox-'.$this->type.'">';
+				echo '<div class="lightbox lightbox-'.esc_attr( $this->type ).'">';
 			
 					$this->buildLightbox();
 
@@ -297,7 +297,7 @@ class DefaultColumn {
 			if( !$this->hasLightbox )
 				$class .= ' no-lightbox';
 
-			echo '<button class="'.$class.'" id="lightbox-btn">';
+			echo '<button class="'.esc_attr( $class ).'" id="lightbox-btn">';
 				echo '<span class="dashicons dashicons-edit"></span>';
 				_e( 'Edit', 'chefsections' );
 			echo '</button>';
@@ -326,7 +326,10 @@ class DefaultColumn {
 		echo '<div class="save-btn-container">';
 
 			echo '<span class="spinner"></span>';
-			echo '<button id="save-column" class="save-btn section-btn">'.$this->properties['buttonText'].'</button>';
+			
+			echo '<button id="save-column" class="save-btn section-btn">';
+				echo esc_html( $this->properties['buttonText'] );
+			echo '</button>';
 
 		echo '</div>';
 
@@ -367,7 +370,7 @@ class DefaultColumn {
 					echo '<strong>Templates:</strong>';
 					foreach( $templates as $template ){
 	
-						echo '<p>'.$template.'</p>';
+						echo '<p>'.esc_html( $template ).'</p>';
 	
 					}
 	

@@ -172,7 +172,7 @@ class CollectionColumn extends DefaultColumn{
 			$class .= ' autoload';
 
 		if( $nav !== 'autoload' || $this->page == 1 )
-			echo '<div id="collection_'.$this->fullId.'" class="'.$class.'" '.$datas.'>';
+			echo '<div id="collection_'.esc_attr( $this->fullId ).'" class="'.esc_attr( $class ).'" '.$datas.'>';
 
 	}
 
@@ -234,11 +234,11 @@ class CollectionColumn extends DefaultColumn{
 
 		$html = '';
 
-		$html .= 'data-id="'.$this->id.'" ';
-		$html .= 'data-section_id="'.$this->section_id.'" ';
-		$html .= 'data-page="'.$this->page.'" ';
-		$html .= 'data-post="'.$post->ID.'" ';
-		$html .= 'data-msg="'.$msg.'" ';
+		$html .= 'data-id="'.esc_attr( $this->id ).'" ';
+		$html .= 'data-section_id="'.esc_attr( $this->section_id ).'" ';
+		$html .= 'data-page="'.esc_attr( $this->page ).'" ';
+		$html .= 'data-post="'.esc_attr( $post->ID ).'" ';
+		$html .= 'data-msg="'.esc_attr( $msg ).'" ';
 
 		return $html;
 	}
@@ -260,7 +260,7 @@ class CollectionColumn extends DefaultColumn{
 		$grid = $this->getField( 'grid', 'stretch' );
 
 		if( $this->getField( 'title' ) )	
-			echo '<strong>'.$this->getField( 'title' ).'</strong>';
+			echo '<strong>'. esc_html( $this->getField( 'title' ) ).'</strong>';
 
 		switch( $view ){
 
@@ -368,7 +368,7 @@ class CollectionColumn extends DefaultColumn{
 
 			'posts_per_page' => Field::number(
 				'posts_per_page',
-				__( 'Aantal berichten', 'chefsections' ),
+				__( 'Number of posts', 'chefsections' ),
 				array(
 					'defaultValue'		=> $this->getField( 'posts_per_page', 4 )
 				)
@@ -377,7 +377,7 @@ class CollectionColumn extends DefaultColumn{
 
 			'posts_per_row'	=> Field::number(
 				'posts_per_row',
-				__( 'Aantal berichten per rij', 'chefsections' ),
+				__( 'Number of posts per row', 'chefsections' ),
 				array(
 					'defaultValue'		=> $this->getField( 'posts_per_row', 4 )
 				)
@@ -386,7 +386,7 @@ class CollectionColumn extends DefaultColumn{
 
 			'orderby' => Field::select(
 				'orderby',
-				__( 'Sorteer op', 'chefsections' ),
+				__( 'Sort on', 'chefsections' ),
 				$orderby,
 				array(
 					'defaultValue'		=> $this->getField( 'orderby', 'date' )
@@ -396,7 +396,7 @@ class CollectionColumn extends DefaultColumn{
 
 			'taxonomies' => Field::taxonomySelect(
 				'taxonomies',
-				__( 'Filteren', 'chefsections' ),
+				__( 'Filter', 'chefsections' ),
 				array(
 					'defaultValue'		=> $this->getField( 'taxonomies', array() )
 				)
@@ -404,9 +404,13 @@ class CollectionColumn extends DefaultColumn{
 		);
 
 
-	
+		//make fields filterable
+		$fields = apply_filters( 
+			'chef_sections_collection_column_fields', 
+			$fields, 
+			$this
+		);
 
-		$fields = apply_filters( 'chef_sections_collection_column_fields', $fields, $this );
 		return $fields;
 
 	}
@@ -421,21 +425,21 @@ class CollectionColumn extends DefaultColumn{
 	private function getSubFields(){
 
 		$view = array(
-					'list' 		=> __( 'Lijst', 'chefsections' ),
-					'blocks'	=> __( 'Blokken', 'chefsections' ),
-					'overview'	=> __( 'Blokken met rijen', 'chefsections' )
+					'list' 		=> __( 'List', 'chefsections' ),
+					'blocks'	=> __( 'Blocks', 'chefsections' ),
+					'overview'	=> __( 'Blocks & rows', 'chefsections' )
 		);
 
 		$nav = array(
-					'none'			=> __( 'Geen', 'chefsections' ),
-					'pagination'	=> __( 'Paginering', 'chefsections' ),
+					'none'			=> __( 'None', 'chefsections' ),
+					'pagination'	=> __( 'Pagination', 'chefsections' ),
 					'autoload'		=> __( 'Endless Scroll', 'chefsections' )
 		);
 
 
 		$grid = array(
-					'stretch'		=> __( 'Strak', 'chefsections' ),
-					'grid'			=> __( 'Regulier', 'chefsections' ),
+					'stretch'		=> __( 'Stretch', 'chefsections' ),
+					'grid'			=> __( 'Regular', 'chefsections' ),
 					'masonry'		=> __( 'Masonry', 'chefsections' )	
 		);
 
@@ -444,7 +448,7 @@ class CollectionColumn extends DefaultColumn{
 
 			'view'	=> Field::radio(
 				'view',
-				__( 'Weergave', 'chefsections' ),
+				__( 'View', 'chefsections' ),
 				$view,
 				array(
 					'defaultValue' => $this->getField( 'view', 'blocks' )
@@ -454,7 +458,7 @@ class CollectionColumn extends DefaultColumn{
 
 			'nav'	=> Field::radio(
 				'nav',
-				__( 'Navigatie', 'chefsections' ),
+				__( 'Navigation', 'chefsections' ),
 				$nav,
 				array(
 					'defaultValue'	=> $this->getField( 'nav', 'none' )
@@ -473,7 +477,13 @@ class CollectionColumn extends DefaultColumn{
 
 		);
 
-		$fields = apply_filters( 'chef_sections_collection_side_fields', $fields, $this );
+		//make filterable
+		$fields = apply_filters( 
+			'chef_sections_collection_side_fields',
+			$fields,
+			$this
+		);
+
 		return $fields;
 
 	}

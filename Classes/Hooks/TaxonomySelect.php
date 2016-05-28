@@ -52,7 +52,7 @@
                 $iteration = count( $value ) - 1;
             }
 
-            $html = '<div class="taxonomy-select-field field-wrapper" data-highest-id="'.$iteration.'">';
+            $html = '<div class="taxonomy-select-field field-wrapper" data-highest-id="'.esc_attr( $iteration ).'">';
 
 
 
@@ -65,8 +65,8 @@
                 }else{
 
                     //$html .= $this->makeItem( 0 );
-                    $html .= '<p>Op dit moment zijn er geen extra filters actief.</p>';
-                    $html .= '<span class="add-remove-btn add-tax msg-add-remove">Maak een filter aan</span>';
+                    $html .= '<p>'.__( 'Currently there are no filters active', 'chefsections' ).'</p>';
+                    $html .= '<span class="add-remove-btn add-tax msg-add-remove">'.__( 'Create a filter', 'chefsections' ).'</span>';
 
                 }
         
@@ -114,20 +114,19 @@
 
             if( $tax === false )
                 $tax = array( 'tax' => 'category', 'terms' => array() );
-                //$tax = $this->getTaxonomies();
 
             $html = '';
             $prefix = $this->name.'['.$iteration.']';
             
-            $html .= '<div class="tax-select-wrapper" id="tax-'.$iteration.'">';
+            $html .= '<div class="tax-select-wrapper" id="tax-'.esc_attr( $iteration ).'">';
 
 
                 $html .= '<select name="'.$prefix.'[tax]" class="taxonomy-selector multi">';
             
                     foreach( $this->taxonomies as $taxonomy => $terms ){
 
-                        $html.= '<option value="'.$taxonomy.'" ';
-                        $html.= selected( $tax['tax'], $taxonomy, false ).'>';
+                        $html .= '<option value="'.esc_attr( $taxonomy ).'" ';
+                        $html .= selected( $tax['tax'], $taxonomy, false ).'>';
 
                             $html.= Taxonomy::name( $taxonomy );
 
@@ -138,17 +137,18 @@
             
                 $html .= '</select>';
             
-                $html .= '<select name="'.$prefix.'[terms]" class="term-selector multi" data-placeholder="'.__( 'Selecteer een of meerdere items', 'chefsections' ).'" multiple>';
+                $html .= '<select name="'.$prefix.'[terms]" class="term-selector multi" data-placeholder="'.__( 'Select one or multiple items', 'chefsections' ).'" multiple>';
                     
 
                     foreach( $this->taxonomies[ $tax['tax'] ] as $term ){
 
-                        $html.= '<option value="'.$term->slug.'" ';
-                        $html.= selected( in_array( $term->slug, $tax['terms'] ), true, false ).'>';
+                        $available = in_array( $term->slug, $tax['terms'] );
+                        $html .= '<option value="'.esc_attr( $term->slug ).'" ';
+                        $html .= selected( $available, true, false ).'>';
 
-                            $html.= $term->name;
+                            $html .= $term->name;
 
-                        $html.= '</option>';
+                        $html .= '</option>';
 
                     }
 
@@ -159,8 +159,8 @@
                 //add or remote this iteration:
                 $html .= '<div class="add-remove">';
 
-                    $html .= '<span class="add-tax add-remove-btn" data-id="'.$iteration.'">+</span>';
-                    $html .= '<span class="remove-tax add-remove-btn" data-id="'.$iteration.'">-</span>';
+                    $html .= '<span class="add-tax add-remove-btn" data-id="'.esc_attr( $iteration ).'">+</span>';
+                    $html .= '<span class="remove-tax add-remove-btn" data-id="'.esc_attr( $iteration ).'">-</span>';
 
                 $html .= '</div>';
 
