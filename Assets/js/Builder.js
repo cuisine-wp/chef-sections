@@ -369,10 +369,15 @@ var SectionBuilder = new function(){
 		YoastSEO.app.registerPlugin( 'chefSections', {status: 'loading'} );
 		YoastSEO.app.pluginReady( 'chefSections' );
 
+		//fallback for plugin-loader bug in Yoast SEO
+		if( $('#YoastSEO-plugin-loading' ).length <= 0 )
+			$('#section-container').append( '<span style="display:none" id="YoastSEO-plugin-loading"></span>' );
+
 		//register the content modification:
 		YoastSEO.app.registerModification( 'content', function( _data ){
 
-			if( self._htmlOutput !== '' )
+			//return the htmlOutput
+			if( self._htmlOutput !== '' && self._htmlOutput !== null )
 				return self._htmlOutput;
 
 			return _data;

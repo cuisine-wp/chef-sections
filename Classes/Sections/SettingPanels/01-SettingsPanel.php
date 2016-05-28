@@ -87,9 +87,9 @@ class SettingsPanel{
 	 */
 	public function build( $section ){
 		
-		echo '<div class="settings-panel '.sanitize_title( $this->slug ).'" id="panel-'.$this->slug.'">';
+		echo '<div class="settings-panel '.sanitize_title( $this->slug ).'" id="panel-'.esc_attr( $this->slug ).'">';
 			echo '<span class="arrow"></span>';
-			echo '<h2>'.$this->title.'<i id="close-panel">&times;</i></h2>';
+			echo '<h2>'.esc_html( $this->title ).'<i id="close-panel">&times;</i></h2>';
 
 			foreach( $this->fields as $field ){
 
