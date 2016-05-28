@@ -12,8 +12,8 @@
 		$url = $column->getField( 'full' );
 
 	echo '<div class="column image">';
-		echo '<meta itemprop="image" content="'.$url.'">';
-		echo '<img src="'. $url. '"/>';
+		echo '<meta itemprop="image" content="'.esc_url( $url ).'">';
+		echo '<img src="'. esc_url( $url ). '"/>';
 	echo '</div>';
 
 	

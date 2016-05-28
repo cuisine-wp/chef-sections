@@ -34,6 +34,7 @@ class Reference extends Section{
 		$this->post_id = $args['post_id'];
 		$post = get_post( $this->post_id );
 
+		//check if this is a section template
 		$this->template_id = ( isset( $args['template_id'] ) ? $args['template_id'] : false );
 
 
@@ -42,17 +43,20 @@ class Reference extends Section{
 			$this->template_id = $this->post_id;
 		}		
 
+		//fill in the basics
 		$this->position = $args['position'];
-
 		$this->title = $args['title'];
-
 		$this->view = $args['view'];
-
 		$this->name = $this->getName( $args );
 
-		$this->hide_title = ( isset( $args['hide_title'] ) ? $args['hide_title'] : 'false' );
+		//title & container settings
+		if( strtolower( $this->title ) == 'sectie titel' )
+			$this->title = '';
 
-		$this->hide_container = ( isset( $args['hide_container'] ) ? $args['hide_container'] : 'false' );
+		$this->hide_title 		= ( $this->title == '' ? true : false );
+
+		$this->hide_container 	= ( isset( $args['hide_container'] ) ? $args['hide_container'] : 'false' );
+
 
 		$this->properties = $args;
 
@@ -89,14 +93,14 @@ class Reference extends Section{
 				$class .= ' reference';
 			
 
-			echo '<div class="'.$class.'" ';
-				echo 'id="'.$this->id.'" ';
+			echo '<div class="'.esc_attr( $class ).'" ';
+				echo 'id="'.esc_attr( $this->id ).'" ';
 				$this->buildIds();
 			echo '>';
 
 				$this->buildControls();
 
-				echo '<div class="section-columns '.$this->view.'">';
+				echo '<div class="section-columns '.esc_attr( $this->view ).'">';
 	
 
 				foreach( $this->columns as $column ){
@@ -110,13 +114,13 @@ class Reference extends Section{
 				if( $this->in_edit_mode === false ){
 
 					echo '<p class="template-txt">';
-						printf( __( 'Dit is het sjabloon "%s." Bij het aanpassen wordt deze op iedere pagina aangepast.', 'chefsections' ), get_the_title( $this->template_id ) );
+						printf( __( 'This is the template "%s." When editting this template, it get\'s changed on every page.', 'chefsections' ), get_the_title( $this->template_id ) );
 					echo '</p>';
 
 
-					echo '<a href="'.admin_url( 'post.php?post='.$this->template_id.'&action=edit' ).'" class="button button-primary">';
+					echo '<a href="'.esc_url( admin_url( 'post.php?post='.$this->template_id.'&action=edit' ) ).'" class="button button-primary">';
 
-						_e( 'Bewerk dit sjabloon', 'chefsections' );
+						_e( 'Edit this template', 'chefsections' );
 
 					echo '</a>';
 

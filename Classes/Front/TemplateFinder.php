@@ -183,6 +183,7 @@ class TemplateFinder {
 
 		}
 
+		$default = apply_filters( 'chef_sections_default_template', $default, $this );
 		return $default;
 	}
 
@@ -197,6 +198,7 @@ class TemplateFinder {
 		$templates = Sort::appendValues( $this->files, '.php' );
 		$located = locate_template( $templates );
 
+		$located = apply_filters( 'chef_sections_located_template', $located, $this );
 		return $located; 
 	}
 
@@ -269,7 +271,7 @@ class TemplateFinder {
 
 		}
 		
-
+		$array = apply_filters( 'chef_sections_template_files', $array, $this );
 		$this->files = $array;
 		return $array;
 	}
