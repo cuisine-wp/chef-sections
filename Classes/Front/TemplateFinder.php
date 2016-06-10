@@ -26,7 +26,7 @@ class TemplateFinder {
 	 * 
 	 * @var string
 	 */
-	private $obj;
+	public $obj;
 
 
 	/**
@@ -34,7 +34,7 @@ class TemplateFinder {
 	 * 
 	 * @var string
 	 */
-	private $templateName;
+	protected $templateName;
 
 
 	/**
@@ -42,7 +42,7 @@ class TemplateFinder {
 	 * 
 	 * @var string
 	 */
-	private $type;
+	public $type;
 
 
 

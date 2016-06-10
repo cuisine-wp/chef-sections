@@ -181,7 +181,8 @@ class Section {
 		$class = $this->getClass();
 		
 		//base html of a section-starting div
-		$html = '<div '.esc_attr( $schema ).' class="'.esc_attr( $class ).'" id="section-'. esc_attr( $this->id ).'">';
+		$html = '<div '.esc_attr( $schema ).' class="'.esc_attr( $class ).'"';
+		$html .= ' id="section-'. esc_attr( $this->id ).'">';
 
 		//so people can add data-properties and other stuff
 		$html = apply_filters( 'chef_section_beforeTemplate', $html );
@@ -203,8 +204,8 @@ class Section {
 
 		echo '</div>';
 
-		//add a hook
-		add_action( 'section_after_template', $this );
+		//do something after template
+		do_action( 'section_after_template', $this );
 
 	}
 
