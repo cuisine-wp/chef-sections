@@ -17,7 +17,7 @@
 		 */
 		public function walk(){
 
-
+			
 			ob_start();
 
 			foreach( $this->sections as $section ){
@@ -132,7 +132,7 @@
 
 				$column->beforeTemplate();
 
-				Template::column( $column, $section->type )->display();
+				Template::column( $column )->display();
 
 				$column->afterTemplate();
 

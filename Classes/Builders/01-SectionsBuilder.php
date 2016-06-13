@@ -576,41 +576,6 @@ class SectionsBuilder {
 	}
 
 
-	/**
-	 * Return a section template name
-	 * 
-	 * @param  int $section_id
-	 * @return string ( template name )
-	 */
-	public function getTemplateName( $section_id ){
-
-		$name = '';
-
-
-
-		foreach( $this->sections as $section ){
-
-			if( $section->id === $section_id ){
-
-				if( $section->type == 'stencil' || $section->type == 'reference' ){
-
-					$_templatePost = get_post( $section->post_id );
-					$name = $section->type.DS.$_templatePost->post_name.'-';
-
-				}
-
-				if( isset( $section->name ) && $section->name != '' )
-					$name .= $section->name;
-				
-				return $name;
-			
-			}
-		}
-
-
-		return 'section-'.$section_id;
-	}
-
 
 
 	/**
