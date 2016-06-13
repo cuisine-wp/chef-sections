@@ -259,8 +259,8 @@ class DefaultColumn {
 		$types = array_combine( $keys, $labels );
 		$name = '_column_type_'.$this->fullId;
 
-		if( $this->referenceMode )
-			$name = 'reference_'.$this->fullId;
+		//if( $this->referenceMode )
+		//	$name = 'reference_'.$this->fullId;
 
 
 		$typeSelector = Field::select( 

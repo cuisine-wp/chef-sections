@@ -311,7 +311,7 @@ class Section {
 		echo '<div class="section-controls">';
 
 			//first the title:
-			$title = ( $this->hide_title ? '' : $this->title );
+			$title = ( $this->hide_title ? '' : $this->getProperty( 'title' ) );
 
 			Field::text(
 				'section['.$this->id.'][title]',
@@ -575,10 +575,13 @@ class Section {
 	 */
 	public function getName( $args ){
 
-		if( isset( $args['name'] ) )
+		if( isset( $args['name'] ) && $args['name'] != '' )
 			return $args['name'];
 
-		return sanitize_title( $this->title ).'-'.$this->id;
+		if( isset( $args['title'] ) && $args['title'] != '' )
+			return sanitize_title( $this->title ).'-'.$this->id;
+
+		return $this->post_id.'-'.$this->id;
 	}
 
 

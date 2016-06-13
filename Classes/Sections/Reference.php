@@ -4,6 +4,8 @@ namespace ChefSections\Sections;
 
 use ChefSections\Wrappers\Column;
 use Cuisine\Wrappers\User;
+use Cuisine\Wrappers\Field;
+use ChefSections\Wrappers\SectionsBuilder;
 
 /**
  * References are meant for use in 'regular' section-flows.
@@ -24,6 +26,12 @@ class Reference extends Section{
 	 */
 	public $in_edit_mode = false;
 
+	/**
+	 * Keep a set of the original
+	 * @var string
+	 */
+	public $original;
+
 
 	function __construct( $args ){
 		
@@ -43,11 +51,21 @@ class Reference extends Section{
 			$this->template_id = $this->post_id;
 		}		
 
+
+		/**
+		 * Fetch the basics from the parent
+		 */
+		$this->original = $this->fetchOriginalSection( $args );
+
+		//use original as the defaults:
+		$this->properties = $this->original;
+
 		//fill in the basics
-		$this->position = $args['position'];
-		$this->title = $args['title'];
-		$this->view = $args['view'];
-		$this->name = $this->getName( $args );
+		$this->position = $args[ 'position' ]; //position is always related to post
+
+		$this->title = $this->properties[ 'title' ];
+		$this->view = $this->original['view']; //view is always original:
+		$this->name = $this->getName( $this->original );
 
 		//title & container settings
 		if( strtolower( $this->title ) == 'sectie titel' )
@@ -55,12 +73,11 @@ class Reference extends Section{
 
 		$this->hide_title 		= ( $this->title == '' ? true : false );
 
-		$this->hide_container 	= ( isset( $args['hide_container'] ) ? $args['hide_container'] : 'false' );
+		$this->hide_container 	= ( isset( $this->original['hide_container'] ) ? $this->original['hide_container'] : 'false' );
 
 
-		$this->properties = $args;
-
-		$this->columns = $this->getColumns( $args['columns'] );
+		//only use the original columns:
+		$this->columns = $this->getColumns( $this->original['columns'] );
 
 		$name = 'page-';
 		if( isset( $post->post_name ) )
@@ -151,10 +168,7 @@ class Reference extends Section{
 
 
 		//get the parent's columns
-		$parent = get_post_meta( $this->template_id, 'sections', true );
-	//	cuisine_dump( $parent );
-
-		
+		$parent = get_post_meta( $this->template_id, 'sections', true );		
 		$parent = array_values( $parent );
 		$arr = array();
 
@@ -197,7 +211,23 @@ class Reference extends Section{
 		$this->name = $this->getName( $parent );
 	}
 
+	/**
+	 * Returns the original section info
+	 * 
+	 * @return array
+	 */
+	public function fetchOriginalSection( $args ){
 
+		$original = $args; //fallback
+
+		$meta = get_post_meta( $this->template_id, 'sections', true );
+		$templateSections = array_values( $meta );
+		if( isset( $templateSections[ 0 ] ) && !empty( $templateSections[ 0 ] ) ){
+			$original = $templateSections[ 0 ];
+		}
+
+		return $original;
+	}
 
 
 }

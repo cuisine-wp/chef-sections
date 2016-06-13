@@ -96,6 +96,7 @@ class SectionsBuilder {
 		if( $controls )
 			$this->addSectionButton();
 
+
 		echo '<div class="section-container" id="section-container">';
 
 
@@ -395,8 +396,6 @@ class SectionsBuilder {
 
 			$i++;
 		}
-
-		cuisine_dump( $columns );
 
 		return true;
 	}
