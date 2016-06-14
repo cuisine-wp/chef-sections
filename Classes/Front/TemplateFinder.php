@@ -123,6 +123,10 @@ class TemplateFinder {
 			$name = '';
 			if( $section['id'] === $column->section_id ){
 
+				if( !isset( $section['type'] ) )
+					$section['type'] = 'section';
+
+
 				if( $section['type'] == 'stencil' || $section['type'] == 'reference' ){
 
 					$_templatePost = get_post( $section['template_id'] );
