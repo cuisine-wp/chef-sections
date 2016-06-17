@@ -246,6 +246,35 @@ class DefaultColumn {
 
 
 	/**
+	 * Build the contents of the lightbox for this column
+	 * 
+	 * @return string ( html, echoed )
+	 */
+	public function buildLightbox(){
+
+		$fields = array();
+
+		if( method_exists( $this, 'getFields' ) )
+			$fields = $this->getFields();
+
+		echo '<div class="main-content">';
+		
+			foreach( $fields as $field ){
+
+				$field->render();
+
+			}
+
+		echo '</div>';
+		echo '<div class="side-content">';
+			$this->saveButton();
+
+		echo '</div>';
+	}
+
+	
+
+	/**
 	 * Build the top controls of a column
 	 * 
 	 * @return string ( html, echoed )
@@ -436,7 +465,7 @@ class DefaultColumn {
 		$args = array(
 
 				'hasLightbox'	=>  true,
-				'buttonText'	=> __( 'Kolom opslaan', 'chef_sections' )
+				'buttonText'	=> __( 'Save Column', 'cuisinesections' )
 		);
 
 		$args = apply_filters( 'chef_sections_default_column_args', $args );

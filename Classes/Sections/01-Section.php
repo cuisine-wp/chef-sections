@@ -182,12 +182,12 @@ class Section {
 		
 		//base html of a section-starting div
 		$html = '<div '.esc_attr( $schema ).' class="'.esc_attr( $class ).'"';
-		$html .= ' id="section-'. esc_attr( $this->id ).'">';
+		$html .= ' id="section-'. esc_attr( $this->id ).'" ';
 
 		//so people can add data-properties and other stuff
-		$html = apply_filters( 'chef_section_beforeTemplate', $html );
+		$html = apply_filters( 'cuisine_section_opening_div', $html );
 
-		echo $html;
+		echo $html.'>';
 
 		do_action( 'chef_section_before_section_content', $this );
 
