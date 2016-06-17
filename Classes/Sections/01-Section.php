@@ -462,11 +462,12 @@ class Section {
 	public function buildHiddenFields(){
 
 		$prefix = 'section['.$this->id.']';
-		Field::hidden(
+		Field::text(
 			$prefix.'[position]',
+			'position',
 			array(
 				'defaultValue' => $this->position,
-				'class' => array( 'field', 'input-field', 'hidden-field', 'section-position' )
+				'class' => array( 'field', 'input-field', 'section-position' )
 			)
 		)->render();
 

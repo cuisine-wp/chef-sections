@@ -229,23 +229,27 @@ class SectionsBuilder {
 			//save columns and types
 			foreach( $sections as $section ){
 
-				$columns = array();
-				$types = $this->getViewTypes();
-				$count = $types[ $section['view'] ];
+				if( $section['type'] == 'section' ){
 
-				for( $i = 1; $i <= $count; $i++ ){
-
-					$string = '_column_type_'.$section['id'].'_'.$i;
-
-					if( isset( $_POST[$string] ) ){
-						$columns[ $i ] = $_POST[$string];
-					}else{
-						$columns[ $i ] = 'content';
+					$columns = array();
+					$types = $this->getViewTypes();
+					$count = $types[ $section['view'] ];
+	
+					for( $i = 1; $i <= $count; $i++ ){
+	
+						$string = '_column_type_'.$section['id'].'_'.$i;
+	
+						if( isset( $_POST[$string] ) ){
+							$columns[ $i ] = $_POST[$string];
+						}else{
+							$columns[ $i ] = 'content';
+						}
 					}
-				}
+	
+					$sections[ $section['id'] ]['post_id'] = $post_id;
+					$sections[ $section['id'] ]['columns'] = $columns;
 
-				$sections[ $section['id'] ]['post_id'] = $post_id;
-				$sections[ $section['id'] ]['columns'] = $columns;
+				}
 			}
 
 
@@ -253,7 +257,6 @@ class SectionsBuilder {
 			update_post_meta( $post_id, 'sections', $sections );	
 		}
 			
-
 		return true;
 	}
 

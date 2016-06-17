@@ -245,33 +245,6 @@ class DefaultColumn {
 	}
 
 
-	/**
-	 * Build the contents of the lightbox for this column
-	 * 
-	 * @return string ( html, echoed )
-	 */
-	public function buildLightbox(){
-
-		$fields = array();
-
-		if( method_exists( $this, 'getFields' ) )
-			$fields = $this->getFields();
-
-		echo '<div class="main-content">';
-		
-			foreach( $fields as $field ){
-
-				$field->render();
-
-			}
-
-		echo '</div>';
-		echo '<div class="side-content">';
-			$this->saveButton();
-
-		echo '</div>';
-	}
-
 	
 
 	/**
@@ -288,8 +261,8 @@ class DefaultColumn {
 		$types = array_combine( $keys, $labels );
 		$name = '_column_type_'.$this->fullId;
 
-		//if( $this->referenceMode )
-		//	$name = 'reference_'.$this->fullId;
+		if( $this->referenceMode )
+			$name = 'reference_'.$this->fullId;
 
 
 		$typeSelector = Field::select( 
