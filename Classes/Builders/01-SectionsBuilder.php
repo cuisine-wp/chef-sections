@@ -212,6 +212,7 @@ class SectionsBuilder {
 	 */
 	public function save( $post_id ){
 
+
 		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
 	    $nonceName = (isset($_POST[Session::nonceName])) ? $_POST[Session::nonceName] : Session::nonceName;
@@ -229,29 +230,25 @@ class SectionsBuilder {
 			//save columns and types
 			foreach( $sections as $section ){
 
-				if( $section['type'] == 'section' ){
+				$columns = array();
+				$types = $this->getViewTypes();
+				$count = $types[ $section['view'] ];
 
-					$columns = array();
-					$types = $this->getViewTypes();
-					$count = $types[ $section['view'] ];
-	
-					for( $i = 1; $i <= $count; $i++ ){
-	
-						$string = '_column_type_'.$section['id'].'_'.$i;
-	
-						if( isset( $_POST[$string] ) ){
-							$columns[ $i ] = $_POST[$string];
-						}else{
-							$columns[ $i ] = 'content';
-						}
+				for( $i = 1; $i <= $count; $i++ ){
+
+					$string = '_column_type_'.$section['id'].'_'.$i;
+
+					if( isset( $_POST[$string] ) ){
+						$columns[ $i ] = $_POST[$string];
+					}else{
+						$columns[ $i ] = 'content';
 					}
-	
-					$sections[ $section['id'] ]['post_id'] = $post_id;
-					$sections[ $section['id'] ]['columns'] = $columns;
-
 				}
-			}
 
+				$sections[ $section['id'] ]['post_id'] = $post_id;
+				$sections[ $section['id'] ]['columns'] = $columns;
+
+			}
 
 			//save the main section meta:
 			update_post_meta( $post_id, 'sections', $sections );	
@@ -447,7 +444,6 @@ class SectionsBuilder {
 
 		if( !isset( $section['type'] ) )
 			$section['type'] = 'section';
-
 
 		switch( $section['type'] ){
 

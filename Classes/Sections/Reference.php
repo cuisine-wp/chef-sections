@@ -75,10 +75,12 @@ class Reference extends Section{
 
 		$this->hide_container 	= ( isset( $this->original['hide_container'] ) ? $this->original['hide_container'] : 'false' );
 
-
-		//only use the original columns:
+		//if( !empty( $this->original['columns'] ) ){
 		$this->columns = $this->getColumns( $this->original['columns'] );
-
+		//}else{
+		//	$this->columns = array();
+		//}
+		
 		$name = 'page-';
 		if( isset( $post->post_name ) )
 			$name = $post->post_name.'-';
@@ -123,7 +125,11 @@ class Reference extends Section{
 				foreach( $this->columns as $column ){
 	
 					//build column with reference-mode on:
-					echo $column->build( true );
+					$refMode = true;
+					if( $this->in_edit_mode )
+						$refMode = false;
+					
+					echo $column->build( $refMode );
 	
 				}
 
