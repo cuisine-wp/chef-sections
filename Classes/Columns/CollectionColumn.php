@@ -229,7 +229,7 @@ class CollectionColumn extends DefaultColumn{
 
 		$type = ( !is_array( $post_type ) ? $types[ $post_type ] : 'berichten' );
 
-		$msg = 'Geen '.strtolower( $type ).' meer gevonden';
+		$msg = __('No','chefsections').' '.strtolower( $type ).' '.__('meer gevonden','chefsections');
 		$msg = apply_filters( 'chef_sections_autoload_message', $msg, $this );
 
 		$html = '';

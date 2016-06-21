@@ -91,25 +91,25 @@ class VideoColumn extends DefaultColumn{
 
 			'title' => Field::text( 
 				'title', 
-				'Titel',
+				__('Title','chefsections'),
 				array(
 					'label' 				=> false,
-					'placeholder' 			=> 'Titel',
+					'placeholder' 			=> __('Title','chefsections'),
 					'defaultValue'			=> $this->getField( 'title' ),
 				)
 			),
 			'url'	=> Field::text(
 				'url',
-				'Video url',
+				__('Video url','chefsections'),
 				array(
 					'label' 				=> false,
-					'placeholder' 			=> 'Video url',
+					'placeholder' 			=> __('Video url','chefsections'),
 					'defaultValue'			=> $this->getField( 'url' ),
 				)
 			),
 			'still' => Field::image(
 				'still',
-				'Video still',
+				__('Video still','chefsections'),
 				array(
 					'defaultValue'			=> $this->getField( 'still' ),
 				)

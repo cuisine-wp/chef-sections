@@ -25,7 +25,7 @@
 					pageNumber: 1,
 					column: '',
 					section: '',
-					message: 'Geen berichten gevonden',
+					message: 'No posts found',
 					wrap: true,
 					postId: 0,
 					onTrigger: null,

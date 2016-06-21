@@ -93,7 +93,7 @@ class ContentColumn extends DefaultColumn{
 				'',
 				array(
 					'label' 				=> false,
-					'placeholder' 			=> 'Titel',
+					'placeholder' 			=> __('Title','chefsections'),
 					'defaultValue'			=> $this->getField( 'title' ),
 				)
 			),
