@@ -1,3 +1,14 @@
+### 1.4.0: 2016-06-27
+
+* Completely new UI
+* Column sorting
+* Section drag-to-add
+* Added Section setting-panels API
+* All output is escaped now
+* Translated everything to english
+* Various bugfixes
+
+
 ### 1.3.9: 2016-05-11
 
 * Adds Schema.org support
