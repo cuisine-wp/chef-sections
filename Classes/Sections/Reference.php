@@ -4,6 +4,8 @@ namespace ChefSections\Sections;
 
 use ChefSections\Wrappers\Column;
 use Cuisine\Wrappers\User;
+use Cuisine\Wrappers\Field;
+use ChefSections\Wrappers\SectionsBuilder;
 
 /**
  * References are meant for use in 'regular' section-flows.
@@ -24,6 +26,12 @@ class Reference extends Section{
 	 */
 	public $in_edit_mode = false;
 
+	/**
+	 * Keep a set of the original
+	 * @var string
+	 */
+	public $original;
+
 
 	function __construct( $args ){
 		
@@ -34,6 +42,7 @@ class Reference extends Section{
 		$this->post_id = $args['post_id'];
 		$post = get_post( $this->post_id );
 
+		//check if this is a section template
 		$this->template_id = ( isset( $args['template_id'] ) ? $args['template_id'] : false );
 
 
@@ -42,22 +51,36 @@ class Reference extends Section{
 			$this->template_id = $this->post_id;
 		}		
 
-		$this->position = $args['position'];
 
-		$this->title = $args['title'];
+		/**
+		 * Fetch the basics from the parent
+		 */
+		$this->original = $this->fetchOriginalSection( $args );
 
-		$this->view = $args['view'];
+		//use original as the defaults:
+		$this->properties = $this->original;
 
-		$this->name = $this->getName( $args );
+		//fill in the basics
+		$this->position = $args[ 'position' ]; //position is always related to post
 
-		$this->hide_title = ( isset( $args['hide_title'] ) ? $args['hide_title'] : 'false' );
+		$this->title = $this->properties[ 'title' ];
+		$this->view = $this->original['view']; //view is always original:
+		$this->name = $this->getName( $this->original );
 
-		$this->hide_container = ( isset( $args['hide_container'] ) ? $args['hide_container'] : 'false' );
+		//title & container settings
+		if( strtolower( $this->title ) == 'sectie titel' )
+			$this->title = '';
 
-		$this->properties = $args;
+		$this->hide_title 		= ( $this->title == '' ? true : false );
 
-		$this->columns = $this->getColumns( $args['columns'] );
+		$this->hide_container 	= ( isset( $this->original['hide_container'] ) ? $this->original['hide_container'] : 'false' );
 
+		//if( !empty( $this->original['columns'] ) ){
+		$this->columns = $this->getColumns( $this->original['columns'] );
+		//}else{
+		//	$this->columns = array();
+		//}
+		
 		$name = 'page-';
 		if( isset( $post->post_name ) )
 			$name = $post->post_name.'-';
@@ -89,21 +112,24 @@ class Reference extends Section{
 				$class .= ' reference';
 			
 
-			echo '<div class="'.$class.'" ';
-				echo 'id="'.$this->id.'" ';
+			echo '<div class="'.esc_attr( $class ).'" ';
+				echo 'id="'.esc_attr( $this->id ).'" ';
 				$this->buildIds();
 			echo '>';
 
-				if( User::hasRole( 'administrator' ) )
-					$this->buildControls();
+				$this->buildControls();
 
-				echo '<div class="section-columns '.$this->view.'">';
+				echo '<div class="section-columns '.esc_attr( $this->view ).'">';
 	
 
 				foreach( $this->columns as $column ){
 	
 					//build column with reference-mode on:
-					echo $column->build( true );
+					$refMode = true;
+					if( $this->in_edit_mode )
+						$refMode = false;
+					
+					echo $column->build( $refMode );
 	
 				}
 
@@ -111,13 +137,13 @@ class Reference extends Section{
 				if( $this->in_edit_mode === false ){
 
 					echo '<p class="template-txt">';
-						printf( __( 'Dit is het sjabloon "%s." Bij het aanpassen wordt deze op iedere pagina aangepast.', 'chefsections' ), get_the_title( $this->template_id ) );
+						printf( __( 'This is the template "%s." When editting this template, it get\'s changed on every page.', 'chefsections' ), get_the_title( $this->template_id ) );
 					echo '</p>';
 
 
-					echo '<a href="'.admin_url( 'post.php?post='.$this->template_id.'&action=edit' ).'" class="button button-primary">';
+					echo '<a href="'.esc_url( admin_url( 'post.php?post='.$this->template_id.'&action=edit' ) ).'" class="button button-primary">';
 
-						_e( 'Bewerk dit sjabloon', 'chefsections' );
+						_e( 'Edit this template', 'chefsections' );
 
 					echo '</a>';
 
@@ -127,11 +153,11 @@ class Reference extends Section{
 				echo '<div class="clearfix"></div>';
 				echo '</div>';
 
-				if( User::hasRole( 'administrator' ) ){
-					$this->bottomControls();
-					$this->buildSettingsPanel();
-				}
-			
+				$this->bottomControls();
+				$this->buildSettingsPanels();
+				$this->buildHiddenFields();
+				
+
 			echo '<div class="loader"><span class="spinner"></span></div>';
 			echo '</div>';
 		}
@@ -148,10 +174,7 @@ class Reference extends Section{
 
 
 		//get the parent's columns
-		$parent = get_post_meta( $this->template_id, 'sections', true );
-	//	cuisine_dump( $parent );
-
-		
+		$parent = get_post_meta( $this->template_id, 'sections', true );		
 		$parent = array_values( $parent );
 		$arr = array();
 
@@ -194,7 +217,23 @@ class Reference extends Section{
 		$this->name = $this->getName( $parent );
 	}
 
+	/**
+	 * Returns the original section info
+	 * 
+	 * @return array
+	 */
+	public function fetchOriginalSection( $args ){
 
+		$original = $args; //fallback
+
+		$meta = get_post_meta( $this->template_id, 'sections', true );
+		$templateSections = array_values( $meta );
+		if( isset( $templateSections[ 0 ] ) && !empty( $templateSections[ 0 ] ) ){
+			$original = $templateSections[ 0 ];
+		}
+
+		return $original;
+	}
 
 
 }

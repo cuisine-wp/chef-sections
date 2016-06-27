@@ -33,11 +33,15 @@ class SocialsColumn extends DefaultColumn{
 		
 			foreach( $props as $key => $link ){
 
-				if( $key !== 'title' ){
+				if( $key !== 'title' && $key !== 'position' ){
 
 					if( $link != '' ){				
 						//filter the link:
-						if( substr( $link, 0, 4 ) !== 'http' && substr( $link, 0, 2 ) !== '//' )
+						if( 
+							substr( $link, 0, 4 ) !== 'http' && 
+							substr( $link, 0, 2 ) !== '//' &&
+							strlen( $link ) > 4 
+						)
 							$props[$key] = 'http://'.$link;
 
 					}
@@ -94,49 +98,49 @@ class SocialsColumn extends DefaultColumn{
 	
 				Field::text( 
 					'title', 
-					'Titel',
+					__('Title', 'chefsections'),
 					array(
 						'defaultValue'	=> $this->getField( 'title' )
 					)
 				),
 				Field::text(
 					'fb',
-					'Facebook link',
+					__('Facebook link', 'chefsections'),
 					array(
 						'defaultValue'	=> $this->getField( 'fb' )
 					)
 				),
 				Field::text(
 					'tw',
-					'Twitter link',
+					__('Twitter link', 'chefsections'),
 					array(
 						'defaultValue'	=> $this->getField( 'tw' )
 					)
 				),
 				Field::text(
 					'in',
-					'LinkedIn link',
+					__('LinkedIn link', 'chefsections'),
 					array(
 						'defaultValue'	=> $this->getField( 'in' )
 					)
 				),
 				Field::text(
 					'gp',
-					'Google Plus link',
+					__('Google Plus link', 'chefsections'),
 					array(
 						'defaultValue'	=> $this->getField( 'gp' )
 					)
 				),
 				Field::text(
 					'pin',
-					'Pinterest link',
+					__('Pinterest link', 'chefsections'),
 					array(
 						'defaultValue'	=> $this->getField( 'pin' )
 					)
 				),
 				Field::text(
 					'ins',
-					'Instagram link',
+					__('Instagram link', 'chefsections'),
 					array(
 						'defaultValue'	=> $this->getField( 'ins' )
 					)

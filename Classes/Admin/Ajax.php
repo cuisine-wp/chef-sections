@@ -62,6 +62,14 @@
 
 			});
 
+			add_action( 'wp_ajax_sortColumns', function(){
+
+				parent::setPostGlobal();
+
+				echo SectionsBuilder::sortColumns();
+				die();
+			});
+
 			//change a sections' view:
 			add_action( 'wp_ajax_changeView', function(){
 

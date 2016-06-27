@@ -2,14 +2,14 @@
 	
 	if( $section->hide_title === 'false' ){
 		echo '<h2  itemscope itemtype="http://schema.org/Thing" itemprop="alternateName" class="section-title">';
-			echo $section->title;
+			echo esc_html( $section->title );
 		echo '</h2>';
 	}
 
 	if( $section->getProperty( 'hide_container' ) == 'false' )
 		echo '<div class="container">';
 
-			echo '<div class="column-wrapper column-row '.$section->view.'">';
+			echo '<div class="column-wrapper column-row '.esc_attr( $section->view ).'">';
 					
 				the_columns( $section );
 	

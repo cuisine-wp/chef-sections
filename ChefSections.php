@@ -78,6 +78,7 @@ if (!class_exists('ChefSections')) {
                 'Classes/Columns',
                 'Classes/Builders',
                 'Classes/Sections',
+                'Classes/Sections/SettingPanels',
                 'Classes/Hooks',
                 'Classes/Admin',
                 'Classes/Front'

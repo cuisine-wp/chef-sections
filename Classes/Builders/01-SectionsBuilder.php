@@ -93,6 +93,10 @@ class SectionsBuilder {
 
 		wp_nonce_field( Session::nonceAction, Session::nonceName );
 
+		if( $controls )
+			$this->addSectionButton();
+
+
 		echo '<div class="section-container" id="section-container">';
 
 
@@ -116,9 +120,6 @@ class SectionsBuilder {
 
 		echo '</div>';
 
-		if( $controls )
-			$this->addSectionButton();
-
 	}
 
 
@@ -135,23 +136,23 @@ class SectionsBuilder {
 
 		echo '<div class="section-wrapper dotted-bg" id="section-builder-ui">';
 
-			echo '<span class="spinner"></span>';
 			echo '<div id="addSection" class="section-btn" data-post_id="'.$this->postId.'">';
-				_e( 'Sectie toevoegen', 'chefsections' );
+				_e( 'Add Section', 'chefsections' );
 			echo '</div>';
 
-			echo '<em>'.__( 'Of', 'chefsections' ).'</em>';
+			echo '<em>'.__( 'Or', 'chefsections' ).'</em>';
 
 			//add templates:
-			echo '<label>'.__( 'Gebruik een sjabloon', 'chefsections' ).':</label>';
-			echo '<select id="getTemplate" data-post_id="'.$this->postId.'">';
+			echo '<select id="getTemplate" data-post_id="'.esc_attr( $this->postId ).'">';
 
-				echo '<option value="none">'.__( 'Selecteer sjabloon', 'chefsections' ).'</option>';
+				echo '<option value="none">';
+					_e( 'Select section template', 'chefsections' );
+				echo '</option>';
 
 				foreach( $templates as $template ){
 
 					if( $template->ID != $this->postId ){
-						echo '<option value="'.$template->ID.'">';
+						echo '<option value="'.esc_attr( $template->ID ).'">';
 							echo $template->post_title;
 						echo '</option>';
 					}
@@ -159,6 +160,18 @@ class SectionsBuilder {
 
 
 			echo '</select>';
+
+			echo '<span class="update-btn-wrapper">';
+				
+				echo '<span class="update-btn" id="updatePost">';
+					_e( 'Update' );
+				echo '</span>';
+
+			echo '</span>';
+
+			//loader
+			echo '<span class="spinner"></span>';
+
 
 		echo '</div>';
 	}
@@ -199,6 +212,7 @@ class SectionsBuilder {
 	 */
 	public function save( $post_id ){
 
+
 		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
 	    $nonceName = (isset($_POST[Session::nonceName])) ? $_POST[Session::nonceName] : Session::nonceName;
@@ -233,14 +247,13 @@ class SectionsBuilder {
 
 				$sections[ $section['id'] ]['post_id'] = $post_id;
 				$sections[ $section['id'] ]['columns'] = $columns;
-			}
 
+			}
 
 			//save the main section meta:
 			update_post_meta( $post_id, 'sections', $sections );	
 		}
 			
-
 		return true;
 	}
 
@@ -358,6 +371,34 @@ class SectionsBuilder {
 		update_post_meta( $this->postId, 'sections', $_sections );
 	}
 
+	/**
+	 * Sort columns
+	 * 
+	 * @return bool (success / no success)
+	 */
+	public function sortColumns(){
+
+		$id = $_POST['section_id'];
+		$ids = $_POST['column_ids'];
+		$i = 1;
+		$columns = array();
+
+		foreach( $ids as $col ){
+
+			$key = '_column_props_'.$id.'_'.$col;
+
+			$column = get_post_meta( $this->postId, $key, true );
+			$column['position'] = $i;
+			$columns[] = $column;
+
+			//update the position:
+			update_post_meta( $this->postId, $key, $column );
+
+			$i++;
+		}
+
+		return true;
+	}
 
 
 
@@ -403,7 +444,6 @@ class SectionsBuilder {
 
 		if( !isset( $section['type'] ) )
 			$section['type'] = 'section';
-
 
 		switch( $section['type'] ){
 
@@ -534,41 +574,6 @@ class SectionsBuilder {
 
 	}
 
-
-	/**
-	 * Return a section template name
-	 * 
-	 * @param  int $section_id
-	 * @return string ( template name )
-	 */
-	public function getTemplateName( $section_id ){
-
-		$name = '';
-
-
-
-		foreach( $this->sections as $section ){
-
-			if( $section->id === $section_id ){
-
-				if( $section->type == 'stencil' || $section->type == 'reference' ){
-
-					$_templatePost = get_post( $section->post_id );
-					$name = $section->type.DS.$_templatePost->post_name.'-';
-
-				}
-
-				if( isset( $section->name ) && $section->name != '' )
-					$name .= $section->name;
-				
-				return $name;
-			
-			}
-		}
-
-
-		return 'section-'.$section_id;
-	}
 
 
 

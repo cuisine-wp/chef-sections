@@ -11,7 +11,8 @@
 			'change .section-controls .type-radio': 'changeView',
 			'click .delete-section': 'deleteSection',
 			'click .code-snitch': 'copyCode',
-			'click .section-settings-btn' : 'toggleSettings'
+			'click .section-controls .buttons-wrapper .button' : 'toggleSettingPanel',
+			'click #close-panel' : 'hideSettingPanel'
 
 		},
 
@@ -27,9 +28,49 @@
 			self.sectionId = self.$el.data( 'section_id' );
 			self.postId = self.$el.data( 'post_id' );
 
-
+			self.setEvents();
 		},
 
+		/**
+		 * Make columns sortable:
+		 *
+		 * @return void
+		 */
+		setEvents: function(){
+
+			var self = this;
+
+			self.$('.section-columns').sortable({
+				handle: '.sort',
+				tolerance: 'pointer',
+				placeholder: 'placeholder-column',
+				update: function (event, ui) {
+					
+					//self.setSectionOrder();
+					var positions = new Array();
+					var i = 1;
+
+					self.$el.find('.section-columns .column').each(function(){
+						positions.push( $( this ).data('column_id') );
+						$( this ).find( '.column-position' ).val( i );
+						i++;
+					});
+
+					var data = {
+						action: 'sortColumns',
+						post_id: self.$el.data( 'post_id' ),
+						column_ids: positions,
+						section_id: self.sectionId
+					}
+
+					$.post( ajaxurl, data, function( response ){
+						
+						console.log( response );
+					});
+				}
+			});
+
+		},
 
 		/**
 		 * Change the view of a section
@@ -83,6 +124,9 @@
 			}
 
 			if( confirm( "Weet je zeker dat je deze sectie wil verwijderen?" ) ){
+				
+				self.$el.addClass('deleting');
+
 				jQuery.post( ajaxurl, data, function( response ){
 					
 					if( response === 'true' ){
@@ -112,16 +156,46 @@
 		},
 
 		/**
-		 * Show the settings field
+		 * Show a settings panel
 		 * 
 		 * @param  Event evt
 		 * @return void
 		 */
-		toggleSettings: function( evt ){
+		toggleSettingPanel: function( evt ){
 
 			var self = this;
+			var _id = $( evt.target ).data('id');
+			
+			var _offset = $( evt.target ).position().left;
+			_offset = parseInt( _offset ) + 27;
 
-			self.$el.find('.section-settings').toggleClass( 'active' );
+			var _panel = self.$el.find('#panel-'+_id);
+
+			if( _panel.hasClass('active' ) === false ){
+
+				$('.section-setting-panels > div' ).removeClass( 'active' );
+
+				_panel.addClass( 'active' );
+				_panel.find('.arrow').css({
+					left: _offset+'px'
+				})
+
+			}else{
+				_panel.removeClass( 'active' );
+			}
+
+
+		},
+
+		/**
+		 * Show a settings panel
+		 * 
+		 * @param  Event evt
+		 * @return void
+		 */
+		hideSettingPanel: function( evt ){
+
+			$('.section-setting-panels > div' ).removeClass( 'active' );
 
 		},
 

@@ -1,9 +1,3 @@
-<a itemscope itemtype="http://schema.org/CreativeWork" itemprop="exampleOfWork" href="<?php the_permalink();?>" class="block block-<?php echo get_post_type();?>">
-	<?php echo '<div itemscope itemtype="http://schema.org/Thing" itemprop="image" class="thumbnail">'.get_the_post_thumbnail('medium').'</div>'; ?>
-	<h2 itemscope itemtype="http://schema.org/Thing" itemprop="name"><?php the_title();?></h2>
-	<div itemscope itemtype="http://schema.org/Thing" itemprop="about"><?php the_excerpt();?></div>
-</a>
-
 <?php
 /**
  * Blogpost block
@@ -17,7 +11,7 @@
 	
 
 	
-	echo '<a itemscope itemtype="http://schema.org/creativeWork" itemprop="hasPart" href="'.Loop::link().'" class="block block-'.Loop::type().'">';
+	echo '<a itemscope itemtype="http://schema.org/creativeWork" itemprop="hasPart" href="'.esc_url( Loop::link() ).'" class="block block-'.esc_attr( Loop::type() ).'">';
 
 			if( has_post_thumbnail() ){
 
@@ -31,11 +25,11 @@
 			
 		echo '<div class="content-wrapper">';
 
-			echo '<h2 itemprop="name">'.Loop::title().'</h2>';
+			echo '<h2 itemprop="name">'.esc_html( Loop::title() ).'</h2>';
 			echo '<div class="description" itemprop="description">'.get_the_excerpt().'</div>';
 
 		echo '</div>';
 
-		echo '<meta itemprop="url" content="'.Loop::link().'"></meta>';
+		echo '<meta itemprop="url" content="'.esc_url( Loop::link() ).'"></meta>';
 
 	echo '</a>';

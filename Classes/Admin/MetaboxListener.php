@@ -31,7 +31,7 @@
 			add_action( 'admin_init', function(){
 
 				$fields = $this->getFields();
-				$name = __( 'Instellingen', 'chefsections');
+				$name = __( 'Settings', 'chefsections');
 
 				Metabox::make( 
 			
@@ -56,8 +56,8 @@
 			$postTypes = $this->getPostTypes();
 
 			$templateTypes = array(
-				'reference'	=> __( 'Referentie', 'chefsections' ),
-				'blueprint' => __( 'Blauwdruk', 'chefsections' ),
+				'reference'	=> __( 'Reference', 'chefsections' ),
+				'blueprint' => __( 'Blueprint', 'chefsections' ),
 				'stencil'	=> __( 'Stencil', 'chefsections' )
 			);
 
@@ -74,7 +74,7 @@
 				Field::select(
 
 					'type',
-					'Sjabloontype',
+					__( 'Template type', 'chefsections' ),
 					$templateTypes,
 					array(
 						'defaultValue' => 'reference'
@@ -85,7 +85,7 @@
 				Field::select(
 
 					'apply_to',
-					'Stel standaard in op',
+					__( 'Apply as default to', 'chefsections' ),
 					$postTypes,
 					array(
 						'defaultValue'	=> 'none',
@@ -111,7 +111,7 @@
 
 
 			$postTypes = array(
-				'none'	=> __( 'Geen specifieke bericht types', 'chefsections' )
+				'none'	=> __( 'No specific post types', 'chefsections' )
 			);
 
 			foreach( $pts as $type ){

@@ -52,6 +52,13 @@ class DefaultColumn {
 	 */
 	public $section_id;
 
+	/**
+	 * Column position within the section
+	 * 
+	 * @var int;
+	 */
+	public $position;
+
 
 	/**
 	 * The properties of this column
@@ -105,6 +112,8 @@ class DefaultColumn {
 
 		//get the properties of this column:
 		$this->getProperties();
+
+		$this->position = $this->getField( 'position', $this->id );
 
 	}
 
@@ -192,7 +201,7 @@ class DefaultColumn {
 
 		$this->referenceMode = $ref;
 
-		echo '<div class="column '.$this->type.'" ';
+		echo '<div class="column '.esc_attr( $this->type ).'" ';
 		echo $this->buildIds().'>';
 
 			$this->buildControls();
@@ -204,10 +213,22 @@ class DefaultColumn {
 			$this->buildBottomControls();
 
 			if( $this->hasLightbox ){
-				echo '<div class="lightbox lightbox-'.$this->type.'">';
+
+				echo '<div class="lightbox lightbox-'.esc_attr( $this->type ).'">';
+			
 					$this->buildLightbox();
+
 				echo '</div>';
+			
 			}
+
+			Field::hidden(
+				'position', 
+				array(
+					'defaultValue' => $this->position,
+					'class' => 'column-position'
+				)
+			)->render();
 
 			echo '<div class="loader"><span class="spinner"></span></div>';
 		echo '</div>';
@@ -223,6 +244,8 @@ class DefaultColumn {
 		//empty, every column needs to do this on there own.
 	}
 
+
+	
 
 	/**
 	 * Build the top controls of a column
@@ -252,8 +275,13 @@ class DefaultColumn {
 		);
 
 		echo '<div class="column-controls">';
+
+			//render the dropdown:
 			$typeSelector->render();
-			$this->buildTemplateSnitch();
+			
+			//sorter
+			echo '<span class="sort dashicons dashicons-leftright"></span>';
+
 		echo '</div>';
 
 	}
@@ -271,7 +299,12 @@ class DefaultColumn {
 			if( !$this->hasLightbox )
 				$class .= ' no-lightbox';
 
-			echo '<button class="'.$class.'" id="lightbox-btn">'.__( 'Bewerken', 'chefsections' ).'</button>';
+			echo '<button class="'.esc_attr( $class ).'" id="lightbox-btn">';
+				echo '<span class="dashicons dashicons-edit"></span>';
+				_e( 'Edit', 'chefsections' );
+			echo '</button>';
+
+			$this->buildTemplateSnitch();
 
 		echo '</div>';
 	}
@@ -295,7 +328,10 @@ class DefaultColumn {
 		echo '<div class="save-btn-container">';
 
 			echo '<span class="spinner"></span>';
-			echo '<button id="save-column" class="save-btn section-btn">'.$this->properties['buttonText'].'</button>';
+			
+			echo '<button id="save-column" class="save-btn section-btn">';
+				echo esc_html( $this->properties['buttonText'] );
+			echo '</button>';
 
 		echo '</div>';
 
@@ -336,7 +372,7 @@ class DefaultColumn {
 					echo '<strong>Templates:</strong>';
 					foreach( $templates as $template ){
 	
-						echo '<p>'.$template.'</p>';
+						echo '<p>'.esc_html( $template ).'</p>';
 	
 					}
 	
@@ -402,7 +438,7 @@ class DefaultColumn {
 		$args = array(
 
 				'hasLightbox'	=>  true,
-				'buttonText'	=> __( 'Kolom opslaan', 'chef_sections' )
+				'buttonText'	=> __( 'Save Column', 'cuisinesections' )
 		);
 
 		$args = apply_filters( 'chef_sections_default_column_args', $args );

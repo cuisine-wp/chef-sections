@@ -53,7 +53,7 @@ highestId: '',
 
 				var _id = $( this ).data( 'id' );
 
-				if( confirm( 'Weet u zeker dat u dit wil verwijderen?' ) ){
+				if( confirm( 'Are you sure you want to delete this?' ) ){
 
 					$('#tax-'+_id).fadeOut( 'fast', function(){
 						$('#tax-'+_id).remove();
@@ -61,8 +61,8 @@ highestId: '',
 						//add a fallback, if there are no filters:
 						if( $('.tax-select-wrapper' ).length <= 0 ){
 
-							var _html = '<p>Op dit moment zijn er geen extra filters actief.</p>';
-							_html += '<span class="add-remove-btn add-tax msg-add-remove">Maak een filter aan</span>';
+							var _html = '<p>At this moment ther are no extra filters active.</p>';
+							_html += '<span class="add-remove-btn add-tax msg-add-remove">Create a filter</span>';
 							self.$el.append( _html );
 
 						}

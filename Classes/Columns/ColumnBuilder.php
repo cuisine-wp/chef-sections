@@ -164,12 +164,12 @@ class ColumnBuilder {
 
 			'content' 		=> array(
 
-				'name'		=> __( 'Tekst', 'chefsections' ),
+				'name'		=> __( 'Textual content', 'chefsections' ),
 				'class' 	=> 'ChefSections\\Columns\\ContentColumn'
 			),
 
 			'image'			=> array(
-				'name'		=> __( 'Afbeelding', 'chefsections' ),
+				'name'		=> __( 'Image', 'chefsections' ),
 				'class' 	=> 'ChefSections\\Columns\\ImageColumn',			
 			),
 
@@ -181,12 +181,12 @@ class ColumnBuilder {
 
 			'collection'	=> array(
 
-				'name'		=> __( 'Collectie', 'chefsections' ),
+				'name'		=> __( 'Collection', 'chefsections' ),
 				'class'		=> 'ChefSections\\Columns\\CollectionColumn'
 			),
 
 			'socials' 		=> array(
-				'name'		=> __( 'Social knoppen', 'chefsections' ),
+				'name'		=> __( 'Social buttons', 'chefsections' ),
 				'class'		=> 'ChefSections\\Columns\\SocialsColumn'
 			),
 		);

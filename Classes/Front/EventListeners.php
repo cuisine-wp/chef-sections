@@ -39,13 +39,12 @@
 
 				);
 
-				PostType::make( 'section-template', __( 'Sjablonen', 'chef-sections' ), __( 'Sjabloon', 'chefsections' ) )->set( $args );
+				PostType::make( 'section-template', __( 'Templates', 'chefsections' ), __( 'Template', 'chefsections' ) )->set( $args );
 
 
 
 				//custom field type:
 				add_filter( 'cuisine_field_types', function( $types ){
-
 
 					$types['taxonomySelect'] = array(
 								'name'		=> 'TaxonomySelect',

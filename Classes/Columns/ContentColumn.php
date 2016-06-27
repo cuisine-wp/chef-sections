@@ -48,7 +48,7 @@ class ContentColumn extends DefaultColumn{
 	 */
 	public function buildPreview(){
 
-		echo '<h2>'.$this->getField( 'title' ).'</h2>';
+		echo '<h2>'.esc_html( $this->getField( 'title' ) ).'</h2>';
 		echo '<p>'.Excerpt::get( $this->getField( 'content' ), 150, ' ', '' ).'...</p>';
 
 	}
@@ -93,7 +93,7 @@ class ContentColumn extends DefaultColumn{
 				'',
 				array(
 					'label' 				=> false,
-					'placeholder' 			=> 'Titel',
+					'placeholder' 			=> __('Title','chefsections'),
 					'defaultValue'			=> $this->getField( 'title' ),
 				)
 			),

@@ -1,7 +1,7 @@
 <div itemprop="video" class="column video">
 
 	<?php if( $column->getField( 'title' ) ):?>
-		<h2 itemprop="name"><?php $column->theField( 'title' );?></h2>
+		<h2 itemprop="name"><?php echo esc_html( $column->getField( 'title' ) );?></h2>
 	<?php endif;?>
 
 	<div class="video-wrapper">
@@ -15,7 +15,7 @@
 				if( isset( $still['large'] ) && $still['large'] != '' )
 					$url = $still['large'];
 
-				echo '<div itemprop="video" style="background-image:url('.$url.')" class="video-still"></div>';
+				echo '<div itemprop="video" style="background-image:url('.esc_url( $url ).')" class="video-still"></div>';
 
 			}
 

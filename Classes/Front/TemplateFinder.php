@@ -6,6 +6,7 @@ use \ChefSections\Wrappers\Column;
 use \ChefSections\Wrappers\SectionsBuilder;
 use \Cuisine\Utilities\Url;
 use \Cuisine\Utilities\Sort;
+use \Cuisine\Utilities\Session;
 
 /**
  * The Template class locates templates
@@ -26,7 +27,7 @@ class TemplateFinder {
 	 * 
 	 * @var string
 	 */
-	private $obj;
+	public $obj;
 
 
 	/**
@@ -34,7 +35,7 @@ class TemplateFinder {
 	 * 
 	 * @var string
 	 */
-	private $templateName;
+	protected $templateName;
 
 
 	/**
@@ -42,7 +43,7 @@ class TemplateFinder {
 	 * 
 	 * @var string
 	 */
-	private $type;
+	public $type;
 
 
 
@@ -58,7 +59,7 @@ class TemplateFinder {
 		$this->type = 'column';
 		$this->obj = $column;
 
-		$section_template = SectionsBuilder::getTemplateName( $column->section_id );
+		$section_template = $this->getSectionPrefix( $column );
 		$this->getFiles( $section_template );
 
 		return $this;
@@ -75,7 +76,7 @@ class TemplateFinder {
 		$this->type = 'block';
 		$this->obj = $column;
 
-		$section_template = SectionsBuilder::getTemplateName( $column->section_id );
+		$section_template = $this->getSectionPrefix( $column );
 		$this->getFiles( $section_template );
 
 		return $this;
@@ -96,6 +97,52 @@ class TemplateFinder {
 		$this->getFiles();
 
 		return $this;
+	}
+
+	/**
+	 * Return a section prefix
+	 * 
+	 * @param  object $column
+	 * @return string
+	 */
+	public function getSectionPrefix( $column ){
+
+		$name = '';
+		$postId = $column->post_id;
+		$template = false;
+
+		//this column is on the main section-flow:
+		if( $column->post_id != $postId )
+			$postId = $column->post_id;
+
+
+		$sections = get_post_meta( $postId, 'sections', true );
+
+		foreach( $sections as $section ){
+
+			$name = '';
+			if( $section['id'] === $column->section_id ){
+
+				if( !isset( $section['type'] ) )
+					$section['type'] = 'section';
+
+
+				if( $section['type'] == 'stencil' || $section['type'] == 'reference' ){
+
+					$_templatePost = get_post( $section['template_id'] );
+					$name = $section['type'].DS.$_templatePost->post_name.'-';
+				}
+
+				if( isset( $section['name'] ) && $section['name'] != '' )
+					$name .= $section['name'];
+				
+				return $name;
+			
+			}
+		}
+
+		return 'section-'.$column->section_id;
+
 	}
 
 
@@ -183,6 +230,7 @@ class TemplateFinder {
 
 		}
 
+		$default = apply_filters( 'chef_sections_default_template', $default, $this );
 		return $default;
 	}
 
@@ -197,6 +245,7 @@ class TemplateFinder {
 		$templates = Sort::appendValues( $this->files, '.php' );
 		$located = locate_template( $templates );
 
+		$located = apply_filters( 'chef_sections_located_template', $located, $this );
 		return $located; 
 	}
 
@@ -269,7 +318,7 @@ class TemplateFinder {
 
 		}
 		
-
+		$array = apply_filters( 'chef_sections_template_files', $array, $this );
 		$this->files = $array;
 		return $array;
 	}

@@ -37,6 +37,7 @@
 			self.sectionId = self.$el.data( 'section_id' );
 			self.postId = self.$el.data( 'post_id' );
 
+			self.setChosen();
 
 			if( self.$( '.lightbox .editor textarea' ).length > 0 ){
 			
@@ -192,6 +193,10 @@
 				}
 			}
 
+			//add the position:
+			var _val = self.$('.column-position').val();
+			properties[ 'position' ] = _val;
+
 			//add the editor content
 			if( self.$( '.lightbox .editor-wrapper' ).length > 0 ){
 
@@ -213,7 +218,6 @@
 				properties = self.getMultiFields( properties );
 			
 			}
-
 			
 			self.saveProperties( properties );
 		},
@@ -341,6 +345,15 @@
 
 			});
 
+		},
+
+		/**
+		 * Set the chosen library for column selection
+		 */
+		setChosen: function(){
+
+			var self = this;
+			self.$el.find('.column-controls .type-select').chosen();
 		},
 
 		destroy: function(){
