@@ -48,8 +48,14 @@ class ContentColumn extends DefaultColumn{
 	 */
 	public function buildPreview(){
 
+		$content = $this->getField('content');
+
+		//remove backslashes when doing ajax updates:
+		if( defined( 'DOING_AJAX' ) )
+			$content = stripcslashes( $content );
+
 		echo '<h2>'.esc_html( $this->getField( 'title' ) ).'</h2>';
-		echo '<p>'.Excerpt::get( $this->getField( 'content' ), 150, ' ', '' ).'...</p>';
+		echo '<p>'.Excerpt::get( $content, 150, ' ', '' ).'...</p>';
 
 	}
 
@@ -86,6 +92,11 @@ class ContentColumn extends DefaultColumn{
 	 */
 	private function getFields(){
 
+		$content = $this->getField( 'content' );
+
+		//remove backslashes when doing ajax updates:
+		if( defined( 'DOING_AJAX' ) )
+			$content = stripcslashes( $content );
 
 		$fields = array(
 			'title' => Field::text( 
@@ -102,7 +113,7 @@ class ContentColumn extends DefaultColumn{
 				'', 
 				array(
 					'label'				=> false,
-					'defaultValue' 		=> $this->getField( 'content' ),
+					'defaultValue' 		=> $content,
 					'column'			=> $this->fullId
 				)
 			)
