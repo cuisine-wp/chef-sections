@@ -263,7 +263,8 @@ class TemplateFinder {
 
 			case 'section':
 
-				$base = 'views/sections/';
+				$base = apply_filters( 'chef_sections_section_template_base', 'sections/' );
+
 
 				if( $template_prefix )
 					$base .= $template_prefix.'-';
@@ -280,10 +281,10 @@ class TemplateFinder {
 
 			case 'column':
 
-				$base = 'elements/columns/';
+				$base = apply_filters( 'chef_sections_column_template_base', 'columns/' );
 
 				if( $this->obj->type == 'collection' )
-					$base = 'views/collections/';
+					$base = apply_filters( 'chef_sections_collection_template_base', 'collections/' );
 
 
 				$array = array(
@@ -297,7 +298,8 @@ class TemplateFinder {
 
 			case 'block':
 
-				$base = 'elements/blocks/';
+				$base = apply_filters( 'chef_sections_block_template_base', 'collections/blocks/' );;
+
 
 				$array = array(
 							$base.$template_prefix.'-'.get_post_type(),
@@ -307,8 +309,7 @@ class TemplateFinder {
 
 			case 'element':
 
-				$base = 'elements/';
-
+				$base = apply_filters( 'chef_sections_elements_template_base', 'elements/' );;
 				$array = array(
 							$base.$this->obj
 				);
@@ -317,8 +318,11 @@ class TemplateFinder {
 
 
 		}
-		
+
+
 		$array = apply_filters( 'chef_sections_template_files', $array, $this );
+        $array = apply_filters( 'chef_sections_'.$this->type.'_template_files', $array, $this->obj );
+
 		$this->files = $array;
 		return $array;
 	}
