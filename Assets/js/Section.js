@@ -56,6 +56,7 @@
 						i++;
 					});
 
+
 					var data = {
 						action: 'sortColumns',
 						post_id: self.$el.data( 'post_id' ),
@@ -63,9 +64,11 @@
 						section_id: self.sectionId
 					}
 
+
 					$.post( ajaxurl, data, function( response ){
 						
-						console.log( response );
+						//console.log( response );
+					
 					});
 				}
 			});

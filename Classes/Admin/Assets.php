@@ -41,12 +41,11 @@
 					
 					}
 				}
-
 			});
+
 
 			
 			add_action( 'admin_menu', function(){
-
 
 				$url = Url::plugin( 'chef-sections', true ).'Assets';
 				wp_enqueue_script( 
@@ -101,6 +100,7 @@
 				wp_enqueue_style( 'sections', $url.'/css/admin.css' );
 				
 			});
+
 
 			add_action( 'admin_footer', function(){
 			

@@ -5,6 +5,7 @@ namespace ChefSections\Sections;
 use ChefSections\Wrappers\Column;
 use Cuisine\Wrappers\User;
 use Cuisine\Wrappers\Field;
+use Cuisine\Utilities\Sort;
 use ChefSections\Wrappers\SectionsBuilder;
 
 /**
@@ -198,6 +199,10 @@ class Reference extends Section{
 				$arr[] = Column::$type( $col_key, $parent['id'], $props );
 	
 			}
+
+
+			//sort by column position:
+			$arr = Sort::byField( $arr, 'position', 'ASC' );
 	
 		}
 

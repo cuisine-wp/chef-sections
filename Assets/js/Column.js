@@ -39,13 +39,6 @@
 
 			self.setChosen();
 
-			if( self.$( '.lightbox .editor textarea' ).length > 0 ){
-			
-				//console.log( tinyMCE.init() );
-				//tinyMCE.init();
-
-			}
-
 			return this;
 		},
 
