@@ -13,25 +13,72 @@
 		color:#fff;
 	}
 
-	&.tw{
+	&.tw, &.twitter{
 		background:#00c2f5;
 	}
 
-	&.pin{
+	&.pin, &.pinterest{
 		background:#ff001d;
 	}
 
-	&.in{
+	&.in, &.linkedin{
 		background:#0080c9;
 	}
 
-	&.gp{
+	&.gp, &.google-plus{
 		background:#d62020;
 	}
 
-	&.ins{
+	&.ins, &.instagram{
 		background:#E7DDD3;
 		i{ color:#603825; }
 	}
 
+	&.vimeo{
+		background:#1ab7ea;
+	}
+	
+	&.github{
+		background:#000000;
+	}
+	
+	&.wordpress{
+		background:#21759b;
+	}
+	
+	&.skype{
+		background:#00AFF0;
+	}
+	
+	&.vine{
+		background:#00b489;
+	}
+	
+	&.slack{
+		background:#3aaf85;
+	}
+	
+	&.foursquare{
+		background:#f94877;
+	}
+	
+	&.codepen{
+		background:#444;
+	}
+	
+	&.medium{
+		background:#02b875;
+	}
+	
+	&.soundcloud{
+		background:#f50;
+	}
+	
+	&.tumblr{
+		background:#34465d;
+	}
+	
+	&.producthunt{
+		background:#da552f;
+	}
 }

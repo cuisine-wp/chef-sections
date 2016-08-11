@@ -8,61 +8,20 @@
 
 	}
 
-	
-		echo '<div class="socials-icons">';
+	echo '<div class="socials-icons socials">';
 
-			if( $column->getField( 'fb' ) ){
+		$socials = $column->getField( 'socials' );
+		if( !empty( $socials ) && !empty( $socials[0]['link'] ) ){
 
-				echo '<a itemprop="sameAs" href="'.esc_url( $column->getField( 'fb' ) ).'" class="social fb" target="_blank">';
-					echo '<i class="fa fa-facebook"></i>';
+			foreach( $socials as $social ){
+
+				echo '<a itemprop="sameAs" href="'.esc_url( $social['link'] ).'" class="social '.$social['icon'].'" target="_blank">';
+					echo '<i class="fa fa-'.$social['icon'].'"></i>';
 				echo '</a>';
 
-			}
+			} 
 
-
-			if( $column->getField( 'tw' ) ){
-
-				echo '<a itemprop="sameAs" href="'.esc_url( $column->getField( 'tw' ) ).'" class="social tw" target="_blank">';
-					echo '<i class="fa fa-twitter"></i>';
-				echo '</a>';
-
-			}
-
-
-			if( $column->getField( 'in' ) ){
-
-				echo '<a itemprop="sameAs" href="'.esc_url( $column->getField( 'in' ) ).'" class="social in" target="_blank">';
-					echo '<i class="fa fa-linkedin"></i>';
-				echo '</a>';
-
-			}
-
-
-			if( $column->getField( 'pin' ) ){
-
-				echo '<a itemprop="sameAs" href="'.esc_url( $column->getField( 'pin' ) ).'" class="social pin" target="_blank">';
-					echo '<i class="fa fa-pinterest"></i>';
-				echo '</a>';
-
-			}
-
-			if( $column->getField( 'gp' ) ){
-
-				echo '<a itemprop="sameAs" href="'.esc_url( $column->getField( 'gp' ) ).'" class="social gp" target="_blank">';
-					echo '<i class="fa fa-google-plus"></i>';
-				echo '</a>';
-
-			}
-
-
-			if( $column->getField( 'ins' ) ){
-
-				echo '<a itemprop="sameAs" href="'.esc_url( $column->getField( 'ins' ) ).'" class="social ins" target="_blank">';
-					echo '<i class="fa fa-instagram"></i>';
-				echo '</a>';
-
-			}
-
-		echo '</div>';
+		}
+	echo '</div>';
 
 	echo '</div>';
