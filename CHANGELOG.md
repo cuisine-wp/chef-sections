@@ -1,3 +1,14 @@
+### 1.4.1: 2016-10-6
+
+* Major template engine changes:
+* * /Columns now in the root template folder
+* * /Sections now in the root template folder
+* Reference section-sorting fixes
+* Escape-bug fixes
+* Social-buttons as a repeater field
+* Various bugfixes
+
+
 ### 1.4.0: 2016-06-27
 
 * Completely new UI
@@ -103,7 +114,7 @@
 ### 1.3.0: 2015-08-15
 
 * New stable tag
-* Added Template References 
+* Added Template References
 * Added support for new section view types
 * Minor bugfixes
 

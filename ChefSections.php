@@ -3,13 +3,13 @@
  * Plugin Name: Chef Sections
  * Plugin URI: http://chefduweb.nl/cuisine
  * Description: Easily transform boring pages into exciting section-based layouts!
- * Version: 1.4.0
+ * Version: 1.4.1
  * Author: Luc Princen
  * Author URI: http://www.chefduweb.nl/
  * License: GPLv2
  * Bitbucket Plugin URI: https://LucPrincen@bitbucket.org/chefduweb/chef-sections
  * Bitbucket Branch:     master
- * 
+ *
  * @package ChefSections
  * @category Core
  * @author Chef du Web
@@ -61,7 +61,7 @@ if (!class_exists('ChefSections')) {
 
             // Load plugin.
             $this->load();
-        
+
         }
 
 
@@ -88,7 +88,7 @@ if (!class_exists('ChefSections')) {
 
 
             foreach( $includes as $inc ){
-                
+
                 $root = static::getPluginPath();
                 $files = glob( $root.$inc.'/*.php' );
 
@@ -117,9 +117,9 @@ if (!class_exists('ChefSections')) {
          * @return \ChefSections\ChefSections
          */
         public static function getInstance(){
-            
+
             return static::$instance = new static();
-            
+
         }
 
 
@@ -163,7 +163,7 @@ if (!class_exists('ChefSections')) {
 
         /**
          * Get the path for this plugin
-         * 
+         *
          * @return string
          */
         public static function getPluginPath(){
