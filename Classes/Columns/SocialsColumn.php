@@ -106,19 +106,24 @@ class SocialsColumn extends DefaultColumn{
 
 			$props = $_POST['properties'];
 		
-			foreach( $props as $key => $link ){
+			foreach( $props as $key => $field ){
 
 				if( $key !== 'title' && $key !== 'position' ){
 
-					if( $link != '' ){				
-						//filter the link:
-						if( 
-							substr( $link, 0, 4 ) !== 'http' && 
-							substr( $link, 0, 2 ) !== '//' &&
-							strlen( $link ) > 4 
-						)
-							$props[$key] = 'http://'.$link;
+					if( !empty( $field ) ){
 
+						foreach( $field as $i => $item ){
+
+							$link = $item['link'];
+							//filter the link:
+							if( 
+								$link !== '' &&
+								substr( $link, 0, 4 ) !== 'http' && 
+								substr( $link, 0, 2 ) !== '//' &&
+								strlen( $link ) > 4 
+							)
+								$field[$i]['link'] = 'http://'.$link;
+						}
 					}
 				}
 			}
