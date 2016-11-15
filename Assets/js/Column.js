@@ -44,8 +44,8 @@
 
 
 		/**
-		 * Refresh the column html 
-		 * 
+		 * Refresh the column html
+		 *
 		 * @return void
 		 */
 		refresh: function(){
@@ -65,7 +65,7 @@
 
 			jQuery.post( ajaxurl, data, function( response ){
 
-				
+
 				self.$el.replaceWith( response );
 
 				SectionBuilder.refresh();
@@ -78,7 +78,7 @@
 
 		/**
 		 * Launch this columns lightbox
-		 * @param  event e 
+		 * @param  event e
 		 * @return void
 		 */
 		launchLightbox: function( e ){
@@ -86,9 +86,9 @@
 			var self = this;
 			e.preventDefault();
 
-		
+
 			if( self.$('.edit-btn' ).hasClass( 'no-lightbox' ) ){
-					
+
 				self.mediaLightbox();
 
 			}else{
@@ -101,11 +101,11 @@
 
 		/**
 		 * Show a media lightbox
-		 * 
+		 *
 		 * @return void
 		 */
 		mediaLightbox: function(){
-			
+
 			var self = this;
 
 			var options = {
@@ -113,7 +113,7 @@
 				button:'Opslaan',
 				//media_type:'image',
 				multiple:false,
-				self: self,	
+				self: self,
 			}
 
 
@@ -142,7 +142,7 @@
 
 		/**
 		 * Close this columns lightbox
-		 * @param  event e 
+		 * @param  event e
 		 * @return void
 		 */
 		closeLightbox: function( e ){
@@ -159,7 +159,7 @@
 
 		/**
 		 * Save this columns contents
-		 * @param  event e 
+		 * @param  event e
 		 * @return bool
 		 */
 		saveColumn: function( e ){
@@ -168,7 +168,7 @@
 			e.preventDefault();
 
 			var properties = {};
-			var inputs = self.$('.lightbox .field-wrapper .field, .lightbox .field-wrapper .subfield:checked');			
+			var inputs = self.$('.lightbox .field-wrapper .field, .lightbox .field-wrapper .subfield:checked');
 
 			for( var i = 0; i <= inputs.length; i++ ){
 
@@ -201,23 +201,26 @@
 
 				});
 
-				
+
 			}
 
 
 			//add multi-dimensional arrays:
 			if( self.$('.multi').length > 0 ){
-			
+
 				properties = self.getMultiFields( properties );
-			
+
 			}
-			
+
+			console.log( properties );
+
+
 			self.saveProperties( properties );
 		},
 
 		/**
 		 * Save multidimensional arrays of fields
-		 *  
+		 *
 		 * @param  object properties
 		 * @return multidimensional object
 		 */
@@ -238,20 +241,20 @@
 
 				if( name !== undefined && disabled == undefined ){
 
-       				var parts = name.split('[');   
+       				var parts = name.split('[');
        				var last = properties;
-			
+
         			for (var i in parts) {
-	
+
         			    var part = parts[i];
         			    if (part.substr(-1) == ']') {
         			        part = part.substr(0, part.length - 1);
         			    }
-			
+
         			    if (i == parts.length - 1) {
 
         			    	if( last[part] === undefined )
-        			    		last[part] = {} 
+        			    		last[part] = {}
 
         			        last[part] = val;
         			        continue retloop;
@@ -260,9 +263,9 @@
         			        last[part] = {}
 
         			    }
-        			    
+
         			    last = last[part];
-        			
+
         			}
        			}
 			}
@@ -273,8 +276,8 @@
 
 
 		/**
-		 * Save a media column 
-		 * 
+		 * Save a media column
+		 *
 		 * @param  {[type]} properties [description]
 		 * @return {[type]}            [description]
 		 */
@@ -311,7 +314,7 @@
 
 		/**
 		 * Change the type of a column
-		 * 
+		 *
 		 * @return void
 		 */
 		changeType: function( el ){

@@ -12,7 +12,7 @@ class ContentColumn extends DefaultColumn{
 
 	/**
 	 * The type of column
-	 * 
+	 *
 	 * @var String
 	 */
 	public $type = 'content';
@@ -20,7 +20,7 @@ class ContentColumn extends DefaultColumn{
 
 	/**
 	 * Simple echo function for the getField method
-	 * 
+	 *
 	 * @param  string $name
 	 * @return string ( html, echoed )
 	 */
@@ -33,7 +33,7 @@ class ContentColumn extends DefaultColumn{
 				echo apply_filters( 'the_content', $this->getField( $name ) );
 
 			}else{
-				
+
 				echo $this->getField( $name );
 
 			}
@@ -43,7 +43,7 @@ class ContentColumn extends DefaultColumn{
 
 	/**
 	 * Create the preview for this column
-	 * 
+	 *
 	 * @return string (html,echoed)
 	 */
 	public function buildPreview(){
@@ -62,7 +62,7 @@ class ContentColumn extends DefaultColumn{
 
 	/**
 	 * Build the contents of the lightbox for this column
-	 * 
+	 *
 	 * @return string ( html, echoed )
 	 */
 	public function buildLightbox(){
@@ -70,7 +70,7 @@ class ContentColumn extends DefaultColumn{
 		$fields = $this->getFields();
 
 		echo '<div class="main-content">';
-		
+
 			foreach( $fields as $field ){
 
 				$field->render();
@@ -87,7 +87,7 @@ class ContentColumn extends DefaultColumn{
 
 	/**
 	 * Get the fields for this column
-	 * 
+	 *
 	 * @return [type] [description]
 	 */
 	private function getFields(){
@@ -99,8 +99,8 @@ class ContentColumn extends DefaultColumn{
 			$content = stripcslashes( $content );
 
 		$fields = array(
-			'title' => Field::text( 
-				'title', 
+			Field::text(
+				'title',
 				'',
 				array(
 					'label' 				=> false,
@@ -108,9 +108,9 @@ class ContentColumn extends DefaultColumn{
 					'defaultValue'			=> $this->getField( 'title' ),
 				)
 			),
-			'editor' => Field::editor( 
-				'content', //this needs a unique id 
-				'', 
+			Field::editor(
+				'content', //this needs a unique id
+				'',
 				array(
 					'label'				=> false,
 					'defaultValue' 		=> $content,

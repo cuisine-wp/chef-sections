@@ -10,6 +10,9 @@
  * Bitbucket Plugin URI: https://LucPrincen@bitbucket.org/chefduweb/chef-sections
  * Bitbucket Branch:     master
  *
+ * Text Domain: chefsections
+ * Domain Path: /Languages/
+ *
  * @package ChefSections
  * @category Core
  * @author Chef du Web
@@ -71,6 +74,10 @@ if (!class_exists('ChefSections')) {
          * @return void
          */
         private function load(){
+
+            //load text-domain:
+            $path = dirname( plugin_basename( __FILE__ ) ).'/Languages/';
+            load_plugin_textdomain( 'chefsections', false, $path );
 
             //auto-loads all .php files in these directories.
             $includes = array(
