@@ -17,7 +17,6 @@
 		 */
 		public function walk(){
 
-			
 			ob_start();
 
 			foreach( $this->sections as $section ){
@@ -50,18 +49,18 @@
 			$sections = get_post_meta( $post_id, 'sections', true );
 
 			if( is_array( $sections ) ){
-										
+
 				foreach( $sections as $section ){
-				
-					//if this section in the loop matches 
-					//the one we're looking for:		
+
+					//if this section in the loop matches
+					//the one we're looking for:
 					if( $section['id'] == $section_id ){
 
 						$args = $section;
 
 						//setup section object
 						$section = new Section( $args );
-						
+
 						ob_start();
 
 							$section->beforeTemplate();
@@ -95,7 +94,7 @@
 				'post_status' => 'publish',
 				'showposts' => 1,
 			);
-			
+
 			$posts = get_posts($args);
 
 			if( !$posts )
@@ -103,12 +102,12 @@
 
 
        		$template = $posts[0];
-			
+
 			//set the new post global
        		$GLOBALS['post'] = $template;
 
        		$this->postId = $template->ID;
-			
+
 			$this->sections = $this->getSections();
 			$this->highestId = $this->getHighestId();
 
@@ -143,7 +142,7 @@
 
 		/**
 		 * Get a template for a collection-block
-		 * 
+		 *
 		 * @param  \ChefSections\Columns\Column
 		 * @return string ( html )
 		 */
@@ -171,4 +170,4 @@
 	}
 
 
-	
+

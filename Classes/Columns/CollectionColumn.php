@@ -16,7 +16,7 @@ class CollectionColumn extends DefaultColumn{
 
 	/**
 	 * The type of column
-	 * 
+	 *
 	 * @var String
 	 */
 	public $type = 'collection';
@@ -31,7 +31,7 @@ class CollectionColumn extends DefaultColumn{
 
 	/**
 	 * Cache queries made for this column
-	 * 
+	 *
 	 * @var boolean/WP_Query
 	 */
 	private $query = false;
@@ -39,7 +39,7 @@ class CollectionColumn extends DefaultColumn{
 
 	/**
 	 * Cache the post global to prevent conflicts
-	 * 
+	 *
 	 * @var Object
 	 */
 	private $globalPost = '';
@@ -50,8 +50,8 @@ class CollectionColumn extends DefaultColumn{
 	/*=============================================================*/
 
 	/**
-	 * Get the query for this collection 
-	 * 
+	 * Get the query for this collection
+	 *
 	 * @return WP_Query
 	 */
 	public function getQuery(){
@@ -68,21 +68,20 @@ class CollectionColumn extends DefaultColumn{
 
 			//if our nav property is set, get pagination info:
 			if( $this->getField( 'nav', 'none' ) != 'none' ){
-	
+
 				//get the paged variable from the original global query, else default to 0.
 				$this->page = ( isset( $wp_the_query->query_vars['paged'] ) ? $wp_the_query->	query_vars['paged'] : 0 );
-				
+
 			}else{
-				
+
 				$this->page = 0;
-	
+
 			}
 		}
 
 		//force the 'publish' post-status
 		$_status = apply_filters( 'chef_sections_collection_post_status', 'publish' );
 
-		//else, create a new query
 		$args = array(
 			'paged'				=> $this->page,
 			'post_type'			=> $this->getField( 'post_type', 'post' ),
@@ -108,7 +107,7 @@ class CollectionColumn extends DefaultColumn{
 
 				//reset the array to prevent problems:
 				$taxonomies = array_values( $taxonomies );
-			
+
 				foreach( $taxonomies as $tax ){
 
 					//add a new entry:
@@ -135,12 +134,12 @@ class CollectionColumn extends DefaultColumn{
 		}
 
 		$args = apply_filters( 'chef_sections_collection_query', $args, $this );
-		
+
 		$this->query = new WP_Query( $args );
 
 		return $this->query;
 	}
-	
+
 
 
 	/*=============================================================*/
@@ -150,7 +149,7 @@ class CollectionColumn extends DefaultColumn{
 
 	/**
 	 * Start the collection wrapper
-	 * 
+	 *
 	 * @return string ( html, echoed )
 	 */
 	public function beforeTemplate(){
@@ -181,7 +180,7 @@ class CollectionColumn extends DefaultColumn{
 	/**
 	 * Add javascripts to the footer, before the template
 	 * and close the div wrapper
-	 * 
+	 *
 	 * @return string ( html, echoed )
 	 */
 	public function afterTemplate(){
@@ -191,13 +190,13 @@ class CollectionColumn extends DefaultColumn{
 		$nav = $this->getField( 'nav', 'pagination' );
 
 		if( $grid == 'masonry' )
-			Script::register( 'masonry_blocks', $url.'masonry', true );	
-					
+			Script::register( 'masonry_blocks', $url.'masonry', true );
+
 
 		if( $nav == 'autoload' )
 			Script::register( 'autoload_blocks', $url.'autoload', true );
 
-	
+
 		if( $nav !== 'autoload' || $this->page == 1 ){
 
 			if( $nav === 'autoload' )
@@ -216,7 +215,7 @@ class CollectionColumn extends DefaultColumn{
 
 	/**
 	 * Get the data attributes for this column
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getDatas(){
@@ -229,7 +228,7 @@ class CollectionColumn extends DefaultColumn{
 
 		$type = ( !is_array( $post_type ) ? $types[ $post_type ] : 'berichten' );
 
-		$msg = __('No','chefsections').' '.strtolower( $type ).' '.__('meer gevonden','chefsections');
+		$msg = sprintf( __('No more %s found','chefsections'), strtolower( $type ) );
 		$msg = apply_filters( 'chef_sections_autoload_message', $msg, $this );
 
 		$html = '';
@@ -251,7 +250,7 @@ class CollectionColumn extends DefaultColumn{
 
 	/**
 	 * Generate a graphic depiction of the collection
-	 * 
+	 *
 	 * @return string ( html, echoed )
 	 */
 	public function buildPreview(){
@@ -259,7 +258,7 @@ class CollectionColumn extends DefaultColumn{
 		$view = $this->getField( 'view', 'blocks' );
 		$grid = $this->getField( 'grid', 'stretch' );
 
-		if( $this->getField( 'title' ) )	
+		if( $this->getField( 'title' ) )
 			echo '<strong>'. esc_html( $this->getField( 'title' ) ).'</strong>';
 
 		switch( $view ){
@@ -291,7 +290,7 @@ class CollectionColumn extends DefaultColumn{
 
 	/**
 	 * Build the contents of the lightbox for this column
-	 * 
+	 *
 	 * @return string ( html, echoed )
 	 */
 	public function buildLightbox(){
@@ -300,7 +299,7 @@ class CollectionColumn extends DefaultColumn{
 		$subfields = $this->getSubFields();
 
 		echo '<div class="main-content">';
-		
+
 			foreach( $fields as $field ){
 
 				$field->render();
@@ -328,7 +327,7 @@ class CollectionColumn extends DefaultColumn{
 
 	/**
 	 * Get the fields for this column
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getFields(){
@@ -345,8 +344,8 @@ class CollectionColumn extends DefaultColumn{
 		$fields = array(
 
 
-			'title' => Field::text( 
-				'title', 
+			'title' => Field::text(
+				'title',
 				'',
 				array(
 					'label' 				=> false,
@@ -355,8 +354,8 @@ class CollectionColumn extends DefaultColumn{
 				)
 			),
 
-			'post_type' => Field::select( 
-				'post_type', //this needs a unique id 
+			'post_type' => Field::select(
+				'post_type', //this needs a unique id
 				__( 'Content type', 'chefsections' ),
 				$this->getPostTypes(),
 				array(
@@ -405,9 +404,9 @@ class CollectionColumn extends DefaultColumn{
 
 
 		//make fields filterable
-		$fields = apply_filters( 
-			'chef_sections_collection_column_fields', 
-			$fields, 
+		$fields = apply_filters(
+			'chef_sections_collection_column_fields',
+			$fields,
 			$this
 		);
 
@@ -419,7 +418,7 @@ class CollectionColumn extends DefaultColumn{
 
 	/**
 	 * Get all the subfields
-	 * 
+	 *
 	 * @return array
 	 */
 	private function getSubFields(){
@@ -440,7 +439,7 @@ class CollectionColumn extends DefaultColumn{
 		$grid = array(
 					'stretch'		=> __( 'Stretch', 'chefsections' ),
 					'grid'			=> __( 'Regular', 'chefsections' ),
-					'masonry'		=> __( 'Masonry', 'chefsections' )	
+					'masonry'		=> __( 'Masonry', 'chefsections' )
 		);
 
 
@@ -478,7 +477,7 @@ class CollectionColumn extends DefaultColumn{
 		);
 
 		//make filterable
-		$fields = apply_filters( 
+		$fields = apply_filters(
 			'chef_sections_collection_side_fields',
 			$fields,
 			$this
@@ -496,7 +495,7 @@ class CollectionColumn extends DefaultColumn{
 
 	/**
 	 * Set the page number
-	 * 
+	 *
 	 * @param integer $num
 	 */
 	public function setPage( $num = 1 ){
@@ -504,10 +503,10 @@ class CollectionColumn extends DefaultColumn{
 	}
 
 
-	
+
 	/**
 	 * Get post types as key / value pairs
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getPostTypes(){
@@ -515,7 +514,7 @@ class CollectionColumn extends DefaultColumn{
 		$pts = get_post_types( array( 'public' => true ) );
 		$arr = array();
 		foreach( $pts as $post_type ){
-			
+
 			$obj = get_post_type_object( $post_type );
 			$arr[$post_type] = $obj->labels->name;
 

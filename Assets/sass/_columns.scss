@@ -69,6 +69,19 @@
 			}
 		}
 
+		.lightbox .chosen-container{
+			display:block;
+  			width: 100% !important;
+
+  			.group-result{
+  				color: #666;
+			}
+
+			.group-option{
+  				padding-left: 15px !important;
+			}
+		}
+
 		.btn-row{
 			box-sizing:border-box;
 			position:absolute;
