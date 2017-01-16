@@ -55,7 +55,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 		if( defined( 'DOING_AJAX' ) )
 			$content = stripcslashes( $content );
 
-		echo '<h2>'.esc_html( $this->getField( 'title' ) ).'</h2>';
+		echo $this->getTitle( 'title' );
 		echo '<p>'.Excerpt::get( $content, 150, ' ', '' ).'...</p>';
 
 	}
@@ -76,7 +76,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 			$content = stripcslashes( $content );
 
 		$fields = array(
-			'title' => Field::text( 
+			Field::title( 
 				'title', 
 				'',
 				array(
@@ -85,7 +85,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 					'defaultValue'			=> $this->getField( 'title' ),
 				)
 			),
-			'editor' => Field::editor( 
+			Field::editor( 
 				'content', //this needs a unique id 
 				'', 
 				array(

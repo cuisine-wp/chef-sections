@@ -17,6 +17,17 @@
 
 
         /**
+         * Method to override to define the input type
+         * that handles the value.
+         *
+         * @return void
+         */
+        protected function fieldType(){
+            $this->type = 'title';
+        } 
+
+
+        /**
          * Build the html
          *
          * @return String;
@@ -27,25 +38,28 @@
             $value = $this->getValue();
             $choices = [ 'h1', 'h2', 'h3' ];
 
+            $html .= '<span class="title-wrapper">';
+
             $html .= $this->buildInput();
 
             $html .= '<span class="type-select">';
 
+                $html .= '<span class="icon">'.$value['type'].'</span>';                
 
                 $html .= '<div class="type-sub-menu">';
 
                     foreach( $choices as $choice ){
 
-                        echo '<label>';
-                            echo '<span>'.$choice.'</span>';
-                            echo '<input '.checked( $choice, $value['type'], false );
-                            echo ' type="radio" name="'.$this->name.'[type]">';
-                        echo '</label>';
+                        $html .= '<label class="title-radio">';
+                            $html .= '<input '.checked( $choice, $value['type'], false );
+                            $html .= ' type="radio" class="multi" name="'.$this->name.'[type]" value="'.$choice.'">';
+                            $html .= '<span>'.$choice.'</span>';
+                        $html .= '</label>';
                     }
 
                 $html .= '</div>';
 
-            $html .= '</span>';
+            $html .= '</span></span>';
 
 
 
@@ -64,7 +78,7 @@
 
                 $html .= 'id="'.$this->id.'" ';
 
-                $html .= 'class="'.$this->getClass().'" ';
+                $html .= 'class="'.$this->getClass().' multi" ';
 
                 $html .= 'name="'.$this->name.'[text]" ';
 
@@ -102,29 +116,16 @@
         public function getValue(){
 
             global $post;
-            $value = $val = false;
 
-            if( $value && !$val )
-                $val = $value;
+            $val = false;
 
-            if( $this->properties['defaultValue'] && !$val )
+            if( $this->properties['defaultValue'] )
                 $val = $this->getDefault();
 
+            if( !$val )
+                $val = [ 'text' => '', 'type' => 'h2' ];
 
-            $val = $this->parseHtml( $val );
             return $val;
         }
 
-
-
-        /**
-         * Returns the html string as an array with title type
-         * 
-         * @param  string $val
-         * @return array
-         */
-        public function parseHtml( $val )
-        {
-                
-        }
     }

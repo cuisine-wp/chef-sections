@@ -260,6 +260,43 @@ class DefaultColumn implements ColumnContract{
 	}
 
 
+	/**
+	 * Returns the title field
+	 * 
+	 * @param  String       $name  
+	 * @param  String 		$class 
+	 * @return String
+	 */
+	public function getTitle( String $name = 'title', String $class = 'column-title' )
+	{
+		$title = $this->getField( $name, false );
+		if( $title ){
+
+			$string = '<'.$title['type'].' class="'.$class.'">';
+				$string .= esc_html( $title['text'] ); 
+			$string .= '</'.$title['type'].'>';
+
+			return $string;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Echoes the output of getTitle
+	 * 
+	 * @param  String       $name  
+	 * @param  String 		$class 
+	 * @return String           
+	 */
+	public function theTitle( String $name, String $class = 'column-title' )
+	{
+		$title = $this->getTitle( $name, $class );
+		if( $title !== null )
+			echo $title;
+	}
+
+
 	/*=============================================================*/
 	/**             UI                                             */
 	/*=============================================================*/
