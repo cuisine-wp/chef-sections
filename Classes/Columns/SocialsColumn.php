@@ -2,12 +2,13 @@
 namespace ChefSections\Columns;
 
 use Cuisine\Wrappers\Field;
+use ChefSections\Contracts\Column as ColumnContract;
 
 /**
  * Gallery column.
  * @package ChefSections\Columns
  */
-class SocialsColumn extends DefaultColumn{
+class SocialsColumn extends DefaultColumn implements ColumnContract{
 
 	/**
 	 * The type of column
@@ -29,7 +30,7 @@ class SocialsColumn extends DefaultColumn{
 		 * @param  string $default (optional)
 		 * @return string / bool (returns false if this content does not exist )
 		 */
-		public function getField( $name, $default = null ){
+		public function getField( String $name, $default = null ){
 
 			//check if we're referencing an old key:
 			if( in_array( $name, array_keys( $this->getOldFields() ) ) )
@@ -141,38 +142,13 @@ class SocialsColumn extends DefaultColumn{
 		}
 
 
-		/**
-		 * Build the contents of the lightbox for this column
-		 * 
-		 * @return string ( html, echoed )
-		 */
-		public function buildLightbox(){
-	
-			$fields = $this->getFields();
-	
-			echo '<div class="main-content">';
-			
-				foreach( $fields as $field ){
-	
-					$field->render();
-	
-				}
-	
-			echo '</div>';
-			echo '<div class="side-content">';
-	
-				$this->saveButton();
-	
-			echo '</div>';
-		}
-	
 	
 		/**
 		 * Get the fields for this column
 		 * 
 		 * @return array
 		 */
-		private function getFields(){
+		public function getFields(){
 
 			$icons = $this->getIcons();
 

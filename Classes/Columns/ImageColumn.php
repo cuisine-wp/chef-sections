@@ -2,12 +2,14 @@
 namespace ChefSections\Columns;
 
 use Cuisine\Wrapper\Image;
+use ChefSections\Contracts\Column as ColumnContract;
+
 
 /**
  * Image column.
  * @package ChefSections\Columns
  */
-class ImageColumn extends DefaultColumn{
+class ImageColumn extends DefaultColumn implements ColumnContract{
 
 	/**
 	 * The type of column

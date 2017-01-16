@@ -1,15 +1,16 @@
 <?php
 namespace ChefSections\Columns;
 
+use Cuisine\Utilities\Url;
 use Cuisine\Wrappers\Field;
 use Cuisine\Wrappers\Script;
-use Cuisine\Utilities\Url;
+use ChefSections\Contracts\Column as ColumnContract;
 
 /**
  * Video column.
  * @package ChefSections\Columns
  */
-class VideoColumn extends DefaultColumn{
+class VideoColumn extends DefaultColumn implements ColumnContract{
 
 	/**
 	 * The type of column
@@ -55,37 +56,11 @@ class VideoColumn extends DefaultColumn{
 
 
 	/**
-	 * Build the contents of the lightbox for this column
-	 * 
-	 * @return string ( html, echoed )
-	 */
-	public function buildLightbox(){
-
-		$fields = $this->getFields();
-
-		echo '<div class="main-content">';
-		
-			foreach( $fields as $field ){
-
-				$field->render();
-
-			}
-
-		echo '</div>';
-		echo '<div class="side-content">';
-
-			$this->saveButton();
-
-		echo '</div>';
-	}
-
-
-	/**
 	 * Get the fields for this column
 	 * 
 	 * @return array
 	 */
-	private function getFields(){
+	public function getFields(){
 
 		$fields = array(
 

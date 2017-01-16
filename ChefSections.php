@@ -44,7 +44,7 @@ if (!class_exists('ChefSections')) {
          *
          * @var float
          */
-        const VERSION = '1.4.0';
+        const VERSION = '1.4.1';
 
 
         /**
@@ -75,6 +75,7 @@ if (!class_exists('ChefSections')) {
             //auto-loads all .php files in these directories.
             $includes = array(
                 'Classes/Wrappers',
+                'Classes/Contracts',
                 'Classes/Columns',
                 'Classes/Builders',
                 'Classes/Sections',
