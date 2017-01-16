@@ -272,7 +272,7 @@ class DefaultColumn implements ColumnContract{
 		$title = $this->getField( $name, false );
 		if( $title ){
 
-			$string = '<'.$title['type'].' class="'.$class.'">';
+			$string = '<'.$title['type'].' class="'.$class.'" itemprop="name">';
 				$string .= esc_html( $title['text'] ); 
 			$string .= '</'.$title['type'].'>';
 
@@ -289,7 +289,7 @@ class DefaultColumn implements ColumnContract{
 	 * @param  String 		$class 
 	 * @return String           
 	 */
-	public function theTitle( String $name, String $class = 'column-title' )
+	public function theTitle( String $name = 'title', String $class = 'column-title' )
 	{
 		$title = $this->getTitle( $name, $class );
 		if( $title !== null )

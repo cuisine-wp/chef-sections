@@ -347,7 +347,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 		$fields = array(
 
 
-			Field::text( 
+			Field::title( 
 				'title', 
 				'',
 				array(

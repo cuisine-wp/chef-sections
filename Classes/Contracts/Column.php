@@ -23,4 +23,8 @@
 
 		public function theField( String $name, $default = null );
 
+		public function getTitle( String $name = 'title', String $class = 'column-title' );
+
+		public function theTitle( String $name = 'title', String $class = 'column-title' );
+
 	}

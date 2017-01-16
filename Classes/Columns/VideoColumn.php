@@ -64,7 +64,7 @@ class VideoColumn extends DefaultColumn implements ColumnContract{
 
 		$fields = array(
 
-			'title' => Field::text( 
+			'title' => Field::title( 
 				'title', 
 				__('Title','chefsections'),
 				array(

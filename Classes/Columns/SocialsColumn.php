@@ -159,7 +159,7 @@ class SocialsColumn extends DefaultColumn implements ColumnContract{
 	
 			$fields = array(
 	
-				Field::text( 
+				Field::title( 
 					'title', 
 					__('Title', 'chefsections'),
 					array(
