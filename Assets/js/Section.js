@@ -203,6 +203,12 @@
 
 		},
 
+		/**
+		 * Set the header tag type
+		 * 
+		 * @param Event evt
+		 * @return void
+		 */
 		setHeaderType: function( evt ){
 
 			var _item = $( evt.target );
@@ -211,6 +217,7 @@
 			_item.parent().parent().parent().find( '.icon' ).html( _val );
 
 		},
+
 
 		/**
 		 * Code copy event function
