@@ -1,18 +1,20 @@
 <?php
 namespace ChefSections\Columns;
 
+use WP_Query;
+use Cuisine\Utilities\Url;
+use Cuisine\Utilities\Sort;
 use Cuisine\Wrappers\Field;
 use Cuisine\Wrappers\Script;
 use ChefSections\Wrappers\Template;
-use Cuisine\Utilities\Url;
-use Cuisine\Utilities\Sort;
-use WP_Query;
+use ChefSections\Contracts\Column as ColumnContract;
+
 
 /**
  * Collection column.
  * @package ChefSections\Columns
  */
-class CollectionColumn extends DefaultColumn{
+class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 	/**
 	 * The type of column
@@ -343,9 +345,8 @@ class CollectionColumn extends DefaultColumn{
 
 		$fields = array(
 
-
-			'title' => Field::text(
-				'title',
+			Field::title( 
+				'title', 
 				'',
 				array(
 					'label' 				=> false,
@@ -354,7 +355,7 @@ class CollectionColumn extends DefaultColumn{
 				)
 			),
 
-			'post_type' => Field::select(
+			Field::select(
 				'post_type', //this needs a unique id
 				__( 'Content type', 'chefsections' ),
 				$this->getPostTypes(),
@@ -365,7 +366,7 @@ class CollectionColumn extends DefaultColumn{
 			),
 
 
-			'posts_per_page' => Field::number(
+			Field::number(
 				'posts_per_page',
 				__( 'Number of posts', 'chefsections' ),
 				array(
@@ -374,7 +375,7 @@ class CollectionColumn extends DefaultColumn{
 			),
 
 
-			'posts_per_row'	=> Field::number(
+			Field::number(
 				'posts_per_row',
 				__( 'Number of posts per row', 'chefsections' ),
 				array(
@@ -383,7 +384,7 @@ class CollectionColumn extends DefaultColumn{
 			),
 
 
-			'orderby' => Field::select(
+			Field::select(
 				'orderby',
 				__( 'Sort on', 'chefsections' ),
 				$orderby,
@@ -393,7 +394,7 @@ class CollectionColumn extends DefaultColumn{
 				)
 			),
 
-			'taxonomies' => Field::taxonomySelect(
+			Field::taxonomySelect(
 				'taxonomies',
 				__( 'Filter', 'chefsections' ),
 				array(

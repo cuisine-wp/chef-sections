@@ -2,11 +2,7 @@
 
 	echo '<div class="column socials" itemscope itemtype="https://schema.org/Organization">';
 
-	if( $column->getField( 'title' ) ){
-
-		echo '<h2 itemprop="name">'.esc_html( $column->getField( 'title' ) ).'</h2>';
-
-	}
+	$column->theTitle();
 
 	echo '<div class="socials-icons socials">';
 

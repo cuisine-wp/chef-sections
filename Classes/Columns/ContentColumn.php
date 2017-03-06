@@ -1,14 +1,15 @@
 <?php
 namespace ChefSections\Columns;
 
-use Cuisine\Wrappers\Field;
 use Cuisine\View\Excerpt;
+use Cuisine\Wrappers\Field;
+use ChefSections\Contracts\Column as ColumnContract;
 
 /**
  * Content column.
  * @package ChefSections\Columns
  */
-class ContentColumn extends DefaultColumn{
+class ContentColumn extends DefaultColumn implements ColumnContract{
 
 	/**
 	 * The type of column
@@ -24,17 +25,17 @@ class ContentColumn extends DefaultColumn{
 	 * @param  string $name
 	 * @return string ( html, echoed )
 	 */
-	public function theField( $name ){
+	public function theField( String $name, $default = null ){
 
-		if( $this->getField( $name ) ){
+		if( $this->getField( $name, $default ) ){
 
 			if( $name == 'content' ){
 
-				echo apply_filters( 'the_content', $this->getField( $name ) );
+				echo apply_filters( 'the_content', $this->getField( $name, $default ) );
 
 			}else{
 				
-				echo $this->getField( $name );
+				echo $this->getField( $name, $default );
 
 			}
 		}
@@ -54,43 +55,19 @@ class ContentColumn extends DefaultColumn{
 		if( defined( 'DOING_AJAX' ) )
 			$content = stripcslashes( $content );
 
-		echo '<h2>'.esc_html( $this->getField( 'title' ) ).'</h2>';
+		echo $this->getTitle( 'title' );
 		echo '<p>'.Excerpt::get( $content, 150, ' ', '' ).'...</p>';
 
 	}
 
 
-	/**
-	 * Build the contents of the lightbox for this column
-	 * 
-	 * @return string ( html, echoed )
-	 */
-	public function buildLightbox(){
-
-		$fields = $this->getFields();
-
-		echo '<div class="main-content">';
-		
-			foreach( $fields as $field ){
-
-				$field->render();
-
-			}
-
-		echo '</div>';
-		echo '<div class="side-content">';
-			$this->saveButton();
-
-		echo '</div>';
-	}
-
 
 	/**
 	 * Get the fields for this column
 	 * 
-	 * @return [type] [description]
+	 * @return array
 	 */
-	private function getFields(){
+	public function getFields(){
 
 		$content = $this->getField( 'content' );
 
@@ -99,7 +76,7 @@ class ContentColumn extends DefaultColumn{
 			$content = stripcslashes( $content );
 
 		$fields = array(
-			'title' => Field::text( 
+			Field::title( 
 				'title', 
 				'',
 				array(
@@ -108,7 +85,7 @@ class ContentColumn extends DefaultColumn{
 					'defaultValue'			=> $this->getField( 'title' ),
 				)
 			),
-			'editor' => Field::editor( 
+			Field::editor( 
 				'content', //this needs a unique id 
 				'', 
 				array(

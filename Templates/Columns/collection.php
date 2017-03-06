@@ -14,6 +14,8 @@
 		$i = 0;
 		$inRow = 0;
 	
+		$column->theTitle();
+
 		while( $query->have_posts() ){
 			$query->the_post();
 	

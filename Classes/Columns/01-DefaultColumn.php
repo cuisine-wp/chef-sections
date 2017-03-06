@@ -7,12 +7,13 @@ use Cuisine\Wrappers\Field;
 use Cuisine\Wrappers\User;
 use ChefSections\Wrappers\Column;
 use ChefSections\Wrappers\Template;
+use ChefSections\Contracts\Column as ColumnContract;
 
 /**
  * Default column.
  * @package ChefSections\Columns
  */
-class DefaultColumn {
+class DefaultColumn implements ColumnContract{
 
 	/**
 	 * The unique number for this column, on this page
@@ -166,7 +167,7 @@ class DefaultColumn {
 	}
 
 	/*=============================================================*/
-	/**             Backend                                        */
+	/**             Saving                                         */
 	/*=============================================================*/
 
 
@@ -178,6 +179,7 @@ class DefaultColumn {
 	public function saveProperties(){
 
 		$props = $_POST['properties'];
+		$props = $this->sanitizeProperties( $props );
 		$props = apply_filters( 'chef_sections_save_column_properties', $props, $this );
 
 		do_action( 'chef_sections_before_column_save', $this );
@@ -194,6 +196,110 @@ class DefaultColumn {
 		$this->properties = $props;
 		return $saved;
 	}
+
+	/**
+	 * Creates the right values to save
+	 * 
+	 * @return array
+	 */
+	public function sanitizeProperties( Array $props )
+	{
+		//$this->
+		return $props;
+	}
+
+
+	/*=============================================================*/
+	/**             Fields                                         */
+	/*=============================================================*/
+
+	/**
+	 * Returns the fields for this column
+	 * 
+	 * @return Array
+	 */
+	public function getFields()
+	{
+		return [];
+	}
+
+
+	/**
+	 * Returns the value of a field in this column
+	 *
+	 * @param  string $name
+	 * @param  string $default (optional)
+	 * @return string / bool (returns false if this content does not exist )
+	 */
+	public function getField( String $name, $default = null ){
+
+		if( !isset( $this->properties[ $name ] ) ){
+
+			if( $default !== null )
+				return $default;
+
+
+			return false;
+
+		}
+
+		return $this->properties[$name];
+	}
+
+
+	/**
+	 * Simple echo function for the getField method
+	 *
+	 * @param  string $name
+	 * @return string ( html, echoed )
+	 */
+	public function theField( String $name, $default = null ){
+
+		if( $this->getField( $name, $default ) )
+			echo $this->getField( $name, $default );
+	}
+
+
+	/**
+	 * Returns the title field
+	 * 
+	 * @param  String       $name  
+	 * @param  String 		$class 
+	 * @return String
+	 */
+	public function getTitle( String $name = 'title', String $class = 'column-title' )
+	{
+		$title = $this->getField( $name, false );
+		if( $title ){
+
+			$string = '<'.$title['type'].' class="'.$class.'" itemprop="name">';
+				$string .= esc_html( $title['text'] ); 
+			$string .= '</'.$title['type'].'>';
+
+			return $string;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Echoes the output of getTitle
+	 * 
+	 * @param  String       $name  
+	 * @param  String 		$class 
+	 * @return String           
+	 */
+	public function theTitle( String $name = 'title', String $class = 'column-title' )
+	{
+		$title = $this->getTitle( $name, $class );
+		if( $title !== null )
+			echo $title;
+	}
+
+
+	/*=============================================================*/
+	/**             UI                                             */
+	/*=============================================================*/
 
 
 	/**
@@ -249,6 +355,33 @@ class DefaultColumn {
 		//empty, every column needs to do this on there own.
 	}
 
+	/**
+	 * Builds the column lightbox
+	 * 
+	 * @return void
+	 */
+	public function buildLightbox(){
+
+		$fields = $this->getFields();
+
+		echo '<div class="main-content">';
+		
+			foreach( $fields as $field ){
+
+				$field->render();
+
+				if( method_exists( $field, 'renderTemplate' ) )
+					echo $field->renderTemplate();
+
+			}
+
+		echo '</div>';
+		echo '<div class="side-content">';
+			
+			$this->saveButton();
+
+		echo '</div>';
+	}
 
 
 
@@ -388,48 +521,12 @@ class DefaultColumn {
 	}
 
 
-
-
 	/*=============================================================*/
 	/**             Getters & Setters                              */
 	/*=============================================================*/
 
 
-	/**
-	 * Returns the value of a field in this column
-	 *
-	 * @param  string $name
-	 * @param  string $default (optional)
-	 * @return string / bool (returns false if this content does not exist )
-	 */
-	public function getField( $name, $default = null ){
-
-		if( !isset( $this->properties[ $name ] ) ){
-
-			if( $default !== null )
-				return $default;
-
-
-			return false;
-
-		}
-
-		return $this->properties[$name];
-
-	}
-
-
-	/**
-	 * Simple echo function for the getField method
-	 *
-	 * @param  string $name
-	 * @return string ( html, echoed )
-	 */
-	public function theField( $name ){
-
-		if( $this->getField( $name ) )
-			echo $this->getField( $name );
-	}
+	
 
 
 	/**

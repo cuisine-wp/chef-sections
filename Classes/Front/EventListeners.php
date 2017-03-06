@@ -51,6 +51,11 @@
 								'class'		=> 'ChefSections\Hooks\TaxonomySelect'
 					);
 
+					$types['title'] = array(
+								'name'		=> 'TitleField',
+								'class'		=> 'ChefSections\Hooks\TitleField'
+					);
+
 					return $types;
 
 				});

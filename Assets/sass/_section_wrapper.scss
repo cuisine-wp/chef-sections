@@ -175,11 +175,24 @@
 		> .field-wrapper{
 			float:left;
 			text-align:center;
-			&.text{
-				width:20%;
+			&.text, &.title{
+				width:25%;
 
 				.input-field{
 					padding:5px 10px;
+				}
+
+				.title-wrapper .type-select{
+					width: 24px;
+					height: 24px;
+					top: -5px;
+    				right: 6px;
+
+					.icon{
+						height: 24px;
+						line-height: 24px;
+						font-size: 14px;
+					}
 				}
 
 			}

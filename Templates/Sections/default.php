@@ -1,10 +1,8 @@
 <?php
 	
-	if( $section->hide_title === 'false' ){
-		echo '<h2  itemscope itemtype="http://schema.org/Thing" itemprop="alternateName" class="section-title">';
-			echo esc_html( $section->title );
-		echo '</h2>';
-	}
+	if( $section->hide_title === 'false' )
+		$section->theTitle();
+		
 
 	if( $section->getProperty( 'hide_container' ) == 'false' )
 		echo '<div class="container">';
