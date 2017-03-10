@@ -270,7 +270,7 @@ class DefaultColumn implements ColumnContract{
 	public function getTitle( String $name = 'title', String $class = 'column-title' )
 	{
 		$title = $this->getField( $name, false );
-		if( $title ){
+		if( $title && isset( $title['text'] ) && $title['text'] != '' ){
 
 			$string = '<'.$title['type'].' class="'.$class.'" itemprop="name">';
 				$string .= esc_html( $title['text'] ); 
