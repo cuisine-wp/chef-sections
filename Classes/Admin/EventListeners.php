@@ -3,7 +3,11 @@
 	namespace ChefSections\Admin;
 
 	use ChefSections\Wrappers\StaticInstance;
-	use ChefSections\Wrappers\SectionsBuilder;
+	use ChefSections\Wrappers\SectionsUi;
+	use ChefSections\Admin\Ui\Toolbar;
+	use ChefSections\Walkers\SectionCollection;
+	use ChefSections\Sections\Manager as SectionManager;
+
 	use ChefSections\Wrappers\BlueprintBuilder;
 	use Cuisine\Utilities\Url;
 
@@ -17,7 +21,7 @@
 
 			$this->listen();
 
-			$this->templates();
+			//$this->templates();
 
 		}
 
@@ -65,7 +69,8 @@
 				
 				if( isset( $post ) && !in_array( $post->ID, $dontload ) ){
 
-					SectionsBuilder::build();
+					Toolbar::build();
+					SectionsUi::build();
 				
 				}
 
@@ -74,7 +79,8 @@
 			//saving
 			add_action( 'save_post', function( $post_id ){
 
-				SectionsBuilder::save( $post_id );
+				$manager = new SectionManager( $post_id );
+				$collection->save();
 
 			});
 
@@ -98,7 +104,7 @@
 		 * 
 		 * @return void
 		 */
-		private function templates(){
+		/*private function templates(){
 
 
 			//when creating a new post, check if we need to apply a template:
@@ -114,10 +120,7 @@
 
 				}
 			});
-
-
-
-		}
+		}*/
 
 	}
 

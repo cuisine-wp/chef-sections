@@ -58,13 +58,13 @@
                 'walker'                  => 'ChefSections\Front\Walker',
                 'template'                => 'ChefSections\Front\TemplateFinder',
 
-                'sectionsbuilder'         => 'ChefSections\Builders\SectionsBuilder',
+                'sections-ui'             => 'ChefSections\Admin\Ui\SectionsUi',
                 'stencilbuilder'          => 'ChefSections\Builders\StencilBuilder',
                 'blueprintbuilder'        => 'ChefSections\Builders\BlueprintBuilder',
                 'referencebuilder'        => 'ChefSections\Builders\ReferenceBuilder',
 
                 'section'                 => 'ChefSections\Sections\Section',
-                'settingspanel'           => 'ChefSections\Sections\SettingsPanels\SettingsPanel',
+                'settingspanel'           => 'ChefSections\Admin\Panels\BasePanel',
                 'reference'               => 'ChefSections\Sections\Reference',
                 'stencil'                 => 'ChefSections\Sections\Stencil',
                 'blueprint'               => 'ChefSections\Sections\Blueprint'

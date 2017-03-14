@@ -76,12 +76,21 @@ if (!class_exists('ChefSections')) {
             $includes = array(
                 'Classes/Wrappers',
                 'Classes/Contracts',
-                'Classes/Columns',
-                'Classes/Builders',
-                'Classes/Sections',
-                'Classes/Sections/SettingPanels',
+                'Classes/Helpers',
                 'Classes/Hooks',
+
+                'Classes/Walkers',
+                'Classes/Builders',
+
+                'Classes/Admin/Containers',
+                'Classes/Admin/Generators',
+                'Classes/Admin/Panels',
+                'Classes/Admin/Ui',
                 'Classes/Admin',
+
+                'Classes/Sections',
+                'Classes/Columns',
+
                 'Classes/Front'
             );
 

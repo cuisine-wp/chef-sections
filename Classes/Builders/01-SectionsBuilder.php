@@ -3,6 +3,7 @@
 namespace ChefSections\Builders;
 
 use ChefSections\Sections\Section;
+use ChefSections\Sections\SectionContainer;
 use ChefSections\Sections\Reference;
 use ChefSections\Sections\Blueprint;
 use ChefSections\Sections\Stencil;
@@ -105,7 +106,9 @@ class SectionsBuilder {
 			
 			foreach( $this->sections as $section ){
 
-				$section->build();
+				if( !$section->isContainered() )
+					$section->build();
+
 			}
 
 
@@ -136,8 +139,12 @@ class SectionsBuilder {
 
 		echo '<div class="section-wrapper dotted-bg" id="section-builder-ui">';
 
-			echo '<div id="addSection" class="section-btn" data-post_id="'.$this->postId.'">';
+			echo '<div id="addSection" class="section-btn" data-post_id="'.$this->postId.'" data-type="section">';
 				_e( 'Add Section', 'chefsections' );
+			echo '</div>';
+
+			echo '<div id="addSection" class="section-btn" data-post_id="'.$this->postId.'" data-type="container">';
+				_e( 'Add Container', 'chefsections' );
 			echo '</div>';
 
 			echo '<em>'.__( 'Or', 'chefsections' ).'</em>';
@@ -293,8 +300,11 @@ class SectionsBuilder {
 		$_sections[ $args['id'] ] = $args;
 		update_post_meta( $this->postId, 'sections', $_sections );
 
-
-		$section = new Section( $args );
+		if( $_POST['type'] == 'section' ){
+			$section = new Section( $args );
+		}else{
+			$section = new SectionContainer( $args );
+		}
 
 		return $section->build();
 	}
@@ -419,7 +429,7 @@ class SectionsBuilder {
 		$sections = get_post_meta( $this->postId, 'sections', true );
 		$array = array();
 
-
+		//$sections[1]['container_id'] = '1';
 		if( is_array( $sections ) && !empty( $sections ) ){
 		
 			$sections = Sort::byField( $sections, 'position', 'ASC' );

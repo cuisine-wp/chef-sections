@@ -2,12 +2,15 @@
 
 namespace ChefSections\Sections;
 
-use ChefSections\Wrappers\Column;
-use ChefSections\Wrappers\SectionsBuilder;
-use ChefSections\Wrappers\Template;
-use Cuisine\Wrappers\Field;
+
 use Cuisine\Wrappers\User;
+use Cuisine\Wrappers\Field;
 use Cuisine\Utilities\Sort;
+use ChefSections\Wrappers\Column;
+use ChefSections\Wrappers\Template;
+use ChefSections\Wrappers\SectionsBuilder;
+use ChefSections\Helpers\Section as SectionHelper;
+
 
 /**
  * Admin Section-meta
@@ -35,6 +38,14 @@ class Section {
 	 * @var integer
 	 */
 	public $post_id;
+
+
+	/**
+	 * Container id
+	 * 
+	 * @var integer
+	 */
+	public $container_id;
 
 	/**
 	 * Title of this section
@@ -127,6 +138,9 @@ class Section {
 
 		//check if this is a section template
 		$this->template_id = ( isset( $args['template_id'] ) ? $args['template_id'] : false );
+
+		//check if this section is part of a container:
+		$this->container_id = ( isset( $args['container_id'] ) ? $args['container_id'] : null );
 
 		if( !is_array( $args['title'] ) )
 			$args['title'] = [ 'text' => $args['title'], 'type' => 'h2' ];
@@ -344,7 +358,7 @@ class Section {
 			
 
 			//view-switcher:
-			$types = SectionsBuilder::getViewTypes();
+			$types = SectionHelper::viewTypes();
 
 			Field::radio(
 				'section['.$this->id.'][view]',
@@ -600,6 +614,52 @@ class Section {
 	}
 
 
+	/**
+	 * Returns the title field
+	 * 
+	 * @param  String       $name  
+	 * @param  String 		$class 
+	 * @return String
+	 */
+	public function getTitle()
+	{
+		$title = $this->getProperty( 'title', false );
+		if( $title && isset( $title['text'] ) && $title['text'] != '' ){
+
+			$string = '<'.$title['type'].' class="section-title" itemprop="name">';
+				$string .= esc_html( $title['text'] ); 
+			$string .= '</'.$title['type'].'>';
+
+			return $string;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Echoes the output of getTitle
+	 * 
+	 * @param  String       $name  
+	 * @param  String 		$class 
+	 * @return String           
+	 */
+	public function theTitle()
+	{
+		$title = $this->getTitle();
+		if( $title !== null )
+			echo $title;
+	}
+
+
+	/**
+	 * Checks to see if a section is containered
+	 * 
+	 * @return boolean
+	 */
+	public function isContainered()
+	{
+		return ( !is_null( $this->container_id ) );
+	}
 
 }
 

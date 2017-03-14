@@ -2,7 +2,7 @@
 
 	namespace ChefSections\Sections;
 
-	class SectionContainer extends Section{
+	class Container extends Section{
 
 		
 			

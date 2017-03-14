@@ -214,7 +214,18 @@ var SectionBuilder = new function(){
 	this.setSectionOrder = function(){
 
 		var i = 1;
-		jQuery('#section-container .section-wrapper').each( function(){
+
+		//regular sections:
+		jQuery('#section-container > .section-wrapper').each( function(){
+			var field = jQuery( this ).find( '.section-position' );
+			field.val( i );
+			i++;
+		});
+
+		var i = 1;
+
+		//handle containered sections:
+		jQuery('#section-container .section-wrapper .section-wrapper').each( function(){
 			var field = jQuery( this ).find( '.section-position' );
 			field.val( i );
 			i++;
@@ -332,8 +343,11 @@ var SectionBuilder = new function(){
 				//_placeholder.replaceWith('pants!');
 				var data = {
 					action: 'createSection',
-					post_id: _placeholder.data('post_id')
+					post_id: _placeholder.data('post_id'),
+					type: _placeholder.data('type')
 				}
+
+
 
 				$.post( ajaxurl, data, function( response ){
 

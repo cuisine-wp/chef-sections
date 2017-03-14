@@ -3,7 +3,7 @@
 	namespace ChefSections\Admin;
 
 	use ChefSections\Wrappers\AjaxInstance;
-	use ChefSections\Wrappers\SectionsBuilder;
+	use ChefSections\Sections\Manager as SectionManager;
 	use ChefSections\Wrappers\ReferenceBuilder;
 	use ChefSections\Wrappers\Column;
 	use ChefSections\Wrappers\Walker;
@@ -37,7 +37,9 @@
 
 				parent::setPostGlobal();
 
-				echo SectionsBuilder::addSection();
+				$manager = new SectionManager( $_POST['post_id'] );
+				echo $manager->addSection();
+
 				die();
 
 			});
@@ -46,6 +48,9 @@
 			add_action( 'wp_ajax_deleteSection', function(){
 
 				parent::setPostGlobal();
+
+				$manager = new SectionManager( $_POST['post_id'] );
+				$manager->deleteSection();
 
 				SectionsBuilder::deleteSection();
 				die();
@@ -57,7 +62,9 @@
 
 				parent::setPostGlobal();
 
-				echo SectionsBuilder::sortSections();
+				$manager = new SectionManager( $_POST['post_id'] );
+				echo $manager->sortSections();
+
 				die();
 
 			});
@@ -66,7 +73,9 @@
 
 				parent::setPostGlobal();
 
-				echo SectionsBuilder::sortColumns();
+				$manager = new SectionManager( $_POST['post_id'] );
+				echo $manager->sortColumns();
+
 				die();
 			});
 
@@ -75,7 +84,9 @@
 
 				parent::setPostGlobal();
 
-				echo SectionsBuilder::changeView();
+				$manager = new SectionManager( $_POST['post_id'] );
+				echo $manager->changeView();
+
 				die();
 
 			});
