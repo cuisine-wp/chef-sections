@@ -73,8 +73,12 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 		echo '<div class="main-content">';
 
 			foreach( $fields as $field ){
-
 				$field->render();
+
+				//if a field has a JS-template, we need to render it:
+				if( method_exists( $field, 'renderTemplate' ) ){
+					echo $field->renderTemplate();
+				}
 
 			}
 
@@ -106,7 +110,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 				array(
 					'label' 				=> false,
 					'placeholder' 			=> __('Title','chefsections'),
-					'defaultValue'			=> $this->getField( 'title', [ 'text' => '', 'type' => 'h2' ] ),
+					'defaultValue'			=> $this->getField( 'title' ),
 				)
 			),
 

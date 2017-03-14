@@ -15,12 +15,10 @@
 		 * @return object
 		 */
 		events: {
-
 			'click .edit-btn': 'launchLightbox',
 			'click .lightbox-modal-close': 'closeLightbox',
 			'click #save-column': 'saveColumn',
 			'change .column-controls .type-select': 'changeType',
-
 		},
 
 
