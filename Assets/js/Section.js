@@ -12,7 +12,8 @@
 			'click .delete-section': 'deleteSection',
 			'click .code-snitch': 'copyCode',
 			'click .section-controls .buttons-wrapper .button' : 'toggleSettingPanel',
-			'click #close-panel' : 'hideSettingPanel'
+			'click #close-panel' : 'hideSettingPanel',
+			'change .title-radio .multi' : 'setHeaderType'
 
 		},
 
@@ -201,6 +202,22 @@
 			$('.section-setting-panels > div' ).removeClass( 'active' );
 
 		},
+
+		/**
+		 * Set the header tag type
+		 * 
+		 * @param Event evt
+		 * @return void
+		 */
+		setHeaderType: function( evt ){
+
+			var _item = $( evt.target );
+			var _val = _item.val();
+
+			_item.parent().parent().parent().find( '.icon' ).html( _val );
+
+		},
+
 
 		/**
 		 * Code copy event function

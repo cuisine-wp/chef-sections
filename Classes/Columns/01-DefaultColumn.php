@@ -7,23 +7,24 @@ use Cuisine\Wrappers\Field;
 use Cuisine\Wrappers\User;
 use ChefSections\Wrappers\Column;
 use ChefSections\Wrappers\Template;
+use ChefSections\Contracts\Column as ColumnContract;
 
 /**
  * Default column.
  * @package ChefSections\Columns
  */
-class DefaultColumn {
+class DefaultColumn implements ColumnContract{
 
 	/**
 	 * The unique number for this column, on this page
-	 * 
+	 *
 	 * @var Int
 	 */
 	public $id;
 
 	/**
 	 * The Id of this column prefixed by the section id
-	 * 
+	 *
 	 * @var String
 	 */
 	public $fullId;
@@ -31,7 +32,7 @@ class DefaultColumn {
 
 	/**
 	 * The post id this column is tied to
-	 * 
+	 *
 	 * @var Int
 	 */
 	public $post_id;
@@ -39,7 +40,7 @@ class DefaultColumn {
 
 	/**
 	 * The type of column
-	 * 
+	 *
 	 * @var String
 	 */
 	public $type;
@@ -47,14 +48,14 @@ class DefaultColumn {
 
 	/**
 	 * The section id for this column
-	 * 
+	 *
 	 * @var int
 	 */
 	public $section_id;
 
 	/**
 	 * Column position within the section
-	 * 
+	 *
 	 * @var int;
 	 */
 	public $position;
@@ -62,7 +63,7 @@ class DefaultColumn {
 
 	/**
 	 * The properties of this column
-	 * 
+	 *
 	 * @var Array
 	 */
 	public $properties;
@@ -80,7 +81,7 @@ class DefaultColumn {
 
 	/**
 	 * Is this column in reference-mode?
-	 * 
+	 *
 	 * @var boolean
 	 */
 	public $referenceMode = false;
@@ -88,7 +89,7 @@ class DefaultColumn {
 
 	/**
 	 * Start the column and feed it the right ID's
-	 * 
+	 *
 	 * @param Int $id      Column ID
 	 * @param Int $post_id \ChefSections\Sections\Section
 	 */
@@ -121,15 +122,15 @@ class DefaultColumn {
 
 	/**
 	 * Get the column properties from the database
-	 * 
+	 *
 	 * @return void
 	 */
 	private function getProperties(){
 
 
-		$props = get_post_meta( 
-			$this->post_id, 
-			'_column_props_'.$this->fullId, 
+		$props = get_post_meta(
+			$this->post_id,
+			'_column_props_'.$this->fullId,
 			true
 		);
 
@@ -149,7 +150,7 @@ class DefaultColumn {
 
 	/**
 	 * Function runs before the template gets fired
-	 * 
+	 *
 	 * @return void
 	 */
 	public function beforeTemplate(){
@@ -158,7 +159,7 @@ class DefaultColumn {
 
 	/**
 	 * Function runs after the template gets fired
-	 * 
+	 *
 	 * @return void
 	 */
 	public function afterTemplate(){
@@ -166,29 +167,139 @@ class DefaultColumn {
 	}
 
 	/*=============================================================*/
-	/**             Backend                                        */
+	/**             Saving                                         */
 	/*=============================================================*/
 
 
 	/**
 	 * Save the properties of this column
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function saveProperties(){
 
 		$props = $_POST['properties'];
+		$props = $this->sanitizeProperties( $props );
+		$props = apply_filters( 'chef_sections_save_column_properties', $props, $this );
 
-		$saved = update_post_meta( 
-			$this->post_id, 
-			'_column_props_'.$this->fullId, 
+		do_action( 'chef_sections_before_column_save', $this );
+
+		$saved = update_post_meta(
+			$this->post_id,
+			'_column_props_'.$this->fullId,
 			$props
 		);
+
+		do_action( 'chef_sections_after_column_save', $this );
 
 		//set the new properties in this class
 		$this->properties = $props;
 		return $saved;
 	}
+
+	/**
+	 * Creates the right values to save
+	 * 
+	 * @return array
+	 */
+	public function sanitizeProperties( Array $props )
+	{
+		//$this->
+		return $props;
+	}
+
+
+	/*=============================================================*/
+	/**             Fields                                         */
+	/*=============================================================*/
+
+	/**
+	 * Returns the fields for this column
+	 * 
+	 * @return Array
+	 */
+	public function getFields()
+	{
+		return [];
+	}
+
+
+	/**
+	 * Returns the value of a field in this column
+	 *
+	 * @param  string $name
+	 * @param  string $default (optional)
+	 * @return string / bool (returns false if this content does not exist )
+	 */
+	public function getField( String $name, $default = null ){
+
+		if( !isset( $this->properties[ $name ] ) ){
+
+			if( $default !== null )
+				return $default;
+
+
+			return false;
+
+		}
+
+		return $this->properties[$name];
+	}
+
+
+	/**
+	 * Simple echo function for the getField method
+	 *
+	 * @param  string $name
+	 * @return string ( html, echoed )
+	 */
+	public function theField( String $name, $default = null ){
+
+		if( $this->getField( $name, $default ) )
+			echo $this->getField( $name, $default );
+	}
+
+
+	/**
+	 * Returns the title field
+	 * 
+	 * @param  String       $name  
+	 * @param  String 		$class 
+	 * @return String
+	 */
+	public function getTitle( String $name = 'title', String $class = 'column-title' )
+	{
+		$title = $this->getField( $name, false );
+		if( $title && isset( $title['text'] ) && $title['text'] != '' ){
+
+			$string = '<'.$title['type'].' class="'.$class.'" itemprop="name">';
+				$string .= esc_html( $title['text'] ); 
+			$string .= '</'.$title['type'].'>';
+
+			return $string;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Echoes the output of getTitle
+	 * 
+	 * @param  String       $name  
+	 * @param  String 		$class 
+	 * @return String           
+	 */
+	public function theTitle( String $name = 'title', String $class = 'column-title' )
+	{
+		$title = $this->getTitle( $name, $class );
+		if( $title !== null )
+			echo $title;
+	}
+
+
+	/*=============================================================*/
+	/**             UI                                             */
+	/*=============================================================*/
 
 
 	/**
@@ -215,15 +326,15 @@ class DefaultColumn {
 			if( $this->hasLightbox ){
 
 				echo '<div class="lightbox lightbox-'.esc_attr( $this->type ).'">';
-			
+
 					$this->buildLightbox();
 
 				echo '</div>';
-			
+
 			}
 
 			Field::hidden(
-				'position', 
+				'position',
 				array(
 					'defaultValue' => $this->position,
 					'class' => 'column-position'
@@ -237,19 +348,46 @@ class DefaultColumn {
 
 	/**
 	 * Builds the column preview
-	 * 
+	 *
 	 * @return void
 	 */
 	public function buildPreview(){
 		//empty, every column needs to do this on there own.
 	}
 
+	/**
+	 * Builds the column lightbox
+	 * 
+	 * @return void
+	 */
+	public function buildLightbox(){
 
-	
+		$fields = $this->getFields();
+
+		echo '<div class="main-content">';
+		
+			foreach( $fields as $field ){
+
+				$field->render();
+
+				if( method_exists( $field, 'renderTemplate' ) )
+					echo $field->renderTemplate();
+
+			}
+
+		echo '</div>';
+		echo '<div class="side-content">';
+			
+			$this->saveButton();
+
+		echo '</div>';
+	}
+
+
 
 	/**
 	 * Build the top controls of a column
-	 * 
+	 *
 	 * @return string ( html, echoed )
 	 */
 	private function buildControls(){
@@ -265,7 +403,7 @@ class DefaultColumn {
 			$name = 'reference_'.$this->fullId;
 
 
-		$typeSelector = Field::select( 
+		$typeSelector = Field::select(
 			$name,
 			'',
 			$types,
@@ -278,7 +416,7 @@ class DefaultColumn {
 
 			//render the dropdown:
 			$typeSelector->render();
-			
+
 			//sorter
 			echo '<span class="sort dashicons dashicons-leftright"></span>';
 
@@ -289,7 +427,7 @@ class DefaultColumn {
 
 	/**
 	 * Build the edit button
-	 * 
+	 *
 	 * @return string (html, echoed)
 	 */
 	private function buildBottomControls(){
@@ -312,7 +450,7 @@ class DefaultColumn {
 
 	/**
 	 * Create the save button in the lightbox
-	 * 
+	 *
 	 * @return string (html, echoed )
 	 */
 	public function saveButton(){
@@ -328,7 +466,7 @@ class DefaultColumn {
 		echo '<div class="save-btn-container">';
 
 			echo '<span class="spinner"></span>';
-			
+
 			echo '<button id="save-column" class="save-btn section-btn">';
 				echo esc_html( $this->properties['buttonText'] );
 			echo '</button>';
@@ -340,7 +478,7 @@ class DefaultColumn {
 
 	/**
 	 * Add the Id's for javascript use
-	 * 
+	 *
 	 * @return string
 	 */
 	private function buildIds(){
@@ -356,7 +494,7 @@ class DefaultColumn {
 
 	/**
 	 * Generate the templates for this section
-	 * 
+	 *
 	 * @return string ( html, echoed )
 	 */
 	private function buildTemplateSnitch(){
@@ -368,14 +506,14 @@ class DefaultColumn {
 			echo '<span class="template-snitch">';
 				echo '<span class="dashicons dashicons-media-text"></span>';
 				echo '<span class="tooltip">';
-	
+
 					echo '<strong>Templates:</strong>';
 					foreach( $templates as $template ){
-	
+
 						echo '<p>'.esc_html( $template ).'</p>';
-	
+
 					}
-	
+
 				echo '</span>';
 			echo '</span>';
 
@@ -383,48 +521,12 @@ class DefaultColumn {
 	}
 
 
-
-
 	/*=============================================================*/
 	/**             Getters & Setters                              */
 	/*=============================================================*/
 
 
-	/**
-	 * Returns the value of a field in this column
-	 * 
-	 * @param  string $name
-	 * @param  string $default (optional)
-	 * @return string / bool (returns false if this content does not exist )
-	 */
-	public function getField( $name, $default = null ){
-
-		if( !isset( $this->properties[ $name ] ) ){
-			
-			if( $default !== null )
-				return $default;
-
-
-			return false;
-
-		}
-
-		return $this->properties[$name];
-
-	}
-
-
-	/**
-	 * Simple echo function for the getField method
-	 * 
-	 * @param  string $name
-	 * @return string ( html, echoed )
-	 */
-	public function theField( $name ){
-
-		if( $this->getField( $name ) )
-			echo $this->getField( $name );
-	}
+	
 
 
 	/**

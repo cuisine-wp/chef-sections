@@ -222,6 +222,9 @@ class SectionsBuilder {
 		if( !$this->validPostType( $post_id ) )
 			return false;
 
+		//cuisine_dump( $_POST['section'] );
+		//die();
+
 
 		if( isset( $_POST['section'] ) ){
 

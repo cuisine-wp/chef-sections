@@ -128,9 +128,12 @@ class Section {
 		//check if this is a section template
 		$this->template_id = ( isset( $args['template_id'] ) ? $args['template_id'] : false );
 
+		if( !is_array( $args['title'] ) )
+			$args['title'] = [ 'text' => $args['title'], 'type' => 'h2' ];
+
 		//fill in the basics
 		$this->position 		= $args['position'];
-		$this->title 			= $args['title'];
+		$this->title 			= $args['title']['text'];
 		$this->view 			= $args['view'];
 		$this->name 			= $this->getName( $args );
 		$this->properties 		= $args;
@@ -310,9 +313,9 @@ class Section {
 		echo '<div class="section-controls">';
 
 			//first the title:
-			$title = ( $this->hide_title ? '' : $this->getProperty( 'title' ) );
+			$title = ( $this->hide_title ? [ 'text' => '', 'type' => 'h2' ] : $this->getProperty( 'title' ) );
 
-			Field::text(
+			Field::title(
 				'section['.$this->id.'][title]',
 				__( 'Titel', 'chefsections' ),
 				array(
@@ -577,7 +580,7 @@ class Section {
 		if( isset( $args['name'] ) && $args['name'] != '' )
 			return $args['name'];
 
-		if( isset( $args['title'] ) && $args['title'] != '' )
+		if( isset( $args['title']['text'] ) && $args['title']['text'] != '' )
 			return sanitize_title( $this->title ).'-'.$this->id;
 
 		return $this->post_id.'-'.$this->id;

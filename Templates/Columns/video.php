@@ -1,8 +1,6 @@
 <div itemprop="video" class="column video">
 
-	<?php if( $column->getField( 'title' ) ):?>
-		<h2 itemprop="name"><?php echo esc_html( $column->getField( 'title' ) );?></h2>
-	<?php endif;?>
+	<?php $column->theTitle(); ?>
 
 	<div class="video-wrapper">
 		<?php 

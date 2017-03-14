@@ -212,9 +212,6 @@
 
 			}
 
-			console.log( properties );
-
-
 			self.saveProperties( properties );
 		},
 
@@ -236,7 +233,7 @@
 				var type = input.attr('type');
 				var disabled = input.attr('disabled');
 
-				if( type == 'checkbox' && input.is( ':checked' ) === false )
+				if( ( type == 'checkbox' || type == 'radio' ) && input.is( ':checked' ) === false )
 					continue retloop;
 
 				if( name !== undefined && disabled == undefined ){
