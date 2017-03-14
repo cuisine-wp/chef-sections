@@ -30,7 +30,7 @@ class SocialsColumn extends DefaultColumn implements ColumnContract{
 		 * @param  string $default (optional)
 		 * @return string / bool (returns false if this content does not exist )
 		 */
-		public function getField( String $name, $default = null ){
+		public function g( String $name, $default = null ){
 
 			//check if we're referencing an old key:
 			if( in_array( $name, array_keys( $this->getOldFields() ) ) )
@@ -163,7 +163,7 @@ class SocialsColumn extends DefaultColumn implements ColumnContract{
 					'title', 
 					__('Title', 'chefsections'),
 					array(
-						'defaultValue'	=> $this->getField( 'title' )
+						'defaultValue'	=> $this->getField( 'title', ['text' => '', 'type' => 'h2'] )
 					)
 				),
 				Field::repeater(

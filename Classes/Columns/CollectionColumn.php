@@ -351,7 +351,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 				array(
 					'label' 				=> false,
 					'placeholder' 			=> 'Titel',
-					'defaultValue'			=> $this->getField( 'title' ),
+					'defaultValue'			=> $this->getField( 'title', ['text' => '', 'type' => 'h2']),
 				)
 			),
 

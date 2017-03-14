@@ -49,6 +49,7 @@
 
 			});
 
+
 			//add roles
 			add_action( 'init', function(){
 
@@ -80,7 +81,7 @@
 			add_action( 'save_post', function( $post_id ){
 
 				$manager = new SectionManager( $post_id );
-				$collection->save();
+				$manager->save();
 
 			});
 

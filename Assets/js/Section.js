@@ -99,6 +99,8 @@
 			}
 
 			jQuery.post( ajaxurl, data, function( response ){
+
+				console.log( response );
 				//console.log( response );				
 				self.$el.replaceWith( response );
 

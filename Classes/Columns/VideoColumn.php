@@ -70,7 +70,7 @@ class VideoColumn extends DefaultColumn implements ColumnContract{
 				array(
 					'label' 				=> false,
 					'placeholder' 			=> __('Title','chefsections'),
-					'defaultValue'			=> $this->getField( 'title' ),
+					'defaultValue'			=> $this->getField( 'title', ['text' => '', 'type' => 'h2'] ),
 				)
 			),
 			'url'	=> Field::text(

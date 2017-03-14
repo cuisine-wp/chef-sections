@@ -1,6 +1,6 @@
 <?php
 
-	use ChefSections\Sections;
+	namespace ChefSections\Sections;
 
 
 	use Cuisine\Utilities\Session;
@@ -171,6 +171,9 @@
 			$existing = $_sections[ $section_id ]['columns'];
 			$new = array();
 
+			cuisine_dump( $existing );
+			die();
+
 			foreach( $default as $key => $col ){
 
 				if( !isset( $existing[ $key ] ) ){
@@ -180,11 +183,15 @@
 				}
 			}
 			
-			$_sections[ $section_id ]['columns'] = $new;
-
-			update_post_meta( $this->postId, 'sections', $_sections );
-
+			cuisine_dump( $new );
+			//$_sections[ $section_id ]['columns'] = $new;
+			
+			//update_post_meta( $this->postId, 'sections', $_sections );
+			cuisine_dump( $_sections );
+			//cuisine_dump( new Section( [ 'section_id' => '1', 'post_id' => '83' ] ) );
+			die();
 			$section = new Section( $_sections[ $section_id ] );
+			
 			return $section->build();
 		
 		}
@@ -249,7 +256,7 @@
 		 */
 		public function getDefaultSectionArgs(){
 
-			$default = SectionHelper::getDefaultArgs();
+			$default = SectionHelper::defaultArgs();
 			$specifics = array(
 				'id'				=> $this->sections->getHighestId(),
 				'position'			=> ( count( $this->sections->get() ) + 1 ),
@@ -267,7 +274,7 @@
 		 * @param  string $view
 		 * @return array
 		 */
-		private function getDefaultColumns( $view ){
+		protected function getDefaultColumns( $view ){
 
 			$viewTypes = SectionHelper::viewTypes();
 			$colCount = $viewTypes[ $view ];

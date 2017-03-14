@@ -97,7 +97,6 @@
 			$sections = get_post_meta( $this->postId, 'sections', true );
 			$array = array();
 
-			//$sections[1]['container_id'] = '1';
 			if( is_array( $sections ) && !empty( $sections ) ){
 			
 				$sections = Sort::byField( $sections, 'position', 'ASC' );
@@ -106,7 +105,7 @@
 
 					foreach( $sections as $section ){
 						
-						$array[] = $this->getSectionType( $section );
+						$array[ $section['id'] ] = $this->getSectionType( $section );
 					
 					}
 				}
