@@ -48,11 +48,14 @@
 
                 $html .= '<div class="type-sub-menu">';
 
+                    $tempId = uniqid();
                     foreach( $choices as $choice ){
-
+                        
                         $html .= '<label class="title-radio">';
-                            $html .= '<input '.checked( $choice, $value['type'], false );
-                            $html .= ' type="radio" class="multi" name="'.$this->name.'[type]" value="'.$choice.'">';
+                            $html .= '<input ';
+                            $html .= ' type="radio" class="multi title-radio" name="'.$tempId.'" data-name="'.$this->name.'[type]" value="'.$choice.'"';
+                            $html .= checked( $choice, $value['type'], false );
+                            $html .= '/>';
                             $html .= '<span>'.$choice.'</span>';
                         $html .= '</label>';
                     }
@@ -122,8 +125,15 @@
             if( $this->properties['defaultValue'] )
                 $val = $this->getDefault();
 
-            if( !$val )
+            if( $val && !is_array( $val ) )
+                $val = [ 'text' => $val, 'type' => 'h2' ];
+
+            if( !$val || empty( $val ) )
                 $val = [ 'text' => '', 'type' => 'h2' ];
+
+
+            if( !isset( $val['type'] ) )
+                $val['type'] = 'h2';
 
             return $val;
         }

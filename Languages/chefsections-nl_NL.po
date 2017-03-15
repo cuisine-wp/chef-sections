@@ -1,0 +1,269 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Chef Sections\n"
+"POT-Creation-Date: 2016-11-15 13:59+0100\n"
+"PO-Revision-Date: 2016-11-15 14:03+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.6\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: Classes/Admin/MetaboxListener.php:34
+#: Classes/Sections/SettingPanels/BaseSettingsPanel.php:35
+msgid "Settings"
+msgstr "Instellingen"
+
+#: Classes/Admin/MetaboxListener.php:59
+msgid "Reference"
+msgstr "Referentie"
+
+#: Classes/Admin/MetaboxListener.php:60
+msgid "Blueprint"
+msgstr "Blauwdruk"
+
+#: Classes/Admin/MetaboxListener.php:61
+msgid "Stencil"
+msgstr "Stencil"
+
+#: Classes/Admin/MetaboxListener.php:77
+msgid "Template type"
+msgstr "Sjabloontype"
+
+#: Classes/Admin/MetaboxListener.php:88
+msgid "Apply as default to"
+msgstr "Ook toepassen als de standaard"
+
+#: Classes/Admin/MetaboxListener.php:114
+msgid "No specific post types"
+msgstr "Geen specifieke post types"
+
+#: Classes/Builders/01-SectionsBuilder.php:115
+msgid "Nog geen secties aangemaakt."
+msgstr "Nog geen secties aangemaakt"
+
+#: Classes/Builders/01-SectionsBuilder.php:140
+msgid "Add Section"
+msgstr "Sectie toevoegen"
+
+#: Classes/Builders/01-SectionsBuilder.php:143
+msgid "Or"
+msgstr "Of"
+
+#: Classes/Builders/01-SectionsBuilder.php:149
+msgid "Select section template"
+msgstr "Selecteer een section-sjabloon"
+
+#: Classes/Builders/01-SectionsBuilder.php:167
+msgid "Update"
+msgstr "Bewerken"
+
+#: Classes/Builders/01-SectionsBuilder.php:494
+msgid "Sectie titel"
+msgstr "Sectie titel"
+
+#: Classes/Columns/01-DefaultColumn.php:304
+msgid "Edit"
+msgstr "Bewerken"
+
+#: Classes/Columns/01-DefaultColumn.php:441
+msgid "Save Column"
+msgstr "Column opslaan"
+
+#: Classes/Columns/CollectionColumn.php:232
+msgid "No"
+msgstr "Nee"
+
+#: Classes/Columns/CollectionColumn.php:232
+msgid "meer gevonden"
+msgstr "meer gevonden"
+
+#: Classes/Columns/CollectionColumn.php:339
+msgid "Datum"
+msgstr "Datum"
+
+#: Classes/Columns/CollectionColumn.php:340
+#: Classes/Sections/01-Section.php:317
+msgid "Titel"
+msgstr "Titel"
+
+#: Classes/Columns/CollectionColumn.php:341
+msgid "Random"
+msgstr "Willekeurig"
+
+#: Classes/Columns/CollectionColumn.php:360
+msgid "Content type"
+msgstr "Content type"
+
+#: Classes/Columns/CollectionColumn.php:371
+msgid "Number of posts"
+msgstr "Aantal berichten"
+
+#: Classes/Columns/CollectionColumn.php:380
+msgid "Number of posts per row"
+msgstr "Aantal berichten per rij"
+
+#: Classes/Columns/CollectionColumn.php:389
+msgid "Sort on"
+msgstr "Sorteer op"
+
+#: Classes/Columns/CollectionColumn.php:399
+msgid "Filter"
+msgstr "Filter"
+
+#: Classes/Columns/CollectionColumn.php:428
+msgid "List"
+msgstr "Lijst"
+
+#: Classes/Columns/CollectionColumn.php:429
+msgid "Blocks"
+msgstr "Blokken"
+
+#: Classes/Columns/CollectionColumn.php:430
+msgid "Blocks & rows"
+msgstr "Blokken & rijen"
+
+#: Classes/Columns/CollectionColumn.php:434
+msgid "None"
+msgstr "Geen"
+
+#: Classes/Columns/CollectionColumn.php:435
+msgid "Pagination"
+msgstr "Paginering"
+
+#: Classes/Columns/CollectionColumn.php:436
+msgid "Endless Scroll"
+msgstr "Eindeloos scrollen"
+
+#: Classes/Columns/CollectionColumn.php:441
+msgid "Stretch"
+msgstr "Oprekken"
+
+#: Classes/Columns/CollectionColumn.php:442
+msgid "Regular"
+msgstr "Regulier"
+
+#: Classes/Columns/CollectionColumn.php:443
+msgid "Masonry"
+msgstr "Metselwerk"
+
+#: Classes/Columns/CollectionColumn.php:451
+msgid "View"
+msgstr "View"
+
+#: Classes/Columns/CollectionColumn.php:461
+msgid "Navigation"
+msgstr "Navigatie"
+
+#: Classes/Columns/CollectionColumn.php:470
+msgid "Grid Type"
+msgstr "Grid type"
+
+#: Classes/Columns/ColumnBuilder.php:167
+msgid "Textual content"
+msgstr "Tekst"
+
+#: Classes/Columns/ColumnBuilder.php:172
+msgid "Image"
+msgstr "Afbeelding"
+
+#: Classes/Columns/ColumnBuilder.php:178
+msgid "Video"
+msgstr "Video"
+
+#: Classes/Columns/ColumnBuilder.php:184
+msgid "Collection"
+msgstr "Collectie"
+
+#: Classes/Columns/ColumnBuilder.php:189
+msgid "Social buttons"
+msgstr "Social buttons"
+
+#: Classes/Columns/ContentColumn.php:107
+#: Classes/Columns/SocialsColumn.php:188 Classes/Columns/VideoColumn.php:94
+#: Classes/Columns/VideoColumn.php:97
+msgid "Title"
+msgstr "Titel"
+
+#: Classes/Columns/SocialsColumn.php:180
+msgid "Link"
+msgstr "Link"
+
+#: Classes/Columns/SocialsColumn.php:181
+msgid "Icon"
+msgstr "Icoon"
+
+#: Classes/Columns/VideoColumn.php:103 Classes/Columns/VideoColumn.php:106
+msgid "Video url"
+msgstr "Video url"
+
+#: Classes/Columns/VideoColumn.php:112
+msgid "Video still"
+msgstr "Video still"
+
+#: Classes/Front/EventListeners.php:42
+msgid "Templates"
+msgstr "Templates"
+
+#: Classes/Front/EventListeners.php:42
+msgid "Template"
+msgstr "Template"
+
+#: Classes/Hooks/TaxonomySelect.php:68
+msgid "Currently there are no filters active"
+msgstr "Geen filters actief"
+
+#: Classes/Hooks/TaxonomySelect.php:69
+msgid "Create a filter"
+msgstr "Nieuwe filter"
+
+#: Classes/Hooks/TaxonomySelect.php:140
+msgid "Select one or multiple items"
+msgstr "Selecteer een of meerdere items"
+
+#: Classes/Sections/01-Section.php:319
+msgid "Section title"
+msgstr "Sectie titel"
+
+#: Classes/Sections/01-Section.php:375
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: Classes/Sections/Reference.php:141
+#, php-format
+msgid ""
+"This is the template \"%s.\" When editting this template, it get's changed "
+"on every page."
+msgstr ""
+"Dit is het sjabloon \"%s.\" Als je dit sjabloon bewerkt, zal het veranderen "
+"op iedere pagina"
+
+#: Classes/Sections/Reference.php:147
+msgid "Edit this template"
+msgstr "Bewerk dit sjabloon"
+
+#: Classes/Sections/SettingPanels/BaseSettingsPanel.php:58
+msgid "Template name"
+msgstr "Sjabloonnaam"
+
+#: Classes/Sections/SettingPanels/BaseSettingsPanel.php:63
+msgid "CSS Classes"
+msgstr "CSS Classes"
+
+#: Classes/Sections/SettingPanels/BaseSettingsPanel.php:65
+msgid "Seperate with commas's"
+msgstr "Scheiden met comma's"
+
+#: Classes/Sections/SettingPanels/BaseSettingsPanel.php:71
+msgid "Hide Container"
+msgstr "Container verbergen"

@@ -123,12 +123,15 @@ class SocialsColumn extends DefaultColumn implements ColumnContract{
 								substr( $link, 0, 2 ) !== '//' &&
 								strlen( $link ) > 4 
 							)
-								$field[$i]['link'] = 'http://'.$link;
+								$props[$key][$i]['link'] = 'http://'.$link;
 						}
 					}
 				}
 			}
 
+			//run default sanitation and filters
+			$props = $this->sanitizeProperties( $props );
+			$props = apply_filters( 'chef_sections_save_column_properties', $props, $this );
 
 			$saved = update_post_meta( 
 				$this->post_id, 

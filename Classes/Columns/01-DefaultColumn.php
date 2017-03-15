@@ -204,7 +204,6 @@ class DefaultColumn implements ColumnContract{
 	 */
 	public function sanitizeProperties( Array $props )
 	{
-		//$this->
 		return $props;
 	}
 
@@ -271,6 +270,9 @@ class DefaultColumn implements ColumnContract{
 	{
 		$title = $this->getField( $name, false );
 		if( $title && isset( $title['text'] ) && $title['text'] != '' ){
+
+			//set a default type
+			if( !isset( $title['type'] ) ) $title['type'] = 'h2';
 
 			$string = '<'.$title['type'].' class="'.$class.'" itemprop="name">';
 				$string .= esc_html( $title['text'] ); 

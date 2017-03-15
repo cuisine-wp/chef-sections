@@ -37,11 +37,11 @@
 				font-weight:normal;
 				font-size:17px;
 				height:32px;
-	
+
 				span{
 					line-height:30px;
 				}
-	
+
 				div b{
 					background-position:0px 5px;
 				}
@@ -97,7 +97,7 @@
 
 		.column-controls{
 			position:relative;
-			
+
 			.field-wrapper{
 				box-sizing:border-box;
 				width:100%;
@@ -135,7 +135,7 @@
 
 	&.half-half .column:first-child{margin-right:30px;}
 
-	&.sidebar-right .column{flex:1;margin-right:0;}	
+	&.sidebar-right .column{flex:1;margin-right:0;}
 	&.sidebar-right .column:first-child{flex:2;margin-right:5%;}
 
 	&.sidebar-left .column{flex: 2;}
@@ -166,20 +166,37 @@
 
 	}
 
-	.field-wrapper.checkbox{
-		text-align:left;
-		> label{
-			display:block;
-			width:100%;
+
+	.field-wrapper{
+
+		&.checkbox{
+			text-align:left;
+			> label{
+				display:block;
+				width:100%;
+			}
+
+			.subfield-wrapper{
+				display:inline-block;
+				padding-right:20px;
+				float:none;
+			}
 		}
 
 		.subfield-wrapper{
-			display:inline-block;
-			padding-right:20px;
-			float:none;
-		}
+ 			display: block;
+ 			width: 100%;
+ 			text-align: left;
 
-
+ 			input{
+ 				display: inline-block;
+ 				margin-right: 5px;
+ 			}
+ 			label{
+ 				display: inline-block;
+ 				width: auto;
+ 			}
+ 		}
 	}
 
 	.main-content{

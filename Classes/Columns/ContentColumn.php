@@ -13,7 +13,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 
 	/**
 	 * The type of column
-	 * 
+	 *
 	 * @var String
 	 */
 	public $type = 'content';
@@ -21,7 +21,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 
 	/**
 	 * Simple echo function for the getField method
-	 * 
+	 *
 	 * @param  string $name
 	 * @return string ( html, echoed )
 	 */
@@ -34,7 +34,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 				echo apply_filters( 'the_content', $this->getField( $name, $default ) );
 
 			}else{
-				
+
 				echo $this->getField( $name, $default );
 
 			}
@@ -44,7 +44,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 
 	/**
 	 * Create the preview for this column
-	 * 
+	 *
 	 * @return string (html,echoed)
 	 */
 	public function buildPreview(){
@@ -61,10 +61,38 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 	}
 
 
+	/**
+	 * Build the contents of the lightbox for this column
+	 *
+	 * @return string ( html, echoed )
+	 */
+	public function buildLightbox(){
+
+		$fields = $this->getFields();
+
+		echo '<div class="main-content">';
+
+			foreach( $fields as $field ){
+				$field->render();
+
+				//if a field has a JS-template, we need to render it:
+				if( method_exists( $field, 'renderTemplate' ) ){
+					echo $field->renderTemplate();
+				}
+
+			}
+
+		echo '</div>';
+		echo '<div class="side-content">';
+			$this->saveButton();
+
+		echo '</div>';
+	}
+
 
 	/**
 	 * Get the fields for this column
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getFields(){
@@ -85,6 +113,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 					'defaultValue'			=> $this->getField( 'title', ['text' => '', 'type' => 'h2'] ),
 				)
 			),
+
 			Field::editor( 
 				'content', //this needs a unique id 
 				'', 

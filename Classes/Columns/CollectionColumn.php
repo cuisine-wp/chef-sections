@@ -260,8 +260,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 		$view = $this->getField( 'view', 'blocks' );
 		$grid = $this->getField( 'grid', 'stretch' );
 
-		if( $this->getField( 'title' ) )
-			echo '<strong>'. esc_html( $this->getField( 'title' ) ).'</strong>';
+		$this->theTitle();
 
 		switch( $view ){
 
