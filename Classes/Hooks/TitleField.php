@@ -48,12 +48,14 @@
 
                 $html .= '<div class="type-sub-menu">';
 
-                    $tempId = uniqid();
+
+                    $subName = $this->getSubFieldName();
+
                     foreach( $choices as $choice ){
                         
                         $html .= '<label class="title-radio">';
                             $html .= '<input ';
-                            $html .= ' type="radio" class="multi title-radio" name="'.$tempId.'" data-name="'.$this->name.'[type]" value="'.$choice.'"';
+                            $html .= ' type="radio" class="multi title-radio" name="'.$subName.'" data-name="'.$this->name.'[type]" value="'.$choice.'"';
                             $html .= checked( $choice, $value['type'], false );
                             $html .= '/>';
                             $html .= '<span>'.$choice.'</span>';
@@ -96,6 +98,22 @@
             return $html;
         }
 
+
+        /**
+         * Returns the name for the radio-buttons
+         * 
+         * @return string
+         */
+        public function getSubFieldName()
+        {
+            $name = $this->getProperty( 'fieldName' );
+            if( $name == '' )
+                $name = uniqid();
+
+            $name .= '[type]';
+
+            return $name;
+        }
 
         /**
          * Returns the value attribute
