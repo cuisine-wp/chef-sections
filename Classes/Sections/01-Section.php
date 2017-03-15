@@ -321,7 +321,8 @@ class Section {
 				array(
 					'placeholder'	=> __( 'Section title', 'chefsections' ),
 					'label'			=> false,
-					'defaultValue'	=> $title
+					'defaultValue'	=> $title,
+					'fieldName'		=> 'section['.$this->id.'][title]'
 				)
 			)->render();
 
