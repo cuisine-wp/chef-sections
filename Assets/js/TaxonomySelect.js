@@ -51,12 +51,13 @@ highestId: '',
 
 			}else{
 
-				var _id = $( this ).data( 'id' );
+				var _tax = $( this ).parent().parent();
 
 				if( confirm( 'Are you sure you want to delete this?' ) ){
 
-					$('#tax-'+_id).fadeOut( 'fast', function(){
-						$('#tax-'+_id).remove();
+
+					_tax.fadeOut( 'fast', function(){
+						_tax.remove();
 					
 						//add a fallback, if there are no filters:
 						if( $('.tax-select-wrapper' ).length <= 0 ){
