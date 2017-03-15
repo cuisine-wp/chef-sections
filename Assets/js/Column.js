@@ -227,12 +227,17 @@
 
 				var input = jQuery( inputs[ a ] );
 				var val = input.val();
-				var name = input.attr('name');
 				var type = input.attr('type');
 				var disabled = input.attr('disabled');
+				var name = input.attr('name');
 
+				//check if checked:
 				if( ( type == 'checkbox' || type == 'radio' ) && input.is( ':checked' ) === false )
 					continue retloop;
+
+				//overwrite the name for title radio buttons:
+				if( input.hasClass( 'title-radio') == true )
+					name = input.data('name');
 
 				if( name !== undefined && disabled == undefined ){
 

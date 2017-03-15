@@ -204,7 +204,6 @@ class DefaultColumn implements ColumnContract{
 	 */
 	public function sanitizeProperties( Array $props )
 	{
-		//$this->
 		return $props;
 	}
 
