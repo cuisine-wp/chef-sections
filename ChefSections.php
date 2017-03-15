@@ -3,7 +3,7 @@
  * Plugin Name: Chef Sections
  * Plugin URI: http://chefduweb.nl/cuisine
  * Description: Easily transform boring pages into exciting section-based layouts!
- * Version: 1.4.1
+ * Version: 1.4.2
  * Author: Luc Princen
  * Author URI: http://www.chefduweb.nl/
  * License: GPLv2
@@ -47,7 +47,7 @@ if (!class_exists('ChefSections')) {
          *
          * @var float
          */
-        const VERSION = '1.4.1';
+        const VERSION = '1.4.2';
 
 
         /**

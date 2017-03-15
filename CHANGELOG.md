@@ -1,3 +1,13 @@
+### 1.4.2: 2017-03-15
+
+* Added a new Title Field to most columns
+* Adds a contract for columns
+* Adds new saving column hooks
+* Fixes issues with the lightbox
+* Fixes issues with translation
+* Social-buttons get a compact repeater field
+* Various bugfixes
+
 ### 1.4.1: 2016-10-6
 
 * Major template engine changes:

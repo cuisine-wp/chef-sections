@@ -174,7 +174,8 @@ class SocialsColumn extends DefaultColumn implements ColumnContract{
 					'Socials',
 					$repeaters,
 					array(
-						'defaultValue' => $this->getField( 'socials' )
+						'defaultValue' => $this->getField( 'socials' ),
+						'view' => 'compact'
 					)
 				)
 			);
