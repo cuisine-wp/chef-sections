@@ -71,7 +71,7 @@
 
 			echo '<div class="section-container" id="section-container">';
 
-			$sections = $this->sections->getMainSections();
+			$sections = $this->sections->getNonContainered();
 
 			if( !empty( $sections ) ){
 

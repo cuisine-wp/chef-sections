@@ -29,6 +29,14 @@
 
 
 		/**
+		 * All sections in an array
+		 * 
+		 * @var Array
+		 */
+		protected $array;
+
+
+		/**
 		 * Highest ID
 		 * 
 		 * @var integer
@@ -66,13 +74,24 @@
 		}
 
 
+		/**
+		 * Return all sections as a multidimensional array
+		 * 
+		 * @return array
+		 */
+		public function toArray()
+		{
+			return $this->array;
+		}
+
+
 
 		/**
 		 * Get all non-containered sections
 		 * 
 		 * @return array
 		 */
-		public function getMainSections()
+		public function getNonContainered()
 		{
 			$_result = [];
 			foreach( $this->sections as $section ){
@@ -95,6 +114,8 @@
 		public function getCollection(){
 
 			$sections = get_post_meta( $this->postId, 'sections', true );
+			$this->array = $sections;
+
 			$array = array();
 
 			if( is_array( $sections ) && !empty( $sections ) ){
@@ -196,7 +217,12 @@
 		 */
 		public function setHighestId( $amount = 1 )
 		{
+			if( is_null( $this->highestId ) )
+				$this->getHighestId();
+
 			$this->highestId = $this->highestId + $amount;
+
+			return $this->highestId;
 		}
 
 

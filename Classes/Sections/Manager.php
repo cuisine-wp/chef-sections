@@ -33,7 +33,6 @@
 		{
 			$this->postId = $post_id;
 			$this->sections = new SectionCollection( $post_id );
-
 		}
 
 
@@ -163,7 +162,7 @@
 			$section_id = $_POST['section_id'];
 			$view = $_POST['view'];
 
-			$_sections = $this->sections->get();
+			$_sections = $this->sections->toArray();
 			$_sections[ $section_id ]['view'] = $view;
 
 			//add columns if needed:
@@ -171,8 +170,6 @@
 			$existing = $_sections[ $section_id ]['columns'];
 			$new = array();
 
-			cuisine_dump( $existing );
-			die();
 
 			foreach( $default as $key => $col ){
 
@@ -183,15 +180,11 @@
 				}
 			}
 			
-			cuisine_dump( $new );
-			//$_sections[ $section_id ]['columns'] = $new;
+			$_sections[ $section_id ]['columns'] = $new;
 			
-			//update_post_meta( $this->postId, 'sections', $_sections );
-			cuisine_dump( $_sections );
-			//cuisine_dump( new Section( [ 'section_id' => '1', 'post_id' => '83' ] ) );
-			die();
+			update_post_meta( $this->postId, 'sections', $_sections );
+
 			$section = new Section( $_sections[ $section_id ] );
-			
 			return $section->build();
 		
 		}
@@ -207,7 +200,7 @@
 			$ids = $_POST['section_ids'];
 
 			//save this section:
-			$_sections = $this->sections->get();
+			$_sections = $this->sections->toArray();
 			
 			$i = 1;
 			foreach( $ids as $section_id ){

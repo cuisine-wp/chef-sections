@@ -83,7 +83,7 @@
 			add_action( 'wp_ajax_changeView', function(){
 
 				parent::setPostGlobal();
-
+				
 				$manager = new SectionManager( $_POST['post_id'] );
 				echo $manager->changeView();
 
