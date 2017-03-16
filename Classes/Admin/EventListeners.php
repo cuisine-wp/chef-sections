@@ -5,9 +5,9 @@
 	use ChefSections\Wrappers\StaticInstance;
 	use ChefSections\Wrappers\SectionsUi;
 	use ChefSections\Admin\Ui\Toolbar;
-	use ChefSections\Walkers\SectionCollection;
-	use ChefSections\Sections\Manager as SectionManager;
+	use ChefSections\Admin\Managers\SectionManager;
 	use ChefSections\Admin\Generators\Blueprint;
+	use ChefSections\Collections\ReferenceCollection;
 
 	use Cuisine\Utilities\Url;
 
@@ -45,7 +45,7 @@
 					if( in_array( $type, $include ) )
 						remove_post_type_support( $type ,'editor' );
 				
-				}				
+				}			
 
 			});
 
@@ -110,14 +110,8 @@
 			//when creating a new post, check if we need to apply a template:
 			add_action( 'save_post', function( $post_id ){
 				
-				global $pagenow, $post;
-				$status = get_post_status( $post_id );
+				( new Blueprint( $post_id ) )->maybeGenerate();
 
-				if( $status == 'auto-draft' && $pagenow == 'post-new.php' ){
-
-					( new Blueprint( $post_id ) )->maybeGenerate();
-
-				}
 			});
 		}
 

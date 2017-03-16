@@ -2,12 +2,13 @@
 
 	namespace ChefSections\Admin;
 
-	use ChefSections\Wrappers\AjaxInstance;
-	use ChefSections\Sections\Manager as SectionManager;
-	use ChefSections\Wrappers\ReferenceBuilder;
+	use Cuisine\Wrappers\PostType;
 	use ChefSections\Wrappers\Column;
 	use ChefSections\Wrappers\Walker;
-	use Cuisine\Wrappers\PostType;
+	use ChefSections\Wrappers\AjaxInstance;
+	use ChefSections\Wrappers\ReferenceBuilder;
+	use ChefSections\Admin\Managers\SectionManager;
+	use ChefSections\Admin\Managers\TemplateManager;
 
 	class Ajax extends AjaxInstance{
 
@@ -16,8 +17,8 @@
 		 */
 		function __construct(){
 
-
 			$this->addSectionEvents();
+			$this->addTemplateEvents();
 			$this->addColumnEvents();
 
 		}
@@ -37,8 +38,7 @@
 
 				parent::setPostGlobal();
 
-				$postId = $_POST['post_id'];
-				( new SectionManager( $postId ) )->addSection();
+				( new SectionManager() )->addSection();
 
 				die();
 
@@ -49,8 +49,7 @@
 
 				parent::setPostGlobal();
 
-				$postId = $_POST['post_id'];
-				( new SectionManager( $postId ) )->deleteSection();
+				( new SectionManager() )->deleteSection();
 
 				die();
 			});
@@ -60,8 +59,7 @@
 
 				parent::setPostGlobal();
 
-				$postId = $_POST['post_id'];
-				( new SectionManager( $postId ) )->sortSections();
+				( new SectionManager() )->sortSections();
 
 				die();
 
@@ -71,8 +69,7 @@
 
 				parent::setPostGlobal();
 
-				$postId = $_POST['post_id'];
-				( new SectionManager( $postId ) )->sortColumns();
+				( new SectionManager() )->sortColumns();
 
 				die();
 			});
@@ -82,22 +79,12 @@
 
 				parent::setPostGlobal();
 
-				$postId = $_POST['post_id'];
-				( new SectionManager( $postId ) )->changeView();
+				( new SectionManager() )->changeView();
 
 				die();
 
 			});
 
-			//load a template with ajax:
-			add_action( 'wp_ajax_loadTemplate', function(){
-
-				parent::setPostGlobal();
-
-				ReferenceBuilder::addReference();
-				die();
-
-			});
 
 			//fetch all html output
 			add_action( 'wp_ajax_getHtmlOutput', function(){
@@ -110,6 +97,22 @@
 
 		}
 
+
+		/**
+		 * Set functions for templates
+		 */
+		private function addTemplateEvents()
+		{
+			add_action( 'wp_ajax_addSectionTemplate', function(){
+				
+				parent::setPostGlobal();
+
+				( new TemplateManager() )->addReference();
+
+				die();
+
+			});
+		}
 
 		/**
 		 * Alle ajax events for columns on the backend 

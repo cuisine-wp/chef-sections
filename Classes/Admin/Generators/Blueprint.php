@@ -3,18 +3,10 @@
 	namespace ChefSections\Admin\Generators;
 
 	use WP_Query;
-	use ChefSections\Sections\Blueprint as BlueprintSection;
+	use ChefSections\SectionTypes\Blueprint as BlueprintSection;
+	use ChefSections\Contracts\Generator as GeneratorContract;
 
-
-	class Blueprint{
-
-
-		/**
-		 * Post ID for the current request
-		 * 
-		 * @var int
-		 */
-		protected $postId;
+	class Blueprint extends BaseGenerator implements GeneratorContract{
 
 
 		/**
@@ -34,23 +26,11 @@
 		 */
 		public function __construct( $postId )
 		{
-			$this->postId = $postId;
+			parent::__construct( $postId );
 			$this->blueprints = $this->getBlueprints();
 		}
 
-		/**
-		 * Maybe generate a new post-type post out of a blueprint
-		 * 
-		 * @return bool
-		 */
-		public function maybeGenerate()
-		{
-			if( $this->check() )
-				return $this->generate();
-
-			return false;
-		}
-
+	
 
 		/**
 		 * Checks wether this blueprint applies to the current post
@@ -59,7 +39,7 @@
 		 */
 		public function check()
 		{
-			if( !is_null( $this->blueprints ) )
+			if( parent::check() && !is_null( $this->blueprints ) )
 				return true;
 
 			return false;

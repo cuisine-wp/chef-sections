@@ -66,7 +66,6 @@ var SectionBuilder = new function(){
 		var self = this;
 
 		self.setSectionTypeSelect();
-		self.setSectionTemplateSelector();
 		self.setAddSectionButton();
 		self.setSectionsSortable();
 
@@ -305,13 +304,13 @@ var SectionBuilder = new function(){
 		var self = this;
 
 		//add on click:
-		$('#addSection').on( 'click', function(){
+		$('.add-section-btn').on( 'click', function( e ){
 
-			var data = {
-				action: 'createSection',
-				post_id: $( this ).data('post_id')
-			}
+			e.preventDefault();
 
+			var data = $( this ).data();
+
+			console.log( data );
 			$('#section-builder-ui .spinner').addClass( 'show' );
 
 			$.post( ajaxurl, data, function( response ){
@@ -331,25 +330,22 @@ var SectionBuilder = new function(){
 		});
 
 
-		$('#addSection').draggable({
+		jQuery('.add-section-btn').draggable({
 			connectToSortable: '#section-container',
 			helper: 'clone',
 			stop: function( event, ui ){
 				
-				var _placeholder = $('#section-container .section-btn.ui-draggable-handle' );
+				var _placeholder = $('#section-container .add-section-btn.ui-draggable-handle' );
 				_placeholder.addClass('placeholder-block');
 				_placeholder.html( '<span class="spinner"></span> Adding section...' );
 
-				//_placeholder.replaceWith('pants!');
-				var data = {
-					action: 'createSection',
-					post_id: _placeholder.data('post_id'),
-					type: _placeholder.data('type')
-				}
+				//set the data
+				var data = _placeholder.data();
+				//delete extra information, not needed:
+				delete data['sortableItem'];
 
 
-
-				$.post( ajaxurl, data, function( response ){
+				jQuery.post( ajaxurl, data, function( response ){
 
 					_placeholder.replaceWith( response );
 

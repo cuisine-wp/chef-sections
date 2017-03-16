@@ -1,6 +1,6 @@
 <?php
 
-namespace ChefSections\Sections;
+namespace ChefSections\SectionTypes;
 
 use ChefSections\Wrappers\Column;
 
@@ -9,7 +9,7 @@ use Cuisine\Wrappers\User;
 /**
  * Blueprints are full-scale section-templates tied to post-types
  */
-class Blueprint extends Section{
+class Blueprint extends BaseSection{
 
 
 	/**

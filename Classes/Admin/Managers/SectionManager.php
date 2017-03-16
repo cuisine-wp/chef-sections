@@ -1,38 +1,26 @@
 <?php
 
-	namespace ChefSections\Sections;
+	namespace ChefSections\Admin\Managers;
 
 
 	use Cuisine\Utilities\Session;
 	use ChefSections\Helpers\PostType;
+	use ChefSections\SectionTypes\ContentSection;
 	use ChefSections\Helpers\Section as SectionHelper;
 	use ChefSections\Collections\SectionCollection;
 
-	class Manager{
+	class SectionManager extends BaseManager{
 
-
-		/**
-		 * Post Id
-		 * 
-		 * @var integer
-		 */
-		protected $postId;
-
-		/**
-		 * Sections Collection
-		 * 
-		 * @var ChefSections\Walkers\SectionCollection;
-		 */
-		protected $sections;
 
 
 		/**
-		 * Constructor
+		 * Set the collection for this manager
+		 *
+		 * @return void
 		 */
-		public function __construct( $post_id )
+		public function setCollection()
 		{
-			$this->postId = $post_id;
-			$this->sections = new SectionCollection( $post_id );
+			$this->collection = new SectionCollection( $this->postId );
 		}
 
 
@@ -108,7 +96,7 @@
 		public function addSection( $datas = array() ){
 
 			//up the highest ID
-			$this->sections->setHighestId( 1 );
+			$this->collection->setHighestId( 1 );
 
 
 			//get the defaults:
@@ -123,18 +111,13 @@
 			}
 
 			//save this section:
-			$_sections = $this->sections->toArray()->all();
+			$_sections = $this->collection->toArray()->all();
 
 			$_sections[ $args['id'] ] = $args;
 			update_post_meta( $this->postId, 'sections', $_sections );
 
-			//if( $_POST['type'] == 'section' ){
-				$section = new Section( $args );
-			//}else{
-			//	$section = new Container( $args );
-			//}
 
-			return $section->build();
+			return ( new ContentSection( $args ) )->build();
 		}
 
 
@@ -147,7 +130,7 @@
 		public function deleteSection(){
 
 			$section_id = $_POST['section_id'];
-			$_sections = $this->sections->toArray()->all();
+			$_sections = $this->collection->toArray()->all();
 
 			unset( $_sections[ $section_id ] );
 			update_post_meta( $this->postId, 'sections', $_sections );
@@ -165,7 +148,7 @@
 			$section_id = $_POST['section_id'];
 			$view = $_POST['view'];
 
-			$_sections = $this->sections->toArray()->all();
+			$_sections = $this->collection->toArray()->all();
 			$_sections[ $section_id ]['view'] = $view;
 
 			//add columns if needed:
@@ -183,11 +166,11 @@
 				}
 			}
 			
+
 			$_sections[ $section_id ]['columns'] = $new;
-			
 			update_post_meta( $this->postId, 'sections', $_sections );
 
-			$section = new Section( $_sections[ $section_id ] );
+			$section = new ContentSection( $_sections[ $section_id ] );
 			return $section->build();
 		
 		}
@@ -203,7 +186,7 @@
 			$ids = $_POST['section_ids'];
 
 			//save this section:
-			$_sections = $this->sections->toArray()->all();
+			$_sections = $this->collection->toArray()->all();
 			
 			$i = 1;
 			foreach( $ids as $section_id ){
@@ -254,8 +237,8 @@
 
 			$default = SectionHelper::defaultArgs();
 			$specifics = array(
-				'id'				=> $this->sections->getHighestId(),
-				'position'			=> ( count( $this->sections->get() ) + 1 ),
+				'id'				=> $this->collection->getHighestId(),
+				'position'			=> ( count( $this->collection->get() ) + 1 ),
 				'post_id'			=> $this->postId,
 			);
 

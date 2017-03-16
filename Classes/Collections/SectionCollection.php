@@ -3,11 +3,11 @@
 	namespace ChefSections\Collections;
 
 	use Cuisine\Utilities\Sort;
-	use ChefSections\Sections\Section;
-	use ChefSections\Sections\Blueprint;
-	use ChefSections\Sections\Reference;
-	use ChefSections\Sections\Stencil;
-	use ChefSections\Sections\Container;
+	use ChefSections\SectionTypes\ContentSection;
+	use ChefSections\SectionTypes\Blueprint;
+	use ChefSections\SectionTypes\Reference;
+	use ChefSections\SectionTypes\Stencil;
+	use ChefSections\SectionTypes\Container;
 
 	class SectionCollection extends Collection{
 
@@ -98,7 +98,7 @@
 				break;
 				default:
 
-					return new Section( $section );
+					return new ContentSection( $section );
 
 				break;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace ChefSections\Sections;
+namespace ChefSections\SectionTypes;
 
 use ChefSections\Wrappers\Column;
 use Cuisine\Wrappers\User;
@@ -11,7 +11,7 @@ use ChefSections\Wrappers\SectionsBuilder;
 /**
  * References are meant for use in 'regular' section-flows.
  */
-class Reference extends Section{
+class Reference extends BaseSection{
 
 	/**
 	 * Section-type "Reference".

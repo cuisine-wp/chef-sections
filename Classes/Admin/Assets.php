@@ -2,10 +2,10 @@
 
 	namespace ChefSections\Admin;
 
-	use ChefSections\Wrappers\StaticInstance;
+	use _WP_Editors;
 	use Cuisine\Utilities\Url;
 	use Cuisine\Utilities\Session;
-	use _WP_Editors;
+	use ChefSections\Wrappers\StaticInstance;
 
 	class Assets extends StaticInstance{
 

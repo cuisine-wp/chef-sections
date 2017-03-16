@@ -3,6 +3,8 @@
 	namespace ChefSections\Admin\Ui;
 
 	use Cuisine\Utilities\Session;
+	use ChefSections\Admin\Managers\ContainerManager;
+	use ChefSections\Admin\Managers\TemplateManager;
 
 	class Toolbar{
 
@@ -21,34 +23,18 @@
 
 			echo '<div class="section-wrapper dotted-bg" id="section-builder-ui">';
 
-				echo '<div id="addSection" class="section-btn" data-post_id="'.$postId.'" data-type="section">';
+				echo '<div class="add-section-btn" data-action="createSection" data-post_id="'.$postId.'">';
 					_e( 'Add Section', 'chefsections' );
-				echo '</div>';
-
-				echo '<div id="addSection" class="section-btn" data-post_id="'.$postId.'" data-type="container">';
-					_e( 'Add Container', 'chefsections' );
 				echo '</div>';
 
 				echo '<em>'.__( 'Or', 'chefsections' ).'</em>';
 
-				//add templates:
-				/*echo '<select id="getTemplate" data-post_id="'.esc_attr( $postId ).'">';
+				//( new ContainerManager() )->buildDropdown();
 
-					echo '<option value="none">';
-						_e( 'Select section template', 'chefsections' );
-					echo '</option>';
+				echo '<em>'.__( 'Or', 'chefsections' ).'</em>';
 
-					foreach( $templates as $template ){
+				( new TemplateManager() )->buildDropdown();
 
-						if( $template->ID != $this->postId ){
-							echo '<option value="'.esc_attr( $template->ID ).'">';
-								echo $template->post_title;
-							echo '</option>';
-						}
-					}
-
-
-				echo '</select>';*/
 
 				echo '<span class="update-btn-wrapper">';
 					

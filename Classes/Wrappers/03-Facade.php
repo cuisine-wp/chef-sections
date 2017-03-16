@@ -59,15 +59,16 @@
                 'template'                => 'ChefSections\Front\TemplateFinder',
 
                 'sections-ui'             => 'ChefSections\Admin\Ui\SectionsUi',
+                'settingspanel'           => 'ChefSections\Admin\Panels\BasePanel',
+
                 //'stencilbuilder'          => 'ChefSections\Builders\StencilBuilder',
                 //'blueprintbuilder'        => 'ChefSections\Builders\BlueprintBuilder',
                 //'referencebuilder'        => 'ChefSections\Builders\ReferenceBuilder',
 
-                'section'                 => 'ChefSections\Sections\Section',
-                'settingspanel'           => 'ChefSections\Admin\Panels\BasePanel',
-                'reference'               => 'ChefSections\Sections\Reference',
-                'stencil'                 => 'ChefSections\Sections\Stencil',
-                'blueprint'               => 'ChefSections\Sections\Blueprint'
+                'section'                 => 'ChefSections\SectionTypes\ContentSection',
+                'reference'               => 'ChefSections\SectionTypes\Reference',
+                'stencil'                 => 'ChefSections\SectionTypes\Stencil',
+                'blueprint'               => 'ChefSections\SectionTypes\Blueprint'
             );
     
             return $aliases[ $name ];
