@@ -2,12 +2,11 @@
 
 	namespace ChefSections\Front;
 
-	use \ChefSections\Builders\SectionsBuilder;
 	use \ChefSections\Sections\Section;
 	use \ChefSections\Wrappers\Template;
 	use \stdClass;
 
-	class Walker extends SectionsBuilder{
+	class Walker{
 
 
 		/**

@@ -6,7 +6,7 @@
 	use Cuisine\Utilities\Session;
 	use ChefSections\Helpers\PostType;
 	use ChefSections\Helpers\Section as SectionHelper;
-	use ChefSections\Walkers\SectionCollection;
+	use ChefSections\Collections\SectionCollection;
 
 	class Manager{
 
@@ -46,7 +46,7 @@
 		 * 
 		 * @return bool
 		 */
-		public function save(){
+		public function saveSections(){
 
 
 			if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
@@ -110,6 +110,7 @@
 			//up the highest ID
 			$this->sections->setHighestId( 1 );
 
+
 			//get the defaults:
 			$args = $this->getDefaultSectionArgs();
 			$args = wp_parse_args( $datas, $args );
@@ -122,7 +123,8 @@
 			}
 
 			//save this section:
-			$_sections = get_post_meta( $this->postId, 'sections', true );
+			$_sections = $this->sections->toArray()->all();
+
 			$_sections[ $args['id'] ] = $args;
 			update_post_meta( $this->postId, 'sections', $_sections );
 
@@ -145,7 +147,8 @@
 		public function deleteSection(){
 
 			$section_id = $_POST['section_id'];
-			$_sections = $this->sections->get();
+			$_sections = $this->sections->toArray()->all();
+
 			unset( $_sections[ $section_id ] );
 			update_post_meta( $this->postId, 'sections', $_sections );
 			echo 'true';
@@ -162,7 +165,7 @@
 			$section_id = $_POST['section_id'];
 			$view = $_POST['view'];
 
-			$_sections = $this->sections->toArray();
+			$_sections = $this->sections->toArray()->all();
 			$_sections[ $section_id ]['view'] = $view;
 
 			//add columns if needed:
@@ -200,7 +203,7 @@
 			$ids = $_POST['section_ids'];
 
 			//save this section:
-			$_sections = $this->sections->toArray();
+			$_sections = $this->sections->toArray()->all();
 			
 			$i = 1;
 			foreach( $ids as $section_id ){

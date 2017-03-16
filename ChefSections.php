@@ -86,8 +86,7 @@ if (!class_exists('ChefSections')) {
                 'Classes/Helpers',
                 'Classes/Hooks',
 
-                'Classes/Walkers',
-                'Classes/Builders',
+                'Classes/Collections',
 
                 'Classes/Admin/Containers',
                 'Classes/Admin/Generators',

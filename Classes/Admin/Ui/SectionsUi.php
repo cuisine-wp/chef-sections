@@ -4,7 +4,7 @@
 
 	use Cuisine\Utilities\Session;
 	use ChefSections\Helpers\PostType;
-	use ChefSections\Walkers\SectionCollection;
+	use ChefSections\Collections\SectionCollection;
 
 	class SectionsUi{
 		

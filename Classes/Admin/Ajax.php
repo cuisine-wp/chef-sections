@@ -37,8 +37,8 @@
 
 				parent::setPostGlobal();
 
-				$manager = new SectionManager( $_POST['post_id'] );
-				echo $manager->addSection();
+				$postId = $_POST['post_id'];
+				( new SectionManager( $postId ) )->addSection();
 
 				die();
 
@@ -49,12 +49,10 @@
 
 				parent::setPostGlobal();
 
-				$manager = new SectionManager( $_POST['post_id'] );
-				$manager->deleteSection();
+				$postId = $_POST['post_id'];
+				( new SectionManager( $postId ) )->deleteSection();
 
-				SectionsBuilder::deleteSection();
 				die();
-
 			});
 
 			//sorting sections:
@@ -62,8 +60,8 @@
 
 				parent::setPostGlobal();
 
-				$manager = new SectionManager( $_POST['post_id'] );
-				echo $manager->sortSections();
+				$postId = $_POST['post_id'];
+				( new SectionManager( $postId ) )->sortSections();
 
 				die();
 
@@ -73,8 +71,8 @@
 
 				parent::setPostGlobal();
 
-				$manager = new SectionManager( $_POST['post_id'] );
-				echo $manager->sortColumns();
+				$postId = $_POST['post_id'];
+				( new SectionManager( $postId ) )->sortColumns();
 
 				die();
 			});
@@ -83,9 +81,9 @@
 			add_action( 'wp_ajax_changeView', function(){
 
 				parent::setPostGlobal();
-				
-				$manager = new SectionManager( $_POST['post_id'] );
-				echo $manager->changeView();
+
+				$postId = $_POST['post_id'];
+				( new SectionManager( $postId ) )->changeView();
 
 				die();
 

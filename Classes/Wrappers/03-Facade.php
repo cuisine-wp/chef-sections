@@ -59,9 +59,9 @@
                 'template'                => 'ChefSections\Front\TemplateFinder',
 
                 'sections-ui'             => 'ChefSections\Admin\Ui\SectionsUi',
-                'stencilbuilder'          => 'ChefSections\Builders\StencilBuilder',
-                'blueprintbuilder'        => 'ChefSections\Builders\BlueprintBuilder',
-                'referencebuilder'        => 'ChefSections\Builders\ReferenceBuilder',
+                //'stencilbuilder'          => 'ChefSections\Builders\StencilBuilder',
+                //'blueprintbuilder'        => 'ChefSections\Builders\BlueprintBuilder',
+                //'referencebuilder'        => 'ChefSections\Builders\ReferenceBuilder',
 
                 'section'                 => 'ChefSections\Sections\Section',
                 'settingspanel'           => 'ChefSections\Admin\Panels\BasePanel',

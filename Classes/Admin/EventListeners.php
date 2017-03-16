@@ -7,8 +7,8 @@
 	use ChefSections\Admin\Ui\Toolbar;
 	use ChefSections\Walkers\SectionCollection;
 	use ChefSections\Sections\Manager as SectionManager;
+	use ChefSections\Generators\Blueprint;
 
-	use ChefSections\Wrappers\BlueprintBuilder;
 	use Cuisine\Utilities\Url;
 
 	class EventListeners extends StaticInstance{
@@ -80,8 +80,7 @@
 			//saving
 			add_action( 'save_post', function( $post_id ){
 
-				$manager = new SectionManager( $post_id );
-				$manager->save();
+				( new SectionManager( $post_id ) )->saveSections();
 
 			});
 
@@ -105,7 +104,7 @@
 		 * 
 		 * @return void
 		 */
-		/*private function templates(){
+		private function templates(){
 
 
 			//when creating a new post, check if we need to apply a template:
@@ -114,14 +113,13 @@
 				global $pagenow, $post;
 				$status = get_post_status( $post_id );
 
-
 				if( $status == 'auto-draft' && $pagenow == 'post-new.php' ){
 
-					BlueprintBuilder::applyTemplates( $post_id );
+					( new Blueprint( $post_id ) )->maybeGenerate();
 
 				}
 			});
-		}*/
+		}
 
 	}
 
