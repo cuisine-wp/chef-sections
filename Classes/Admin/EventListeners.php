@@ -7,7 +7,7 @@
 	use ChefSections\Admin\Ui\Toolbar;
 	use ChefSections\Walkers\SectionCollection;
 	use ChefSections\Sections\Manager as SectionManager;
-	use ChefSections\Generators\Blueprint;
+	use ChefSections\Admin\Generators\Blueprint;
 
 	use Cuisine\Utilities\Url;
 
@@ -21,7 +21,7 @@
 
 			$this->listen();
 
-			//$this->templates();
+			$this->templates();
 
 		}
 
