@@ -59,6 +59,17 @@
 
 			});
 
+			add_filter( 'chef_sections_containers', function( $data ){
+
+				$data[ 'group' ] = [
+					'label' => 'Section Group',
+					'class' => '\ChefSections\Containers\GroupContainer'
+				];
+
+				return $data;
+
+			});
+
 
 			//placing the sections builder
 			add_action( 'edit_form_after_editor', function(){

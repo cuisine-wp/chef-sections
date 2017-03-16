@@ -3,7 +3,6 @@
 namespace ChefSections\SectionTypes;
 
 use ChefSections\Wrappers\Column;
-
 use Cuisine\Wrappers\User;
 
 /**

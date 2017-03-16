@@ -95,7 +95,7 @@ if (!class_exists('ChefSections')) {
                 'Classes/Admin/Ui',
                 'Classes/Admin',
 
-                'Classes/Sections',
+                'Classes/SectionTypes',
                 'Classes/Columns',
 
                 'Classes/Front'

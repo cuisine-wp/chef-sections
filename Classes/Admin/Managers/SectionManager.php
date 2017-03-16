@@ -25,6 +25,23 @@
 
 
 		/*=============================================================*/
+		/**             UI                                             */
+		/*=============================================================*/
+
+
+		/**
+		 * Build an "Add Section"-button
+		 * 
+		 * @return string (html, echoed)
+		 */
+		public function buildButton()
+		{
+			echo '<div class="add-section-btn" data-action="createSection" data-post_id="'.$this->postId.'">';
+				_e( 'Add Section', 'chefsections' );
+			echo '</div>';
+		}
+
+		/*=============================================================*/
 		/**             Saving                                         */
 		/*=============================================================*/
 

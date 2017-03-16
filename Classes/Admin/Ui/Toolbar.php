@@ -3,6 +3,7 @@
 	namespace ChefSections\Admin\Ui;
 
 	use Cuisine\Utilities\Session;
+	use ChefSections\Admin\Managers\SectionManager;
 	use ChefSections\Admin\Managers\ContainerManager;
 	use ChefSections\Admin\Managers\TemplateManager;
 
@@ -17,22 +18,14 @@
 		public static function build()
 		{
 
-			$postId = Session::postId();
-			$args = array( 'multiple' => true, 'dropdown' => true );
-			//$templates = ReferenceBuilder::getTemplates( $args );
-
 			echo '<div class="section-wrapper dotted-bg" id="section-builder-ui">';
 
-				echo '<div class="add-section-btn" data-action="createSection" data-post_id="'.$postId.'">';
-					_e( 'Add Section', 'chefsections' );
-				echo '</div>';
+				( new SectionManager() )->buildButton();
 
-				echo '<em>'.__( 'Or', 'chefsections' ).'</em>';
+				//container dropdown:
+				( new ContainerManager() )->buildDropdown();
 
-				//( new ContainerManager() )->buildDropdown();
-
-				echo '<em>'.__( 'Or', 'chefsections' ).'</em>';
-
+				//template dropdown:
 				( new TemplateManager() )->buildDropdown();
 
 

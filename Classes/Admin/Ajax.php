@@ -19,6 +19,7 @@
 
 			$this->addSectionEvents();
 			$this->addTemplateEvents();
+			$this->addContainerEvents();
 			$this->addColumnEvents();
 
 		}
@@ -28,7 +29,7 @@
 		/**
 		 * All ajax events for sections on the backend
 		 * 
-		 * @return string, echoed
+		 * @return void
 		 */
 		private function addSectionEvents(){
 
@@ -100,6 +101,8 @@
 
 		/**
 		 * Set functions for templates
+		 *
+		 * @return void
 		 */
 		private function addTemplateEvents()
 		{
@@ -115,9 +118,28 @@
 		}
 
 		/**
+		 * Set functions for containers
+		 *
+		 * @return void
+		 */
+		private function addContainerEvents()
+		{
+			add_action( 'wp_ajax_addSectionContainer', function(){
+
+				parent::setPostGlobal();
+
+				( new ContainerManager() )->addContainer();
+
+				die();
+
+			});
+		}
+
+
+		/**
 		 * Alle ajax events for columns on the backend 
 		 *
-		 * @return string, echoed
+		 * @return void
 		 */
 		private function addColumnEvents(){
 
