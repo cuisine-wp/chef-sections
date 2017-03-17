@@ -56,3 +56,31 @@
 
 
 	}
+
+/*
+	Generator::make( 'blueprint', function( Fluent $section ){
+
+		$section->view( 'half-half' );
+		$section->class( 'toptaak' );
+
+		$section->defaultVariation( 'toptaak-1' );
+		$section->variations([ 'toptaak-1' => 'Toptaak 1', 'toptaak-2' => 'Toptaak 2' ]);
+
+		$section->allowedColumns([ 'content', 'video' ]);
+		$section->allowedViews([ 'half-half', 'fullwidth' ]);
+
+		$section = array(
+			'view' => 'half-half',
+			'class' => 'toptaak',
+			'defaultVariation' => 'toptaak-1';
+		);
+
+		$columns = [
+			Column::toptaak(),
+			Column::toptaak()
+		];
+
+
+		$section->columns($columns);
+
+	})*/
