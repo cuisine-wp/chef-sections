@@ -18,45 +18,6 @@
 		}
 
 
-		/**************************************************/
-		/**                   UI                          */
-		/**************************************************/
-
-		/**
-		 * Build the dropdown to select a container
-		 * 
-		 * @return string (html, echoed)
-		 */
-		public function buildDropdown()
-		{
-
-			if( !$this->collection->empty() ){
-				
-				echo '<div class="section-dropdown-wrapper container-dropdown">';
-					echo '<button class="primary btn container-dropdown">';
-						_e( 'Select a container', 'chefsections' );
-					echo '</button>';
-
-					echo '<div class="dropdown-inner">';
-						
-						foreach( $this->collection->all() as $slug => $container ){
-
-							echo '<div class="add-section-btn section-cont" ';
-							echo 'data-action="addSectionContainer" ';
-							echo 'data-post_id="'.$this->postId.'" ';
-							echo 'data-container_type="'.$slug.'">';
-								echo $container['label'];
-							echo '</div>';
-						}
-
-					echo '</div>';
-
-				echo '</div>';
-
-			}
-		}
-
-
 
 		/**************************************************/
 		/**           Handle adding a container           */

@@ -6,8 +6,9 @@
 	use Cuisine\Utilities\Session;
 	use ChefSections\Helpers\PostType;
 	use ChefSections\SectionTypes\ContentSection;
-	use ChefSections\Helpers\Section as SectionHelper;
 	use ChefSections\Collections\SectionCollection;
+	use ChefSections\Helpers\Section as SectionHelper;
+	use ChefSections\Admin\Ui\Sections\ContentSectionUi;
 
 	class SectionHandler extends BaseHandler{
 
@@ -21,24 +22,6 @@
 		public function setCollection()
 		{
 			$this->collection = new SectionCollection( $this->postId );
-		}
-
-
-		/*=============================================================*/
-		/**             UI                                             */
-		/*=============================================================*/
-
-
-		/**
-		 * Build an "Add Section"-button
-		 * 
-		 * @return string (html, echoed)
-		 */
-		public function buildButton()
-		{
-			echo '<div class="add-section-btn" data-action="createSection" data-post_id="'.$this->postId.'">';
-				_e( 'Add Section', 'chefsections' );
-			echo '</div>';
 		}
 
 		/*=============================================================*/
@@ -134,7 +117,7 @@
 			update_post_meta( $this->postId, 'sections', $_sections );
 
 
-			return ( new ContentSection( $args ) )->build();
+			return $this->getSectionUi( $args );
 		}
 
 
@@ -187,8 +170,7 @@
 			$_sections[ $section_id ]['columns'] = $new;
 			update_post_meta( $this->postId, 'sections', $_sections );
 
-			$section = new ContentSection( $_sections[ $section_id ] );
-			return $section->build();
+			return $this->getSectionUi( $_sections[ $section_id ] );
 		
 		}
 
@@ -241,6 +223,20 @@
 			}
 
 			return true;
+		}
+
+
+		/**
+		 * Give back a section UI based on the handler arguments
+		 * 
+		 * @param  Array $args
+		 * 
+		 * @return string (html, echoed)
+		 */
+		public function getSectionUi( $args )
+		{
+			$section = new ContentSection( $args );
+			return ( new ContentSectionUi( $section ) )->build();
 		}
 
 

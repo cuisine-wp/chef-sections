@@ -79,6 +79,8 @@
 			if( !isset( $section['type'] ) )
 				$section['type'] = 'section';
 
+			cuisine_dump( $section );
+			
 			switch( $section['type'] ){
 
 				case 'reference':

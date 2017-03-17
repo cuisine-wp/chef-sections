@@ -6,6 +6,7 @@
 	use ChefSections\Collections\SectionCollection;
 	use ChefSections\Collections\ReferenceCollection;
 	use ChefSections\Helpers\Section as SectionHelper;
+	use ChefSections\Admin\Ui\Sections\ReferenceSectionUi;
 
 	class TemplateHandler extends BaseHandler{
 
@@ -20,45 +21,7 @@
 			$this->collection = new ReferenceCollection();
 		}
 
-		/**************************************************/
-		/**                   UI                          */
-		/**************************************************/
 
-		/**
-		 * Build the dropdown to select a reference
-		 * 
-		 * @return string (html, echoed)
-		 */
-		public function buildDropdown()
-		{
-			echo '<div class="section-dropdown-wrapper template-dropdown">';
-				echo '<button class="primary btn template-dropdown">';
-					_e( 'Select a template', 'chefsections' );
-				echo '</button>';
-
-				echo '<div class="dropdown-inner">';
-
-					foreach( $this->collection->toArray()->all() as $item ){
-
-						echo '<div class="add-section-btn" ';
-						echo 'data-action="addSectionTemplate" ';
-						echo 'data-post_id="'.$this->postId.'" ';
-						echo 'data-template_id="'.$item['ID'].'">';
-							echo $item['post_title'];
-						echo '</div>';
-					}
-
-
-				echo '</div>';
-
-			echo '</div>';
-		}
-
-
-
-		/**************************************************/
-		/**           Handle adding a template            */
-		/**************************************************/
 
 		/**
 		 * Add a reference section
@@ -107,8 +70,9 @@
 
 			//create the new Reference object, and build it
 			$section = new Reference( $args );
-			return $section->build();
+			return ( new ReferenceSectionUi( $section ) )->build();
 		}
+
 		
 
 		/**

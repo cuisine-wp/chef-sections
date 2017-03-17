@@ -2,11 +2,45 @@
 
 	namespace ChefSections\Front;
 
-	use \ChefSections\Sections\Section;
-	use \ChefSections\Wrappers\Template;
 	use \stdClass;
+	use \Cuisine\Utilities\Session;
+	use \ChefSections\Wrappers\Template;
+	use \ChefSections\SectionTypes\ContentSection;
+	use \ChefSections\Collections\SectionCollection;
 
 	class Walker{
+
+
+		/**
+		 * The current post ID
+		 * 
+		 * @var int
+		 */
+		protected $postId;
+
+		/**
+		 * Section collection
+		 * 
+		 * @var ChefSections\Collections\SectionCollection;
+		 */
+		protected $collection;
+
+
+		public function __construct()
+		{
+			$this->postId = Session::rootPostId();
+			$this->setCollection( $this->postId );
+		}
+
+		/**
+		 * Set the collection
+		 *
+		 * @return void
+		 */
+		public function setCollection( $postId )
+		{
+			$this->collection = new SectionCollection( $postId );	
+		}
 
 
 		/**
@@ -18,11 +52,11 @@
 
 			ob_start();
 
-			foreach( $this->sections as $section ){
+			foreach( $this->collection->all() as $section ){
 
 				$section->beforeTemplate();
 
-				Template::section( $section )->display();
+					Template::section( $section )->display();
 
 				$section->afterTemplate();
 			}
@@ -38,40 +72,39 @@
 		/**
 		* Get a single section
 		*
-		* @param int $post_id
-		* @param int $section_id
+		* @param int $postId
+		* @param int $sectionId
+		* 
 		* @return string (html)
 		*/
-		public function get_section( $post_id, $section_id ){
+		public function get_section( $postId, $sectionId ){
 
 			$template = false;
-			$sections = get_post_meta( $post_id, 'sections', true );
+			$sections = $this->collection;
 
-			if( is_array( $sections ) ){
+			//check if we need to load a new collection:
+			if( $post_id !== $this->postId )
+				$sections = new SectionCollection( $postId );
 
-				foreach( $sections as $section ){
 
-					//if this section in the loop matches
-					//the one we're looking for:
-					if( $section['id'] == $section_id ){
+			//if the collection isn't empty:
+			if( !$sections->empty() ){
 
-						$args = $section;
+				//get the section:
+				$section = $sections->get( $sectionId );
 
-						//setup section object
-						$section = new Section( $args );
+				if( !is_null( $section ) ){
 
-						ob_start();
+					ob_start();
 
-							$section->beforeTemplate();
+						$section->beforeTemplate();
 
-							//render it's template:
-							Template::section( $section )->display();
+						//render it's template:
+						Template::section( $section )->display();
 
-							$section->afterTemplate();
+						$section->afterTemplate();
 
-						$template = ob_get_clean();
-
-					}
+					$template = ob_get_clean();
 				}
 			}
 
@@ -102,13 +135,7 @@
 
        		$template = $posts[0];
 
-			//set the new post global
-       		$GLOBALS['post'] = $template;
-
-       		$this->postId = $template->ID;
-
-			$this->sections = $this->getSections();
-			$this->highestId = $this->getHighestId();
+    		$this->setCollection( $template->ID );
 
 			return self::walk();
 
@@ -156,12 +183,17 @@
 		 *
 		 * @return bool
 		 */
-		public function hasSections(){
+		public function hasSections( $postId = null ){
 
-			if( !empty( $this->sections ) )
-				return true;
+			//set custom collection, if applicable:
+			if( !is_null( $postId ) )
+				$this->setCollection( $postId );
 
-			return false;
+			//check if empty
+			if( $this->collection->empty() )
+				return false;
+
+			return true;
 		}
 
 

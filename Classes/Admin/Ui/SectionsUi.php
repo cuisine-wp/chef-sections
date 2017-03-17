@@ -5,6 +5,11 @@
 	use Cuisine\Utilities\Session;
 	use ChefSections\Helpers\PostType;
 	use ChefSections\Collections\SectionCollection;
+	use ChefSections\Admin\Ui\Sections\ContentSectionUi;
+	use ChefSections\Admin\Ui\Sections\ContainerSectionUi;
+	use ChefSections\Admin\Ui\Sections\ReferenceSectionUi;
+	use ChefSections\Admin\Ui\Sections\BlueprintSectionUi;
+
 
 	class SectionsUi{
 		
@@ -77,7 +82,8 @@
 
 				foreach( $sections as $section ){
 
-					$section->build();
+					//find the right section UI class and run the build command
+					$this->getSectionUiClass( $section )->build();
 
 				}
 
@@ -85,7 +91,7 @@
 			}else{
 
 				echo '<div class="section-wrapper msg">';
-					echo '<p>'.__('Nog geen secties aangemaakt.', 'chefsections').'</p>';
+					echo '<p>'.__('No sections yet.', 'chefsections').'</p>';
 					echo '<span class="spinner"></span>';
 				echo '</div>';
 			
@@ -93,6 +99,40 @@
 
 			echo '</div>';
 
+		}
+
+
+		/**
+		 * Returns an instance of the right UI Class
+		 *
+		 * @param ChefSections\SectionTypes\BaseSection $section
+		 * 
+		 * @return ChefSections\Admin\Ui\Sections\BaseSectionUI
+		 */
+		public function getSectionUiClass( $section )
+		{
+			switch( $section->type ){
+
+				case 'reference':
+
+					return new ReferenceSectionUi( $section );
+					break;
+
+				case 'container':
+
+					return new ContainerSectionUi( $section );
+					break;
+
+				case 'blueprint':
+
+					return new BlueprintSectionUi( $section );
+					break;
+
+				default:
+
+					return new ContentSectionUi( $section );
+					break;
+			}
 		}
 
 
