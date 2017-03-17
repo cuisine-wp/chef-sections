@@ -1,6 +1,6 @@
 <?php
 
-	namespace ChefSections\Admin\Managers;
+	namespace ChefSections\Admin\Handlers;
 
 
 	use Cuisine\Utilities\Session;
@@ -9,7 +9,7 @@
 	use ChefSections\Helpers\Section as SectionHelper;
 	use ChefSections\Collections\SectionCollection;
 
-	class SectionManager extends BaseManager{
+	class SectionHandler extends BaseHandler{
 
 
 

@@ -1,12 +1,11 @@
 <?php
 
-	namespace ChefSections\Admin\Generators;
+	namespace ChefSections\Admin\Handlers;
 
 	use WP_Query;
 	use ChefSections\SectionTypes\Blueprint as BlueprintSection;
-	use ChefSections\Contracts\Generator as GeneratorContract;
 
-	class Blueprint extends BaseGenerator implements GeneratorContract{
+	class BlueprintHandler extends BaseHandler{
 
 
 		/**
@@ -18,19 +17,31 @@
 
 
 		/**
-		 * Constructor for this class
+		 * Set the collection for this class
 		 *
-		 * @param int $postId
-		 *
-		 * @return ChefSections\Admin\Generators\Blueprint
+		 * @return void
 		 */
-		public function __construct( $postId )
+		public function setCollection()
 		{
-			parent::__construct( $postId );
-			$this->blueprints = $this->getBlueprints();
+			$this->collection = $this->getBlueprints();
 		}
 
 	
+
+		/**
+		 * Maybe generate a new post-type post out of a blueprint
+		 * 
+		 * @return bool
+		 */
+		public function maybeGenerate()
+		{
+			if( $this->check() )
+				return $this->generate();
+
+			return false;
+		}
+
+
 
 		/**
 		 * Checks wether this blueprint applies to the current post
@@ -39,7 +50,24 @@
 		 */
 		public function check()
 		{
-			if( parent::check() && !is_null( $this->blueprints ) )
+			if( $this->checkPage() && !is_null( $this->blueprints ) )
+				return true;
+
+			return false;
+		}
+
+	/**
+		 * Checks if this is the page this handler should be run
+		 * 
+		 * @return bool
+		 */
+		public function checkPage()
+		{
+
+			global $pagenow, $post;
+			$status = get_post_status( $this->postId );
+
+			if( $status == 'auto-draft' && $pagenow == 'post-new.php' )
 				return true;
 
 			return false;

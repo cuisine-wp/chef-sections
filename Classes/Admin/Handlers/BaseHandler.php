@@ -1,10 +1,10 @@
 <?php
 
-	namespace ChefSections\Admin\Managers;
+	namespace ChefSections\Admin\Handlers;
 
 	use Cuisine\Utilities\Session;
 
-	class BaseManager{
+	class BaseHandler{
 
 
 		/**

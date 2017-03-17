@@ -1,10 +1,10 @@
 <?php
 
-	namespace ChefSections\Admin\Managers;
+	namespace ChefSections\Admin\Handlers;
 
 	use ChefSections\Collections\ContainerCollection;
 
-	class ContainerManager extends BaseManager{
+	class ContainerHandler extends BaseHandler{
 
 
 		/**

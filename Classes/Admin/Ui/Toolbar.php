@@ -3,9 +3,10 @@
 	namespace ChefSections\Admin\Ui;
 
 	use Cuisine\Utilities\Session;
-	use ChefSections\Admin\Managers\SectionManager;
-	use ChefSections\Admin\Managers\ContainerManager;
-	use ChefSections\Admin\Managers\TemplateManager;
+	use ChefSections\Admin\Handlers\SectionHandler;
+	use ChefSections\Admin\Handlers\ContainerHandler;
+	use ChefSections\Admin\Handlers\TemplateHandler;
+
 
 	class Toolbar{
 
@@ -20,13 +21,13 @@
 
 			echo '<div class="section-wrapper dotted-bg" id="section-builder-ui">';
 
-				( new SectionManager() )->buildButton();
+				( new SectionHandler() )->buildButton();
 
 				//container dropdown:
-				( new ContainerManager() )->buildDropdown();
+				( new ContainerHandler() )->buildDropdown();
 
 				//template dropdown:
-				( new TemplateManager() )->buildDropdown();
+				( new TemplateHandler() )->buildDropdown();
 
 
 				echo '<span class="update-btn-wrapper">';

@@ -7,8 +7,8 @@
 	use ChefSections\Wrappers\Walker;
 	use ChefSections\Wrappers\AjaxInstance;
 	use ChefSections\Wrappers\ReferenceBuilder;
-	use ChefSections\Admin\Managers\SectionManager;
-	use ChefSections\Admin\Managers\TemplateManager;
+	use ChefSections\Admin\Handlers\SectionHandler;
+	use ChefSections\Admin\Handlers\TemplateHandler;
 
 	class Ajax extends AjaxInstance{
 
@@ -39,7 +39,7 @@
 
 				parent::setPostGlobal();
 
-				( new SectionManager() )->addSection();
+				( new SectionHandler() )->addSection();
 
 				die();
 
@@ -50,7 +50,7 @@
 
 				parent::setPostGlobal();
 
-				( new SectionManager() )->deleteSection();
+				( new SectionHandler() )->deleteSection();
 
 				die();
 			});
@@ -60,7 +60,7 @@
 
 				parent::setPostGlobal();
 
-				( new SectionManager() )->sortSections();
+				( new SectionHandler() )->sortSections();
 
 				die();
 
@@ -70,7 +70,7 @@
 
 				parent::setPostGlobal();
 
-				( new SectionManager() )->sortColumns();
+				( new SectionHandler() )->sortColumns();
 
 				die();
 			});
@@ -80,7 +80,7 @@
 
 				parent::setPostGlobal();
 
-				( new SectionManager() )->changeView();
+				( new SectionHandler() )->changeView();
 
 				die();
 
@@ -110,7 +110,7 @@
 				
 				parent::setPostGlobal();
 
-				( new TemplateManager() )->addReference();
+				( new TemplateHandler() )->addReference();
 
 				die();
 
@@ -128,7 +128,7 @@
 
 				parent::setPostGlobal();
 
-				( new ContainerManager() )->addContainer();
+				( new ContainerHandler() )->addContainer();
 
 				die();
 

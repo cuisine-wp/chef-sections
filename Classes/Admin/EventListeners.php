@@ -5,8 +5,8 @@
 	use ChefSections\Wrappers\StaticInstance;
 	use ChefSections\Wrappers\SectionsUi;
 	use ChefSections\Admin\Ui\Toolbar;
-	use ChefSections\Admin\Managers\SectionManager;
-	use ChefSections\Admin\Generators\Blueprint;
+	use ChefSections\Admin\Handlers\SectionHandler;
+	use ChefSections\Admin\Handlers\BlueprintHandler;
 	use ChefSections\Collections\ReferenceCollection;
 
 	use Cuisine\Utilities\Url;
@@ -91,7 +91,7 @@
 			//saving
 			add_action( 'save_post', function( $post_id ){
 
-				( new SectionManager( $post_id ) )->saveSections();
+				( new SectionHandler( $post_id ) )->saveSections();
 
 			});
 
@@ -121,7 +121,7 @@
 			//when creating a new post, check if we need to apply a template:
 			add_action( 'save_post', function( $post_id ){
 				
-				( new Blueprint( $post_id ) )->maybeGenerate();
+				( new BlueprintHandler( $post_id ) )->maybeGenerate();
 
 			});
 		}

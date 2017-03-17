@@ -1,13 +1,13 @@
 <?php
 
-	namespace ChefSections\Admin\Managers;
+	namespace ChefSections\Admin\Handlers;
 
 	use ChefSections\SectionTypes\Reference;
 	use ChefSections\Collections\SectionCollection;
 	use ChefSections\Collections\ReferenceCollection;
 	use ChefSections\Helpers\Section as SectionHelper;
 
-	class TemplateManager extends BaseManager{
+	class TemplateHandler extends BaseHandler{
 
 
 		/**
