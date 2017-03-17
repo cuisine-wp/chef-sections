@@ -87,7 +87,10 @@ if (!class_exists('ChefSections')) {
                 'Classes/Hooks',
 
                 'Classes/Collections',
-                
+
+                'Classes/Generators/Database',
+                'Classes/Generators',
+
                 'Classes/Admin/Containers',
                 'Classes/Admin/Handlers',
                 'Classes/Admin/Panels',
