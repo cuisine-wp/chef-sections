@@ -357,8 +357,7 @@ var SectionBuilder = new function(){
 				
 		var self = this;
 		jQuery.post( ajaxurl, data, function( response ){
-			console.log( response );
-			/*
+
 			_placeholder.replaceWith( response );
 
 			//order items:
@@ -372,7 +371,6 @@ var SectionBuilder = new function(){
 
 			//remove the spinner:
 			$('#section-builder-ui .spinner').removeClass( 'show' );
-			*/	
 		});
 	}
 

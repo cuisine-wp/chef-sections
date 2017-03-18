@@ -51,12 +51,12 @@
 			});
 
 
-			add_action( 'admin_footer', function(){
+			/*add_action( 'admin_footer', function(){
 
 				$_POST['container_slug'] = 'group';
 				( new ContainerHandler() )->addContainer();
 
-			});
+			});*/
 
 			//add roles
 			add_action( 'init', function(){
