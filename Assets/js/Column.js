@@ -298,7 +298,9 @@
 						'properties'	: properties
 			};
 
+			console.log( data );
 
+			/*
 
 			jQuery.post( ajaxurl, data, function( response ){
 
@@ -309,7 +311,7 @@
 				SectionBuilder.refresh();
 				refreshFields();
 
-			});
+			});*/
 		},
 
 
@@ -327,17 +329,16 @@
 			self.$( '.loader' ).addClass( 'show' );
 
 			var data = {
-						'action' 		: 'saveColumnType',
-						'post_id' 		: self.postId,
-						'column_id'		: self.columnId,
-						'section_id'	: self.sectionId,
-						'type'			: type
+				'action' 		: 'saveColumnType',
+				'post_id' 		: self.postId,
+				'column_id'		: self.columnId,
+				'section_id'	: self.sectionId,
+				'type'			: type
 			};
 
 			jQuery.post( ajaxurl, data, function( response ){
 
 				self.$el.replaceWith( response );
-
 				SectionBuilder.refresh();
 				refreshFields();
 

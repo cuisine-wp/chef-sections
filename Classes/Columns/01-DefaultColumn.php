@@ -7,6 +7,8 @@ use Cuisine\Wrappers\Field;
 use Cuisine\Wrappers\User;
 use ChefSections\Wrappers\Column;
 use ChefSections\Wrappers\Template;
+use ChefSections\Collections\SectionCollection;
+use ChefSections\Helpers\Column as ColumnHelper;
 use ChefSections\Contracts\Column as ColumnContract;
 
 /**
@@ -54,6 +56,13 @@ class DefaultColumn implements ColumnContract{
 	public $section_id;
 
 	/**
+	 * Full section object
+	 * 
+	 * @var ChefSections\Sections\BaseSection
+	 */
+	public $section;
+
+	/**
 	 * Column position within the section
 	 *
 	 * @var int;
@@ -93,15 +102,11 @@ class DefaultColumn implements ColumnContract{
 	 * @param Int $id      Column ID
 	 * @param Int $post_id \ChefSections\Sections\Section
 	 */
-	function __construct( $id, $section_id, $props = array() ){
+	function __construct( $id, $section, $props = array() ){
 
 		global $post;
 
 		$this->id = $id;
-
-		$this->section_id = $section_id;
-
-		$this->fullId = $this->section_id.'_'.$this->id;
 
 		$this->post_id = ( isset( $post ) ? $post->ID : null );
 
@@ -110,6 +115,20 @@ class DefaultColumn implements ColumnContract{
 		if( isset( $props['post_id'] ) ){
 			$this->post_id = $props['post_id'];
 		}
+
+
+		//set the section variable:
+		if( is_int( $section ) ){
+			$collection = new SectionCollection( $this->post_id );
+			$section = $collection->get( $section );
+			dd( $section );
+		}
+
+		$this->section = $section;
+		$this->section_id = $section->id;
+
+		$this->fullId = $this->section_id.'_'.$this->id;
+
 
 		//get the properties of this column:
 		$this->getProperties();
@@ -395,8 +414,8 @@ class DefaultColumn implements ColumnContract{
 	private function buildControls(){
 
 		//create key - label pairs for this dropdown:
-		$keys = array_keys( Column::getAvailableTypes() );
-		$labels = Sort::pluck( Column::getAvailableTypes(), 'name' );
+		$keys = array_keys( ColumnHelper::getAvailableTypes() );
+		$labels = Sort::pluck( ColumnHelper::getAvailableTypes(), 'name' );
 
 		$types = array_combine( $keys, $labels );
 		$name = '_column_type_'.$this->fullId;

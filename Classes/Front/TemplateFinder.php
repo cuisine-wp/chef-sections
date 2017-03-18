@@ -256,17 +256,17 @@ class TemplateFinder {
 	 * 
 	 * @return array
 	 */
-	public function getFiles( $template_prefix = false ){
+	public function getFiles( $template_prefix = null ){
 
 
 		switch( $this->type ){
 
 			case 'section':
 
-				$base = apply_filters( 'chef_sections_section_template_base', 'sections/' );
+				$base = $this->obj->getTemplateBase();
+				$base = apply_filters( 'chef_sections_section_template_base', $base.'/', $this->obj );
 
-
-				if( $template_prefix )
+				if( !is_null( $template_prefix ) )
 					$base .= $template_prefix.'-';
 				
 

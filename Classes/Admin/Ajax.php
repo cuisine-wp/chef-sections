@@ -7,6 +7,7 @@
 	use ChefSections\Wrappers\Walker;
 	use ChefSections\Wrappers\AjaxInstance;
 	use ChefSections\Wrappers\ReferenceBuilder;
+	use ChefSections\Admin\Handlers\ColumnHandler;
 	use ChefSections\Admin\Handlers\SectionHandler;
 	use ChefSections\Admin\Handlers\TemplateHandler;
 	use ChefSections\Admin\Handlers\ContainerHandler;
@@ -148,7 +149,7 @@
 
 				parent::setPostGlobal();
 
-				Column::saveType();
+				( new ColumnHandler() )->saveType();
 				die();
 
 			});
@@ -160,7 +161,7 @@
 
 				parent::setPostGlobal();
 				
-				echo Column::saveProperties();
+				echo ( new ColumnHandler() )->saveProperties();
 				die();
 
 			});
@@ -170,7 +171,7 @@
 
 				parent::setPostGlobal();
 
-				Column::refreshColumn();
+				( new ColumnHandler() )->refreshColumn();
 				die();
 
 			});

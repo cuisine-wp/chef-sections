@@ -9,6 +9,7 @@
 	use ChefSections\Wrappers\Column;
 	use ChefSections\Wrappers\Template;
 	use ChefSections\Wrappers\SectionsBuilder;
+	use ChefSections\Helpers\Column as ColumnHelper;
 	use ChefSections\Helpers\Section as SectionHelper;
 
 
@@ -330,9 +331,9 @@
 						'post_id'	=>	 $this->post_id
 					);
 
-					if( Column::typeExists( $type ) ){
+					if( ColumnHelper::typeExists( $type ) ){
 
-						$arr[] = Column::$type( $col_key, $this->id, $props );
+						$arr[] = Column::$type( $col_key, $this, $props );
 		
 					}else{
 						$arr[] = false;
@@ -380,6 +381,21 @@
 
 		}
 
+
+		/*=============================================================*/
+		/**             Template functions                             */
+		/*=============================================================*/
+
+
+		/**
+		 * Returns the template base for this section
+		 * 
+		 * @return string
+		 */
+		public function getTemplateBase()
+		{
+			return $this->type.'s';
+		}
 
 		/**
 		 * Returns the title field
