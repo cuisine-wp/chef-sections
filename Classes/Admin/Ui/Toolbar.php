@@ -9,25 +9,54 @@
 
 	class Toolbar{
 
+		/**
+		 * Current post id
+		 * 
+		 * @var int
+		 */
+		protected $postId;
+
+		/**
+		 * Template collection
+		 * 
+		 * @var ChefSections\Collections\ReferenceCollection
+		 */
+		protected $templates;
+
+		/**
+		 * Container collection
+		 * 
+		 * @var ChefSections\Collections\ContainerCollection
+		 */
+		protected $containers;
+
+
+		/**
+		 * Constructor
+		 */
+		public function __construct()
+		{
+			$this->templates = ( new ReferenceCollection() )->toArray();
+			$this->containers = ( new ContainerCollection() )->toArray();
+			$this->postId = Session::postId();
+		}
+
 
 		/**
 		 * Build the toolbar
 		 * 
 		 * @return string (html, echoed)
 		 */
-		public static function build()
+		public function build()
 		{
 
 			echo '<div class="section-wrapper dotted-bg" id="section-builder-ui">';
 
-				static::buildButton();
+				$this->createSectionButton();
 
-				//container dropdown:
-				static::containerDropdown();
+				$this->createTemplateButton();
 
-				//template dropdown:
-				static::templateDropdown();
-
+				$this->createContainerButton();
 
 				echo '<span class="update-btn-wrapper">';
 					
@@ -40,95 +69,126 @@
 				//loader
 				echo '<span class="spinner"></span>';
 
-
 			echo '</div>';
+
+			//add template json:
+			echo '<script>';
+				echo 'var SectionTemplates = '.$this->templateJson().';';
+				echo 'var SectionContainers = '.$this->containerJson().';';
+			echo '</script>';
+
 		}
 
-
 		/**
-		 * Build an "Add Section"-button
+		 * Returns the HTML for a section button
 		 * 
 		 * @return string (html, echoed)
 		 */
-		public static function buildButton()
+		public function createSectionButton()
 		{
-			$postId = Session::postId();
-			echo '<div class="add-section-btn" data-action="createSection" data-post_id="'.$postId.'">';
+			echo '<div class="add-section-btn" data-action="createSection" data-post_id="'.$this->postId.'">';
+				echo '<span class="dashicons dashicons-plus-alt"></span>';
 				_e( 'Add Section', 'chefsections' );
 			echo '</div>';
+
 		}
 
-
 		/**
-		 * Add the dropdown for containers
+		 * Returns the HTML for the template button
 		 * 
-		 * @return string (html, echoed )
+		 * @return string (html, echoed)
 		 */
-		public static function containerDropdown()
+		public function createTemplateButton()
 		{
 
-			$postId = Session::postId();
-			$containers = new ContainerCollection();
+			if( !$this->templates->empty() ){
 
-			if( !$containers->empty() ){
+				echo '<div class="add-section-btn" ';
+				echo 'data-type="search" ';
+				echo 'data-content="SectionTemplates" ';
+				echo 'data-post_id="'.$this->postId.'" ';
+				echo 'data-action="addSectionTemplate" ';
+				echo 'data-label="'.__( 'Please select your template', 'chefsections' ).'" ';
+				echo '>';
+
+					echo '<span class="dashicons dashicons-media-document"></span>';
+					_e( 'Add a Template', 'chefsections' );
+					echo '<small><span class="dashicons dashicons-arrow-down"></span></small>';
 				
-				echo '<div class="section-dropdown-wrapper container-dropdown">';
-					echo '<button class="primary btn container-dropdown">';
-						_e( 'Select a container', 'chefsections' );
-					echo '</button>';
-
-					echo '<div class="dropdown-inner">';
-						
-						foreach( $containers->all() as $slug => $container ){
-
-							echo '<div class="add-section-btn section-cont" ';
-							echo 'data-action="addSectionContainer" ';
-							echo 'data-post_id="'.$postId.'" ';
-							echo 'data-container_type="'.$slug.'">';
-								echo $container['label'];
-							echo '</div>';
-						}
-
-					echo '</div>';
-
 				echo '</div>';
 
 			}
 		}
 
-
 		/**
-		 * Adds the dropdown for templates
+		 * Creates the container button
 		 * 
-		 * @return string (html, echoed)
+		 * @return string (html,echoed)
 		 */
-		public static function templateDropdown()
+		public function createContainerButton()
 		{
+			if( !$this->containers->empty() ){
+				echo '<div class="add-section-btn" ';
+				echo 'data-type="search" ';
+				echo 'data-content="SectionContainers" ';
+				echo 'data-post_id="'.$this->postId.'" ';
+				echo 'data-action="addSectionContainer" ';
+				echo 'data-label="'.__( 'Please select your container', 'chefsections' ).'" ';
+				echo '>';
 
-			$postId = Session::postId();
-			$references = new ReferenceCollection();
-
-			echo '<div class="section-dropdown-wrapper template-dropdown">';
-				echo '<button class="primary btn template-dropdown">';
-					_e( 'Select a template', 'chefsections' );
-				echo '</button>';
-
-				echo '<div class="dropdown-inner">';
-
-					foreach( $references->toArray()->all() as $item ){
-
-						echo '<div class="add-section-btn" ';
-						echo 'data-action="addSectionTemplate" ';
-						echo 'data-post_id="'.$postId.'" ';
-						echo 'data-template_id="'.$item['ID'].'">';
-							echo $item['post_title'];
-						echo '</div>';
-					}
-
+					echo '<span class="dashicons dashicons-feedback"></span>';
+					_e( 'Add a Container', 'chefsections' );
+					echo '<small><span class="dashicons dashicons-arrow-down"></span></small>';
 
 				echo '</div>';
-
-			echo '</div>';
+			}
 		}
+
+
+
+
+		/**
+		 * Create the Container Json
+		 * 
+		 * @return string (html, echoed )
+		 */
+		public function containerJson()
+		{
+			$collection = $this->containers->all();
+			$containers = [];
+
+
+			foreach( $collection as $slug => $item ){
+				$containers[] = [
+					'id' => $slug,
+					'name' => $item['label']
+				];
+			}
+
+			return json_encode( $containers );
+
+		}
+
+
+		/**
+		 * Get's the template JSON
+		 * 
+		 * @return string (json)
+		 */
+		public function templateJson(){
+			$collection = array_values( $this->templates->all() );
+			$templates = [];
+
+			foreach( $collection as $item ){
+				$templates[] = [
+					'id' => $item['ID'],
+					'name' => $item['post_title'],
+					'type' => 'reference'
+				];
+			}
+
+			return json_encode( $templates ); 
+		}
+
 
 	}

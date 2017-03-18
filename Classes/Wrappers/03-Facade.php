@@ -58,7 +58,6 @@
                 'walker'                  => 'ChefSections\Front\Walker',
                 'template'                => 'ChefSections\Front\TemplateFinder',
 
-                'sections-ui'             => 'ChefSections\Admin\Ui\SectionsUi',
                 'settingspanel'           => 'ChefSections\Admin\Panels\BasePanel',
 
                 //'stencilbuilder'          => 'ChefSections\Builders\StencilBuilder',

@@ -168,6 +168,17 @@
 		}
 
 
+		/**
+		 * Returns this collection as a JSON
+		 * 
+		 * @return string (json)
+		 */
+		public function toJson()
+		{
+			return json_encode( array_values( $this->toArray()->all() ) );
+		}
+
+
 		/*=============================================================*/
 		/**             Set class data:                                */
 		/*=============================================================*/

@@ -67,6 +67,7 @@ var SectionBuilder = new function(){
 
 		self.setSectionTypeSelect();
 		self.setAddSectionButton();
+		self.setAddSectionDraggbles();
 		self.setSectionsSortable();
 
 	}
@@ -260,42 +261,7 @@ var SectionBuilder = new function(){
 	}
 
 	/**
-	 * Fetching a section-template
-	 * 
-	 * @return html
-	 */
-	this.setSectionTemplateSelector = function(){
-
-		var self = this;
-
-		$('#getTemplate').on( 'change', function(){
-
-			if( $( '#getTemplate' ).val() !== 'none' ){
-
-				var data = {
-					action: 'loadTemplate',
-					post_id: $( '#getTemplate' ).data( 'post_id' ),
-					template_id: $( '#getTemplate' ).val()
-				}
-		
-				$('.section-wrapper.msg').addClass('loading');
-		
-				$.post( ajaxurl, data, function( response ){
-		
-		
-					jQuery('#section-container').append( response );
-					$('.section-wrapper.msg').remove();
-		
-					self.refresh();
-					refreshFields();
-				
-				});
-			}
-		});
-	}
-
-	/**
-	 * Adding sections 
+	 * Add sections by clicking the button 
 	 * 
 	 * @return html
 	 */
@@ -304,63 +270,196 @@ var SectionBuilder = new function(){
 		var self = this;
 
 		//add on click:
-		$('.add-section-btn').on( 'click', function( e ){
+		$('.add-section-btn').on( 'click on', function( e ){
 
 			e.preventDefault();
 
+			//create the placeholder:
+			var _html = '<div id="section-container" class="add-section-btn.ui-draggable-handle"></div>';
+			$('#section-container').append( _html );
+
+			var _placeholder = $('#section-container .add-section-btn.ui-draggable-handle' );
+				_placeholder.addClass('placeholder-block');
+				_placeholder.html( '<span class="spinner"></span> Adding section...' );
+
+
+			//gather data:
 			var data = $( this ).data();
 
-			console.log( data );
-			$('#section-builder-ui .spinner').addClass( 'show' );
+			if( data.type == 'search' ){
+					
+				self.launchSearchWindow( data, _placeholder, function( _newData ){
+					self.updateSections( _newData, _placeholder );
+				})
 
-			$.post( ajaxurl, data, function( response ){
-
-				$('#section-container').append( response );
-
-				//register new section here:
-				self.refresh();
-
-				//refresh the fields
-				refreshFields();
-
-				//remove the spinner:
-				$('#section-builder-ui .spinner').removeClass( 'show' );
-				
-			});
+			}else{
+				self.updateSections( data, _placeholder );
+			}
 		});
+	}
 
+	/**
+	 * Set the draggable buttons
+	 *
+	 * @return void
+	 */
+	this.setAddSectionDraggbles = function(){
+
+		var self = this;
 
 		jQuery('.add-section-btn').draggable({
 			connectToSortable: '#section-container',
 			helper: 'clone',
 			stop: function( event, ui ){
-				
+
 				var _placeholder = $('#section-container .add-section-btn.ui-draggable-handle' );
 				_placeholder.addClass('placeholder-block');
 				_placeholder.html( '<span class="spinner"></span> Adding section...' );
 
 				//set the data
 				var data = _placeholder.data();
+
 				//delete extra information, not needed:
 				delete data['sortableItem'];
 
 
-				jQuery.post( ajaxurl, data, function( response ){
+				if( data.type == 'search' ){
+					
+					self.launchSearchWindow( data, _placeholder, function( _newData ){
 
-					_placeholder.replaceWith( response );
+						delete _newData['sortableItem'];
+						
+						self.updateSections( _newData, _placeholder );
+					});
 
-					//order items:
-					self.setSectionOrder();
+				}else{
+					self.updateSections( data, _placeholder );
+				}
 
-					//register new section here:
-					self.refresh();
+				//
 
-					//refresh the fields
-					refreshFields();
-
-				});
 			}
 		});
+	}
+
+	/**
+	 * Update sections through AJAX
+	 * 
+	 * @param  JSON data
+	 * @param  DOM Element _placeholder
+	 * 
+	 * @return void
+	 */
+	this.updateSections = function( data, _placeholder ){
+		
+		//remove the spinner:
+		$('#section-builder-ui .spinner').addClass( 'show' );
+				
+		var self = this;
+		jQuery.post( ajaxurl, data, function( response ){
+			console.log( response );
+			/*
+			_placeholder.replaceWith( response );
+
+			//order items:
+			self.setSectionOrder();
+
+			//register new section here:
+			self.refresh();
+
+			//refresh the fields
+			refreshFields();
+
+			//remove the spinner:
+			$('#section-builder-ui .spinner').removeClass( 'show' );
+			*/	
+		});
+	}
+
+
+	/**
+	 * Launch a search window
+	 * 
+	 * @param  JSON   data
+	 * @param  Function callback
+	 * 
+	 * @return void
+	 */
+	this.launchSearchWindow = function( data, _placeholder, callback ){
+
+		var self = this;
+	
+		//add HTML
+		_placeholder.append( self.createSearchWindow( data ) );
+
+		jQuery('#closeSearch').on( 'click tap', function(){
+			jQuery( '#tempSearch' ).remove();
+			_placeholder.remove();
+		})
+
+		//init chosen:
+		jQuery('#tempSearchSelect').on('chosen:ready', function(event, data){
+			
+			jQuery( '#tempSearchSelect' ).trigger('chosen:open').trigger('chosen:activate');
+			jQuery( '#tempSearch .active-result').on( 'click tap', function(){
+				jQuery( '#tempSearchSelect' ).trigger('change');
+			});
+
+		}).chosen({
+			placeholder_text_single: 'Select your preference',
+			disable_search_threshold: 0
+		});
+
+
+		//set the callback:
+		jQuery( '#tempSearchSelect' ).on( 'change', function(){
+
+			var _templateId = jQuery( this ).val();
+			var _newData = data;
+			var _key = 'template_id';
+			if( data.content == 'SectionContainers' )
+				_key = 'container_slug';
+
+			_newData[ _key ] = _templateId;
+
+			jQuery( '#tempSearch' ).remove();
+			callback( _newData );
+		});
+
+		
+	}
+
+	/**
+	 * Generate HTML for the search window
+	 * 
+	 * @param  JSON data         
+
+	 * @return void
+	 */
+	this.createSearchWindow = function( data ){
+
+		var _options = window[ data.content ];
+
+		//generate HTML:
+		var _html = '<div id="tempSearch">';
+
+		_html += '<div id="closeSearch"><span class="dashicons dashicons-no"></span></div>';
+		
+		if( typeof( data.label ) != 'undefined' )
+			_html += '<strong>'+data.label+'</strong>';
+
+		_html += '<select id="tempSearchSelect" data-placeholder="Please select...">';
+			_html += '<option value="none"> </option>';
+			for( var i = 0; i < _options.length; i++ ){
+				_html += '<option value="'+_options[i]['id']+'">';
+				_html += _options[i]['name'];
+				_html += '</option>';
+			}
+
+		_html += '</select>';
+		_html += '</div>';
+
+		return _html;
 	}
 
 	/****************************************/

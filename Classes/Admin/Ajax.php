@@ -9,6 +9,7 @@
 	use ChefSections\Wrappers\ReferenceBuilder;
 	use ChefSections\Admin\Handlers\SectionHandler;
 	use ChefSections\Admin\Handlers\TemplateHandler;
+	use ChefSections\Admin\Handlers\ContainerHandler;
 
 	class Ajax extends AjaxInstance{
 

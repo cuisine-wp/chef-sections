@@ -3,10 +3,11 @@
 	namespace ChefSections\Admin;
 
 	use ChefSections\Wrappers\StaticInstance;
-	use ChefSections\Wrappers\SectionsUi;
+	use ChefSections\Admin\Ui\SectionsUi;
 	use ChefSections\Admin\Ui\Toolbar;
 	use ChefSections\Admin\Handlers\SectionHandler;
 	use ChefSections\Admin\Handlers\BlueprintHandler;
+	use ChefSections\Admin\Handlers\ContainerHandler;
 	use ChefSections\Collections\ReferenceCollection;
 
 	use Cuisine\Utilities\Url;
@@ -50,6 +51,13 @@
 			});
 
 
+			add_action( 'admin_footer', function(){
+
+				$_POST['container_slug'] = 'group';
+				( new ContainerHandler() )->addContainer();
+
+			});
+
 			//add roles
 			add_action( 'init', function(){
 
@@ -81,8 +89,8 @@
 				
 				if( isset( $post ) && !in_array( $post->ID, $dontload ) ){
 
-					Toolbar::build();
-					SectionsUi::build();
+					( new Toolbar() )->build();
+					( new SectionsUi() )->build();
 				
 				}
 

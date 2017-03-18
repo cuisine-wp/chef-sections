@@ -144,6 +144,7 @@
 			if( !isset( $args['hide_container'] ) )
 				$args['hide_container'] = 'false';
 
+
 			//set the name	
 			$args['name'] = $this->getName( $args );
 

@@ -87,7 +87,7 @@ if (!class_exists('ChefSections')) {
                 'Classes/Hooks',
 
                 'Classes/Collections',
-                
+
                 'Classes/Admin/Containers',
                 'Classes/Admin/Handlers',
                 'Classes/Admin/Panels',
@@ -96,6 +96,7 @@ if (!class_exists('ChefSections')) {
                 'Classes/Admin',
 
                 'Classes/SectionTypes',
+                'Classes/Containers',
                 'Classes/Columns',
 
                 'Classes/Front'

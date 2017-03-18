@@ -49,4 +49,25 @@
 		}
 
 
+		/**
+		 * Default Container args
+		 * 
+		 * @return array
+		 */
+		public static function defaultContainerArgs()
+		{
+
+			$args = array(
+				'title'				=> __( 'Sectie container title', 'chefsections' ),
+				'hide_title'		=> apply_filters('chef_sections_hide_title', false ),
+				'hide_container'	=> apply_filters('chef_sections_hide_container', true ),
+				'view'				=> 'grouped',
+				'type'				=> 'container'
+			);
+
+			$args = apply_filters( 'chef_sections_default_section_container_args', $args );
+			return $args;	
+		}
+
+
 	}
