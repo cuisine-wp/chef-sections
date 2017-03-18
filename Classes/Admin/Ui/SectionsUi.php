@@ -4,11 +4,8 @@
 
 	use Cuisine\Utilities\Session;
 	use ChefSections\Helpers\PostType;
+	use ChefSections\Helpers\SectionUi as SectionUiHelper;
 	use ChefSections\Collections\SectionCollection;
-	use ChefSections\Admin\Ui\Sections\ContentSectionUi;
-	use ChefSections\Admin\Ui\Sections\ContainerSectionUi;
-	use ChefSections\Admin\Ui\Sections\ReferenceSectionUi;
-	use ChefSections\Admin\Ui\Sections\BlueprintSectionUi;
 
 
 	class SectionsUi{
@@ -74,7 +71,8 @@
 			wp_nonce_field( Session::nonceAction, Session::nonceName );
 
 
-			echo '<div class="section-container" id="section-container">';
+			echo '<div class="section-flow section-sortables" id="main-section-container">';
+
 
 			$sections = $this->sections->getNonContainered();
 
@@ -83,7 +81,7 @@
 				foreach( $sections as $section ){
 
 					//find the right section UI class and run the build command
-					$this->getSectionUiClass( $section )->build();
+					SectionUiHelper::getClass( $section )->build();
 
 				}
 
@@ -100,41 +98,6 @@
 			echo '</div>';
 
 		}
-
-
-		/**
-		 * Returns an instance of the right UI Class
-		 *
-		 * @param ChefSections\SectionTypes\BaseSection $section
-		 * 
-		 * @return ChefSections\Admin\Ui\Sections\BaseSectionUI
-		 */
-		public function getSectionUiClass( $section )
-		{
-			switch( $section->type ){
-
-				case 'reference':
-
-					return new ReferenceSectionUi( $section );
-					break;
-
-				case 'container':
-
-					return new ContainerSectionUi( $section );
-					break;
-
-				case 'blueprint':
-
-					return new BlueprintSectionUi( $section );
-					break;
-
-				default:
-
-					return new ContentSectionUi( $section );
-					break;
-			}
-		}
-
 
 		/**
 		 * Rebuild the sections builder after a template has been applied

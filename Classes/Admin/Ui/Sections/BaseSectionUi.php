@@ -260,6 +260,13 @@
 			)->render();
 
 			Field::hidden(
+				$prefix.'[container_id]',
+				array(
+					'defaultValue' => $this->section->container_id
+				)
+			)->render();
+
+			Field::hidden(
 			
 				$prefix.'[type]',
 				array(

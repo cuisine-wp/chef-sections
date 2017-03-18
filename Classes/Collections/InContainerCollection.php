@@ -2,6 +2,11 @@
 
 	namespace ChefSections\Collections;
 
+	use Cuisine\Utilities\Sort;
+	use ChefSections\SectionTypes\ContentSection;
+	use ChefSections\SectionTypes\Blueprint;
+	use ChefSections\SectionTypes\Reference;
+	use ChefSections\SectionTypes\Stencil;
 
 	class InContainerCollection extends Collection{
 
@@ -58,4 +63,73 @@
 
 			return $items;
 		}
+
+
+		/**
+		 * Switches the raw html data to objects
+		 * 
+		 * @return array
+		 */
+		public function createObjects(){
+
+			$array = array();
+
+			if( !$this->empty() ){
+			
+				$sections = Sort::byField( $this->items, 'position', 'ASC' );
+			
+				if( $sections ){
+
+					foreach( $sections as $section ){
+
+						if( $section['type'] != 'container' )
+							$array[ $section['id'] ] = $this->getSectionType( $section );
+					
+					}
+				}
+			}
+
+			return $array;
+		}
+
+
+
+		/**
+		 * Returns the correct Section class
+		 * 
+		 * @return Section / Reference / Layout / Stencil
+		 */
+		public function getSectionType( $section ){
+
+			if( !isset( $section['type'] ) )
+				$section['type'] = 'section';
+			
+			switch( $section['type'] ){
+
+				case 'reference':
+
+					return new Reference( $section );
+
+				break;
+				case 'blueprint':
+
+					return new Blueprint( $section );
+
+				break;
+				case 'stencil':
+
+					return new Stencil( $section );
+
+				break;
+				default:
+
+					return new ContentSection( $section );
+
+				break;
+
+
+			}
+		}
+
+
 	}

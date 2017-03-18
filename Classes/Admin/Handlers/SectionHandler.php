@@ -47,6 +47,7 @@
 				return false;
 
 
+
 			if( isset( $_POST['section'] ) ){
 
 				$sections = $_POST['section'];
@@ -56,21 +57,28 @@
 
 					$columns = array();
 					$types = SectionHelper::viewTypes();
-					$count = $types[ $section['view'] ];
 
-					for( $i = 1; $i <= $count; $i++ ){
-
-						$string = '_column_type_'.$section['id'].'_'.$i;
-
-						if( isset( $_POST[$string] ) ){
-							$columns[ $i ] = $_POST[$string];
-						}else{
-							$columns[ $i ] = 'content';
-						}
-					}
-
+					//set the post id:
 					$sections[ $section['id'] ]['post_id'] = $this->postId;
-					$sections[ $section['id'] ]['columns'] = $columns;
+
+					//save columns, if it's not a container:
+					if( $section['type'] != 'container' ){
+
+						$count = $types[ $section['view'] ];
+
+						for( $i = 1; $i <= $count; $i++ ){
+
+							$string = '_column_type_'.$section['id'].'_'.$i;
+
+							if( isset( $_POST[$string] ) ){
+								$columns[ $i ] = $_POST[$string];
+							}else{
+								$columns[ $i ] = 'content';
+							}
+						}
+
+						$sections[ $section['id'] ]['columns'] = $columns;
+					}
 
 				}
 
@@ -253,6 +261,7 @@
 				'id'				=> $this->collection->getHighestId(),
 				'position'			=> ( count( $this->collection->get() ) + 1 ),
 				'post_id'			=> $this->postId,
+				'container_id'		=> ( isset( $_POST['container_id'] ) ? $_POST['container_id'] : null )
 			);
 
 			//return the args

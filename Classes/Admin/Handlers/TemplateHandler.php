@@ -46,9 +46,10 @@
 			
 			//set the section specifics:
 			$specifics = array(
-				'id'				=> $pageSections->getHighestId(),
-				'position'			=> ( count( $pageSections->all() ) + 1 ),
-				'post_id'			=> $this->postId,
+				'id'			=> $pageSections->getHighestId(),
+				'position'		=> ( count( $pageSections->all() ) + 1 ),
+				'post_id'		=> $this->postId,
+				'container_id'		=> ( isset( $_POST['container_id'] ) ? $_POST['container_id'] : null )
 			);
 
 			//get default args

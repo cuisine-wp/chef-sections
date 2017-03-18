@@ -82,7 +82,7 @@ var SectionBuilder = new function(){
 		//set width:
 		var _w = $('.section-container').innerWidth();
 		var _builder = $('#section-builder-ui');
-		var _container = $('#section-container');
+		var _container = $('#main-section-container');
 		var _offset = _builder.offset().top;
 
 		_builder.css({
@@ -173,7 +173,17 @@ var SectionBuilder = new function(){
 
 		jQuery('.section-wrapper').each( function( index, obj ){
 
-			var sec = new Section( { el: obj } );
+			if( $( obj ).hasClass( 'section-container' ) == false ){
+			
+				console.log( "section: "+$( obj ).attr( 'id' ) );
+				var sec = new Section( { el: obj } );
+			
+			}else{
+
+				console.log( "container: "+$( obj ).attr( 'id' ) )
+				var sec = new Container({ el: obj });
+			}
+
 			self._sections.push( sec );
 
 		});
@@ -196,7 +206,7 @@ var SectionBuilder = new function(){
 	this.setSectionsSortable = function(){
 
 		var self = this;
-		$('#section-container').sortable({
+		$('.section-sortables').sortable({
 			handle: '.pin',
 			placeholder: 'section-placeholder',
 			update: function (event, ui) {
@@ -216,7 +226,7 @@ var SectionBuilder = new function(){
 		var i = 1;
 
 		//regular sections:
-		jQuery('#section-container > .section-wrapper').each( function(){
+		jQuery('#main-section-container > .section-wrapper').each( function(){
 			var field = jQuery( this ).find( '.section-position' );
 			field.val( i );
 			i++;
@@ -225,7 +235,7 @@ var SectionBuilder = new function(){
 		var i = 1;
 
 		//handle containered sections:
-		jQuery('#section-container .section-wrapper .section-wrapper').each( function(){
+		jQuery('#main-section-container .section-wrapper .section-wrapper').each( function(){
 			var field = jQuery( this ).find( '.section-position' );
 			field.val( i );
 			i++;
@@ -276,9 +286,9 @@ var SectionBuilder = new function(){
 
 			//create the placeholder:
 			var _html = '<div id="section-container" class="add-section-btn.ui-draggable-handle"></div>';
-			$('#section-container').append( _html );
+			$('#main-section-container').append( _html );
 
-			var _placeholder = $('#section-container .add-section-btn.ui-draggable-handle' );
+			var _placeholder = $('#main-section-container .add-section-btn.ui-draggable-handle' );
 				_placeholder.addClass('placeholder-block');
 				_placeholder.html( '<span class="spinner"></span> Adding section...' );
 
@@ -308,21 +318,27 @@ var SectionBuilder = new function(){
 		var self = this;
 
 		jQuery('.add-section-btn').draggable({
-			connectToSortable: '#section-container',
+			connectToSortable: '.section-sortables',
 			helper: 'clone',
 			stop: function( event, ui ){
 
-				var _placeholder = $('#section-container .add-section-btn.ui-draggable-handle' );
+				var _placeholder = $('#main-section-container .add-section-btn.ui-draggable-handle' );
 				_placeholder.addClass('placeholder-block');
 				_placeholder.html( '<span class="spinner"></span> Adding section...' );
 
 				//set the data
 				var data = _placeholder.data();
 
+				//set container_id, if applicable:
+				var dropzone = _placeholder.parent();
+				if( typeof( dropzone.data('container_id') ) != 'undefined' )
+					data['container_id'] = dropzone.data( 'container_id' );
+
+
 				//delete extra information, not needed:
 				delete data['sortableItem'];
 
-
+				console.log( data );
 				if( data.type == 'search' ){
 					
 					self.launchSearchWindow( data, _placeholder, function( _newData ){
@@ -475,7 +491,7 @@ var SectionBuilder = new function(){
 
 		//fallback for plugin-loader bug in Yoast SEO
 		if( $('#YoastSEO-plugin-loading' ).length <= 0 )
-			$('#section-container').append( '<span style="display:none" id="YoastSEO-plugin-loading"></span>' );
+			$('#main-section-container').append( '<span style="display:none" id="YoastSEO-plugin-loading"></span>' );
 
 
 		YoastSEO.app.registerPlugin( 'chefSections', {status: 'loading'} );
@@ -531,7 +547,7 @@ var SectionBuilder = new function(){
 //init sections builder
 jQuery( window ).load( function( $ ){
 
-	if( jQuery('.section-container').length > 0 )
+	if( jQuery('#main-section-container').length > 0 )
 		SectionBuilder.init();
 	
 });

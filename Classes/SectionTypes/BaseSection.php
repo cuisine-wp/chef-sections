@@ -144,6 +144,9 @@
 			if( !isset( $args['hide_container'] ) )
 				$args['hide_container'] = 'false';
 
+			if( !isset( $args['columns'] ) )
+				$args['columns'] = [];
+
 
 			//set the name	
 			$args['name'] = $this->getName( $args );

@@ -559,7 +559,7 @@
 
 }
 
-.section-placeholder, #section-container .placeholder-block{
+.section-placeholder, #main-section-container .placeholder-block{
 	display:block;
 	width:100%;
 	height:150px;
@@ -650,7 +650,7 @@
   	}
 }
 
-#section-container .placeholder-block{
+#main-section-container .placeholder-block{
 	box-sizing:border-box;
 	background:transparent;
 	position: relative;
@@ -777,4 +777,20 @@
     	left: 50%;
     	margin-left: -5px;
     }
+}
+
+.section-container{
+	background: transparent;
+	border: 2px solid #e5e5e5;
+	.section-sortables{
+		width: 100%;
+		display: block;
+		min-height: 200px;
+		border: 1px dashed rgba(0,0,0,.3);
+		padding: 30px;
+
+		.section-wrapper:first-of-type{
+			margin-top: 0;
+		}
+	}
 }

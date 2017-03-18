@@ -29,12 +29,13 @@
 		public function getNonContainered()
 		{
 			$_result = [];
-			foreach( $this->objects as $section ){
+			foreach( $this->objects as $key => $section ){
 
-				if( is_null( $section->container_id ) )
-					$_result[] = $section;
+				if( is_null( $section->container_id ) || $section->container_id == '' )
+					$_result[ $key ] = $section;
 
 			}
+
 
 			return $_result;
 		}
@@ -95,6 +96,11 @@
 
 					return new Stencil( $section );
 
+				break;
+				case 'container':
+
+					return new Container( $section );
+					
 				break;
 				default:
 

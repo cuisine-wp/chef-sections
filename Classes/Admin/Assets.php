@@ -57,6 +57,14 @@
 				);
 
 				wp_enqueue_script( 
+					'sections_container', 
+					$url.'/js/Container.js', 
+					array( 'backbone', 'media-editor' ),
+					false,
+				    true
+				);
+
+				wp_enqueue_script( 
 					'sections_column', 
 					$url.'/js/Column.js', 
 					array( 'backbone', 'media-editor', 'chosen' ),

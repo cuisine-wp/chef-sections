@@ -59,6 +59,7 @@
 				'id'				=> $this->collection->getHighestId(),
 				'position'			=> ( count( $this->collection->all() ) + 1 ),
 				'post_id'			=> $this->postId,
+				'container_id'		=> null
 			];
 
 			//set the arguments:

@@ -1,5 +1,5 @@
 
-	var Section = Backbone.View.extend({
+	var Container = Backbone.View.extend({
 
 		hasLightbox: true,
 
@@ -8,13 +8,10 @@
 
 		events: {
 
-			'change .section-controls .type-radio': 'changeView',
 			'click .delete-section': 'deleteSection',
-			'click .code-snitch': 'copyCode',
 			'click .section-controls .buttons-wrapper .button' : 'toggleSettingPanel',
 			'click #close-panel' : 'hideSettingPanel',
 			'change .title-radio .multi' : 'setHeaderType'
-
 		},
 
 		/**
@@ -29,85 +26,6 @@
 			self.sectionId = self.$el.data( 'section_id' );
 			self.postId = self.$el.data( 'post_id' );
 
-			self.setEvents();
-		},
-
-		/**
-		 * Make columns sortable:
-		 *
-		 * @return void
-		 */
-		setEvents: function(){
-
-			var self = this;
-
-			self.$('.section-columns').sortable({
-				handle: '.sort',
-				tolerance: 'pointer',
-				placeholder: 'placeholder-column',
-				update: function (event, ui) {
-					
-					//self.setSectionOrder();
-					var positions = new Array();
-					var i = 1;
-
-					self.$el.find('.section-columns .column').each(function(){
-						positions.push( $( this ).data('column_id') );
-						$( this ).find( '.column-position' ).val( i );
-						i++;
-					});
-
-
-					var data = {
-						action: 'sortColumns',
-						post_id: self.$el.data( 'post_id' ),
-						column_ids: positions,
-						section_id: self.sectionId
-					}
-
-
-					$.post( ajaxurl, data, function( response ){
-						
-						//console.log( response );
-					
-					});
-				}
-			});
-
-		},
-
-		/**
-		 * Change the view of a section
-		 * 
-		 * @param  Element el
-		 * @return void
-		 */
-		changeView: function( el ){
-
-			var self = this;
-			self.showLoader( jQuery );
-			
-			var view = jQuery( el.target ).val();
-			
-			var data = {
-
-				action: 'changeView',
-				section_id: self.sectionId,
-				post_id: self.postId,
-				view: view
-
-			}
-
-			jQuery.post( ajaxurl, data, function( response ){
-
-				console.log( response );
-				//console.log( response );				
-				self.$el.replaceWith( response );
-
-				SectionBuilder.refresh();
-				refreshFields();
-
-			});
 		},
 
 
@@ -218,34 +136,6 @@
 
 			_item.parent().parent().parent().find( '.icon' ).html( _val );
 
-		},
-
-
-		/**
-		 * Code copy event function
-		 * 
-		 * @param  Event evt
-		 * @return void
-		 */
-		copyCode: function( evt ){
-
-			var self = this;
-			var string = self.$el.find( '.copy' ).html();
-			self.copyToClipboard( string );
-
-		},
-
-		/**
-		 * Copy the contents to your clipboard
-		 * 
-		 * @param  string _value
-		 * @return void
-		 */
-		copyToClipboard: function( _value ){
-			jQuery( 'body' ).append("<input type='text' id='temp' style='position:absolute;opacity:0;'>");
-			jQuery( '#temp' ).val( _value ).select();
-			document.execCommand( 'copy' );
-			jQuery( '#temp' ).remove();
 		},
 
 		/**
