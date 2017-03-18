@@ -31,7 +31,7 @@
 			$_result = [];
 			foreach( $this->objects as $key => $section ){
 
-				if( is_null( $section->container_id ) || $section->container_id == '' )
+				if( is_null( $section->container_id ) )
 					$_result[ $key ] = $section;
 
 			}

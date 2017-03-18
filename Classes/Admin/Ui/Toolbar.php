@@ -103,17 +103,28 @@
 
 			if( !$this->templates->empty() ){
 
-				echo '<div class="add-section-btn" ';
-				echo 'data-type="search" ';
-				echo 'data-content="SectionTemplates" ';
+				echo '<div class="add-section-btn secondary-btn" ';
 				echo 'data-post_id="'.$this->postId.'" ';
 				echo 'data-action="addSectionTemplate" ';
-				echo 'data-label="'.__( 'Please select your template', 'chefsections' ).'" ';
+
+				if( $this->templates->count() > 1 ){				
+					echo 'data-type="search" ';
+					echo 'data-content="SectionTemplates" ';
+					echo 'data-label="'.__( 'Please select your template', 'chefsections' ).'" ';
+
+				}else{
+					$template = $this->templates->toArray()->first();
+					echo 'data-template_id="'.$template['ID'].'" ';
+				
+				}
+
 				echo '>';
 
 					echo '<span class="dashicons dashicons-media-document"></span>';
 					_e( 'Add a Template', 'chefsections' );
-					echo '<small><span class="dashicons dashicons-arrow-down"></span></small>';
+
+					if( $this->templates->count() > 1 )
+						echo '<small><span class="dashicons dashicons-arrow-down"></span></small>';
 				
 				echo '</div>';
 
@@ -128,17 +139,27 @@
 		public function createContainerButton()
 		{
 			if( !$this->containers->empty() ){
-				echo '<div class="add-section-btn" ';
-				echo 'data-type="search" ';
-				echo 'data-content="SectionContainers" ';
+				echo '<div class="add-section-btn secondary-btn" ';
 				echo 'data-post_id="'.$this->postId.'" ';
 				echo 'data-action="addSectionContainer" ';
-				echo 'data-label="'.__( 'Please select your container', 'chefsections' ).'" ';
+
+				if( $this->containers->count() > 1 ){
+					echo 'data-type="search" ';
+					echo 'data-content="SectionContainers" ';
+					echo 'data-label="'.__( 'Please select your container', 'chefsections' ).'" ';
+
+				}else{
+					$container = array_keys( $this->containers->all() );
+					echo 'data-container_slug="'.$container[0].'" ';
+				
+				}
 				echo '>';
 
 					echo '<span class="dashicons dashicons-feedback"></span>';
 					_e( 'Add a Container', 'chefsections' );
-					echo '<small><span class="dashicons dashicons-arrow-down"></span></small>';
+
+					if( $this->containers->count() > 1 )
+						echo '<small><span class="dashicons dashicons-arrow-down"></span></small>';
 
 				echo '</div>';
 			}

@@ -50,6 +50,7 @@ var SectionBuilder = new function(){
 
 		self.setColumns();
 		self.setSections();
+		self.setSectionsSortable();
 
 		//update the eventual output:
 		self.updateHtmlOutput();
@@ -69,6 +70,7 @@ var SectionBuilder = new function(){
 		self.setAddSectionButton();
 		self.setAddSectionDraggbles();
 		self.setSectionsSortable();
+		self.setScrollLockForLightbox();
 
 	}
 
@@ -175,12 +177,10 @@ var SectionBuilder = new function(){
 
 			if( $( obj ).hasClass( 'section-container' ) == false ){
 			
-				console.log( "section: "+$( obj ).attr( 'id' ) );
 				var sec = new Section( { el: obj } );
 			
 			}else{
 
-				console.log( "container: "+$( obj ).attr( 'id' ) )
 				var sec = new Container({ el: obj });
 			}
 
@@ -475,6 +475,17 @@ var SectionBuilder = new function(){
 
 		return _html;
 	}
+
+	/****************************************/
+	/***	Lightbox functions
+	/****************************************/
+
+	this.setScrollLockForLightbox = function(){
+		
+	
+
+	}
+
 
 	/****************************************/
 	/***	Yoast Functions

@@ -8,7 +8,7 @@
 
 		events: {
 
-			'click .delete-section': 'deleteSection',
+			'click .container-footer .delete-section': 'deleteSection',
 			'click .section-controls .buttons-wrapper .button' : 'toggleSettingPanel',
 			'click #close-panel' : 'hideSettingPanel',
 			'change .title-radio .multi' : 'setHeaderType'

@@ -177,7 +177,7 @@
 		 * 
 		 * @return string ( html, echoed )
 		 */
-		private function buildCodeSnitch(){
+		public function buildCodeSnitch(){
 
 			echo '<span class="template-snitch code-snitch">';
 				echo '<span class="dashicons dashicons-editor-code"></span>';
@@ -196,7 +196,7 @@
 		 * 
 		 * @return string ( html, echoed )
 		 */
-		private function buildTemplateSnitch(){
+		public function buildTemplateSnitch(){
 
 			/*$templates = Template::section( $this )->files;
 			echo '<span class="template-snitch">';

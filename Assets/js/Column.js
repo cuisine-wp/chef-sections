@@ -34,7 +34,7 @@
 			self.columnId = self.$el.data( 'column_id' );
 			self.sectionId = self.$el.data( 'section_id' );
 			self.postId = self.$el.data( 'post_id' );
-
+			
 			self.setChosen();
 
 			return this;
@@ -83,6 +83,8 @@
 
 			var self = this;
 			e.preventDefault();
+
+			
 
 
 			if( self.$('.edit-btn' ).hasClass( 'no-lightbox' ) ){

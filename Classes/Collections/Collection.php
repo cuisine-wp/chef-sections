@@ -126,6 +126,16 @@
 		}
 
 
+		/**
+		 * Get the amount of items in this collection
+		 * 
+		 * @return int
+		 */
+		public function count(){
+			return count( $this->items );
+		}
+
+
 		/*=============================================================*/
 		/**             Return data                                    */
 		/*=============================================================*/

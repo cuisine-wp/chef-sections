@@ -141,6 +141,9 @@
 			if( !isset( $args['view'] ) )
 				$args['view'] = 'fullwidth';
 
+			if( !isset( $args['container_id'] ) || $args['container_id'] == '' )
+				$args['container_id'] = null;
+
 			if( !isset( $args['hide_container'] ) )
 				$args['hide_container'] = 'false';
 

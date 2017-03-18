@@ -17,6 +17,19 @@
 
 
 		/**
+		 * Construct this class
+		 * 
+		 */
+		public function __construct( $postId = null )
+		{
+
+			$this->postId = ( is_null( $postId ) ? Session::postId() : $postId );
+			$this->setCollection();
+
+			return $this;
+		}
+
+		/**
 		 * Set the collection for this class
 		 *
 		 * @return void
@@ -50,8 +63,9 @@
 		 */
 		public function check()
 		{
-			if( $this->checkPage() && !is_null( $this->blueprints ) )
+			if( $this->checkPage() && !is_null( $this->collection ) ){
 				return true;
+			}
 
 			return false;
 		}
@@ -64,7 +78,7 @@
 		public function checkPage()
 		{
 
-			global $pagenow, $post;
+			global $pagenow;
 			$status = get_post_status( $this->postId );
 
 			if( $status == 'auto-draft' && $pagenow == 'post-new.php' )
@@ -87,7 +101,7 @@
 
 			//no template id? though luck.
 			if( $templateId == null )
-				$templateId = $this->blueprints->ID;
+				$templateId = $this->collection->ID;
 
 			if( $templateId == null )
 				return false;
@@ -100,7 +114,7 @@
 
 				//change the post id at the start;
 				$_sections[ $key ]['post_id'] = $this->postId;
-				$_sections[ $key ]['type'] = 'blueprint';
+				//$_sections[ $key ]['type'] = 'blueprint';
 				
 
 				if( !empty( $_section['columns'] ) ){

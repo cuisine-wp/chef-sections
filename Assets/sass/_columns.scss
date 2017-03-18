@@ -153,13 +153,13 @@
 	z-index:2000;
 	background:#fff;
 	border:1px solid #eee;
-	box-shadow:0 0 10px rgba(0,0,0,.3);
+	box-shadow:0 0 0 5000px rgba(0,0,0,.4), 0 0 10px rgba(0,0,0,.6);
 	position:fixed;
 	top:50px;
 	left:50%;
 	margin-left:-400px;
 	width:850px;
-	height:600px;
+	height:90vh;
 
 	&.active{
 		display:block;
