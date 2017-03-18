@@ -51,7 +51,7 @@
 				'parent'
 			];
 
-			return $attributes;
+			return array_merge( $attributes, $referenceAttributes );
 		}
 
 
@@ -67,9 +67,9 @@
 			$args = parent::sanitizeArgs( $args );
 
 			if( isset( $args['template_id'] ) && $args['template_id'] != $args['post_id'] ){
-				if( !isset( $args['parent'] ) || is_array( $args['parent'] ) )
+
+				if( !isset( $args['parent'] ) )
 					$args['parent'] = ( new SectionCollection( $args['template_id'] ) )->first();
-			
 			}
 
 			return $args;

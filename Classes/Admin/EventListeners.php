@@ -81,7 +81,7 @@
 				
 				if( isset( $post ) && !in_array( $post->ID, $dontload ) ){
 
-					//Toolbar::build();
+					Toolbar::build();
 					SectionsUi::build();
 				
 				}
