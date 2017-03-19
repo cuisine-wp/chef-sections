@@ -31,6 +31,20 @@
 		/**             Backend                                        */
 		/*=============================================================*/
 
+		/**
+		 * Returns the output of the build function as a string
+		 * 
+		 * @return string
+		 */
+		public function get()
+		{
+			ob_start();
+
+				$this->build();
+
+			return ob_get_clean();
+		}
+
 
 		/**
 		 * Build the UI for this section

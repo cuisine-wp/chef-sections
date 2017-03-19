@@ -45,8 +45,6 @@
 
 				$this->buildControls();
 
-					echo $this->container->view;
-
 				echo '<div class="'.$this->getClass().'">';
 					
 					$this->buildMainUi();

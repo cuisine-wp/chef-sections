@@ -69,8 +69,8 @@
 
 			//return a new Container Section UI:
 			$container = SectionHelper::getClass( $args );
-
-			return ( new ContainerSectionUi( $container ) )->build();
+			$html = ( new ContainerSectionUi( $container ) )->get();
+			$this->response( $html );
 		}
 
 

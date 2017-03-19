@@ -11,6 +11,28 @@
 	class SectionUi{
 
 		/**
+		 * Returns the tab html, if applicable
+		 * 
+		 * @return mixed
+		 */
+		public static function needsTab( $section )
+		{
+			if( 
+				isset( $section->container_id ) &&
+				!is_null( $section->container_id ) &&
+				$section->container_id != '' 
+			){
+
+				$container = ( new ContainerCollection() )->get( $args['container_id'] );
+				if( $container['view'] == 'tabbed' )
+					return true;
+
+			}
+
+			return false;
+		}
+
+		/**
 		 * Returns an instance of the right UI Class
 		 *
 		 * @param ChefSections\SectionTypes\BaseSection $section

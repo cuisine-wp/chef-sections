@@ -30,7 +30,9 @@
 		font-weight:bold;
 
 
-		.chosen-container-single{
+		.chosen-container-single, .chosen-container{
+		    width: 100% !important;
+		    
 			.chosen-single{
 				background:#fff;
 				text-align:left;

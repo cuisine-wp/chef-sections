@@ -48,17 +48,32 @@
 		    -webkit-flex-direction: row;
 		    -ms-flex-direction: row;
 		    flex-direction: row;
-		    margin-bottom: 5px;
+		    margin-bottom: 0;
 
     		.tab{
+    			position: relative;
     			background: #444;
     			box-shadow: 1px 1px 3px rgba(0,0,0,.3);
-    			padding: 10px 20px;
-    			min-height: 40px;
+    			padding: 10px 35px 10px 20px;
+    			min-height: 30px;
     			margin-right: 10px;
     			color: #fff;
-    			min-width: 100px;
+    			min-width: 110px;
     			cursor: pointer;
+    			font-size: 14px;
+    			font-weight: bold;
+    			vertical-align: middle;
+
+    			span{
+    				line-height: 30px;
+    			}
+
+    			.dashicons{
+    				color: #bbb;
+    				position: absolute;
+    				right: 10px;
+    				top: 10px;
+    			}
 
     			&.active, &:hover{
     				background: white;

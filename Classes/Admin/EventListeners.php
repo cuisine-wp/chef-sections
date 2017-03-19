@@ -54,8 +54,10 @@
 
 			/*add_action( 'admin_footer', function(){
 
-				$_POST['container_slug'] = 'group';
-				( new ContainerHandler() )->addContainer();
+				$_POST['post_id'] = '198';
+				$_POST['section_id'] = '8';
+
+				( new SectionHandler() )->addSection();
 
 			});*/
 
@@ -72,6 +74,7 @@
 
 				$data[ 'group' ] = [
 					'label' => 'Section Group',
+					'view' => 'tabbed',
 					'class' => '\ChefSections\Containers\GroupContainer'
 				];
 

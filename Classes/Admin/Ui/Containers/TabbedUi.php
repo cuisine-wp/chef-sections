@@ -37,7 +37,7 @@
 
 			$this->buildNav();
 
-			echo '<div class="tabbed-content section-data" id="tabsFor'.$this->container->id.'">';
+			echo '<div class="tabbed-content section-data" id="tabContentFor'.$this->container->id.'">';
 
 				if( !$this->container->sections->empty() ){
 
@@ -58,7 +58,7 @@
 		 */
 		public function buildNav()
 		{
-			echo '<div class="section-sortables tab-nav" data-container_id="'.$this->container->id.'">';
+			echo '<div class="section-sortables tab-nav" id="tabsFor'.$this->container->id.'" data-container_id="'.$this->container->id.'">';
 
 				if( !$this->container->sections->empty() ){
 
@@ -78,7 +78,6 @@
 		public static function getTab( $section, $active = false )
 		{
 			$title = $section->getProperty( 'tab_title', $section->title );
-			$position = $section->getProperty( 'position' );
 			$class = 'tab';
 
 			if( $active )

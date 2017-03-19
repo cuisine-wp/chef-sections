@@ -6,9 +6,11 @@
 	use Cuisine\Utilities\Session;
 	use ChefSections\Helpers\PostType;
 	use ChefSections\SectionTypes\ContentSection;
+	use ChefSections\Admin\Ui\Containers\TabbedUi;
 	use ChefSections\Collections\SectionCollection;
 	use ChefSections\Helpers\Section as SectionHelper;
 	use ChefSections\Admin\Ui\Sections\ContentSectionUi;
+	use ChefSections\Helpers\SectionUi as SectionUiHelper;
 
 	class SectionHandler extends BaseHandler{
 
@@ -119,12 +121,10 @@
 
 			//save this section:
 			$_sections = $this->collection->toArray()->all();
-
 			$_sections[ $args['id'] ] = $args;
 			update_post_meta( $this->postId, 'sections', $_sections );
-
-
-			return $this->getSectionUi( $args );
+			
+			$this->sectionResponse( $args );
 		}
 
 
@@ -141,7 +141,8 @@
 
 			unset( $_sections[ $section_id ] );
 			update_post_meta( $this->postId, 'sections', $_sections );
-			echo 'true';
+			
+			$this->response([ 'status' => 'success', 'error' => false ]);
 		}
 
 
@@ -177,7 +178,7 @@
 			$_sections[ $section_id ]['columns'] = $new;
 			update_post_meta( $this->postId, 'sections', $_sections );
 
-			return $this->getSectionUi( $_sections[ $section_id ] );
+			$this->sectionResponse($_sections[ $section_id ] );
 		
 		}
 
@@ -201,7 +202,10 @@
 			}
 
 			update_post_meta( $this->postId, 'sections', $_sections );
+
+			$this->response([ 'status' => 'success', 'error' => false ]);
 		}
+
 
 		/**
 		 * Sort columns
@@ -229,21 +233,32 @@
 				$i++;
 			}
 
+			$this->response([ 'status' => 'success', 'error' => false ]);
 			return true;
 		}
 
 
 		/**
-		 * Give back a section UI based on the handler arguments
+		 * Return a section in the correct format
 		 * 
 		 * @param  Array $args
 		 * 
-		 * @return string (html, echoed)
+		 * @return string (JSON, echoed)
 		 */
-		public function getSectionUi( $args )
+		public function sectionResponse( $args )
 		{
-			$section = new ContentSection( $args );
-			return ( new ContentSectionUi( $section ) )->build();
+			$response = [];
+			$section = SectionHelper::getClass( $args );
+
+			$response['html'] = ( SectionUiHelper::getClass( $section ) )->get();
+			$response['tab'] = false;
+
+			//add support for tabbed containers:
+			if( SectionUiHelper::needsTab( $args ) )
+				$response['tab'] = TabbedUi::getTab( $section, true );
+			
+
+			return $this->response( $response );
 		}
 
 
@@ -258,7 +273,7 @@
 			$default = SectionHelper::defaultArgs();
 			$specifics = array(
 				'id'				=> $this->collection->getHighestId(),
-				'position'			=> ( count( $this->collection->get() ) + 1 ),
+				'position'			=> ( count( $this->collection->all() ) + 1 ),
 				'post_id'			=> $this->postId,
 				'container_id'		=> ( isset( $_POST['container_id'] ) ? $_POST['container_id'] : null )
 			);

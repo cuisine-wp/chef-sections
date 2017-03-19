@@ -100,12 +100,24 @@
 
 			jQuery.post( ajaxurl, data, function( response ){
 
-				console.log( response );
-				//console.log( response );				
-				self.$el.replaceWith( response );
+				try{
 
-				SectionBuilder.refresh();
-				refreshFields();
+					response = JSON.parse( response );
+					
+					//console.log( response );				
+					self.$el.replaceWith( response.html );
+
+					SectionBuilder.refresh();
+					refreshFields();
+					
+
+				}catch( e ){
+					
+					console.log( e );
+
+				}
+				console.log( response );
+				
 
 			});
 		},
@@ -135,14 +147,25 @@
 
 				jQuery.post( ajaxurl, data, function( response ){
 					
-					if( response === 'true' ){
-	
-						self.$el.slideUp( 'slow', function(){
-							self.$el.remove();
-						});
-	
-						SectionBuilder.refresh();
-						refreshFields();
+					console.log( response );
+					
+					try{
+
+						response = JSON.parse( response );
+						if( response.error == false || response.error == 'fase' ){
+
+							self.$el.slideUp( 'slow', function(){
+								self.$el.remove();
+							});
+		
+							SectionBuilder.refresh();
+							refreshFields();
+						}
+
+					} catch( e ){
+
+						console.log( e );
+
 					}
 	
 				});

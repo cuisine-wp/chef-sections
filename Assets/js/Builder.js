@@ -353,7 +353,6 @@ var SectionBuilder = new function(){
 				//delete extra information, not needed:
 				delete data['sortableItem'];
 
-				console.log( data );
 				if( data.type == 'search' ){
 					
 					self.launchSearchWindow( data, _placeholder, function( _newData ){
@@ -381,7 +380,7 @@ var SectionBuilder = new function(){
 	 * 
 	 * @return void
 	 */
-	this.updateSections = function( data, _placeholder ){
+	this.updateSections = function( data, _placeholder, tabContainer ){
 		
 		//remove the spinner:
 		$('#section-builder-ui .spinner').addClass( 'show' );
@@ -389,19 +388,43 @@ var SectionBuilder = new function(){
 		var self = this;
 		jQuery.post( ajaxurl, data, function( response ){
 
-			_placeholder.replaceWith( response );
+			try{
 
-			//order items:
-			self.setSectionOrder();
+				response = JSON.parse( response );
 
-			//register new section here:
-			self.refresh();
+				if( response.tab != false && response.tab != 'false' && response.tab != '' ){
 
-			//refresh the fields
-			refreshFields();
+					var _target = $( '#tabContentFor'+data['container_id'] );
+					$('#tabsFor'+data['container_id'] ).find('.tab').removeClass( 'active' ); 
+					_placeholder.replaceWith( response.tab );
+					_target.append( response.html );
 
-			//remove the spinner:
-			$('#section-builder-ui .spinner').removeClass( 'show' );
+					self.setTabs();
+				}else{
+
+					_placeholder.replaceWith( response.html );
+
+				}
+
+				//order items:
+				self.setSectionOrder();
+
+				//register new section here:
+				self.refresh();
+
+				//refresh the fields
+				refreshFields();
+
+				//remove the spinner:
+				$('#section-builder-ui .spinner').removeClass( 'show' );
+
+			}catch( e ){
+
+				console.log( e );
+
+			}
+
+			
 		});
 	}
 
@@ -504,9 +527,8 @@ var SectionBuilder = new function(){
 			var _container = $( this ).data( 'container_id' );
 			var _active = $( this ).find( '.active' ).data('id');
 
-			console.log( _container + ' -- '+_active );
-			$( '#tabsFor'+_container+ ' > .section-wrapper' ).removeClass( 'active' );
-			$( '#tabsFor'+_container ).find( '.section-'+_active ).addClass( 'active' );
+			$( '#tabContentFor'+_container+ ' > .section-wrapper' ).removeClass( 'active' );
+			$( '#tabContentFor'+_container ).find( '.section-'+_active ).addClass( 'active' );
 
 		});
 	}
