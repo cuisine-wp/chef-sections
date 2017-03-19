@@ -36,6 +36,7 @@ var SectionBuilder = new function(){
 		self.setBuilder();
 		self.setColumns();
 		self.setSections();
+		self.setTabs();
 
 	}
 
@@ -50,6 +51,7 @@ var SectionBuilder = new function(){
 
 		self.setColumns();
 		self.setSections();
+		self.setTabs();
 		self.setSectionsSortable();
 
 		//update the eventual output:
@@ -70,7 +72,8 @@ var SectionBuilder = new function(){
 		self.setAddSectionButton();
 		self.setAddSectionDraggbles();
 		self.setSectionsSortable();
-		self.setScrollLockForLightbox();
+		self.setTabsClickable();
+		//self.setScrollLockForLightbox();
 
 	}
 
@@ -489,14 +492,40 @@ var SectionBuilder = new function(){
 	}
 
 	/****************************************/
-	/***	Lightbox functions
+	/***	Tab functions
 	/****************************************/
 
-	this.setScrollLockForLightbox = function(){
-		
-	
+	this.setTabs = function(){
 
+		var self = this;
+
+		$('.tab-nav').each( function(){
+
+			var _container = $( this ).data( 'container_id' );
+			var _active = $( this ).find( '.active' ).data('id');
+
+			console.log( _container + ' -- '+_active );
+			$( '#tabsFor'+_container+ ' > .section-wrapper' ).removeClass( 'active' );
+			$( '#tabsFor'+_container ).find( '.section-'+_active ).addClass( 'active' );
+
+		});
 	}
+
+	this.setTabsClickable = function(){
+
+		var self = this;
+
+		$('.tab-nav .tab').on( 'click tap', function(){
+			$( this ).parent().find('.tab').removeClass( 'active' );
+			$( this ).addClass( 'active' );
+
+			self.setTabs();	
+		});
+	}
+
+	//this.setScrollLockForLightbox = function(){
+		
+
 
 
 	/****************************************/

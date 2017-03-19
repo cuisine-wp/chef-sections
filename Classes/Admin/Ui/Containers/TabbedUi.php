@@ -37,7 +37,7 @@
 
 			$this->buildNav();
 
-			echo '<div class="tabbed-content section-data">';
+			echo '<div class="tabbed-content section-data" id="tabsFor'.$this->container->id.'">';
 
 				if( !$this->container->sections->empty() ){
 
