@@ -7,6 +7,13 @@
 
 	class GroupContainer extends Container{
 
-
-
+		/**
+		 * Return a tabbed view
+		 * 
+		 * @return string
+		 */
+		public function getView()
+		{
+			return 'tabbed';
+		}
 	}

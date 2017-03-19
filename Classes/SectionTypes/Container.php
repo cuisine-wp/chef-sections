@@ -23,6 +23,13 @@
 		 */
 		public $sections;
 
+		/**
+		 * Container slug
+		 * 
+		 * @var string
+		 */
+		public $slug;
+
 
 		/**
 		 * Returns all public attributes
@@ -33,7 +40,8 @@
 		{
 			$attributes = parent::getAttributes();
 			$containerAttributes = [
-				'sections'
+				'sections',
+				'slug'
 			];
 
 			return array_merge( $attributes, $containerAttributes );
@@ -51,8 +59,15 @@
 		{
 			$args = parent::sanitizeArgs( $args );
 
+			//hard-set the view for each container:
+			$args['view'] = $this->getView();
+
 			if( !isset( $args['sections'] ) )
 				$args['sections'] = new InContainerCollection( $args['post_id'], $args['id'] );
+
+			//fall back on the only container we know for sure we've got.
+			if( !isset( $args['slug'] ) )
+				$args['slug'] = 'group';
 
 			return $args;
 		}
@@ -82,6 +97,16 @@
 		 */
 		public function getSections(){
 			return $this->sections;
+		}
+
+		/**
+		 * Returns the view for this container
+		 * 
+		 * @return string
+		 */
+		public function getView()
+		{
+			return 'grouped';
 		}
 
 	}

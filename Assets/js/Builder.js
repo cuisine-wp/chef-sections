@@ -82,7 +82,7 @@ var SectionBuilder = new function(){
 	this.setBuilder = function(){
 
 		//set width:
-		var _w = $('.section-container').innerWidth();
+		var _w = $('#main-section-container').innerWidth();
 		var _builder = $('#section-builder-ui');
 		var _container = $('#main-section-container');
 		var _offset = _builder.offset().top;
@@ -232,14 +232,26 @@ var SectionBuilder = new function(){
 			i++;
 		});
 
+		
 		var i = 1;
 
-		//handle containered sections:
-		jQuery('#main-section-container .section-wrapper .section-wrapper').each( function(){
+		//handle grouped container sections:
+		jQuery('#main-section-container .section-wrapper.grouped-sections .section-wrapper').each( function(){
 			var field = jQuery( this ).find( '.section-position' );
 			field.val( i );
 			i++;
-		})
+		});
+
+		
+		var i = 1;
+		
+		//handle tab container sections:
+		jQuery( '#main-section-container .section-wrapper.tabbed-sections .tab').each( function(){
+			var _id = $( this ).data( 'id' );
+			var _sec = jQuery( '#main-section-container .section-wrapper.tabbed-sections .section-'+_id );
+			_sec.find( '.section-position' );
+			i++;
+		});
 	}
 
 

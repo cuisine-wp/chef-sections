@@ -2,7 +2,7 @@
 
 	namespace ChefSections\SectionTypes;
 
-
+	use Exception;
 	use Cuisine\Wrappers\User;
 	use Cuisine\Wrappers\Field;
 	use Cuisine\Utilities\Sort;

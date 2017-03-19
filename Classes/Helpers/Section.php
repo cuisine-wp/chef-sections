@@ -2,8 +2,55 @@
 	
 	namespace ChefSections\Helpers;
 
+	use ChefSections\SectionTypes\Blueprint;
+	use ChefSections\SectionTypes\Reference;
+	use ChefSections\SectionTypes\Container;
+	use ChefSections\SectionTypes\ContentSection;
+	use ChefSections\Collections\ContainerCollection;
 
 	class Section{
+
+
+		/**
+		 * Returns the right class from raw section data
+		 * 
+		 * @param  Array $sectionData
+		 * 
+		 * @return ChefSections\Sections\BaseSection
+		 */
+		public static function getClass( $sectionData )
+		{
+			switch( $sectionData['type'] ){
+
+				case 'reference':
+
+					return new Reference( $sectionData );
+					break;
+
+				case 'blueprint':
+
+					return new Blueprint( $sectionData );
+					break;
+
+				case 'container':
+
+					//check if there's a container slug set:
+					if( isset( $sectionData['slug'] ) && $sectionData['slug'] != '' ){
+
+						$container = ( new ContainerCollection() )->get( $sectionData['slug'] );
+						$class = $container['class'];
+						return new $class( $sectionData );
+					}
+
+					return new Container( $sectionData );
+					break;
+
+				default:
+
+					return new ContentSection( $sectionData );
+					break;
+			}
+		}
 
 		/**
 		 * Returns all possible Section view types

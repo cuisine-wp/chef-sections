@@ -106,7 +106,6 @@
 			//up the highest ID
 			$this->collection->setHighestId( 1 );
 
-
 			//get the defaults:
 			$args = $this->getDefaultSectionArgs();
 			$args = wp_parse_args( $datas, $args );

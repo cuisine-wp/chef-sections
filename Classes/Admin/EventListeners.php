@@ -2,15 +2,16 @@
 
 	namespace ChefSections\Admin;
 
-	use ChefSections\Wrappers\StaticInstance;
-	use ChefSections\Admin\Ui\SectionsUi;
+	use Cuisine\Utilities\Url;
 	use ChefSections\Admin\Ui\Toolbar;
+	use ChefSections\Admin\Ui\SectionsUi;
+	use ChefSections\Wrappers\StaticInstance;
 	use ChefSections\Admin\Handlers\SectionHandler;
 	use ChefSections\Admin\Handlers\BlueprintHandler;
 	use ChefSections\Admin\Handlers\ContainerHandler;
 	use ChefSections\Collections\ReferenceCollection;
 
-	use Cuisine\Utilities\Url;
+	use ChefSections\Helpers\Section as SectionHelper;
 
 	class EventListeners extends StaticInstance{
 
