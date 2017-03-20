@@ -364,7 +364,6 @@ class DefaultColumn implements ColumnContract{
 
 			echo '<div class="loader"><span class="spinner"></span></div>';
 		echo '</div>';
-
 	}
 
 	/**

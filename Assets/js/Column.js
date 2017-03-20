@@ -174,14 +174,19 @@
 
 				var input = jQuery( inputs[ i ] );
 
-				if( input.val() !== undefined && input.attr( 'name' ) !== undefined && input.attr('disabled') == undefined ){
+				//we'll check for multi-dimensional fields later:
+				if( input.hasClass( 'multi') == false ){
 
-					var value = input.val();
+					if( input.val() !== undefined && input.attr( 'name' ) !== undefined && input.attr('disabled') == undefined ){
 
-					if( input.hasClass( 'type-checkbox' ) && input.is(':checked') === false )
-						value = 'false';
+						var value = input.val();
 
-					properties[ input.attr( 'name' ) ] = value;
+						if( input.hasClass( 'type-checkbox' ) && input.is(':checked') === false )
+							value = 'false';
+
+						properties[ input.attr( 'name' ) ] = value;
+
+					}
 
 				}
 			}
@@ -298,9 +303,8 @@
 						'properties'	: properties
 			};
 
-			console.log( data );
 
-			/*
+			
 
 			jQuery.post( ajaxurl, data, function( response ){
 
@@ -311,7 +315,7 @@
 				SectionBuilder.refresh();
 				refreshFields();
 
-			});*/
+			});
 		},
 
 
@@ -335,6 +339,7 @@
 				'section_id'	: self.sectionId,
 				'type'			: type
 			};
+			console.log( data );
 
 			jQuery.post( ajaxurl, data, function( response ){
 

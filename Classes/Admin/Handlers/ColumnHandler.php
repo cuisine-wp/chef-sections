@@ -73,7 +73,8 @@
 			$sectionId = $_POST['section_id'];
 			$type = $_POST['type'];
 
-			$section = $this->collection->get( $sectionId );
+			$section = $this->collection->toObjects()->get( $sectionId );
+
 			$newColumn = Column::$type( $id, $section, array() );
 			$newColumn->build();
 		}
