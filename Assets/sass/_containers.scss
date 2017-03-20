@@ -1,85 +1,133 @@
-.section-container{
-	background: transparent;
-	border: 2px solid #e5e5e5;
-	.section-sortables{
-		width: 100%;
-		display: block;
-		min-height: 200px;
+#main-section-container{
 
-		.section-wrapper:first-of-type{
-			margin-top: 0;
-		}
-	}
-
-	.tabbed-sections{
-	    -webkit-flex-wrap: wrap;
-    	-ms-flex-wrap: wrap;
-    	flex-wrap: wrap;
- 		-webkit-align-items: flex-start;
-    	-ms-flex-align: start;
-    	align-items: flex-start;
-
-    	.section-sortables, .tabbed-content{
-    		-webkit-flex: 1 0 100%;
-		    -ms-flex: 1 0 100%;
-		    flex: 1 0 100%;
-    	}
-
-    	.tabbed-content{
+    .section-container{
+    	background: transparent;
+    	border: 2px solid #e5e5e5;
+    	.section-sortables{
+    		width: 100%;
+    		display: block;
     		min-height: 200px;
 
-    		.section-wrapper{
-    			display: none;
-    		}
-
-    		.section-wrapper.active{
-    			display: block;
+    		.section-wrapper:first-of-type{
     			margin-top: 0;
     		}
     	}
 
-    	.section-sortables{
-    		height: auto;
-    		max-height: 80px;
-    		min-height: initial;
-    		display: -ms-flexbox;
-		    display: -webkit-flex;
-		    display: flex;
-		    -webkit-flex-direction: row;
-		    -ms-flex-direction: row;
-		    flex-direction: row;
-		    margin-bottom: 0;
+    	.tabbed-sections{
+    	    -webkit-flex-wrap: wrap;
+        	-ms-flex-wrap: wrap;
+        	flex-wrap: wrap;
+     		-webkit-align-items: flex-start;
+        	-ms-flex-align: start;
+        	align-items: flex-start;
 
-    		.tab{
-    			position: relative;
-    			background: #444;
-    			box-shadow: 1px 1px 3px rgba(0,0,0,.3);
-    			padding: 10px 35px 10px 20px;
-    			min-height: 30px;
-    			margin-right: 10px;
-    			color: #fff;
-    			min-width: 110px;
-    			cursor: pointer;
-    			font-size: 14px;
-    			font-weight: bold;
-    			vertical-align: middle;
+        	.section-sortables, .tabbed-content{
+        		-webkit-flex: 1 0 100%;
+    		    -ms-flex: 1 0 100%;
+    		    flex: 1 0 100%;
+        	}
 
-    			span{
-    				line-height: 30px;
-    			}
+        	.tabbed-content{
+        		min-height: 200px;
 
-    			.dashicons{
-    				color: #bbb;
-    				position: absolute;
-    				right: 10px;
-    				top: 10px;
-    			}
+        		.section-wrapper{
+        			display: none;
+        		}
 
-    			&.active, &:hover{
-    				background: white;
-    				color: #444;
-    			}
-    		}
+        		.section-wrapper.active{
+        			display: block;
+        			margin-top: 0;
+        		}
+        	}
+
+        	.section-sortables{
+        		height: auto;
+        		max-height: 80px;
+        		min-height: initial;
+        		display: -ms-flexbox;
+    		    display: -webkit-flex;
+    		    display: flex;
+    		    -webkit-flex-direction: row;
+    		    -ms-flex-direction: row;
+    		    flex-direction: row;
+    		    margin-bottom: 0;
+
+        		.tab > .pin, .section-placeholder{
+        			position: relative;
+        			background: #444;
+        			box-shadow: 1px 1px 3px rgba(0,0,0,.3);
+        			padding: 10px 35px 10px 20px;
+        			min-height: 30px;
+        			margin-right: 10px;
+        			color: #fff;
+        			min-width: 110px;
+        			cursor: pointer;
+        			font-size: 14px;
+        			font-weight: bold;
+        			vertical-align: middle;
+
+
+        			span{
+        				line-height: 30px;
+        			}
+
+        			.dashicons{
+        				color: #bbb;
+        				position: absolute;
+        				right: 10px;
+        				top: 10px;
+                        width: 28px;
+                        height: 28px;
+                        line-height: 28px;
+                        text-align: center;
+                        vertical-align: middle;
+        			}
+        		}
+
+                .tab.active .pin, .tab:hover .pin{
+                    background: white;
+                    color: #444;
+                }
+
+                .tab:hover .dashicons{
+                    color: #2ea2cc;
+                }
+
+
+                .section-placeholder, .placeholder-block{
+                    border:1px dashed #2ea2cc;
+                    max-width: 110px;
+                    background: transparent;
+                    margin: 0 15px 0 0;
+                }
+
+                .placeholder-block{
+                    background:transparent;
+                    position: relative;
+                    box-shadow:none;
+                    height: 50px !important;
+                    max-width:110px !important;
+                    width:initial !important;
+                    padding: 10px 35px 10px 20px;
+                    color: transparent;
+
+                    .spinner{
+                        float:none;
+                        display:inline-block;
+                        visibility:visible;
+                        margin-top:5px;
+                    }
+
+                    #tempSearch{
+                        margin-top: -20px;
+
+                        &:after{
+                            margin-left: -17px;
+                        }
+                    }
+
+                }
+        	}
     	}
-	}
+    }
 }

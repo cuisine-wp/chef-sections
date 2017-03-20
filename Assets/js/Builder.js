@@ -211,6 +211,7 @@ var SectionBuilder = new function(){
 		var self = this;
 		$('.section-sortables').sortable({
 			handle: '.pin',
+			connectWith: '.section-sortables',
 			placeholder: 'section-placeholder',
 			update: function (event, ui) {
 				self.setSectionOrder();
@@ -380,17 +381,20 @@ var SectionBuilder = new function(){
 	 * 
 	 * @return void
 	 */
-	this.updateSections = function( data, _placeholder, tabContainer ){
+	this.updateSections = function( data, _placeholder ){
 		
 		//remove the spinner:
 		$('#section-builder-ui .spinner').addClass( 'show' );
-				
+		
+		console.log( data );
+
 		var self = this;
 		jQuery.post( ajaxurl, data, function( response ){
 
 			try{
 
 				response = JSON.parse( response );
+
 
 				if( response.tab != false && response.tab != 'false' && response.tab != '' ){
 

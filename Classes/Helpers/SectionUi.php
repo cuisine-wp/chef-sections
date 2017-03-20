@@ -2,7 +2,7 @@
 
 	namespace ChefSections\Helpers;
 
-
+	use ChefSections\Collections\ContainerCollection;
 	use ChefSections\Admin\Ui\Sections\ContentSectionUi;
 	use ChefSections\Admin\Ui\Sections\ContainerSectionUi;
 	use ChefSections\Admin\Ui\Sections\ReferenceSectionUi;
@@ -23,7 +23,8 @@
 				$section->container_id != '' 
 			){
 
-				$container = ( new ContainerCollection() )->get( $args['container_id'] );
+				$container = ( new ContainerCollection() )->getById( $section->container_id, $section->post_id );
+
 				if( $container['view'] == 'tabbed' )
 					return true;
 

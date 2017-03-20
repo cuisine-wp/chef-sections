@@ -3,7 +3,9 @@
 	namespace ChefSections\Admin\Ui\Sections;
 
 	use Cuisine\Wrappers\Field;
+	use ChefSections\Admin\Ui\Containers\TabbedUi;
 	use ChefSections\Helpers\Section as SectionHelper;
+	use ChefSections\Helpers\SectionUi as SectionUiHelper;
 
 	class BaseSectionUi{
 
@@ -28,7 +30,7 @@
 		}
 
 		/*=============================================================*/
-		/**             Backend                                        */
+		/**             Building UI                                    */
 		/*=============================================================*/
 
 		/**
@@ -184,6 +186,9 @@
 			echo 'data-section_id="'.esc_attr( $this->section->id ).'" ';
 			echo 'data-post_id="'.esc_attr( $this->section->post_id ).'"';
 
+			if( SectionUiHelper::needsTab( $this->section ) )
+				echo ' data-tab="tab_'.$this->section->id.'"';
+
 		}
 
 		/**
@@ -290,5 +295,31 @@
 			)->render();
 		}
 
-		
+	
+		/*=============================================================*/
+		/**             Support for tabs                               */
+		/*=============================================================*/
+
+
+		/**
+		 * Returns the tab response for this section ( if needed )
+		 * 
+		 * @return string
+		 */
+		public function getTab()
+		{
+			$tab = null;
+
+			//add support for tabbed containers:
+			if( SectionUiHelper::needsTab( $this->section ) )
+				$tab = TabbedUi::getTab( $this->section, true );
+
+
+			return $tab;
+		}
+
+
+			
+
+
 	}

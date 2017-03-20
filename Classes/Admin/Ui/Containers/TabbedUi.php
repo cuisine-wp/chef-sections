@@ -77,15 +77,21 @@
 
 		public static function getTab( $section, $active = false )
 		{
-			$title = $section->getProperty( 'tab_title', $section->title );
+			$title = $section->getProperty( 'tabTitle', $section->title );
+
+			if( substr( strtolower( $title ), 0, 7 ) == 'section' && $section->title != '' )
+				$title = $section->title;
+
 			$class = 'tab';
 
 			if( $active )
 				$class .= ' active';
 
-			$html = '<div class="'.$class.'" data-id="'.$section->id.'">';
-				$html .= '<span class="title">'.$title.'</span>';
-				$html .= '<span class="dashicons dashicons-leftright"></span>';
+			$html = '<div class="'.$class.'" id="tab_'.$section->id.'" data-id="'.$section->id.'">';
+				$html .= '<div class="pin">';
+					$html .= '<span class="title">'.$title.'</span>';
+					$html .= '<span class="dashicons dashicons-leftright "></span>';
+				$html .= '</div>';
 			$html .= '</div>';
 
 			return $html;

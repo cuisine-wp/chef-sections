@@ -249,14 +249,10 @@
 		{
 			$response = [];
 			$section = SectionHelper::getClass( $args );
+			$sectionUi = SectionUiHelper::getClass( $section );
 
-			$response['html'] = ( SectionUiHelper::getClass( $section ) )->get();
-			$response['tab'] = false;
-
-			//add support for tabbed containers:
-			if( SectionUiHelper::needsTab( $args ) )
-				$response['tab'] = TabbedUi::getTab( $section, true );
-			
+			$response['html'] = $sectionUi->get();
+			$response['tab'] = $sectionUi->getTab();			
 
 			return $this->response( $response );
 		}

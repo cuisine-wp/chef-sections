@@ -146,15 +146,23 @@
 				self.$el.addClass('deleting');
 
 				jQuery.post( ajaxurl, data, function( response ){
-					
-					console.log( response );
-					
+										
 					try{
 
 						response = JSON.parse( response );
 						if( response.error == false || response.error == 'fase' ){
 
 							self.$el.slideUp( 'slow', function(){
+
+								if( typeof( self.$el.data('tab') ) != 'undefined' ){
+
+									//set first tab as active:
+									self.$el.parent().parent().find('.section-sortables > .tab').first().addClass( 'active' );
+									
+									//remove old tab:
+									$( '#'+ self.$el.data('tab') ).remove();
+								}
+
 								self.$el.remove();
 							});
 		
