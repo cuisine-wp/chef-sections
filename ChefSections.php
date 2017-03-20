@@ -91,6 +91,7 @@ if (!class_exists('ChefSections')) {
                 'Classes/Admin/Containers',
                 'Classes/Admin/Handlers',
                 'Classes/Admin/Panels',
+                'Classes/Admin/Ui/Containers',
                 'Classes/Admin/Ui/Sections',
                 'Classes/Admin/Ui',
                 'Classes/Admin',

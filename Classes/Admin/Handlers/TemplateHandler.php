@@ -8,7 +8,7 @@
 	use ChefSections\Helpers\Section as SectionHelper;
 	use ChefSections\Admin\Ui\Sections\ReferenceSectionUi;
 
-	class TemplateHandler extends BaseHandler{
+	class TemplateHandler extends SectionHandler{
 
 
 		/**
@@ -70,8 +70,7 @@
 			update_post_meta( $this->postId, 'sections', $_sections );
 
 			//create the new Reference object, and build it
-			$section = new Reference( $args );
-			return ( new ReferenceSectionUi( $section ) )->build();
+			$this->sectionResponse( $args );
 		}
 
 		

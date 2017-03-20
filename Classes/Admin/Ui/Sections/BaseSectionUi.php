@@ -3,7 +3,9 @@
 	namespace ChefSections\Admin\Ui\Sections;
 
 	use Cuisine\Wrappers\Field;
+	use ChefSections\Admin\Ui\Containers\TabbedUi;
 	use ChefSections\Helpers\Section as SectionHelper;
+	use ChefSections\Helpers\SectionUi as SectionUiHelper;
 
 	class BaseSectionUi{
 
@@ -28,8 +30,22 @@
 		}
 
 		/*=============================================================*/
-		/**             Backend                                        */
+		/**             Building UI                                    */
 		/*=============================================================*/
+
+		/**
+		 * Returns the output of the build function as a string
+		 * 
+		 * @return string
+		 */
+		public function get()
+		{
+			ob_start();
+
+				$this->build();
+
+			return ob_get_clean();
+		}
 
 
 		/**
@@ -102,7 +118,7 @@
 				//add the top buttons for panels:
 				echo '<div class="buttons-wrapper">';
 
-					$buttons = apply_filters( 'chef_sections_panel_buttons', array() );
+					$buttons = SectionUiHelper::getPanelButtons( $this->section );
 
 					foreach( $buttons as $button ){
 
@@ -129,7 +145,8 @@
 				)->render();
 
 				//sorting pin:
-				echo '<span class="dashicons dashicons-sort pin"></span>';
+				if( !SectionUiHelper::needsTab( $this->section ) )
+					echo '<span class="dashicons dashicons-sort pin"></span>';
 
 
 			echo '</div>';
@@ -169,6 +186,9 @@
 
 			echo 'data-section_id="'.esc_attr( $this->section->id ).'" ';
 			echo 'data-post_id="'.esc_attr( $this->section->post_id ).'"';
+
+			if( SectionUiHelper::needsTab( $this->section ) )
+				echo ' data-tab="tab_'.$this->section->id.'"';
 
 		}
 
@@ -276,5 +296,31 @@
 			)->render();
 		}
 
-		
+	
+		/*=============================================================*/
+		/**             Support for tabs                               */
+		/*=============================================================*/
+
+
+		/**
+		 * Returns the tab response for this section ( if needed )
+		 * 
+		 * @return string
+		 */
+		public function getTab()
+		{
+			$tab = null;
+
+			//add support for tabbed containers:
+			if( SectionUiHelper::needsTab( $this->section ) )
+				$tab = TabbedUi::getTab( $this->section, true );
+
+
+			return $tab;
+		}
+
+
+			
+
+
 	}

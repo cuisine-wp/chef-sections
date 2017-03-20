@@ -36,6 +36,7 @@ var SectionBuilder = new function(){
 		self.setBuilder();
 		self.setColumns();
 		self.setSections();
+		self.setTabs();
 
 	}
 
@@ -50,6 +51,9 @@ var SectionBuilder = new function(){
 
 		self.setColumns();
 		self.setSections();
+		self.setTabs();
+		self.setTabsClickable();
+
 		self.setSectionsSortable();
 
 		//update the eventual output:
@@ -70,7 +74,8 @@ var SectionBuilder = new function(){
 		self.setAddSectionButton();
 		self.setAddSectionDraggbles();
 		self.setSectionsSortable();
-		self.setScrollLockForLightbox();
+		self.setTabsClickable();
+		//self.setScrollLockForLightbox();
 
 	}
 
@@ -82,7 +87,7 @@ var SectionBuilder = new function(){
 	this.setBuilder = function(){
 
 		//set width:
-		var _w = $('.section-container').innerWidth();
+		var _w = $('#main-section-container').innerWidth();
 		var _builder = $('#section-builder-ui');
 		var _container = $('#main-section-container');
 		var _offset = _builder.offset().top;
@@ -208,6 +213,7 @@ var SectionBuilder = new function(){
 		var self = this;
 		$('.section-sortables').sortable({
 			handle: '.pin',
+			connectWith: '.section-sortables',
 			placeholder: 'section-placeholder',
 			update: function (event, ui) {
 				self.setSectionOrder();
@@ -232,14 +238,28 @@ var SectionBuilder = new function(){
 			i++;
 		});
 
+		
 		var i = 1;
 
-		//handle containered sections:
-		jQuery('#main-section-container .section-wrapper .section-wrapper').each( function(){
+		//handle grouped container sections:
+		jQuery('#main-section-container .section-wrapper .grouped-sections .section-wrapper').each( function(){
 			var field = jQuery( this ).find( '.section-position' );
 			field.val( i );
 			i++;
-		})
+		});
+
+		
+		var i = 1;
+		
+		//handle tab container sections:
+		jQuery( '#main-section-container .section-wrapper .tabbed-sections .tab').each( function(){
+			var _id = $( this ).data( 'id' );
+			var _container = $( this ).parent().data('container_id');
+
+			var _sec = jQuery( '#tabContentFor'+_container+' .section-'+_id );
+			_sec.find( '.section-position' ).val( i );
+			i++;
+		});
 	}
 
 
@@ -320,8 +340,12 @@ var SectionBuilder = new function(){
 		jQuery('.add-section-btn').draggable({
 			connectToSortable: '.section-sortables',
 			helper: 'clone',
+			start: function( event, ui ){
+				$('#main-section-container').addClass( 'dragging' ); 
+			},
 			stop: function( event, ui ){
 
+				$('#main-section-container').removeClass( 'dragging' );
 				var _placeholder = $('#main-section-container .add-section-btn.ui-draggable-handle' );
 				_placeholder.addClass('placeholder-block');
 				_placeholder.html( '<span class="spinner"></span> Adding section...' );
@@ -338,7 +362,6 @@ var SectionBuilder = new function(){
 				//delete extra information, not needed:
 				delete data['sortableItem'];
 
-				console.log( data );
 				if( data.type == 'search' ){
 					
 					self.launchSearchWindow( data, _placeholder, function( _newData ){
@@ -370,23 +393,48 @@ var SectionBuilder = new function(){
 		
 		//remove the spinner:
 		$('#section-builder-ui .spinner').addClass( 'show' );
-				
+		
 		var self = this;
 		jQuery.post( ajaxurl, data, function( response ){
 
-			_placeholder.replaceWith( response );
+			try{
 
-			//order items:
-			self.setSectionOrder();
+				response = JSON.parse( response );
+			
+				if( response.tab != null && response.tab != 'null' && response.tab != '' ){
 
-			//register new section here:
-			self.refresh();
+					var _target = $( '#tabContentFor'+data['container_id'] );
+					$('#tabsFor'+data['container_id'] ).find('.tab').removeClass( 'active' ); 
+					_placeholder.replaceWith( response.tab );
+					_target.append( response.html );
 
-			//refresh the fields
-			refreshFields();
+					self.setTabs();
+				}else{
 
-			//remove the spinner:
-			$('#section-builder-ui .spinner').removeClass( 'show' );
+					_placeholder.replaceWith( response.html );
+
+				}
+
+				//order items:
+				self.setSectionOrder();
+
+				//register new section here:
+				self.refresh();
+
+				//refresh the fields
+				refreshFields();
+
+				//remove the spinner:
+				$('#section-builder-ui .spinner').removeClass( 'show' );
+				
+
+			}catch( e ){
+
+				console.log( e );
+
+			}
+
+			
 		});
 	}
 
@@ -477,14 +525,39 @@ var SectionBuilder = new function(){
 	}
 
 	/****************************************/
-	/***	Lightbox functions
+	/***	Tab functions
 	/****************************************/
 
-	this.setScrollLockForLightbox = function(){
-		
-	
+	this.setTabs = function(){
 
+		var self = this;
+
+		$('.tab-nav').each( function(){
+
+			var _container = $( this ).data( 'container_id' );
+			var _active = $( this ).find( '.active' ).data('id');
+
+			$( '#tabContentFor'+_container+ ' > .section-wrapper' ).removeClass( 'active' );
+			$( '#tabContentFor'+_container ).find( '.section-'+_active ).addClass( 'active' );
+
+		});
 	}
+
+	this.setTabsClickable = function(){
+
+		var self = this;
+
+		$('.tab-nav .tab').on( 'click tap', function(){
+			$( this ).parent().find('.tab').removeClass( 'active' );
+			$( this ).addClass( 'active' );
+
+			self.setTabs();	
+		});
+	}
+
+	//this.setScrollLockForLightbox = function(){
+		
+
 
 
 	/****************************************/

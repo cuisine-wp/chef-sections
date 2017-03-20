@@ -7,6 +7,4 @@
 
 	class GroupContainer extends Container{
 
-
-
 	}

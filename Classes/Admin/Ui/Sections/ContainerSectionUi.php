@@ -3,6 +3,8 @@
 	namespace ChefSections\Admin\Ui\Sections;
 
 	use Cuisine\Wrappers\Field;
+	use ChefSections\Admin\Ui\Containers\TabbedUi;
+	use ChefSections\Admin\Ui\Containers\GroupedUi;
 	use ChefSections\Helpers\SectionUi as SectionUiHelper;
 
 	class ContainerSectionUi extends BaseSectionUi{
@@ -43,21 +45,9 @@
 
 				$this->buildControls();
 
-				echo '<div class="section-columns container-sections '.esc_attr( $this->container->view ).'">';
-						
-					echo '<div class="section-sortables" data-container_id="'.$this->container->id.'">';
-
-						if( !$this->container->sections->empty() ){
-
-							foreach( $this->container->sections->all() as $section ){
-
-								SectionUiHelper::getClass( $section )->build();
-
-							}
-						}
-
-
-					echo '</div>';
+				echo '<div class="'.$this->getClass().'">';
+					
+					$this->buildMainUi();
 
 					echo '<div class="clearfix"></div>';
 				echo '</div>';
@@ -68,6 +58,41 @@
 				
 			echo '<div class="loader"><span class="spinner"></span></div>';
 			echo '</div>';
+		}
+
+		/**
+		 * Fetched the right UI class for building the main UI
+		 * 
+		 * @return string ( html, echoed )
+		 */
+		public function buildMainUi()
+		{
+			switch( $this->container->view ){
+
+				case 'tabbed':
+
+					return ( new TabbedUi( $this->container ) )->build();
+					break;
+
+				default:
+
+					return ( new GroupedUi( $this->container ) )->build();
+					break;
+
+			}
+		}
+
+		/**
+		 * Returns the class for this container
+		 * 
+		 * @return string
+		 */
+		public function getClass()
+		{
+			$class = 'section-columns container-sections ';
+			$class .= $this->container->view.'-sections ';
+			$class .= $this->container->slug.'-container';
+			return $class;
 		}
 
 
@@ -101,7 +126,7 @@
 				//add the top buttons for panels:
 				echo '<div class="buttons-wrapper">';
 
-					$buttons = apply_filters( 'chef_sections_panel_buttons', array() );
+					$buttons = SectionUiHelper::getPanelButtons( $this->section );
 
 					foreach( $buttons as $button ){
 
@@ -119,6 +144,13 @@
 					'section['.$this->section->id.'][view]',
 					array(
 						'defaultValue' => $this->section->view
+					)
+				)->render();
+
+				Field::hidden(
+					'section['.$this->section->id.'][slug]',
+					array(
+						'defaultValue' => $this->section->slug
 					)
 				)->render();
 

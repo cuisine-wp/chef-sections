@@ -24,7 +24,6 @@
 		public function setCollection()
 		{
 			$this->collection = new SectionCollection( $this->postId );
-			$this->containers = new ContainerCollection();
 		}
 
 
@@ -51,22 +50,17 @@
 			//up the highest ID:
 			$this->collection->setHighestId( 1 );
 
-			//get the container:
-			$container = $this->containers->get( $slug );
-			$container = $container['class'];
-
 			$specifics = [
 				'id'				=> $this->collection->getHighestId(),
 				'position'			=> ( count( $this->collection->all() ) + 1 ),
 				'post_id'			=> $this->postId,
-				'container_id'		=> null
+				'container_id'		=> null,
+				'slug' 				=> $slug
 			];
 
 			//set the arguments:
 			$args = SectionHelper::defaultContainerArgs() + $specifics;
 			$args['columns'] = [];
-
-			$container = new $container( $args );
 
 			//save this section:
 			$_sections = $this->collection->toArray()->all();
@@ -74,7 +68,9 @@
 			update_post_meta( $this->postId, 'sections', $_sections );
 
 			//return a new Container Section UI:
-			return ( new ContainerSectionUi( $container ) )->build();
+			$container = SectionHelper::getClass( $args );
+			$html = ( new ContainerSectionUi( $container ) )->get();
+			$this->response( $html );
 		}
 
 

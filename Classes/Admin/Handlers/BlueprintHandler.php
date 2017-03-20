@@ -63,14 +63,18 @@
 		 */
 		public function check()
 		{
-			if( $this->checkPage() && !is_null( $this->collection ) ){
+			if( 
+				!is_null( $this->collection ) &&
+				$this->checkPage() && 
+				$this->validPostType()
+			){
 				return true;
 			}
 
 			return false;
 		}
 
-	/**
+		/**
 		 * Checks if this is the page this handler should be run
 		 * 
 		 * @return bool
@@ -82,6 +86,22 @@
 			$status = get_post_status( $this->postId );
 
 			if( $status == 'auto-draft' && $pagenow == 'post-new.php' )
+				return true;
+
+			return false;
+		}
+
+		/**
+		 * Check the validity of the post type we're applying this to
+		 * 
+		 * @return bool
+		 */
+		public function validPostType()
+		{
+			$postType = ( isset( $_GET['post_type'] ) ? $_GET['post_type'] : get_post_type( $this->postId ) );
+			$applyTo = get_post_meta( $this->collection->ID, 'apply_to', true );
+
+			if( $postType == $applyTo )
 				return true;
 
 			return false;

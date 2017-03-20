@@ -1,6 +1,6 @@
 //columns
 .section-columns{
-	padding:15px;
+	padding:15px 0 15px 15px;
 	display: flex;
 	flex-direction: row;
 	align-items: stretch;
@@ -30,7 +30,9 @@
 		font-weight:bold;
 
 
-		.chosen-container-single{
+		.chosen-container-single, .chosen-container{
+		    width: 100% !important;
+		    
 			.chosen-single{
 				background:#fff;
 				text-align:left;

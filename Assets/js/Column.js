@@ -174,7 +174,7 @@
 
 				var input = jQuery( inputs[ i ] );
 
-				//we'll check for multi-dimensional fields later:
+				//multi dimensional inputs we'll handle later
 				if( input.hasClass( 'multi') == false ){
 
 					if( input.val() !== undefined && input.attr( 'name' ) !== undefined && input.attr('disabled') == undefined ){

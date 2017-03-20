@@ -4,6 +4,7 @@
 
 	use Cuisine\Wrappers\Field;
 	use ChefSections\Collections\SectionCollection;
+	use ChefSections\Helpers\SectionUi as SectionUiHelper;
 
 	class ReferenceSectionUi extends BaseSectionUi{
 
@@ -140,7 +141,7 @@
 				//add the top buttons for panels:
 				echo '<div class="buttons-wrapper">';
 
-					$buttons = apply_filters( 'chef_sections_panel_buttons', array() );
+					$buttons = SectionUiHelper::getPanelButtons( $this->section );
 
 					foreach( $buttons as $button ){
 

@@ -2,15 +2,16 @@
 
 	namespace ChefSections\Admin;
 
-	use ChefSections\Wrappers\StaticInstance;
-	use ChefSections\Admin\Ui\SectionsUi;
+	use Cuisine\Utilities\Url;
 	use ChefSections\Admin\Ui\Toolbar;
+	use ChefSections\Admin\Ui\SectionsUi;
+	use ChefSections\Wrappers\StaticInstance;
 	use ChefSections\Admin\Handlers\SectionHandler;
 	use ChefSections\Admin\Handlers\BlueprintHandler;
 	use ChefSections\Admin\Handlers\ContainerHandler;
 	use ChefSections\Collections\ReferenceCollection;
 
-	use Cuisine\Utilities\Url;
+	use ChefSections\Helpers\Section as SectionHelper;
 
 	class EventListeners extends StaticInstance{
 
@@ -53,8 +54,10 @@
 
 			/*add_action( 'admin_footer', function(){
 
-				$_POST['container_slug'] = 'group';
-				( new ContainerHandler() )->addContainer();
+				$_POST['post_id'] = '198';
+				$_POST['section_id'] = '8';
+
+				( new SectionHandler() )->addSection();
 
 			});*/
 
@@ -67,16 +70,7 @@
 
 			});
 
-			add_filter( 'chef_sections_containers', function( $data ){
-
-				$data[ 'group' ] = [
-					'label' => 'Section Group',
-					'class' => '\ChefSections\Containers\GroupContainer'
-				];
-
-				return $data;
-
-			});
+			
 
 
 			//placing the sections builder

@@ -100,12 +100,24 @@
 
 			jQuery.post( ajaxurl, data, function( response ){
 
-				console.log( response );
-				//console.log( response );				
-				self.$el.replaceWith( response );
+				try{
 
-				SectionBuilder.refresh();
-				refreshFields();
+					response = JSON.parse( response );
+					
+					//console.log( response );				
+					self.$el.replaceWith( response.html );
+
+					SectionBuilder.refresh();
+					refreshFields();
+					
+
+				}catch( e ){
+					
+					console.log( e );
+
+				}
+				console.log( response );
+				
 
 			});
 		},
@@ -134,15 +146,35 @@
 				self.$el.addClass('deleting');
 
 				jQuery.post( ajaxurl, data, function( response ){
-					
-					if( response === 'true' ){
-	
-						self.$el.slideUp( 'slow', function(){
-							self.$el.remove();
-						});
-	
-						SectionBuilder.refresh();
-						refreshFields();
+										
+					try{
+
+						response = JSON.parse( response );
+						if( response.error == false || response.error == 'fase' ){
+
+							self.$el.slideUp( 'fast', function(){
+
+								if( typeof( self.$el.data('tab') ) != 'undefined' ){
+
+									//set first tab as active:
+									self.$el.parent().parent().find('.section-sortables > .tab').first().addClass( 'active' );
+									
+									//remove old tab:
+									$( '#'+ self.$el.data('tab') ).remove();
+								}
+
+								self.$el.remove();
+
+								SectionBuilder.refresh();
+								refreshFields();
+							});
+		
+						}
+
+					} catch( e ){
+
+						console.log( e );
+
 					}
 	
 				});
@@ -175,7 +207,7 @@
 			var _offset = $( evt.target ).position().left;
 			_offset = parseInt( _offset ) + 27;
 
-			var _panel = self.$el.find('#panel-'+_id);
+			var _panel = self.$el.find('> .section-setting-panels #panel-'+_id);
 
 			if( _panel.hasClass('active' ) === false ){
 

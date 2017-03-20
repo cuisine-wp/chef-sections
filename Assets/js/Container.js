@@ -9,7 +9,7 @@
 		events: {
 
 			'click .container-footer .delete-section': 'deleteSection',
-			'click .section-controls .buttons-wrapper .button' : 'toggleSettingPanel',
+			'click > .section-controls .buttons-wrapper .button' : 'toggleSettingPanel',
 			'click #close-panel' : 'hideSettingPanel',
 			'change .title-radio .multi' : 'setHeaderType'
 		},
@@ -93,7 +93,7 @@
 			var _offset = $( evt.target ).position().left;
 			_offset = parseInt( _offset ) + 27;
 
-			var _panel = self.$el.find('#panel-'+_id);
+			var _panel = self.$el.find('> .section-setting-panels #panel-'+_id);
 
 			if( _panel.hasClass('active' ) === false ){
 
