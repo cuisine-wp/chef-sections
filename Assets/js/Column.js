@@ -339,7 +339,6 @@
 				'section_id'	: self.sectionId,
 				'type'			: type
 			};
-			console.log( data );
 
 			jQuery.post( ajaxurl, data, function( response ){
 
