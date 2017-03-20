@@ -52,6 +52,8 @@ var SectionBuilder = new function(){
 		self.setColumns();
 		self.setSections();
 		self.setTabs();
+		self.setTabsClickable();
+
 		self.setSectionsSortable();
 
 		//update the eventual output:
@@ -214,6 +216,7 @@ var SectionBuilder = new function(){
 			connectWith: '.section-sortables',
 			placeholder: 'section-placeholder',
 			update: function (event, ui) {
+				console.log( 'sorted!' );
 				self.setSectionOrder();
 			}
 		});
@@ -240,7 +243,7 @@ var SectionBuilder = new function(){
 		var i = 1;
 
 		//handle grouped container sections:
-		jQuery('#main-section-container .section-wrapper.grouped-sections .section-wrapper').each( function(){
+		jQuery('#main-section-container .section-wrapper .grouped-sections .section-wrapper').each( function(){
 			var field = jQuery( this ).find( '.section-position' );
 			field.val( i );
 			i++;
@@ -250,10 +253,13 @@ var SectionBuilder = new function(){
 		var i = 1;
 		
 		//handle tab container sections:
-		jQuery( '#main-section-container .section-wrapper.tabbed-sections .tab').each( function(){
+		jQuery( '#main-section-container .section-wrapper .tabbed-sections .tab').each( function(){
 			var _id = $( this ).data( 'id' );
-			var _sec = jQuery( '#main-section-container .section-wrapper.tabbed-sections .section-'+_id );
-			_sec.find( '.section-position' );
+			var _container = $( this ).parent().data('container_id');
+			console.log( _id + '--'+ _container );
+
+			var _sec = jQuery( '#tabContentFor'+_container+' .section-'+_id );
+			_sec.find( '.section-position' ).val( i );
 			i++;
 		});
 	}
@@ -532,6 +538,7 @@ var SectionBuilder = new function(){
 			var _active = $( this ).find( '.active' ).data('id');
 
 			$( '#tabContentFor'+_container+ ' > .section-wrapper' ).removeClass( 'active' );
+			console.log( 'Kont: '+_container +' -- Active'+ _active );
 			$( '#tabContentFor'+_container ).find( '.section-'+_active ).addClass( 'active' );
 
 		});

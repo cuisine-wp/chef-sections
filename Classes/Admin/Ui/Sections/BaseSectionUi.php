@@ -145,7 +145,8 @@
 				)->render();
 
 				//sorting pin:
-				echo '<span class="dashicons dashicons-sort pin"></span>';
+				if( !SectionUiHelper::needsTab( $this->section ) )
+					echo '<span class="dashicons dashicons-sort pin"></span>';
 
 
 			echo '</div>';

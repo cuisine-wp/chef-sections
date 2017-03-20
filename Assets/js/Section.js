@@ -152,7 +152,7 @@
 						response = JSON.parse( response );
 						if( response.error == false || response.error == 'fase' ){
 
-							self.$el.slideUp( 'slow', function(){
+							self.$el.slideUp( 'fast', function(){
 
 								if( typeof( self.$el.data('tab') ) != 'undefined' ){
 
@@ -164,10 +164,11 @@
 								}
 
 								self.$el.remove();
+
+								SectionBuilder.refresh();
+								refreshFields();
 							});
 		
-							SectionBuilder.refresh();
-							refreshFields();
 						}
 
 					} catch( e ){
@@ -206,7 +207,7 @@
 			var _offset = $( evt.target ).position().left;
 			_offset = parseInt( _offset ) + 27;
 
-			var _panel = self.$el.find('#panel-'+_id);
+			var _panel = self.$el.find('> .section-setting-panels #panel-'+_id);
 
 			if( _panel.hasClass('active' ) === false ){
 
