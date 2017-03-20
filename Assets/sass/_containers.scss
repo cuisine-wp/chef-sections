@@ -28,7 +28,7 @@
         	}
 
         	.tabbed-content{
-        		min-height: 200px;
+        		min-height: 150px;
 
         		.section-wrapper{
         			display: none;
@@ -43,7 +43,7 @@
         	.section-sortables{
         		height: auto;
         		max-height: 80px;
-        		min-height: initial;
+                min-height: 50px;
         		display: -ms-flexbox;
     		    display: -webkit-flex;
     		    display: flex;
@@ -51,6 +51,7 @@
     		    -ms-flex-direction: row;
     		    flex-direction: row;
     		    margin-bottom: 0;
+                max-width: calc( 100% - 15px );
 
         		.tab > .pin, .section-placeholder{
         			position: relative;
@@ -133,5 +134,11 @@
 
     .tabbed-content .section-wrapper .section-controls{
         padding-right: 15px;
+    }
+
+    &.dragging{
+        .section-container .tabbed-sections .section-sortables{
+            background: rgba(0,0,0,.06);
+        }
     }
 }

@@ -216,7 +216,6 @@ var SectionBuilder = new function(){
 			connectWith: '.section-sortables',
 			placeholder: 'section-placeholder',
 			update: function (event, ui) {
-				console.log( 'sorted!' );
 				self.setSectionOrder();
 			}
 		});
@@ -256,7 +255,6 @@ var SectionBuilder = new function(){
 		jQuery( '#main-section-container .section-wrapper .tabbed-sections .tab').each( function(){
 			var _id = $( this ).data( 'id' );
 			var _container = $( this ).parent().data('container_id');
-			console.log( _id + '--'+ _container );
 
 			var _sec = jQuery( '#tabContentFor'+_container+' .section-'+_id );
 			_sec.find( '.section-position' ).val( i );
@@ -342,8 +340,12 @@ var SectionBuilder = new function(){
 		jQuery('.add-section-btn').draggable({
 			connectToSortable: '.section-sortables',
 			helper: 'clone',
+			start: function( event, ui ){
+				$('#main-section-container').addClass( 'dragging' ); 
+			},
 			stop: function( event, ui ){
 
+				$('#main-section-container').removeClass( 'dragging' );
 				var _placeholder = $('#main-section-container .add-section-btn.ui-draggable-handle' );
 				_placeholder.addClass('placeholder-block');
 				_placeholder.html( '<span class="spinner"></span> Adding section...' );
@@ -392,17 +394,14 @@ var SectionBuilder = new function(){
 		//remove the spinner:
 		$('#section-builder-ui .spinner').addClass( 'show' );
 		
-		console.log( data );
-
 		var self = this;
 		jQuery.post( ajaxurl, data, function( response ){
 
 			try{
 
 				response = JSON.parse( response );
-
-
-				if( response.tab != false && response.tab != 'false' && response.tab != '' ){
+			
+				if( response.tab != null && response.tab != 'null' && response.tab != '' ){
 
 					var _target = $( '#tabContentFor'+data['container_id'] );
 					$('#tabsFor'+data['container_id'] ).find('.tab').removeClass( 'active' ); 
@@ -427,6 +426,7 @@ var SectionBuilder = new function(){
 
 				//remove the spinner:
 				$('#section-builder-ui .spinner').removeClass( 'show' );
+				
 
 			}catch( e ){
 
@@ -538,7 +538,6 @@ var SectionBuilder = new function(){
 			var _active = $( this ).find( '.active' ).data('id');
 
 			$( '#tabContentFor'+_container+ ' > .section-wrapper' ).removeClass( 'active' );
-			console.log( 'Kont: '+_container +' -- Active'+ _active );
 			$( '#tabContentFor'+_container ).find( '.section-'+_active ).addClass( 'active' );
 
 		});
