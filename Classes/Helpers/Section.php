@@ -2,10 +2,7 @@
 	
 	namespace ChefSections\Helpers;
 
-	use ChefSections\SectionTypes\Blueprint;
-	use ChefSections\SectionTypes\Reference;
 	use ChefSections\SectionTypes\Container;
-	use ChefSections\SectionTypes\ContentSection;
 	use ChefSections\Collections\ContainerCollection;
 
 	class Section{
@@ -20,17 +17,9 @@
 		 */
 		public static function getClass( $sectionData )
 		{
+			$classes = static::getClasses();
+
 			switch( $sectionData['type'] ){
-
-				case 'reference':
-
-					return new Reference( $sectionData );
-					break;
-
-				case 'blueprint':
-
-					return new Blueprint( $sectionData );
-					break;
 
 				case 'container':
 
@@ -47,9 +36,28 @@
 
 				default:
 
-					return new ContentSection( $sectionData );
+					$class = $classes[ $sectionData['type'] ];
+					return new $class( $sectionData );
 					break;
 			}
+		}
+
+		/**
+		 * Returns an array of all Section Type classes (filterable)
+		 * 
+		 * @return Array
+		 */
+		public static function getClasses(){
+
+			$classes = [
+				'section' 			=> '\ChefSections\SectionTypes\ContentSection',
+				'contentSection'	=> '\ChefSections\SectionTypes\ContentSection',
+				'reference'			=> '\ChefSections\SectionTypes\Reference',
+				'blueprint'			=> '\ChefSections\SectionTypes\Blueprint',
+				'container'			=> '\ChefSections\SectionTypes\Container'
+			];
+
+			return apply_filters( 'chef_sections_section_type_classes', $classes );
 		}
 
 		/**

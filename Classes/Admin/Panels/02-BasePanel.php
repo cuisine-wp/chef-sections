@@ -4,7 +4,6 @@ namespace ChefSections\Admin\Panels;
 
 use Cuisine\Utilities\Session;
 use Cuisine\Wrappers\Field;
-use ChefSections\Collections\ContainerCollection;
 
 class BasePanel{
 
@@ -27,7 +26,7 @@ class BasePanel{
 	 * 
 	 * @var array
 	 */
-	protected $options;
+	public $options;
 
 
 
@@ -82,7 +81,7 @@ class BasePanel{
 	 */
 	public function build( $section ){
 
-		if( $this->validContainer( $section ) ){
+		if( $this->checkRules( $section ) ){
 
 			echo '<div class="settings-panel '.sanitize_title( $this->slug ).'" id="panel-'.esc_attr( $this->slug ).'">';
 				echo '<span class="arrow"></span>';
@@ -131,7 +130,7 @@ class BasePanel{
 	 */
 	public function button( $buttons, $section ){
 
-		if( $this->validContainer( $section ) ){
+		if( $this->checkRules( $section ) ){
 		
 			$buttons[ $this->slug ] = array(
 				'label' => $this->title,
@@ -147,36 +146,14 @@ class BasePanel{
 
 
 	/**
-	 * Check if the section has a container, and if this panel applies to it
+	 * Check rules wether or not this should be displayed
 	 *
 	 * @return bool
 	 */
-	public function validContainer( $section )
+	public function checkRules( $section )
 	{
-
-		//show, regardless:
-		if( is_null( $this->options['inContainer'] ) )
-			return true;
-		
-		if( 
-			!is_null( $this->options['inContainer'] ) && 
-			!is_null( $section->container_id )
-		){
-	
-			if( !is_array( $this->options['inContainer'] ) )
-				$this->options['inContainer'] = [ $this->options['inContainer'] ];
-
-			$container = ( new ContainerCollection() )->getById( $section->container_id, $section->post_id );
-
-			if( in_array( $container['slug'], $this->options['inContainer'] ) )
-				return true;
-
-		}
-
-
-
-
-		return false;
+		$validator = new PanelValidator( $this, $section );
+		return $validator->isValid();
 	}
 
 
@@ -214,8 +191,7 @@ class BasePanel{
 		$defaults = array(
 			'icon'				=> false,
 			'position'			=> 10,
-			'forContainer' 		=> null,
-			'inContainer'		=> null,
+			'rules' 			=> [],
 		);
 
 

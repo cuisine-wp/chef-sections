@@ -11,9 +11,10 @@
 	use ChefSections\Wrappers\SectionsBuilder;
 	use ChefSections\Helpers\Column as ColumnHelper;
 	use ChefSections\Helpers\Section as SectionHelper;
+	use ChefSections\Contracts\Section as SectionContract;
 
 
-	class BaseSection{
+	class BaseSection implements SectionContract{
 
 		/**
 		 * Unique Id for this section, prefixed by the post_id
@@ -95,6 +96,7 @@
 		/**
 		 * Array containing all properties of this section
 		 * 
+
 		 * @var array
 		 */
 		public $properties;
@@ -285,7 +287,7 @@
 		 * 
 		 * @return string
 		 */
-		private function getSchema(){
+		protected function getSchema(){
 
 			$schema = 'itemscope ';
 			$schema .= 'itemtype="http://schema.org/Collection"';
@@ -372,33 +374,6 @@
 		}
 
 
-		/**
-		 * Get this sections's template slug
-		 * 
-		 * @return String
-		 */
-		public function getSlug(){
-
-			global $post;
-			return $post->post_name.'-'.sanitize_title( $this->title );
-
-		}
-
-
-		/*=============================================================*/
-		/**             Template functions                             */
-		/*=============================================================*/
-
-
-		/**
-		 * Returns the template base for this section
-		 * 
-		 * @return string
-		 */
-		public function getTemplateBase()
-		{
-			return $this->type.'s';
-		}
 
 		/**
 		 * Returns the title field

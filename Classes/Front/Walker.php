@@ -77,7 +77,7 @@
 		* 
 		* @return string (html)
 		*/
-		public function get_section( $postId, $sectionId ){
+		public function getSection( $postId, $sectionId ){
 
 			$template = false;
 			$sections = $this->collection;
@@ -118,7 +118,7 @@
 		* @param string $name of the post
 		* @return string (html)
 		*/
-		public function get_sections_template( $name ){
+		public function getSectionsTemplate( $name ){
 
 			$args = array(
 				'name' => $name,
@@ -196,7 +196,21 @@
 			return true;
 		}
 
+		/********************************************/
+		/**          Deprecated function            */
+		/********************************************/
 
+		public function get_section( $postId, $sectionId  )
+		{
+			_deprecated_function( __METHOD__, '3.0.0', 'getSection' );
+			return $this->getSection( $postId, $sectionId  );
+		}
+
+		public function get_sections_template( $name )
+		{
+			_deprecated_function( __METHOD__, '3.0.0', 'getSectionsTemplate' );
+			return $this->getSectionsTemplate( $name );
+		}
 
 	}
 

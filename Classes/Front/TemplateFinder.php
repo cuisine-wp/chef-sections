@@ -8,6 +8,8 @@ use \Cuisine\Utilities\Url;
 use \Cuisine\Utilities\Sort;
 use \Cuisine\Utilities\Session;
 
+use \ChefSections\Templates\ContentSectionTemplate;
+
 /**
  * The Template class locates templates
  * @package ChefSections\Front
@@ -86,17 +88,26 @@ class TemplateFinder {
 	/**
 	 * Get the template for a section
 	 * 
-	 * @param  \ChefSections\Sections\Section 	$section
-	 * @return \ChefSections\Front\TemplateFinder ( chainable )
+	 * @param  \ChefSections\SectionTypes\Section 	$section
+	 * 
+	 * @return \ChefSections\TemplateClasses/ContentSection
 	 */
 	public function section( $section ){
 
-		$this->type = 'section';
-		$this->obj = $section;
+		switch( $section->type ){
 
-		$this->getFiles();
+			case 'reference':
+				return new ReferenceTemplate( $section );
+				break;
 
-		return $this;
+			case 'container':
+				return new ContainerTemplate( $section );
+				break;
+
+			default:
+				return new ContentSectionTemplate( $section );
+				break;
+		}
 	}
 
 	/**
