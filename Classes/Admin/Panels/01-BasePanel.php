@@ -155,23 +155,26 @@ class BasePanel{
 	{
 
 		//show, regardless:
-		if( is_null( $this->options['containerSlug'] ) )
+		if( is_null( $this->options['inContainer'] ) )
 			return true;
 		
 		if( 
-			!is_null( $this->options['containerSlug'] ) && 
+			!is_null( $this->options['inContainer'] ) && 
 			!is_null( $section->container_id )
 		){
 	
-			if( !is_array( $this->options['containerSlug'] ) )
-				$this->options['containerSlug'] = [ $this->options['containerSlug'] ];
+			if( !is_array( $this->options['inContainer'] ) )
+				$this->options['inContainer'] = [ $this->options['inContainer'] ];
 
 			$container = ( new ContainerCollection() )->getById( $section->container_id, $section->post_id );
 
-			if( in_array( $container['slug'], $this->options['containerSlug'] ) )
+			if( in_array( $container['slug'], $this->options['inContainer'] ) )
 				return true;
 
 		}
+
+
+
 
 		return false;
 	}
@@ -211,7 +214,8 @@ class BasePanel{
 		$defaults = array(
 			'icon'				=> false,
 			'position'			=> 10,
-			'containerSlug' 	=> null
+			'forContainer' 		=> null,
+			'inContainer'		=> null,
 		);
 
 
