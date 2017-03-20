@@ -48,7 +48,10 @@
 			$container = $sections[ $containerId ];
 			$slug = $container['slug'];
 
-			return $this->get( $slug );
+			$item = $this->get( $slug );
+			$item['slug'] = $slug;
+
+			return $item;
 		}
 
 

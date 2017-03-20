@@ -67,4 +67,15 @@
 			}
 		}
 
+
+		/**
+		 * Returns the right panel buttons for sections
+		 * 
+		 * @return Array
+		 */
+		public static function getPanelButtons( $section )
+		{
+			return apply_filters( 'chef_sections_panel_buttons', array(), $section );
+		}
+
 	}

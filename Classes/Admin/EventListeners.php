@@ -70,17 +70,7 @@
 
 			});
 
-			add_filter( 'chef_sections_containers', function( $data ){
-
-				$data[ 'group' ] = [
-					'label' => 'Section Group',
-					'view' => 'tabbed',
-					'class' => '\ChefSections\Containers\GroupContainer'
-				];
-
-				return $data;
-
-			});
+			
 
 
 			//placing the sections builder
