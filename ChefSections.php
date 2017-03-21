@@ -100,6 +100,7 @@ if (!class_exists('ChefSections')) {
                 'Classes/Containers',
                 'Classes/Columns',
 
+                'Classes/Templates',
                 'Classes/Front'
             );
 

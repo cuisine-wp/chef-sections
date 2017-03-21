@@ -158,7 +158,7 @@
 
 
 			//set the name	
-			$args['name'] = $this->getName( $args );
+			$args['name'] = sanitize_title( $this->getName( $args ) );
 
 			return $args;
 		}
@@ -204,7 +204,17 @@
 		 */
 		public function getAttributes()
 		{
-			$attributes = [ 'id', 'post_id', 'container_id', 'position', 'view', 'hide_title', 'hide_container'	];
+			$attributes = [ 
+				'id', 
+				'post_id', 
+				'container_id', 
+				'name', 
+				'position', 
+				'view', 
+				'hide_title', 
+				'hide_container'
+			];
+			
 			$attributes = apply_filters( 'chef_sections_section_attributes', $attributes );
 
 			return $attributes;

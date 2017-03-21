@@ -94,20 +94,21 @@ class TemplateFinder {
 	 */
 	public function section( $section ){
 
-		switch( $section->type ){
+		$classes = [
+			'reference' => '\ChefSections\Templates\ReferenceTemplate',
+			'container' => '\ChefSections\Templates\ContainerTemplate',
+			'default' 	=> '\ChefSections\Templates\ContentSesctionTemplate'
+		];
 
-			case 'reference':
-				return new ReferenceTemplate( $section );
-				break;
+		$key = $section->type;
+		$keys =  array_keys( $classes );
 
-			case 'container':
-				return new ContainerTemplate( $section );
-				break;
+		if( !isset( $keys[ $key ] ) )
+			$key = 'default';
 
-			default:
-				return new ContentSectionTemplate( $section );
-				break;
-		}
+		$class = apply_filters( 'chef_sections_section_template_class', $classes[ $key ], $section );
+
+		return new $class( $section );
 	}
 
 	/**

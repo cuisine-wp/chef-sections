@@ -1,9 +1,11 @@
 <?php
 
 
-	namespace ChefSections\Front\Templates;
+	namespace ChefSections\Templates;
 
-	use ChefSections\Contracts\TemplateContract;
+	use Cuisine\Utilities\Url;
+	use Cuisine\Utilities\Sort;
+	use ChefSections\Contracts\Template as TemplateContract;
 
 	class BaseTemplate implements TemplateContract{
 
@@ -32,7 +34,12 @@
 		protected $baseFolder = 'base/';
 
 
-
+		/**
+		 * The path to a located template
+		 * 
+		 * @var String (path)
+		 */
+		protected $located;
 
 
 
@@ -44,8 +51,51 @@
 		public function __construct( $object )
 		{
 			$this->object = $object;
+			$this->baseFolder = apply_filters( 'chef_sections_'.$this->type.'_template_base', $this->baseFolder );
+
+			$this->located = $this->locate();
+		}
+
+
+		
+		/******************************************************/
+		/**             Display & Get                         */
+		/******************************************************/
+
+		/**
+		 * Display the actual template
+		 * 
+		 * @return String (html, echoed)
+		 */
+		public function display()
+		{
+
+			add_action( 'chef_sections_before_'.$this->type.'_template', $this->object );
+
+			include( $this->located );
+
+			add_action( 'chef_sections_after_'.$this->type.'_template', $this->object );		
+		}	
+
+
+		/**
+		 * Returns the html
+		 * 
+		 * @return String (html)
+		 */
+		public function get()
+		{
+			ob_start();
+
+				$this->display();
+
+			return ob_get_clean();
 		}
 		
+		/******************************************************/
+		/**             Locate functions                      */
+		/******************************************************/
+
 
 		/**
 		 * Locate the right template file
@@ -54,7 +104,7 @@
 		 */
 		public function locate()
 		{
-			$templates = $this->searchTheme();
+			$templates = $this->getThemeLocations();
 			$located = locate_template( $templates );
 
 			$located = apply_filters( 'chef_sections_located_template', $located, $this );
@@ -74,11 +124,62 @@
 		 */
 		public function default()
 		{
-				
+			$base = $this->pluginPath();
+			$default = $base.'Columns/collection-block.php';
+			$default = apply_filters( 'chef_sections_default_template', $default, $this->object );
+			return $default;
 		}
 
 
-		protected function searchTheme(){
+		/**
+		 * Returns the default hierarchy for this template
+		 * 
+		 * @return Array
+		 */
+		public function getHierarchy()
+		{
+			return [];
+		}
+
+
+		/**
+		 * Set variables
+		 *
+		 * @return void
+		 */
+		public function setVars(){
+
+		}
+
+		/******************************************************/
+		/**             Helper functions                      */
+		/******************************************************/
+
+		/**
+		 * Construct a path
+		 * 
+		 * @return string
+		 */
+		public function constructPath()
+		{
+			$num = func_num_args();
+			$args = func_get_args();
+
+			$string = $this->baseFolder;
+
+			foreach( $args as $arg ){
+				$string .= $arg.'-';
+			}
+
+			return substr( $string, 0, -1 );
+		}
+
+		/**
+		 * Get the theme locations and pass them through filters
+		 * 
+		 * @return Array
+		 */
+		protected function getThemeLocations(){
 
 			$templates = $this->getHierarchy();
 
@@ -107,48 +208,16 @@
 		}
 
 
-		/**
-		 * Returns the default hierarchy for this template
-		 * 
-		 * @return Array
-		 */
-		public function getHierarchy()
-		{
 
-			return [];
+		/**
+		 * Return the default plugin template path
+		 * 
+		 * @return string
+		 */
+		public function pluginPath()
+		{
+			return Url::path( 'plugin', 'chef-sections/Templates', true );
 		}
 
 
-		/******************************************************/
-		/**             Display & Get                         */
-		/******************************************************/
-
-		/**
-		 * Display the actual template
-		 * 
-		 * @return String (html, echoed)
-		 */
-		public function display()
-		{
-			add_action( 'chef_sections_before_'.$this->type.'_template', $this->object );
-
-			include( $this->located );
-
-			add_action( 'chef_sections_after_'.$this->type.'_template', $this->object );		
-		}	
-
-
-		/**
-		 * Returns the html
-		 * 
-		 * @return String (html)
-		 */
-		public function get()
-		{
-			ob_start();
-
-				$this->display();
-
-			return ob_get_clean();
-		}
 	}
