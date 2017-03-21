@@ -340,6 +340,7 @@ var SectionBuilder = new function(){
 		jQuery('.add-section-btn').draggable({
 			connectToSortable: '.section-sortables',
 			helper: 'clone',
+			revert: 'invalid',
 			start: function( event, ui ){
 				$('#main-section-container').addClass( 'dragging' ); 
 			},
@@ -347,35 +348,39 @@ var SectionBuilder = new function(){
 
 				$('#main-section-container').removeClass( 'dragging' );
 				var _placeholder = $('#main-section-container .add-section-btn.ui-draggable-handle' );
-				_placeholder.addClass('placeholder-block');
-				_placeholder.html( '<span class="spinner"></span> Adding section...' );
+				
+				//check if the placeholder exists:
+				if( _placeholder.length > 0 ){
 
-				//set the data
-				var data = _placeholder.data();
+					_placeholder.addClass('placeholder-block');
+					_placeholder.html( '<span class="spinner"></span> Adding section...' );
 
-				//set container_id, if applicable:
-				var dropzone = _placeholder.parent();
-				if( typeof( dropzone.data('container_id') ) != 'undefined' )
-					data['container_id'] = dropzone.data( 'container_id' );
+					//set the data
+					var data = _placeholder.data();
 
 
-				//delete extra information, not needed:
-				delete data['sortableItem'];
+					//set container_id, if applicable:
+					var dropzone = _placeholder.parent();
+					if( typeof( dropzone.data('container_id') ) != 'undefined' )
+						data['container_id'] = dropzone.data( 'container_id' );
 
-				if( data.type == 'search' ){
-					
-					self.launchSearchWindow( data, _placeholder, function( _newData ){
 
-						delete _newData['sortableItem'];
+					//delete extra information, not needed:
+					delete data['sortableItem'];
+
+					if( data.type == 'search' ){
 						
-						self.updateSections( _newData, _placeholder );
-					});
+						self.launchSearchWindow( data, _placeholder, function( _newData ){
 
-				}else{
-					self.updateSections( data, _placeholder );
+							delete _newData['sortableItem'];
+							
+							self.updateSections( _newData, _placeholder );
+						});
+
+					}else{
+						self.updateSections( data, _placeholder );
+					}
 				}
-
-				//
 
 			}
 		});

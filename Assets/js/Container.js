@@ -52,16 +52,26 @@
 				self.$el.addClass('deleting');
 
 				jQuery.post( ajaxurl, data, function( response ){
-					
-					if( response === 'true' ){
+
+					try{
+
+						response = JSON.parse( response );
+						if( response.error == false || response.error == 'fase' ){
+
+							self.$el.slideUp( 'fast', function(){
+								self.$el.remove();
+							});
 	
-						self.$el.slideUp( 'slow', function(){
-							self.$el.remove();
-						});
-	
-						SectionBuilder.refresh();
-						refreshFields();
+							SectionBuilder.refresh();
+							refreshFields();
+						}
+
+					} catch( e ){
+
+						console.log( e );
+
 					}
+					
 	
 				});
 			}

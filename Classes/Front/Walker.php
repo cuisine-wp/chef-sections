@@ -74,6 +74,7 @@
 		*
 		* @param int $postId
 		* @param int $sectionId
+		* @param string $path
 		* 
 		* @return string (html)
 		*/
@@ -119,6 +120,8 @@
 		* Get all sections in a template
 		*
 		* @param string $name of the post
+		* @param string $path
+		* 
 		* @return string (html)
 		*/
 		public function getSectionsTemplate( $name, $path = null ){
