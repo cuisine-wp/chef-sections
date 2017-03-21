@@ -10,10 +10,14 @@ use ChefSections\Wrappers\Walker;
  * Echoes get_sections
  * @return void
  */
-function the_sections(){	
+if( !function_exists( 'the_sections' ) ){
 
-	if( has_sections() )
-		echo Walker::walk();
+	function the_sections(){	
+
+		if( has_sections() )
+			echo Walker::walk();
+
+	}
 
 }
 
@@ -22,11 +26,16 @@ function the_sections(){
  * Get current sections
  * @return ChefSections\Front\Walker ( html )
  */
-function get_sections(){
+if( !function_exists( 'get_sections' ) ){
 
-	return Walker::walk();
+	function get_sections(){
+
+		return Walker::walk();
+
+	}
 
 }
+
 
 /**
  * Get a section from an external post
@@ -37,10 +46,13 @@ function get_sections(){
  * 
  * @return string (html)
  */
-function get_section( $post_id, $section_id = null, $templatePath = null ){
+if( !function_exists( 'get_section' ) ){
 
-	$section = Walker::getSection( $post_id, $section_id, $templatePath );
-	return $section;
+	function get_section( $post_id, $section_id = null, $templatePath = null ){
+
+		$section = Walker::getSection( $post_id, $section_id, $templatePath );
+		return $section;
+	}
 
 }
 
@@ -53,12 +65,15 @@ function get_section( $post_id, $section_id = null, $templatePath = null ){
  * 
  * @return string (html)
  */
-function get_sections_template( $name, $templatePath = null ){
+if( !function_exists( 'get_sections_template' ) ){
 
-	return Walker::getSectionsTemplate( $name, $templatePath );
+	function get_sections_template( $name, $templatePath = null ){
+
+		return Walker::getSectionsTemplate( $name, $templatePath );
+
+	}
 
 }
-
 
 /**
  * A singular fallback for the function above
@@ -68,9 +83,13 @@ function get_sections_template( $name, $templatePath = null ){
  * 
  * @return string (html)
  */
-function get_section_template( $name, $templatePath = null ){
+if( !function_exists( 'get_section_template' ) ){
 
-	return Walker::getSectionsTemplate( $name, $templatePath );
+	function get_section_template( $name, $templatePath = null ){
+
+		return Walker::getSectionsTemplate( $name, $templatePath );
+
+	}
 
 }
 
@@ -79,9 +98,13 @@ function get_section_template( $name, $templatePath = null ){
  * Check if this post has sections
  * @return  bool
  */
-function has_sections(){
+if( !function_exists( 'has_sections' ) ){
 
-	return Walker::hasSections();
+	function has_sections(){
+
+		return Walker::hasSections();
+
+	}
 
 }
 
@@ -89,25 +112,71 @@ function has_sections(){
 /**
  * Echo the columns:
  *
- * @param \ChefSections\Sections\Section;
+ * @param \ChefSections\SectionTypes\BaseSection
+ * 
  * @return void
  */
-function the_columns( $section ){
+if( !function_exists( 'the_columns' ) ){
 
-	echo Walker::columns( $section );
+	function the_columns( $section ){
+
+		echo Walker::columns( $section );
 	
+	}
+
 }
 
 
 /**
  * Get columns in a section 
  *
- * @param  \ChefSections\Sections\Section
+ * @param  \ChefSections\SectionTypes\BaseSection
+ * 
  * @return ChefSections\Front\Walker ( html )
  */
-function get_columns( $section ){
+if( !function_exists( 'get_columns' ) ){
 
-	return Walker::columns( $section );
+	function get_columns( $section ){
+
+		return Walker::columns( $section );
+
+	}
+
+}
+
+
+/**
+ * Echo all sections inside a container
+ * 
+ * @param  \ChefSections\SectionTypes\Container $section
+ * 
+ * @return ChefSections\Front\Walker
+ */
+if( !function_exists( 'the_containered_sections' ) ){
+
+	function the_containered_sections( $section ){
+
+		echo Walker::sectionsInContainer( $section );
+
+	}
+
+}
+
+
+/**
+ * Returns all sections inside a container
+ * 
+ * @param  \ChefSections\SectionTypes\Container $section
+ * 
+ * @return ChefSections\Front\Walker
+ */
+if( !function_exists( 'get_containered_sections' ) ){
+
+	function get_containered_sections( $section ){
+
+		return Walker::sectionsInContainer( $section );
+
+	}
 
 }
 
@@ -118,8 +187,12 @@ function get_columns( $section ){
  * @param  \ChefSections\Columns\Column $column
  * @return ChefSections\Front\Walker ( html )
  */
-function get_block_template( $column ){
+if( !function_exists('get_block_template' ) ){
 
-	return Walker::block( $column );
+	function get_block_template( $column ){
+
+		return Walker::block( $column );
+
+	}
 
 }

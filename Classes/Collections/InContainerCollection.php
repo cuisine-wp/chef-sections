@@ -3,10 +3,7 @@
 	namespace ChefSections\Collections;
 
 	use Cuisine\Utilities\Sort;
-	use ChefSections\SectionTypes\ContentSection;
-	use ChefSections\SectionTypes\Blueprint;
-	use ChefSections\SectionTypes\Reference;
-	use ChefSections\SectionTypes\Stencil;
+	use ChefSections\Helpers\Section as SectionHelper;
 
 	class InContainerCollection extends Collection{
 
@@ -54,8 +51,6 @@
 
 			foreach( $sections as $key => $section ){
 
-
-
 				if( isset( $section['container_id'] ) && $section['container_id'] == $this->sectionId )
 					$items[ $key ] = $section;
 
@@ -83,7 +78,7 @@
 					foreach( $sections as $section ){
 
 						if( $section['type'] != 'container' )
-							$array[ $section['id'] ] = $this->getSectionType( $section );
+							$array[ $section['id'] ] = SectionHelper::getClass( $section );
 					
 					}
 				}

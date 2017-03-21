@@ -7,6 +7,7 @@
 	use \ChefSections\Wrappers\Template;
 	use \ChefSections\SectionTypes\ContentSection;
 	use \ChefSections\Collections\SectionCollection;
+	use \ChefSections\Collections\InContainerCollection;
 
 	class Walker{
 
@@ -42,6 +43,9 @@
 			$this->collection = new SectionCollection( $postId );	
 		}
 
+		/******************************************/
+		/**           Section Walkers             */
+		/******************************************/
 
 		/**
 		 * Walk through all sections, get templates
@@ -52,7 +56,7 @@
 
 			ob_start();
 
-			foreach( $this->collection->all() as $section ){
+			foreach( $this->collection->getNonContainered() as $section ){
 
 				$section->beforeTemplate();
 
@@ -68,6 +72,43 @@
 
 			return apply_filters( 'chef_sections_output', ob_get_clean(), $this );
 		}
+
+		/**
+		 * Get all sections in a container
+		 * 
+		 * @param  ChefSections\SectionTypes\Container $container
+		 * 
+		 * @return string (html)
+		 */
+		public function sectionsInContainer( $container )
+		{
+			
+			$collection = new InContainerCollection( $this->postId, $container->id );
+
+			ob_start();
+
+			foreach( $collection->all() as $section ){
+
+				$section->beforeTemplate();
+
+					Template::section( $section )->display();
+
+				$section->afterTemplate();
+			}
+
+			
+			//reset post-data, to be sure:
+			wp_reset_postdata();
+			wp_reset_query();
+
+
+			return apply_filters( 'chef_sections_container_output', ob_get_clean(), $this );	
+		}
+
+
+		/******************************************/
+		/**           Section Getters             */
+		/******************************************/
 
 		/**
 		* Get a single section
@@ -146,6 +187,11 @@
 
 
 
+		/******************************************/
+		/**           Column Walkers              */
+		/******************************************/
+
+
 		/**
 		 * Walk through all columns of this section & get templates
 		 *
@@ -181,6 +227,10 @@
 		}
 
 
+		/******************************************/
+		/**           Helper functions            */
+		/******************************************/
+
 		/**
 		 * Returns if this post has sections
 		 *
@@ -203,12 +253,14 @@
 		/**          Deprecated function            */
 		/********************************************/
 
+		//replaced by getSection in this class
 		public function get_section( $postId, $sectionId  )
 		{
 			_deprecated_function( __METHOD__, '3.0.0', 'getSection' );
 			return $this->getSection( $postId, $sectionId  );
 		}
 
+		//replaced by getSectionsTemplate in this class
 		public function get_sections_template( $name )
 		{
 			_deprecated_function( __METHOD__, '3.0.0', 'getSectionsTemplate' );
