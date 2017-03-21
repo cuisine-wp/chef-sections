@@ -174,15 +174,18 @@
 
 				var input = jQuery( inputs[ i ] );
 
-				if( input.val() !== undefined && input.attr( 'name' ) !== undefined && input.attr('disabled') == undefined ){
+				if ( input.hasClass( 'multi') == false ) {
 
-					var value = input.val();
+					if( input.val() !== undefined && input.attr( 'name' ) !== undefined && input.attr('disabled') == undefined ){
 
-					if( input.hasClass( 'type-checkbox' ) && input.is(':checked') === false )
-						value = 'false';
+						var value = input.val();
 
-					properties[ input.attr( 'name' ) ] = value;
+						if( input.hasClass( 'type-checkbox' ) && input.is(':checked') === false )
+							value = 'false';
 
+						properties[ input.attr( 'name' ) ] = value;
+
+					}
 				}
 			}
 
