@@ -12,7 +12,7 @@ use \ChefSections\Templates\BlockTemplate;
 use \ChefSections\Templates\ColumnTemplate;
 use \ChefSections\Templates\ElementTemplate;
 use \ChefSections\Templates\CollectionTemplate;
-
+use \ChefSections\Templates\DynamicSectionTemplate;
 
 /**
  * The Template class locates templates
@@ -49,7 +49,7 @@ class TemplateFinder {
 	/**
 	 * Get the template for a section
 	 * 
-	 * @param  \ChefSections\SectionTypes\Section 	$section
+	 * @param  \ChefSections\SectionTypes\BaseSection 	$section
 	 * 
 	 * @return \ChefSections\TemplateClasses/ContentSection
 	 */
@@ -68,6 +68,20 @@ class TemplateFinder {
 
 		$class = apply_filters( 'chef_sections_section_template_class', $classes[ $key ], $section );
 		return new $class( $section );
+	}
+
+
+	/**
+	 * Returns a dynamic section template
+	 * 
+	 * @param  \ChefSections\SectionTypes\BaseSection $section
+	 * @param  String $path
+	 * 
+	 * @return ChefSections\TemplateClasses/DynamicSectionTemplate
+	 */
+	public function dynamic( $section, $path )
+	{
+		return new DynamicSectionTemplate( $section, $path );
 	}
 
 

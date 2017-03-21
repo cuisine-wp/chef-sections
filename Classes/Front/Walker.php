@@ -77,21 +77,21 @@
 		* 
 		* @return string (html)
 		*/
-		public function getSection( $postId, $sectionId ){
+		public function getSection( $postId, $sectionId = null, $path = null ){
 
 			$template = false;
 			$sections = $this->collection;
 
 			//check if we need to load a new collection:
-			if( $post_id !== $this->postId )
+			if( $postId !== $this->postId )
 				$sections = new SectionCollection( $postId );
 
 
 			//if the collection isn't empty:
 			if( !$sections->empty() ){
 
-				//get the section:
-				$section = $sections->get( $sectionId );
+				//get the section, default the first if section Id turns out to be null
+				$section = ( is_null( $sectionId ) ? $sections->first() : $sections->get( $sectionId ) );
 
 				if( !is_null( $section ) ){
 
@@ -99,8 +99,11 @@
 
 						$section->beforeTemplate();
 
-						//render it's template:
-						Template::section( $section )->display();
+						if( is_null( $path ) ){
+							Template::section( $section )->display();
+						}else{
+							Template::dynamic( $section, $path )->display();
+						}
 
 						$section->afterTemplate();
 
@@ -118,7 +121,7 @@
 		* @param string $name of the post
 		* @return string (html)
 		*/
-		public function getSectionsTemplate( $name ){
+		public function getSectionsTemplate( $name, $path = null ){
 
 			$args = array(
 				'name' => $name,
@@ -132,13 +135,10 @@
 			if( !$posts )
 				return false;
 
+       		$templatePost = $posts[0];
 
-       		$template = $posts[0];
-
-    		$this->setCollection( $template->ID );
-
-			return self::walk();
-
+       		//get the first section of templatePost and send the optional path:
+       		return $this->getSection( $templatePost->ID, null, $path );
 		}
 
 

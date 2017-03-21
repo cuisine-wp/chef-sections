@@ -33,11 +33,13 @@ function get_sections(){
  * 
  * @param  int $post_id    
  * @param  int $section_id 
+ * @param  string $templatePath
+ * 
  * @return string (html)
  */
-function get_section( $post_id, $section_id ){
+function get_section( $post_id, $section_id = null, $templatePath = null ){
 
-	$section = Walker::get_section( $post_id, $section_id );
+	$section = Walker::getSection( $post_id, $section_id, $templatePath );
 	return $section;
 
 }
@@ -47,11 +49,13 @@ function get_section( $post_id, $section_id ){
  * Get the sections from a template 
  * 
  * @param  string $name template-name
+ * @param  string $templatePath
+ * 
  * @return string (html)
  */
-function get_sections_template( $name ){
+function get_sections_template( $name, $templatePath = null ){
 
-	return Walker::get_sections_template( $name );
+	return Walker::getSectionsTemplate( $name, $templatePath );
 
 }
 
@@ -60,11 +64,13 @@ function get_sections_template( $name ){
  * A singular fallback for the function above
  * 
  * @param  string $name template-name
+ * @param  string $templatePath
+ * 
  * @return string (html)
  */
-function get_section_template( $name ){
+function get_section_template( $name, $templatePath = null ){
 
-	return Walker::get_sections_template( $name );
+	return Walker::getSectionsTemplate( $name, $templatePath );
 
 }
 
