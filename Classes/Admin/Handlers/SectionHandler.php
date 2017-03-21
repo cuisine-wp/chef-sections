@@ -54,6 +54,7 @@
 
 				$sections = $_POST['section'];
 
+				
 				//save columns and types
 				foreach( $sections as $section ){
 
