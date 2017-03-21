@@ -122,9 +122,7 @@
 			echo '<div class="section-controls">';
 
 				//first the title:
-				$title = [ 'text' => '', 'type' => 'h2' ];
-				if( !$this->section->hide_title )
-					$title = $this->section->getProperty( 'title' );
+				$title = $this->section->getProperty( 'title' );
 
 				Field::title(
 					'section['.$this->section->id.'][title]',
