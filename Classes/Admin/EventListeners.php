@@ -7,9 +7,8 @@
 	use ChefSections\Admin\Ui\SectionsUi;
 	use ChefSections\Wrappers\StaticInstance;
 	use ChefSections\Admin\Handlers\SectionHandler;
-	use ChefSections\Admin\Handlers\BlueprintHandler;
 	use ChefSections\Admin\Handlers\ContainerHandler;
-	use ChefSections\Collections\ReferenceCollection;
+	use ChefSections\Admin\Handlers\PageBlueprintHandler;
 
 	use ChefSections\Helpers\Section as SectionHelper;
 
@@ -38,7 +37,7 @@
 			add_action( 'admin_init', function(){
 
 				//remove editors from the post-types:
-				$post_types = array( 'page', 'section-template' );
+				$post_types = array( 'page', 'section-template', 'page-template' );
 				$include = apply_filters( 'chef_sections_remove_editor', $post_types );
 				$post_types = apply_filters( 'chef_sections_post_types', $post_types );
 
@@ -106,6 +105,7 @@
 			add_action( 'add_meta_boxes', function(){
 
 				remove_meta_box( 'wpseo_meta', 'section-template', 'normal' );
+				remove_meta_box( 'wpseo_meta', 'page-template', 'normal' );
 
 			}, 20 );
 
@@ -123,7 +123,7 @@
 			//when creating a new post, check if we need to apply a template:
 			add_action( 'save_post', function( $post_id ){
 				
-				( new BlueprintHandler( $post_id ) )->maybeGenerate();
+				( new PageBlueprintHandler( $post_id ) )->maybeGenerate();
 
 			});
 		}

@@ -4,7 +4,7 @@
 
 	use Cuisine\Utilities\Session;
 	use ChefSections\Collections\ContainerCollection;
-	use ChefSections\Collections\ReferenceCollection;
+	use ChefSections\Collections\SectionBlueprintCollection;
 
 
 	class Toolbar{
@@ -36,7 +36,7 @@
 		 */
 		public function __construct()
 		{
-			$this->templates = ( new ReferenceCollection() )->toArray();
+			$this->templates = ( new SectionBlueprintCollection() )->toArray();
 			$this->containers = ( new ContainerCollection() )->toArray();
 			$this->postId = Session::postId();
 		}

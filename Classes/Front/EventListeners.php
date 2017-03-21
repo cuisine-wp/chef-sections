@@ -41,6 +41,10 @@
 
 				PostType::make( 'section-template', __( 'Templates', 'chefsections' ), __( 'Template', 'chefsections' ) )->set( $args );
 
+				//set page-templates
+				$args['menu_icon'] = 'dashicons-media-spreadsheet';
+				$args['menu_position'] = 76;
+				PostType::make( 'page-template', __( 'Page templates', 'chefsections'), __( 'Page template', 'chefsections' ) )->set( $args );
 
 
 				//custom field type:

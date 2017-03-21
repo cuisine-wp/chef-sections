@@ -74,14 +74,7 @@ class TemplateFinder {
 	 * @return \ChefSections\Front\TemplateFinder ( chainable )
 	 */
 	public function block( $column ){
-
-		$this->type = 'block';
-		$this->obj = $column;
-
-		$section_template = $this->getSectionPrefix( $column );
-		$this->getFiles( $section_template );
-
-		return $this;
+		return new BlockTemplate( $column );
 	}
 
 
@@ -97,7 +90,7 @@ class TemplateFinder {
 		$classes = [
 			'reference' => '\ChefSections\Templates\ReferenceTemplate',
 			'container' => '\ChefSections\Templates\ContainerTemplate',
-			'default' 	=> '\ChefSections\Templates\ContentSesctionTemplate'
+			'default' 	=> '\ChefSections\Templates\ContentSectionTemplate'
 		];
 
 		$key = $section->type;
@@ -110,6 +103,7 @@ class TemplateFinder {
 
 		return new $class( $section );
 	}
+
 
 	/**
 	 * Return a section prefix

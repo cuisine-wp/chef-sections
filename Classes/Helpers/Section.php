@@ -52,6 +52,7 @@
 			$classes = [
 				'section' 			=> '\ChefSections\SectionTypes\ContentSection',
 				'contentSection'	=> '\ChefSections\SectionTypes\ContentSection',
+				'stencil'			=> '\ChefSections\SectionTypes\ContentSection',
 				'reference'			=> '\ChefSections\SectionTypes\Reference',
 				'blueprint'			=> '\ChefSections\SectionTypes\Blueprint',
 				'container'			=> '\ChefSections\SectionTypes\Container'

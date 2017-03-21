@@ -34,7 +34,9 @@
 				if( $pagenow == 'post.php' || $pagenow == 'post-new.php' ){
 					if( 
 						( isset( $_GET['post'] ) && get_post_type( $_GET['post'] ) == 'section-template' ) || 
-						( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'section-template' )
+						( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'section-template' ) ||
+						( isset( $_GET['post'] ) && get_post_type( $_GET['post'] ) == 'page-template' ) || 
+						( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'page-template' )
 					){
 
 						wp_enqueue_media();

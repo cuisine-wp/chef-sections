@@ -9,8 +9,8 @@
 	use ChefSections\Wrappers\ReferenceBuilder;
 	use ChefSections\Admin\Handlers\ColumnHandler;
 	use ChefSections\Admin\Handlers\SectionHandler;
-	use ChefSections\Admin\Handlers\TemplateHandler;
 	use ChefSections\Admin\Handlers\ContainerHandler;
+	use ChefSections\Admin\Handlers\SectionBlueprintHandler;
 
 	class Ajax extends AjaxInstance{
 
@@ -112,7 +112,7 @@
 				
 				parent::setPostGlobal();
 
-				( new TemplateHandler() )->addReference();
+				( new SectionBlueprintHandler() )->addSectionBlueprint();
 
 				die();
 

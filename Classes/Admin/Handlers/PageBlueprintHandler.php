@@ -3,9 +3,9 @@
 	namespace ChefSections\Admin\Handlers;
 
 	use WP_Query;
-	use ChefSections\SectionTypes\Blueprint as BlueprintSection;
+	use ChefSections\SectionTypes\PageBlueprint as BlueprintSection;
 
-	class BlueprintHandler extends BaseHandler{
+	class PageBlueprintHandler extends BaseHandler{
 
 
 		/**
@@ -172,7 +172,7 @@
 		 */
 		public function getBlueprints( $props = array() ){
 
-			if( isset( $props['post_type'] ) )
+			if( !isset( $props['post_type'] ) )
 				$props['post_type'] = ( isset( $_GET['post_type'] ) ? $_GET['post_type'] : get_post_type( $this->postId ) );
 
 			$template = null;
@@ -180,10 +180,6 @@
 
 			//set the meta-query object:
 	 		$mq = array();
-	 		$mq[] = array(
-	 			'key'		=> 'type',
-	 			'value'		=> 'blueprint'
-	 		);
 
 
 	 		//suited for this post type:
@@ -198,7 +194,7 @@
 
 
 			$args = array( 
-				'post_type' => 'section-template', 
+				'post_type' => 'page-template', 
 				'posts_per_page' => 1,
 				'meta_query' => $mq
 			);
