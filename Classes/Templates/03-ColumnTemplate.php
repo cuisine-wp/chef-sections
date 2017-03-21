@@ -1,18 +1,17 @@
 <?php
 
-
 	namespace ChefSections\Templates;
 
+	use ChefSections\Helpers\Column as ColumnHelper;
 
-	class BaseSectionTemplate extends BaseTemplate{
-
+	class ColumnTemplate extends BaseTemplate{
 
 		/**
 		 * Get the protected type
 		 * 
 		 * @var string
 		 */
-		protected $type = 'section';
+		protected $type = 'column';
 
 
 		/**
@@ -20,7 +19,8 @@
 		 * 
 		 * @var string
 		 */
-		protected $baseFolder = 'sections/';
+		protected $baseFolder = 'columns/';
+
 
 
 		/**
@@ -30,8 +30,8 @@
 		 */
 		public function display()
 		{
-			$type = 'section';
-			$section = $this->object;
+			$type = 'column';
+			$column = $this->object;
 
 			add_action( 'chef_sections_before_'.$this->type.'_template', $this->object );
 
@@ -52,8 +52,20 @@
 		 */
 		public function default()
 		{
-			$base = $this->pluginPath();
-			$default = $base.'Sections/default.php';
+
+			$types = ColumnHelper::getAvailableTypes();
+			$column = $types[ $this->object->type ];
+
+			if( !isset( $column['template'] ) || $column['template'] == '' ){
+
+				$base = $this->pluginPath();
+				$default = $base.'Columns/'. $this->object->type. '.php';
+
+			}else{
+				$default = $column['template'];
+
+			}
+			
 			$default = apply_filters( 'chef_sections_default_template', $default, $this->object );
 			return $default;
 		}
@@ -66,25 +78,52 @@
 		 */
 		public function getHierarchy()
 		{
+
 			$post = $this->getPost();
 
 			$templates = [
+
 				$this->constructPath(
 					$post->post_name,
-					$this->object->name
+					$this->object->section->name,
+					$this->object->id
 				),
 
 				$this->constructPath(
 					$post->post_name,
-					$this->object->view
+					$this->object->section->name,
+					$this->object->type
 				),
 
 				$this->constructPath(
-					$this->object->view
-				)
+					$post->post_name,
+					$this->object->type
+				),
 			];
 
-			return apply_filters( 'chef_sections_section_template_hierarchy', $templates );;
+			//only add the following templates if the section name is set:
+			if( !is_null( $this->object->section->name ) && $this->object->section->name != '' ){
+				$templates = array_merge( $templates, [
+
+					$this->constructPath(
+						$this->object->section->name,
+						$this->object->id
+					),
+
+					$this->constructPath(
+						$this->object->section->name,
+						$this->object->type
+					)
+				]);
+			}
+
+			//add just the objec
+			$templates[] = $this->constructPath(
+				$this->object->type
+			);
+
+			$templates = $this->removeDuplicates( $templates );
+			return apply_filters( 'chef_sections_section_template_hierarchy', $templates );
 		}
 
 
@@ -101,7 +140,6 @@
 		{
 			return apply_filters( 'chef_sections_template_post_getter', get_post( $this->object->post_id ) );
 		}
-
 
 
 	}

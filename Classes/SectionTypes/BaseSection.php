@@ -380,7 +380,7 @@
 			if( isset( $args['title']['text'] ) && $args['title']['text'] != '' )
 				return sanitize_title( $args['title']['text'] ).'-'.$args['id'];
 
-			return $args['post_id'].'-'.$args['id'];
+			return null;
 		}
 
 

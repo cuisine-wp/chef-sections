@@ -3,6 +3,7 @@
 	namespace ChefSections\Admin\Ui\Sections;
 
 	use Cuisine\Wrappers\Field;
+	use ChefSections\Wrappers\Template;
 	use ChefSections\Admin\Ui\Containers\TabbedUi;
 	use ChefSections\Helpers\Section as SectionHelper;
 	use ChefSections\Helpers\SectionUi as SectionUiHelper;
@@ -218,7 +219,7 @@
 		 */
 		public function buildTemplateSnitch(){
 
-			/*$templates = Template::section( $this )->files;
+			$templates = Template::section( $this->section )->getHierarchy();
 			echo '<span class="template-snitch">';
 				echo '<span class="dashicons dashicons-media-text"></span>';
 				echo '<span class="tooltip">';
@@ -231,7 +232,7 @@
 					}
 
 				echo '</span>';
-			echo '</span>';*/
+			echo '</span>';
 		}
 
 

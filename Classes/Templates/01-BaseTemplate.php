@@ -106,7 +106,6 @@
 		{
 			$templates = $this->getThemeLocations();
 			$located = locate_template( $templates );
-
 			$located = apply_filters( 'chef_sections_located_template', $located, $this );
 		
 			if( !$located )
@@ -125,7 +124,7 @@
 		public function default()
 		{
 			$base = $this->pluginPath();
-			$default = $base.'Columns/collection-block.php';
+			$default = $base.'Sections/default.php';
 			$default = apply_filters( 'chef_sections_default_template', $default, $this->object );
 			return $default;
 		}
@@ -159,7 +158,8 @@
 			$string = $this->baseFolder;
 
 			foreach( $args as $arg ){
-				$string .= $arg.'-';
+				if( !is_null( $arg ) && $arg != '' )
+					$string .= $arg.'-';
 			}
 
 			return substr( $string, 0, -1 );
@@ -172,7 +172,7 @@
 		 */
 		protected function getThemeLocations(){
 
-			$templates = $this->getHierarchy();
+			$templates = $this->removeDuplicates( $this->getHierarchy() );
 
 			if( !empty( $templates ) ){
 				
@@ -196,6 +196,24 @@
 			}
 
 			return $templates;
+		}
+
+
+		/**
+		 * Remove duplicates from array
+		 * 
+		 * @return Array
+		 */
+		protected function removeDuplicates( $templates )
+		{
+			$response = [];
+
+			foreach( $templates as $template ){
+				if( !in_array( $template, $response ) )
+					$response[] = $template;
+			}
+
+			return $response;
 		}
 
 

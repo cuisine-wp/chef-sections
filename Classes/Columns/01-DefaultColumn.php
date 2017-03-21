@@ -519,7 +519,7 @@ class DefaultColumn implements ColumnContract{
 	 */
 	private function buildTemplateSnitch(){
 
-		$templates = Template::column( $this )->files;
+		$templates = Template::column( $this )->getHierarchy();
 
 		if( User::hasRole( 'administrator' ) ){
 
