@@ -1,10 +1,8 @@
 <?php
 namespace ChefSections\Columns;
 
-/**
- * Column factory.
- * @package ChefSections\Columns
- */
+use ChefSections\Helpers\Column as ColumnHelper;
+
 class ColumnBuilder {
 
 
@@ -21,11 +19,11 @@ class ColumnBuilder {
 	 * @throws Exception
 	 * @return object ChefSections\Columns\ColumnBuilder
 	 */
-	public function make( $class, $id, $section_id, array $colProperties ){
+	public function make( $class, $id, $section, array $colProperties ){
 
 	    try {
 	        // Return the called class.
-	        $class =  new $class( $id, $section_id, $colProperties );
+	        $class =  new $class( $id, $section, $colProperties );
 
 	    } catch(\Exception $e){
 
@@ -45,9 +43,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\ContentColumn
 	 */
-	public function content( $id, $section_id, array $properties = array() ){
+	public function content( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\ContentColumn', $id, $section_id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\ContentColumn', $id, $section, $properties );
 
 	}
 
@@ -59,9 +57,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\ImageColumn
 	 */
-	public function image( $id, $section_id, array $properties = array() ){
+	public function image( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\ImageColumn', $id, $section_id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\ImageColumn', $id, $section, $properties );
 
 	}
 
@@ -73,9 +71,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\VideoColumn
 	 */
-	public function video( $id, $section_id, array $properties = array() ){
+	public function video( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\VideoColumn', $id, $section_id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\VideoColumn', $id, $section, $properties );
 
 	}
 
@@ -87,9 +85,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\CollectionColumn
 	 */
-	public function collection( $id, $section_id, array $properties = array() ){
+	public function collection( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\CollectionColumn', $id, $section_id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\CollectionColumn', $id, $section, $properties );
 
 	}
 
@@ -102,9 +100,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\SocialsColumn
 	 */
-	public function socials( $id, $section_id, array $properties = array() ){
+	public function socials( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\SocialsColumn', $id, $section_id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\SocialsColumn', $id, $section, $properties );
 
 	}
 
@@ -116,9 +114,9 @@ class ColumnBuilder {
 	 * @param array $extras Extra column properties.
 	 * @return \ChefSections\Columns\EmptyColumn
 	 */
-	public function clear( $id, $section_id, array $properties = array() ){
+	public function clear( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\ClearColumn', $id, $section_id, $properties );
+	    return $this->make( 'ChefSections\\Columns\\ClearColumn', $id, $section, $properties );
 
 	}
 
@@ -132,7 +130,7 @@ class ColumnBuilder {
 	 */
 	public function __call( $name, $attr ){
 
-		$types = $this->getAvailableTypes();
+		$types = ColumnHelper::getAvailableTypes();
 		$names = array_keys( $types );
 
 		//if method can be found:
@@ -145,134 +143,5 @@ class ColumnBuilder {
 
 		return false;
 	}
-
-
-	/*=============================================================*/
-	/**             GETTERS & SETTERS                              */
-	/*=============================================================*/
-
-
-	/**
-	 * Returns a filterable array of column types
-	 *
-	 * @filter chef_sections_column_types
-	 * @return array
-	 */
-	public function getAvailableTypes(){
-
-		$arr = array(
-
-			'content' 		=> array(
-
-				'name'		=> __( 'Textual content', 'chefsections' ),
-				'class' 	=> 'ChefSections\\Columns\\ContentColumn'
-			),
-
-			'image'			=> array(
-				'name'		=> __( 'Image', 'chefsections' ),
-				'class' 	=> 'ChefSections\\Columns\\ImageColumn',			
-			),
-
-			'video'			=> array(
-
-				'name'		=> __( 'Video', 'chefsections' ),
-				'class' 	=> 'ChefSections\\Columns\\VideoColumn',
-			),
-
-			'collection'	=> array(
-
-				'name'		=> __( 'Collection', 'chefsections' ),
-				'class'		=> 'ChefSections\\Columns\\CollectionColumn'
-			),
-
-			'socials' 		=> array(
-				'name'		=> __( 'Social buttons', 'chefsections' ),
-				'class'		=> 'ChefSections\\Columns\\SocialsColumn'
-			),
-		);
-
-
-		$arr = apply_filters( 'chef_sections_column_types', $arr );
-		return $arr;
-	}
-
-
-	/**
-	 * Check if a column-type exists:
-	 * 
-	 * @return bool
-	 */
-	public function typeExists( $type ){
-
-		$types = self::getAvailableTypes();
-		return array_key_exists( $type, $types );
-
-	}
-
-
-	/*=============================================================*/
-	/**             AJAX                                           */
-	/*=============================================================*/
-
-
-
-	/**
-	 * Save column data, for any column
-	 * 
-	 * @return bool
-	 */
-	public function saveProperties(){
-
-		$id = $_POST['column_id'];
-		$section_id = $_POST['section_id'];	
-		$type = $_POST['type'];
-
-		$column = $this->$type( $id, $section_id, array() );
-		$column->saveProperties();
-		$column->build();
-		die();
-	}
-
-
-
-	/**
-	 * Save column type, for any column
-	 * 
-	 * @return string, echoed
-	 */
-	public function saveType(){
-
-		global $post;
-
-		$id = $_POST['column_id'];
-		$section_id = $_POST['section_id'];
-		$type = $_POST['type'];
-
-		update_post_meta( $post->ID, '_column_type_'.$id, $type );
-
-
-		$_sections = get_post_meta( $post->ID, 'sections', true );
-		$_sections[ $section_id ]['columns'][ $id ] = $type;
-		update_post_meta( $post->ID, 'sections', $_sections );
-
-		$this->refreshColumn();
-
-	}
-
-	/**
-	 * Refresh a column
-	 * 
-	 * @return void
-	 */
-	public function refreshColumn(){
-
-		$id = $_POST['column_id'];
-		$section_id = $_POST['section_id'];
-		$type = $_POST['type'];
-
-		$newColumn = $this->$type( $id, $section_id, array() );
-		$newColumn->build();
-	}
-
 
 }

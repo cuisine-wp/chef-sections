@@ -6,8 +6,11 @@
 	use Cuisine\Utilities\Session;
 	use ChefSections\Helpers\PostType;
 	use ChefSections\SectionTypes\ContentSection;
-	use ChefSections\Helpers\Section as SectionHelper;
+	use ChefSections\Admin\Ui\Containers\TabbedUi;
 	use ChefSections\Collections\SectionCollection;
+	use ChefSections\Helpers\Section as SectionHelper;
+	use ChefSections\Admin\Ui\Sections\ContentSectionUi;
+	use ChefSections\Helpers\SectionUi as SectionUiHelper;
 
 	class SectionHandler extends BaseHandler{
 
@@ -21,24 +24,6 @@
 		public function setCollection()
 		{
 			$this->collection = new SectionCollection( $this->postId );
-		}
-
-
-		/*=============================================================*/
-		/**             UI                                             */
-		/*=============================================================*/
-
-
-		/**
-		 * Build an "Add Section"-button
-		 * 
-		 * @return string (html, echoed)
-		 */
-		public function buildButton()
-		{
-			echo '<div class="add-section-btn" data-action="createSection" data-post_id="'.$this->postId.'">';
-				_e( 'Add Section', 'chefsections' );
-			echo '</div>';
 		}
 
 		/*=============================================================*/
@@ -64,30 +49,39 @@
 				return false;
 
 
+
 			if( isset( $_POST['section'] ) ){
 
 				$sections = $_POST['section'];
 
+				
 				//save columns and types
 				foreach( $sections as $section ){
 
 					$columns = array();
 					$types = SectionHelper::viewTypes();
-					$count = $types[ $section['view'] ];
 
-					for( $i = 1; $i <= $count; $i++ ){
-
-						$string = '_column_type_'.$section['id'].'_'.$i;
-
-						if( isset( $_POST[$string] ) ){
-							$columns[ $i ] = $_POST[$string];
-						}else{
-							$columns[ $i ] = 'content';
-						}
-					}
-
+					//set the post id:
 					$sections[ $section['id'] ]['post_id'] = $this->postId;
-					$sections[ $section['id'] ]['columns'] = $columns;
+
+					//save columns, if it's not a container:
+					if( $section['type'] != 'container' ){
+
+						$count = $types[ $section['view'] ];
+
+						for( $i = 1; $i <= $count; $i++ ){
+
+							$string = '_column_type_'.$section['id'].'_'.$i;
+
+							if( isset( $_POST[$string] ) ){
+								$columns[ $i ] = $_POST[$string];
+							}else{
+								$columns[ $i ] = 'content';
+							}
+						}
+
+						$sections[ $section['id'] ]['columns'] = $columns;
+					}
 
 				}
 
@@ -115,7 +109,6 @@
 			//up the highest ID
 			$this->collection->setHighestId( 1 );
 
-
 			//get the defaults:
 			$args = $this->getDefaultSectionArgs();
 			$args = wp_parse_args( $datas, $args );
@@ -129,12 +122,10 @@
 
 			//save this section:
 			$_sections = $this->collection->toArray()->all();
-
 			$_sections[ $args['id'] ] = $args;
 			update_post_meta( $this->postId, 'sections', $_sections );
-
-
-			return ( new ContentSection( $args ) )->build();
+			
+			$this->sectionResponse( $args );
 		}
 
 
@@ -151,7 +142,8 @@
 
 			unset( $_sections[ $section_id ] );
 			update_post_meta( $this->postId, 'sections', $_sections );
-			echo 'true';
+			
+			$this->response([ 'status' => 'success', 'error' => false ]);
 		}
 
 
@@ -187,8 +179,7 @@
 			$_sections[ $section_id ]['columns'] = $new;
 			update_post_meta( $this->postId, 'sections', $_sections );
 
-			$section = new ContentSection( $_sections[ $section_id ] );
-			return $section->build();
+			$this->sectionResponse($_sections[ $section_id ] );
 		
 		}
 
@@ -212,7 +203,10 @@
 			}
 
 			update_post_meta( $this->postId, 'sections', $_sections );
+
+			$this->response([ 'status' => 'success', 'error' => false ]);
 		}
+
 
 		/**
 		 * Sort columns
@@ -240,7 +234,28 @@
 				$i++;
 			}
 
+			$this->response([ 'status' => 'success', 'error' => false ]);
 			return true;
+		}
+
+
+		/**
+		 * Return a section in the correct format
+		 * 
+		 * @param  Array $args
+		 * 
+		 * @return string (JSON, echoed)
+		 */
+		public function sectionResponse( $args )
+		{
+			$response = [];
+			$section = SectionHelper::getClass( $args );
+			$sectionUi = SectionUiHelper::getClass( $section );
+
+			$response['html'] = $sectionUi->get();
+			$response['tab'] = $sectionUi->getTab();			
+
+			return $this->response( $response );
 		}
 
 
@@ -255,8 +270,9 @@
 			$default = SectionHelper::defaultArgs();
 			$specifics = array(
 				'id'				=> $this->collection->getHighestId(),
-				'position'			=> ( count( $this->collection->get() ) + 1 ),
+				'position'			=> ( count( $this->collection->all() ) + 1 ),
 				'post_id'			=> $this->postId,
+				'container_id'		=> ( isset( $_POST['container_id'] ) ? $_POST['container_id'] : null )
 			);
 
 			//return the args

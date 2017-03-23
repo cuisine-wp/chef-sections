@@ -28,4 +28,37 @@
 		public $postType = 'page';
 
 
+		/**
+		 * Returns all public attributes
+		 * 
+		 * @return array
+		 */
+		public function getAttributes()
+		{
+			$attributes = parent::getAttributes();
+			$blueprintAttributes = [
+				'postType'
+			];
+
+			return array_merge( $attributes, $blueprintAttributes );
+		}
+
+
+		/**
+		 * Add the postType argument
+		 * 
+		 * @param  Array $args
+		 * 
+		 * @return Array
+		 */
+		public function sanitizeArgs( $args )
+		{
+			$args = parent::sanitizeArgs( $args );
+
+			if( !isset( $args['postType'] ) )
+				$args['postType'] = 'page';
+
+			return $args;
+		}
+
 	}

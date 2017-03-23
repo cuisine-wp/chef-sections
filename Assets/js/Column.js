@@ -34,7 +34,7 @@
 			self.columnId = self.$el.data( 'column_id' );
 			self.sectionId = self.$el.data( 'section_id' );
 			self.postId = self.$el.data( 'post_id' );
-
+			
 			self.setChosen();
 
 			return this;
@@ -83,6 +83,8 @@
 
 			var self = this;
 			e.preventDefault();
+
+			
 
 
 			if( self.$('.edit-btn' ).hasClass( 'no-lightbox' ) ){
@@ -172,15 +174,19 @@
 
 				var input = jQuery( inputs[ i ] );
 
-				if( input.val() !== undefined && input.attr( 'name' ) !== undefined && input.attr('disabled') == undefined ){
+				//multi dimensional inputs we'll handle later
+				if( input.hasClass( 'multi') == false ){
 
-					var value = input.val();
+					if( input.val() !== undefined && input.attr( 'name' ) !== undefined && input.attr('disabled') == undefined ){
 
-					if( input.hasClass( 'type-checkbox' ) && input.is(':checked') === false )
-						value = 'false';
+						var value = input.val();
 
-					properties[ input.attr( 'name' ) ] = value;
+						if( input.hasClass( 'type-checkbox' ) && input.is(':checked') === false )
+							value = 'false';
 
+						properties[ input.attr( 'name' ) ] = value;
+
+					}
 				}
 			}
 
@@ -297,6 +303,7 @@
 			};
 
 
+			
 
 			jQuery.post( ajaxurl, data, function( response ){
 
@@ -325,17 +332,16 @@
 			self.$( '.loader' ).addClass( 'show' );
 
 			var data = {
-						'action' 		: 'saveColumnType',
-						'post_id' 		: self.postId,
-						'column_id'		: self.columnId,
-						'section_id'	: self.sectionId,
-						'type'			: type
+				'action' 		: 'saveColumnType',
+				'post_id' 		: self.postId,
+				'column_id'		: self.columnId,
+				'section_id'	: self.sectionId,
+				'type'			: type
 			};
 
 			jQuery.post( ajaxurl, data, function( response ){
 
 				self.$el.replaceWith( response );
-
 				SectionBuilder.refresh();
 				refreshFields();
 

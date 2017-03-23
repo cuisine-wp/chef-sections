@@ -3,9 +3,9 @@
 	namespace ChefSections\Admin\Handlers;
 
 	use WP_Query;
-	use ChefSections\SectionTypes\Blueprint as BlueprintSection;
+	use ChefSections\SectionTypes\PageBlueprint as BlueprintSection;
 
-	class BlueprintHandler extends BaseHandler{
+	class PageBlueprintHandler extends BaseHandler{
 
 
 		/**
@@ -15,6 +15,19 @@
 		 */
 		protected $blueprints;
 
+
+		/**
+		 * Construct this class
+		 * 
+		 */
+		public function __construct( $postId = null )
+		{
+
+			$this->postId = ( is_null( $postId ) ? Session::postId() : $postId );
+			$this->setCollection();
+
+			return $this;
+		}
 
 		/**
 		 * Set the collection for this class
@@ -50,13 +63,18 @@
 		 */
 		public function check()
 		{
-			if( $this->checkPage() && !is_null( $this->blueprints ) )
+			if( 
+				!is_null( $this->collection ) &&
+				$this->checkPage() && 
+				$this->validPostType()
+			){
 				return true;
+			}
 
 			return false;
 		}
 
-	/**
+		/**
 		 * Checks if this is the page this handler should be run
 		 * 
 		 * @return bool
@@ -64,10 +82,26 @@
 		public function checkPage()
 		{
 
-			global $pagenow, $post;
+			global $pagenow;
 			$status = get_post_status( $this->postId );
 
 			if( $status == 'auto-draft' && $pagenow == 'post-new.php' )
+				return true;
+
+			return false;
+		}
+
+		/**
+		 * Check the validity of the post type we're applying this to
+		 * 
+		 * @return bool
+		 */
+		public function validPostType()
+		{
+			$postType = ( isset( $_GET['post_type'] ) ? $_GET['post_type'] : get_post_type( $this->postId ) );
+			$applyTo = get_post_meta( $this->collection->ID, 'apply_to', true );
+
+			if( $postType == $applyTo )
 				return true;
 
 			return false;
@@ -87,7 +121,7 @@
 
 			//no template id? though luck.
 			if( $templateId == null )
-				$templateId = $this->blueprints->ID;
+				$templateId = $this->collection->ID;
 
 			if( $templateId == null )
 				return false;
@@ -100,7 +134,7 @@
 
 				//change the post id at the start;
 				$_sections[ $key ]['post_id'] = $this->postId;
-				$_sections[ $key ]['type'] = 'blueprint';
+				//$_sections[ $key ]['type'] = 'blueprint';
 				
 
 				if( !empty( $_section['columns'] ) ){
@@ -138,7 +172,7 @@
 		 */
 		public function getBlueprints( $props = array() ){
 
-			if( isset( $props['post_type'] ) )
+			if( !isset( $props['post_type'] ) )
 				$props['post_type'] = ( isset( $_GET['post_type'] ) ? $_GET['post_type'] : get_post_type( $this->postId ) );
 
 			$template = null;
@@ -146,10 +180,6 @@
 
 			//set the meta-query object:
 	 		$mq = array();
-	 		$mq[] = array(
-	 			'key'		=> 'type',
-	 			'value'		=> 'blueprint'
-	 		);
 
 
 	 		//suited for this post type:
@@ -164,7 +194,7 @@
 
 
 			$args = array( 
-				'post_type' => 'section-template', 
+				'post_type' => 'page-template', 
 				'posts_per_page' => 1,
 				'meta_query' => $mq
 			);

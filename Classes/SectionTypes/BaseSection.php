@@ -2,17 +2,19 @@
 
 	namespace ChefSections\SectionTypes;
 
-
+	use Exception;
 	use Cuisine\Wrappers\User;
 	use Cuisine\Wrappers\Field;
 	use Cuisine\Utilities\Sort;
 	use ChefSections\Wrappers\Column;
 	use ChefSections\Wrappers\Template;
 	use ChefSections\Wrappers\SectionsBuilder;
+	use ChefSections\Helpers\Column as ColumnHelper;
 	use ChefSections\Helpers\Section as SectionHelper;
+	use ChefSections\Contracts\Section as SectionContract;
 
 
-	class BaseSection{
+	class BaseSection implements SectionContract{
 
 		/**
 		 * Unique Id for this section, prefixed by the post_id
@@ -26,7 +28,7 @@
 		 * 
 		 * @var integer
 		 */
-		private $position = 0;
+		public $position = 0;
 
 		/**
 		 * The post ID this section is tied to
@@ -67,14 +69,6 @@
 
 
 		/**
-		 * Template prefix
-		 * 
-		 * @var string
-		 */
-		public $template = '';
-
-
-		/**
 		 * All columns in this section
 		 * 
 		 * @var array
@@ -97,84 +91,135 @@
 		 */
 		public $hide_container;
 
-		/**
-		 * Boolean to detirmine if this is a reference section
-		 *
-		 * @possible values: section - reference - stencil - layout
-		 * @var boolean
-		 */
-		public $type = 'section';
-
-
-		/**
-		 * The ID for the template, if this is a template-based section
-		 * 
-		 * @var integer
-		 */
-		public $template_id = 0;
 
 
 		/**
 		 * Array containing all properties of this section
 		 * 
+
 		 * @var array
 		 */
 		public $properties;
 
 
 
+		/**
+		 * Base type
+		 * 
+		 * @var string
+		 */
+		public $type = 'base';
+
+
 		function __construct( $args ){
 			
+			$args = $this->sanitizeArgs( $args );
 
-			$this->id = $args['id'];
+			//all properties in one object
+			$this->properties = $args;
+			$this->setAttributes( $args );
 
-			//get the post object based on the given post_id
-			$this->post_id = $args['post_id'];
-			$post = get_post( $this->post_id );
+		}
 
-			//check if this is a section template
-			$this->template_id = ( isset( $args['template_id'] ) ? $args['template_id'] : false );
 
-			//check if this section is part of a container:
-			$this->container_id = ( isset( $args['container_id'] ) ? $args['container_id'] : null );
+		/**
+		 * Sanitize the arguments this section was supplied with
+		 * 
+		 * @param  Array $args
+		 * 
+		 * @return Array
+		 */
+		public function sanitizeArgs( $args )
+		{
+			if( !isset( $args['id'] ) )
+				throw new Exception( 'Section ID not found' );
 
-			if( !is_array( $args['title'] ) )
+			if( !isset( $args['post_id'] ) )
+				throw new Exception( 'Post ID for section '.$args['id'].' not found.' );
+
+			//title
+			if( !isset( $args['title'] ) || !is_array( $args['title'] ) )
 				$args['title'] = [ 'text' => $args['title'], 'type' => 'h2' ];
 
-			//fill in the basics
-			$this->position 		= $args['position'];
-			$this->title 			= $args['title']['text'];
-			$this->view 			= $args['view'];
-			$this->name 			= $this->getName( $args );
-			$this->properties 		= $args;
-			$this->columns 			= $this->getColumns( $args['columns'] );
+			if( !isset( $args['view'] ) )
+				$args['view'] = 'fullwidth';
 
-			//title & container settings
-			if( strtolower( $this->title ) == 'sectie titel' )
-				$this->title = '';
+			if( !isset( $args['container_id'] ) || $args['container_id'] == '' )
+				$args['container_id'] = null;
 
-			$this->hide_title 		= ( $this->title == '' ? true : false );
+			if( !isset( $args['tabTitle'] ) )
+				$args['tabTitle'] = 'Section '.$args['id'];
 
-			$this->hide_container 	= ( isset( $args['hide_container'] ) ? $args['hide_container'] : 'false' );
+			if( !isset( $args['hide_container'] ) )
+				$args['hide_container'] = 'false';
+
+			if( !isset( $args['columns'] ) )
+				$args['columns'] = [];
 
 
-			//template settings
-			$name = 'page-';
-			if( isset( $post->post_name ) )
-				$name = $post->post_name.'-';
+			//set the name	
+			$args['name'] = sanitize_title( $this->getName( $args ) );
 
-			$this->template = $name;
+			return $args;
+		}
 
-			//check for section-types when dealing with templates:
-			if( $post->post_type == 'section-template' && $this->type == 'section' ){
 
-				$_type = get_post_meta( $this->post_id, 'type', true );
-				if( $_type )
-					$this->type = $_type;
+		/**
+		 * Set all attributes
+		 *
+		 * @param Array $args
+		 *
+		 * @return void
+		 */
+		public function setAttributes( $args )
+		{
+			
+			//all properties that we need to convert to Section attributes
+			$attributes = $this->getAttributes();
+
+			//set all specific attributes
+			foreach( $attributes as $attribute ){
+				
+				$this->$attribute = ( isset( $args[ $attribute ] ) ? $args[ $attribute ] : null );
 
 			}
 
+			//columns
+			$this->columns = $this->getColumns( $args['columns'] );
+			
+			//title:
+			$this->title = $args['title']['text'];
+			if( strtolower( $this->title ) == 'sectie titel' )
+				$this->title = '';
+
+			$this->hide_title = ( $this->title == '' ? true : false );
+
 		}
+
+
+		/**
+		 * Returns all public attributes
+		 * 
+		 * @return array
+		 */
+		public function getAttributes()
+		{
+			$attributes = [ 
+				'id', 
+				'post_id', 
+				'container_id', 
+				'name', 
+				'position', 
+				'view', 
+				'hide_title', 
+				'hide_container'
+			];
+			
+			$attributes = apply_filters( 'chef_sections_section_attributes', $attributes );
+
+			return $attributes;
+		}
+
 		
 		/*=============================================================*/
 		/**             Frontend                                       */
@@ -252,273 +297,12 @@
 		 * 
 		 * @return string
 		 */
-		private function getSchema(){
+		protected function getSchema(){
 
 			$schema = 'itemscope ';
 			$schema .= 'itemtype="http://schema.org/Collection"';
 
 			return $schema;
-		}
-
-
-
-
-
-		/*=============================================================*/
-		/**             Backend                                        */
-		/*=============================================================*/
-
-
-		/**
-		 * Build this Section
-		 * 
-		 * @return String (html, echoed)
-		 */
-		public function build(){
-
-			if( is_admin() ){
-
-				$class = 'section-wrapper ui-state-default section-'.$this->id;
-
-				echo '<div class="'.esc_attr( $class ).'" ';
-					echo 'id="'.esc_attr( $this->id ).'" ';
-					$this->buildIds();
-				echo '>';
-
-					$this->buildControls();
-
-					echo '<div class="section-columns '.esc_attr( $this->view ).'">';
-		
-
-					foreach( $this->columns as $column ){
-						
-						if( $column )
-							echo $column->build();
-		
-					}
-
-
-					echo '<div class="clearfix"></div>';
-					echo '</div>';
-
-					$this->bottomControls();
-					$this->buildSettingsPanels();
-					$this->buildHiddenFields();
-				
-				echo '<div class="loader"><span class="spinner"></span></div>';
-				echo '</div>';
-			}
-		}
-
-
-
-		/**
-		 * Build the top of this Section
-		 * 
-		 * 
-		 * @return String ( html, echoed )
-		 */
-		public function buildControls(){
-
-			echo '<div class="section-controls">';
-
-				//first the title:
-				$title = ( $this->hide_title ? [ 'text' => '', 'type' => 'h2' ] : $this->getProperty( 'title' ) );
-
-				Field::title(
-					'section['.$this->id.'][title]',
-					__( 'Titel', 'chefsections' ),
-					array(
-						'placeholder'	=> __( 'Section title', 'chefsections' ),
-						'label'			=> false,
-						'defaultValue'	=> $title,
-						'fieldName'		=> 'section['.$this->id.'][title]'
-					)
-				)->render();
-
-
-				//add the top buttons for panels:
-				echo '<div class="buttons-wrapper">';
-
-					$buttons = apply_filters( 'chef_sections_panel_buttons', array() );
-
-					foreach( $buttons as $button ){
-
-						echo '<span class="button section-'.esc_attr( $button['name'] ).'-btn with-tooltip" data-id="'.esc_attr( $button['name'] ).'">';
-							echo '<span class="dashicons '.esc_attr( $button['icon'] ).'"></span>';
-							echo '<span class="tooltip">'.esc_attr( $button['label'] ).'</span>';
-						echo '</span>';
-
-					}
-
-				echo '</div>';
-				
-
-				//view-switcher:
-				$types = SectionHelper::viewTypes();
-
-				Field::radio(
-					'section['.$this->id.'][view]',
-					'Weergave',
-					$types,
-					array(
-						'defaultValue' => $this->view
-					)
-				)->render();
-
-				//sorting pin:
-				echo '<span class="dashicons dashicons-sort pin"></span>';
-
-
-			echo '</div>';
-		
-			echo '<div class="clearfix"></div>';
-		}
-
-
-		/**
-		 * Create the controls on the bottom
-		 * 
-		 * @return string (html, echoed)
-		 */
-		public function bottomControls(){
-
-			echo '<div class="section-footer">';
-				echo '<p class="delete-section">';
-					echo '<span class="dashicons dashicons-trash"></span>';
-				echo __( 'Delete', 'chefsections' ).'</p>';
-
-				do_action( 'chef_sections_bottom_controls' );
-
-				$this->buildTemplateSnitch();
-				$this->buildCodeSnitch();
-
-			echo '</div>';
-
-		}
-
-
-		/**
-		 * Generate the data-tags with id's
-		 * 
-		 * @return string ( html, echoed )
-		 */
-		public function buildIds(){
-
-			echo 'data-section_id="'.esc_attr( $this->id ).'" ';
-			echo 'data-post_id="'.esc_attr( $this->post_id ).'"';
-
-		}
-
-		/**
-		 * Generate the code needed to fetch this section
-		 * 
-		 * @return string ( html, echoed )
-		 */
-		private function buildCodeSnitch(){
-
-			echo '<span class="template-snitch code-snitch">';
-				echo '<span class="dashicons dashicons-editor-code"></span>';
-				echo '<span class="tooltip">';
-
-					echo '<strong>Code:</strong><br/>';
-					echo '<span class="copy">echo Loop::section( '.esc_attr( $this->post_id ).', '.esc_attr( $this->id ).' );</span>';
-
-				echo '</span>';
-			echo '</span>';
-		}
-
-
-		/**
-		 * Generate the templates for this section
-		 * 
-		 * @return string ( html, echoed )
-		 */
-		private function buildTemplateSnitch(){
-
-			$templates = Template::section( $this )->files;
-			echo '<span class="template-snitch">';
-				echo '<span class="dashicons dashicons-media-text"></span>';
-				echo '<span class="tooltip">';
-
-					echo '<strong>Templates:</strong>';
-					foreach( $templates as $template ){
-
-						echo '<p>'.esc_html( $template ).'</p>';
-
-					}
-
-				echo '</span>';
-			echo '</span>';
-		}
-
-
-		/**
-		 * Create the settings panel with it's fields
-		 * 
-		 * @return string (html, echoed)
-		 */
-		public function buildSettingsPanels(){
-
-			echo '<div class="section-setting-panels">';
-
-				do_action( 'chef_section_setting_panels', $this );
-
-			echo '</div>';
-		}
-
-		/**
-		 * Render all hidden fields for this section
-		 * 
-		 * @return void
-		 */
-		public function buildHiddenFields(){
-
-			$prefix = 'section['.$this->id.']';
-			Field::hidden(
-				$prefix.'[position]',
-				array(
-					'defaultValue' => $this->position,
-					'class' => array( 'field', 'input-field', 'section-position' )
-				)
-			)->render();
-
-			Field::hidden(
-				$prefix.'[post_id]',
-				array(
-					'defaultValue' => $this->post_id
-				)
-			)->render();
-
-			Field::hidden(
-				$prefix.'[id]',
-				array(
-					'defaultValue' => $this->id
-				)
-			)->render();
-
-			Field::hidden(
-			
-				$prefix.'[type]',
-				array(
-					'defaultValue' => $this->type
-				)
-			
-			)->render();
-
-
-			if( $this->template_id !== 0 ){
-
-				Field::hidden(
-				
-					$prefix.'[template_id]',
-					array(
-						'defaultValue' => $this->template_id
-					)
-			
-				)->render();
-
-			}
 		}
 
 
@@ -531,14 +315,16 @@
 		 * Return a property, or false if the property isn't found.
 		 * 
 		 * @param  string $name name of the property
+		 * @param  mixed $default
+		 * 
 		 * @return mixed
 		 */
-		public function getProperty( $name ){
+		public function getProperty( $name, $default = false ){
 
 			if( isset( $this->properties[ $name ] ) )
 				return $this->properties[ $name ];
 
-			return false;
+			return $default;
 
 		}
 
@@ -560,9 +346,9 @@
 						'post_id'	=>	 $this->post_id
 					);
 
-					if( Column::typeExists( $type ) ){
+					if( ColumnHelper::typeExists( $type ) ){
 
-						$arr[] = Column::$type( $col_key, $this->id, $props );
+						$arr[] = Column::$type( $col_key, $this, $props );
 		
 					}else{
 						$arr[] = false;
@@ -592,23 +378,11 @@
 				return $args['name'];
 
 			if( isset( $args['title']['text'] ) && $args['title']['text'] != '' )
-				return sanitize_title( $this->title ).'-'.$this->id;
+				return sanitize_title( $args['title']['text'] ).'-'.$args['id'];
 
-			return $this->post_id.'-'.$this->id;
+			return null;
 		}
 
-
-		/**
-		 * Get this sections's template slug
-		 * 
-		 * @return String
-		 */
-		public function getSlug(){
-
-			global $post;
-			return $post->post_name.'-'.sanitize_title( $this->title );
-
-		}
 
 
 		/**
@@ -647,16 +421,4 @@
 				echo $title;
 		}
 
-
-		/**
-		 * Checks to see if a section is containered
-		 * 
-		 * @return boolean
-		 */
-		public function isContainered()
-		{
-			return ( !is_null( $this->container_id ) );
-		}
-		
-		
 	}

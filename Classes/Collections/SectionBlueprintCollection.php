@@ -6,7 +6,7 @@
 	use Cuisine\Utilities\Sort;
 	use ChefSections\SectionTypes\Reference;
 
-	class ReferenceCollection extends Collection{
+	class SectionBlueprintCollection extends Collection{
 
 		/**
 		 * Constructor
@@ -31,13 +31,13 @@
 		{
 			$items = [];
 
-			$args = $this->getReferenceQuery();
-			$references = new WP_Query( $args );
+			$args = $this->getSectionBlueprintQuery();
+			$blueprints = new WP_Query( $args );
 
-			if( $references->have_posts() ){
+			if( $blueprints->have_posts() ){
 
 				//convert all WP_Post objects to arrays:
-				foreach( $references->posts as $item ){
+				foreach( $blueprints->posts as $item ){
 					
 					$this->objects[ $item->ID ] = $item;
 					$items[ $item->ID ] = $item->to_array();
@@ -55,21 +55,15 @@
 		 * 
 		 * @return array
 		 */
-		public function getReferenceQuery()
+		public function getSectionBlueprintQuery()
 		{
 
 			$args = array( 
 				'post_type' => 'section-template', 
-				'posts_per_page' => -1,
-				'meta_query' => array(
-					array(
-						'key'	=> 'type',
-						'value' => 'reference'
-					)
-				)
+				'posts_per_page' => -1
 			);
 
-			$args = apply_filters( 'chef_sections_reference_collection_query', $args, $this );
+			$args = apply_filters( 'chef_sections_section_blueprint_collection_query', $args, $this );
 			return $args;
 		}
 

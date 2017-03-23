@@ -36,6 +36,7 @@ var SectionBuilder = new function(){
 		self.setBuilder();
 		self.setColumns();
 		self.setSections();
+		self.setTabs();
 
 	}
 
@@ -50,6 +51,10 @@ var SectionBuilder = new function(){
 
 		self.setColumns();
 		self.setSections();
+		self.setTabs();
+		self.setTabsClickable();
+
+		self.setSectionsSortable();
 
 		//update the eventual output:
 		self.updateHtmlOutput();
@@ -67,7 +72,10 @@ var SectionBuilder = new function(){
 
 		self.setSectionTypeSelect();
 		self.setAddSectionButton();
+		self.setAddSectionDraggbles();
 		self.setSectionsSortable();
+		self.setTabsClickable();
+		//self.setScrollLockForLightbox();
 
 	}
 
@@ -79,9 +87,9 @@ var SectionBuilder = new function(){
 	this.setBuilder = function(){
 
 		//set width:
-		var _w = $('.section-container').innerWidth();
+		var _w = $('#main-section-container').innerWidth();
 		var _builder = $('#section-builder-ui');
-		var _container = $('#section-container');
+		var _container = $('#main-section-container');
 		var _offset = _builder.offset().top;
 
 		_builder.css({
@@ -172,10 +180,25 @@ var SectionBuilder = new function(){
 
 		jQuery('.section-wrapper').each( function( index, obj ){
 
-			var sec = new Section( { el: obj } );
+			if( $( obj ).hasClass( 'section-container' ) == false ){
+			
+				var sec = new Section( { el: obj } );
+			
+			}else{
+
+				var sec = new Container({ el: obj });
+			}
+
 			self._sections.push( sec );
 
 		});
+
+		if( self._sections.length > 0 ){
+			$('.no-section-msg.msg').addClass('hidden');
+
+		}else{
+			$('.no-section-msg.msg').removeClass('hidden');
+		}
 
 		self.setSectionOrder();
 
@@ -195,8 +218,9 @@ var SectionBuilder = new function(){
 	this.setSectionsSortable = function(){
 
 		var self = this;
-		$('#section-container').sortable({
+		$('.section-sortables').sortable({
 			handle: '.pin',
+			connectWith: '.section-sortables',
 			placeholder: 'section-placeholder',
 			update: function (event, ui) {
 				self.setSectionOrder();
@@ -215,20 +239,34 @@ var SectionBuilder = new function(){
 		var i = 1;
 
 		//regular sections:
-		jQuery('#section-container > .section-wrapper').each( function(){
+		jQuery('#main-section-container > .section-wrapper').each( function(){
 			var field = jQuery( this ).find( '.section-position' );
 			field.val( i );
 			i++;
 		});
 
+		
 		var i = 1;
 
-		//handle containered sections:
-		jQuery('#section-container .section-wrapper .section-wrapper').each( function(){
+		//handle grouped container sections:
+		jQuery('#main-section-container .section-wrapper .grouped-sections .section-wrapper').each( function(){
 			var field = jQuery( this ).find( '.section-position' );
 			field.val( i );
 			i++;
-		})
+		});
+
+		
+		var i = 1;
+		
+		//handle tab container sections:
+		jQuery( '#main-section-container .section-wrapper .tabbed-sections .tab').each( function(){
+			var _id = $( this ).data( 'id' );
+			var _container = $( this ).parent().data('container_id');
+
+			var _sec = jQuery( '#tabContentFor'+_container+' .section-'+_id );
+			_sec.find( '.section-position' ).val( i );
+			i++;
+		});
 	}
 
 
@@ -260,42 +298,7 @@ var SectionBuilder = new function(){
 	}
 
 	/**
-	 * Fetching a section-template
-	 * 
-	 * @return html
-	 */
-	this.setSectionTemplateSelector = function(){
-
-		var self = this;
-
-		$('#getTemplate').on( 'change', function(){
-
-			if( $( '#getTemplate' ).val() !== 'none' ){
-
-				var data = {
-					action: 'loadTemplate',
-					post_id: $( '#getTemplate' ).data( 'post_id' ),
-					template_id: $( '#getTemplate' ).val()
-				}
-		
-				$('.section-wrapper.msg').addClass('loading');
-		
-				$.post( ajaxurl, data, function( response ){
-		
-		
-					jQuery('#section-container').append( response );
-					$('.section-wrapper.msg').remove();
-		
-					self.refresh();
-					refreshFields();
-				
-				});
-			}
-		});
-	}
-
-	/**
-	 * Adding sections 
+	 * Add sections by clicking the button 
 	 * 
 	 * @return html
 	 */
@@ -304,18 +307,128 @@ var SectionBuilder = new function(){
 		var self = this;
 
 		//add on click:
-		$('.add-section-btn').on( 'click', function( e ){
+		$('.add-section-btn').on( 'click on', function( e ){
 
 			e.preventDefault();
 
+			//create the placeholder:
+			var _html = '<div id="section-container" class="add-section-btn.ui-draggable-handle"></div>';
+			$('#main-section-container').append( _html );
+
+			var _placeholder = $('#main-section-container .add-section-btn.ui-draggable-handle' );
+				_placeholder.addClass('placeholder-block');
+				_placeholder.html( '<span class="spinner"></span> Adding section...' );
+
+
+			//gather data:
 			var data = $( this ).data();
 
-			console.log( data );
-			$('#section-builder-ui .spinner').addClass( 'show' );
+			if( data.type == 'search' ){
+					
+				self.launchSearchWindow( data, _placeholder, function( _newData ){
+					self.updateSections( _newData, _placeholder );
+				})
 
-			$.post( ajaxurl, data, function( response ){
+			}else{
+				self.updateSections( data, _placeholder );
+			}
+		});
+	}
 
-				$('#section-container').append( response );
+	/**
+	 * Set the draggable buttons
+	 *
+	 * @return void
+	 */
+	this.setAddSectionDraggbles = function(){
+
+		var self = this;
+
+		jQuery('.add-section-btn').draggable({
+			connectToSortable: '.section-sortables',
+			helper: 'clone',
+			revert: 'invalid',
+			start: function( event, ui ){
+				$('#main-section-container').addClass( 'dragging' ); 
+			},
+			stop: function( event, ui ){
+
+				$('#main-section-container').removeClass( 'dragging' );
+				var _placeholder = $('#main-section-container .add-section-btn.ui-draggable-handle' );
+				
+				//check if the placeholder exists:
+				if( _placeholder.length > 0 ){
+
+					_placeholder.addClass('placeholder-block');
+					_placeholder.html( '<span class="spinner"></span> Adding section...' );
+
+					//set the data
+					var data = _placeholder.data();
+
+
+					//set container_id, if applicable:
+					var dropzone = _placeholder.parent();
+					if( typeof( dropzone.data('container_id') ) != 'undefined' )
+						data['container_id'] = dropzone.data( 'container_id' );
+
+
+					//delete extra information, not needed:
+					delete data['sortableItem'];
+
+					if( data.type == 'search' ){
+						
+						self.launchSearchWindow( data, _placeholder, function( _newData ){
+
+							delete _newData['sortableItem'];
+							
+							self.updateSections( _newData, _placeholder );
+						});
+
+					}else{
+						self.updateSections( data, _placeholder );
+					}
+				}
+
+			}
+		});
+	}
+
+	/**
+	 * Update sections through AJAX
+	 * 
+	 * @param  JSON data
+	 * @param  DOM Element _placeholder
+	 * 
+	 * @return void
+	 */
+	this.updateSections = function( data, _placeholder ){
+		
+		//remove the spinner:
+		$('#section-builder-ui .spinner').addClass( 'show' );
+		
+		var self = this;
+		jQuery.post( ajaxurl, data, function( response ){
+
+			try{
+
+				response = JSON.parse( response );
+			
+				if( response.tab != null && response.tab != 'null' && response.tab != '' ){
+
+					var _target = $( '#tabContentFor'+data['container_id'] );
+					$('#tabsFor'+data['container_id'] ).find('.tab').removeClass( 'active' ); 
+					_placeholder.replaceWith( response.tab );
+					_target.append( response.html );
+
+					self.setTabs();
+				}else{
+
+					_placeholder.replaceWith( response.html );
+
+				}
+
+				//order items:
+				self.setSectionOrder();
 
 				//register new section here:
 				self.refresh();
@@ -326,42 +439,138 @@ var SectionBuilder = new function(){
 				//remove the spinner:
 				$('#section-builder-ui .spinner').removeClass( 'show' );
 				
-			});
-		});
 
+			}catch( e ){
 
-		jQuery('.add-section-btn').draggable({
-			connectToSortable: '#section-container',
-			helper: 'clone',
-			stop: function( event, ui ){
-				
-				var _placeholder = $('#section-container .add-section-btn.ui-draggable-handle' );
-				_placeholder.addClass('placeholder-block');
-				_placeholder.html( '<span class="spinner"></span> Adding section...' );
+				console.log( e );
 
-				//set the data
-				var data = _placeholder.data();
-				//delete extra information, not needed:
-				delete data['sortableItem'];
-
-
-				jQuery.post( ajaxurl, data, function( response ){
-
-					_placeholder.replaceWith( response );
-
-					//order items:
-					self.setSectionOrder();
-
-					//register new section here:
-					self.refresh();
-
-					//refresh the fields
-					refreshFields();
-
-				});
 			}
+
+			
 		});
 	}
+
+
+	/**
+	 * Launch a search window
+	 * 
+	 * @param  JSON   data
+	 * @param  Function callback
+	 * 
+	 * @return void
+	 */
+	this.launchSearchWindow = function( data, _placeholder, callback ){
+
+		var self = this;
+	
+		//add HTML
+		_placeholder.append( self.createSearchWindow( data ) );
+
+		jQuery('#closeSearch').on( 'click tap', function(){
+			jQuery( '#tempSearch' ).remove();
+			_placeholder.remove();
+		})
+
+		//init chosen:
+		jQuery('#tempSearchSelect').on('chosen:ready', function(event, data){
+			
+			jQuery( '#tempSearchSelect' ).trigger('chosen:open').trigger('chosen:activate');
+			jQuery( '#tempSearch .active-result').on( 'click tap', function(){
+				jQuery( '#tempSearchSelect' ).trigger('change');
+			});
+
+		}).chosen({
+			placeholder_text_single: 'Select your preference',
+			disable_search_threshold: 0
+		});
+
+
+		//set the callback:
+		jQuery( '#tempSearchSelect' ).on( 'change', function(){
+
+			var _templateId = jQuery( this ).val();
+			var _newData = data;
+			var _key = 'template_id';
+			if( data.content == 'SectionContainers' )
+				_key = 'container_slug';
+
+			_newData[ _key ] = _templateId;
+
+			jQuery( '#tempSearch' ).remove();
+			callback( _newData );
+		});
+
+		
+	}
+
+	/**
+	 * Generate HTML for the search window
+	 * 
+	 * @param  JSON data         
+
+	 * @return void
+	 */
+	this.createSearchWindow = function( data ){
+
+		var _options = window[ data.content ];
+
+		//generate HTML:
+		var _html = '<div id="tempSearch">';
+
+		_html += '<div id="closeSearch"><span class="dashicons dashicons-no"></span></div>';
+		
+		if( typeof( data.label ) != 'undefined' )
+			_html += '<strong>'+data.label+'</strong>';
+
+		_html += '<select id="tempSearchSelect" data-placeholder="Please select...">';
+			_html += '<option value="none"> </option>';
+			for( var i = 0; i < _options.length; i++ ){
+				_html += '<option value="'+_options[i]['id']+'">';
+				_html += _options[i]['name'];
+				_html += '</option>';
+			}
+
+		_html += '</select>';
+		_html += '</div>';
+
+		return _html;
+	}
+
+	/****************************************/
+	/***	Tab functions
+	/****************************************/
+
+	this.setTabs = function(){
+
+		var self = this;
+
+		$('.tab-nav').each( function(){
+
+			var _container = $( this ).data( 'container_id' );
+			var _active = $( this ).find( '.active' ).data('id');
+
+			$( '#tabContentFor'+_container+ ' > .section-wrapper' ).removeClass( 'active' );
+			$( '#tabContentFor'+_container ).find( '.section-'+_active ).addClass( 'active' );
+
+		});
+	}
+
+	this.setTabsClickable = function(){
+
+		var self = this;
+
+		$('.tab-nav .tab').on( 'click tap', function(){
+			$( this ).parent().find('.tab').removeClass( 'active' );
+			$( this ).addClass( 'active' );
+
+			self.setTabs();	
+		});
+	}
+
+	//this.setScrollLockForLightbox = function(){
+		
+
+
 
 	/****************************************/
 	/***	Yoast Functions
@@ -378,7 +587,7 @@ var SectionBuilder = new function(){
 
 		//fallback for plugin-loader bug in Yoast SEO
 		if( $('#YoastSEO-plugin-loading' ).length <= 0 )
-			$('#section-container').append( '<span style="display:none" id="YoastSEO-plugin-loading"></span>' );
+			$('#main-section-container').append( '<span style="display:none" id="YoastSEO-plugin-loading"></span>' );
 
 
 		YoastSEO.app.registerPlugin( 'chefSections', {status: 'loading'} );
@@ -434,7 +643,7 @@ var SectionBuilder = new function(){
 //init sections builder
 jQuery( window ).load( function( $ ){
 
-	if( jQuery('.section-container').length > 0 )
+	if( jQuery('#main-section-container').length > 0 )
 		SectionBuilder.init();
 	
 });

@@ -35,4 +35,20 @@
 			return $this;
 		}
 
+		/**
+		 * Ajax response
+		 * 
+		 * @return string (json, echoed)
+		 */
+		public function response( $response )
+		{
+			if( !is_array( $response ) )
+				$response = [ 'html' => $response ];
+			
+			if( !isset( $response['error'] ) )
+				$response['error']  = false;
+
+			echo json_encode( $response );
+		}
+
 	}

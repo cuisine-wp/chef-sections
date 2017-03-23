@@ -4,7 +4,9 @@
 
 	use Cuisine\Utilities\Session;
 	use ChefSections\Helpers\PostType;
+	use ChefSections\Helpers\SectionUi as SectionUiHelper;
 	use ChefSections\Collections\SectionCollection;
+
 
 	class SectionsUi{
 		
@@ -69,32 +71,27 @@
 			wp_nonce_field( Session::nonceAction, Session::nonceName );
 
 
-			echo '<div class="section-container" id="section-container">';
+			echo '<div class="section-flow section-sortables" id="main-section-container">';
+
+
+				echo '<div class="no-section-msg msg hidden">';
+					echo '<p>'.__('No sections yet.', 'chefsections').'</p>';
+				echo '</div>';
+
 
 			$sections = $this->sections->getNonContainered();
 
-			if( !empty( $sections ) ){
 
-				foreach( $sections as $section ){
+			foreach( $sections as $section ){
 
-					$section->build();
+				//find the right section UI class and run the build command
+				SectionUiHelper::getClass( $section )->build();
 
-				}
-
-
-			}else{
-
-				echo '<div class="section-wrapper msg">';
-					echo '<p>'.__('Nog geen secties aangemaakt.', 'chefsections').'</p>';
-					echo '<span class="spinner"></span>';
-				echo '</div>';
-			
 			}
 
 			echo '</div>';
 
 		}
-
 
 		/**
 		 * Rebuild the sections builder after a template has been applied

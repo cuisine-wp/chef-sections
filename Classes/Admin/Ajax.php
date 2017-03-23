@@ -7,8 +7,10 @@
 	use ChefSections\Wrappers\Walker;
 	use ChefSections\Wrappers\AjaxInstance;
 	use ChefSections\Wrappers\ReferenceBuilder;
+	use ChefSections\Admin\Handlers\ColumnHandler;
 	use ChefSections\Admin\Handlers\SectionHandler;
-	use ChefSections\Admin\Handlers\TemplateHandler;
+	use ChefSections\Admin\Handlers\ContainerHandler;
+	use ChefSections\Admin\Handlers\SectionBlueprintHandler;
 
 	class Ajax extends AjaxInstance{
 
@@ -110,7 +112,7 @@
 				
 				parent::setPostGlobal();
 
-				( new TemplateHandler() )->addReference();
+				( new SectionBlueprintHandler() )->addSectionBlueprint();
 
 				die();
 
@@ -147,7 +149,7 @@
 
 				parent::setPostGlobal();
 
-				Column::saveType();
+				( new ColumnHandler() )->saveType();
 				die();
 
 			});
@@ -159,7 +161,7 @@
 
 				parent::setPostGlobal();
 				
-				echo Column::saveProperties();
+				echo ( new ColumnHandler() )->saveProperties();
 				die();
 
 			});
@@ -169,7 +171,7 @@
 
 				parent::setPostGlobal();
 
-				Column::refreshColumn();
+				( new ColumnHandler() )->refreshColumn();
 				die();
 
 			});

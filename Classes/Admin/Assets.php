@@ -34,7 +34,9 @@
 				if( $pagenow == 'post.php' || $pagenow == 'post-new.php' ){
 					if( 
 						( isset( $_GET['post'] ) && get_post_type( $_GET['post'] ) == 'section-template' ) || 
-						( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'section-template' )
+						( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'section-template' ) ||
+						( isset( $_GET['post'] ) && get_post_type( $_GET['post'] ) == 'page-template' ) || 
+						( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'page-template' )
 					){
 
 						wp_enqueue_media();
@@ -57,6 +59,14 @@
 				);
 
 				wp_enqueue_script( 
+					'sections_container', 
+					$url.'/js/Container.js', 
+					array( 'backbone', 'media-editor' ),
+					false,
+				    true
+				);
+
+				wp_enqueue_script( 
 					'sections_column', 
 					$url.'/js/Column.js', 
 					array( 'backbone', 'media-editor', 'chosen' ),
@@ -67,7 +77,7 @@
 				wp_enqueue_script( 
 					'sections_builder', 
 					$url.'/js/Builder.js', 
-					array( 'backbone', 'media-editor', 'jquery-ui-draggable' ),
+					array( 'backbone', 'media-editor', 'jquery-ui-draggable', 'chosen' ),
 					false,
 				    true
 				);

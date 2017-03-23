@@ -2,10 +2,19 @@
 
 	namespace ChefSections\Admin\Handlers;
 
+	use ChefSections\Collections\SectionCollection;
 	use ChefSections\Collections\ContainerCollection;
+	use ChefSections\Helpers\Section as SectionHelper;
+	use ChefSections\Admin\Ui\Sections\ContainerSectionUi;
 
 	class ContainerHandler extends BaseHandler{
 
+		/**
+		 * Collection of all registered containers
+		 * 
+		 * @var ChefSections\Collections\ContainerCollection;
+		 */
+		protected $containers;
 
 		/**
 		 * Set the collection for this manager
@@ -14,46 +23,7 @@
 		 */
 		public function setCollection()
 		{
-			$this->collection = new ContainerCollection();
-		}
-
-
-		/**************************************************/
-		/**                   UI                          */
-		/**************************************************/
-
-		/**
-		 * Build the dropdown to select a container
-		 * 
-		 * @return string (html, echoed)
-		 */
-		public function buildDropdown()
-		{
-
-			if( !$this->collection->empty() ){
-				
-				echo '<div class="section-dropdown-wrapper container-dropdown">';
-					echo '<button class="primary btn container-dropdown">';
-						_e( 'Select a container', 'chefsections' );
-					echo '</button>';
-
-					echo '<div class="dropdown-inner">';
-						
-						foreach( $this->collection->all() as $slug => $container ){
-
-							echo '<div class="add-section-btn section-cont" ';
-							echo 'data-action="addSectionContainer" ';
-							echo 'data-post_id="'.$this->postId.'" ';
-							echo 'data-container_type="'.$slug.'">';
-								echo $container['label'];
-							echo '</div>';
-						}
-
-					echo '</div>';
-
-				echo '</div>';
-
-			}
+			$this->collection = new SectionCollection( $this->postId );
 		}
 
 
@@ -69,17 +39,38 @@
 		 */
 		public function addContainer(){
 
-			dd( $_POST );
-			$slug = ( isset( $_POST['container_type'] ) ? $_POST['container_type'] : null );
+			$slug = ( isset( $_POST['container_slug'] ) ? $_POST['container_slug'] : null );
 
-			if( is_null( $slug ) )
-				return 'Error: no Container slug';
+			//check for the slug:
+			if( is_null( $slug ) ){
+				echo 'Error: no Container slug';
+				die();
+			}
 
+			//up the highest ID:
+			$this->collection->setHighestId( 1 );
 
-			$container = $this->collection->get( $slug );
+			$specifics = [
+				'id'				=> $this->collection->getHighestId(),
+				'position'			=> ( count( $this->collection->all() ) + 1 ),
+				'post_id'			=> $this->postId,
+				'container_id'		=> null,
+				'slug' 				=> $slug
+			];
 
-			dd( $this->collection->all() );
+			//set the arguments:
+			$args = SectionHelper::defaultContainerArgs() + $specifics;
+			$args['columns'] = [];
 
+			//save this section:
+			$_sections = $this->collection->toArray()->all();
+			$_sections[ $args['id'] ] = $args;
+			update_post_meta( $this->postId, 'sections', $_sections );
+
+			//return a new Container Section UI:
+			$container = SectionHelper::getClass( $args );
+			$html = ( new ContainerSectionUi( $container ) )->get();
+			$this->response( $html );
 		}
 
 

@@ -12,21 +12,22 @@ class BasePanel{
 	 * 
 	 * @var string
 	 */
-	private $title;
+	protected $title;
 
 	/**
 	 * String with this slug
 	 * 
 	 * @var string
 	 */
-	private $slug;
+	protected $slug;
 
 	/**
 	 * Array containing all options
 	 * 
 	 * @var array
 	 */
-	private $options;
+	public $options;
+
 
 
 	/**
@@ -36,14 +37,6 @@ class BasePanel{
 	 */
 	public $fields;
 
-
-
-	function __construct(){
-
-		add_filter( 'chef_sections_panel_buttons', array( &$this, 'button' ) );
-
-
-	}
 
 
 
@@ -75,6 +68,7 @@ class BasePanel{
 
 		$this->fields = $fields;
 
+		add_filter( 'chef_sections_panel_buttons', array( &$this, 'button' ), 100, 2 );
 		add_action( 'chef_section_setting_panels', array( &$this, 'build' ) );
 
 	}
@@ -86,45 +80,47 @@ class BasePanel{
 	 * @return String (html)
 	 */
 	public function build( $section ){
-		
-		echo '<div class="settings-panel '.sanitize_title( $this->slug ).'" id="panel-'.esc_attr( $this->slug ).'">';
-			echo '<span class="arrow"></span>';
-			echo '<h2>'.esc_html( $this->title ).'<i id="close-panel">&times;</i></h2>';
 
-			foreach( $this->fields as $field ){
+		if( $this->checkRules( $section ) ){
 
-				//set values
-				$_name = $field->name;
-				$value = $section->getProperty( $_name );
+			echo '<div class="settings-panel '.sanitize_title( $this->slug ).'" id="panel-'.esc_attr( $this->slug ).'">';
+				echo '<span class="arrow"></span>';
+				echo '<h2>'.esc_html( $this->title ).'<i id="close-panel">&times;</i></h2>';
 
-				if( $value ){
-					$field->properties['defaultValue'] = $value;
-				}else{
-					$field->properties['defaultValue'] = '';
+				foreach( $this->fields as $field ){
+
+					//set values
+					$_name = $field->name;
+					$value = $section->getProperty( $_name );
+
+					if( $value ){
+						$field->properties['defaultValue'] = $value;
+					}else{
+						$field->properties['defaultValue'] = '';
+					}
+
+					$field->setName( 'section['.$section->id.']['. $_name .']' );
+					$field->render();
+					$field->setName( $_name );	
+
 				}
 
-				$field->setName( 'section['.$section->id.']['. $_name .']' );
-				$field->render();
-				$field->setName( $_name );	
-
-			}
-
-			//render the javascript-templates seperate, to prevent doubles
-			$rendered = array();
+				//render the javascript-templates seperate, to prevent doubles
+				$rendered = array();
+								
+				foreach( $this->fields as $field ){
+								
+					if( method_exists( $field, 'renderTemplate' ) && !in_array( $field->name, $rendered ) ){
 							
-			foreach( $this->fields as $field ){
-							
-				if( method_exists( $field, 'renderTemplate' ) && !in_array( $field->name, $rendered ) ){
-						
-						echo $field->renderTemplate();
-						$rendered[] = $field->name;
-							
-				}
-			}	
+							echo $field->renderTemplate();
+							$rendered[] = $field->name;
+								
+					}
+				}	
 
 
-		echo '</div>';
-
+			echo '</div>';
+		}
 	}
 
 	/**
@@ -132,16 +128,32 @@ class BasePanel{
 	 * 
 	 * @return array
 	 */
-	public function button( $buttons ){
+	public function button( $buttons, $section ){
 
-		$buttons[ $this->slug ] = array(
-			'label' => $this->title,
-			'name' => $this->slug,
-			'icon' => $this->options['icon'],
-			'position' => $this->options['position']
-		);
+		if( $this->checkRules( $section ) ){
+		
+			$buttons[ $this->slug ] = array(
+				'label' => $this->title,
+				'name' => $this->slug,
+				'icon' => $this->options['icon'],
+				'position' => $this->options['position']
+			);
+
+		}
 
 		return $buttons;
+	}
+
+
+	/**
+	 * Check rules wether or not this should be displayed
+	 *
+	 * @return bool
+	 */
+	public function checkRules( $section )
+	{
+		$validator = new PanelValidator( $this, $section );
+		return $validator->isValid();
 	}
 
 
@@ -177,8 +189,9 @@ class BasePanel{
 	private function sanitizeOptions( $options ){
 
 		$defaults = array(
-			'icon'		=> false,
-			'position'	=> 10
+			'icon'				=> false,
+			'position'			=> 10,
+			'rules' 			=> [],
 		);
 
 

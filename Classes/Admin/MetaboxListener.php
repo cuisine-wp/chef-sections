@@ -30,72 +30,46 @@
 
 			add_action( 'admin_init', function(){
 
-				$fields = $this->getFields();
 				$name = __( 'Settings', 'chefsections');
 
+				//section templates:
 				Metabox::make( 
 			
 					$name, 
 					'section-template', 
 					array( 'context' => 'side' )
 			
-				)->set( $fields );
+				)->set([
+
+					Field::checkbox(
+						'editable',
+						__( 'Is this section template editable?', 'chefsections' )
+					)
+				
+				]);
+
+
+				//page templates:
+				Metabox::make( 
+			
+					$name, 
+					'page-template', 
+					array( 'context' => 'side' )
+			
+				)->set([
+					Field::select(
+						'apply_to',
+						__( 'Apply as default to', 'chefsections' ),
+						$this->getPostTypes(),
+						array(
+							'defaultValue'	=> 'none',
+						)
+					)
+				]);
 			
 			});
 		}
 
-
-
-		/**
-		 * Gets the fields for our metabox
-		 * 
-		 * @return array
-		 */
-		private function getFields(){
-
-			$postTypes = $this->getPostTypes();
-
-			$templateTypes = array(
-				'reference'	=> __( 'Reference', 'chefsections' ),
-				'blueprint' => __( 'Blueprint', 'chefsections' ),
-				'stencil'	=> __( 'Stencil', 'chefsections' )
-			);
-
-			$templateTypes = apply_filters( 'chef_sections_template_types', $templateTypes );
-
-			$currentType = get_post_meta( Session::postId(), 'type', true );
-			$class = ( $currentType == 'blueprint' ? array( 'active' ) : array( 'not-visible' ) );
-
-		
-
-			//return the fields:
-			return array(
-
-				Field::select(
-
-					'type',
-					__( 'Template type', 'chefsections' ),
-					$templateTypes,
-					array(
-						'defaultValue' => 'reference'
-					)
-
-				),
-
-				Field::select(
-
-					'apply_to',
-					__( 'Apply as default to', 'chefsections' ),
-					$postTypes,
-					array(
-						'defaultValue'	=> 'none',
-						'wrapper-class'	=> $class
-					)
-				)
-
-			);
-
-		}
 
 
 

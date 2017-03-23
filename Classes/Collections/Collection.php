@@ -126,6 +126,15 @@
 		}
 
 
+		/**
+		 * Get the amount of items in this collection
+		 * 
+		 * @return int
+		 */
+		public function count(){
+			return count( $this->items );
+		}
+
 
 		/*=============================================================*/
 		/**             Return data                                    */
@@ -166,6 +175,17 @@
 		{
 			$this->returnValue = 'objects';
 			return $this;
+		}
+
+
+		/**
+		 * Returns this collection as a JSON
+		 * 
+		 * @return string (json)
+		 */
+		public function toJson()
+		{
+			return json_encode( array_values( $this->toArray()->all() ) );
 		}
 
 

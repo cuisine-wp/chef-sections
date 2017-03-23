@@ -2,14 +2,15 @@
 
 	namespace ChefSections\Admin;
 
-	use ChefSections\Wrappers\StaticInstance;
-	use ChefSections\Wrappers\SectionsUi;
-	use ChefSections\Admin\Ui\Toolbar;
-	use ChefSections\Admin\Handlers\SectionHandler;
-	use ChefSections\Admin\Handlers\BlueprintHandler;
-	use ChefSections\Collections\ReferenceCollection;
-
 	use Cuisine\Utilities\Url;
+	use ChefSections\Admin\Ui\Toolbar;
+	use ChefSections\Admin\Ui\SectionsUi;
+	use ChefSections\Wrappers\StaticInstance;
+	use ChefSections\Admin\Handlers\SectionHandler;
+	use ChefSections\Admin\Handlers\ContainerHandler;
+	use ChefSections\Admin\Handlers\PageBlueprintHandler;
+
+	use ChefSections\Helpers\Section as SectionHelper;
 
 	class EventListeners extends StaticInstance{
 
@@ -36,7 +37,7 @@
 			add_action( 'admin_init', function(){
 
 				//remove editors from the post-types:
-				$post_types = array( 'page', 'section-template' );
+				$post_types = array( 'page', 'section-template', 'page-template' );
 				$include = apply_filters( 'chef_sections_remove_editor', $post_types );
 				$post_types = apply_filters( 'chef_sections_post_types', $post_types );
 
@@ -50,6 +51,15 @@
 			});
 
 
+			/*add_action( 'admin_footer', function(){
+
+				$_POST['post_id'] = '198';
+				$_POST['section_id'] = '8';
+
+				( new SectionHandler() )->addSection();
+
+			});*/
+
 			//add roles
 			add_action( 'init', function(){
 
@@ -59,16 +69,7 @@
 
 			});
 
-			add_filter( 'chef_sections_containers', function( $data ){
-
-				$data[ 'group' ] = [
-					'label' => 'Section Group',
-					'class' => '\ChefSections\Containers\GroupContainer'
-				];
-
-				return $data;
-
-			});
+			
 
 
 			//placing the sections builder
@@ -81,8 +82,8 @@
 				
 				if( isset( $post ) && !in_array( $post->ID, $dontload ) ){
 
-					Toolbar::build();
-					SectionsUi::build();
+					( new Toolbar() )->build();
+					( new SectionsUi() )->build();
 				
 				}
 
@@ -104,6 +105,7 @@
 			add_action( 'add_meta_boxes', function(){
 
 				remove_meta_box( 'wpseo_meta', 'section-template', 'normal' );
+				remove_meta_box( 'wpseo_meta', 'page-template', 'normal' );
 
 			}, 20 );
 
@@ -121,7 +123,7 @@
 			//when creating a new post, check if we need to apply a template:
 			add_action( 'save_post', function( $post_id ){
 				
-				( new BlueprintHandler( $post_id ) )->maybeGenerate();
+				( new PageBlueprintHandler( $post_id ) )->maybeGenerate();
 
 			});
 		}

@@ -2,6 +2,7 @@
 
 	namespace ChefSections\Collections;
 
+	use Cuisine\Utilities\Session;
 
 	class ContainerCollection extends Collection{
 
@@ -32,6 +33,26 @@
 			return $items;
 		}
 
+
+		/**
+		 * Returns the container by ID
+		 * 
+		 * @return array
+		 */
+		public function getById( $containerId, $postId = null )
+		{
+			if( is_null( $postId ) )
+				$postId = Session::postId();
+
+			$sections = get_post_meta( $postId, 'sections', true );
+			$container = $sections[ $containerId ];
+			$slug = $container['slug'];
+
+			$item = $this->get( $slug );
+			$item['slug'] = $slug;
+
+			return $item;
+		}
 
 
 	}

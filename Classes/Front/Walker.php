@@ -2,12 +2,50 @@
 
 	namespace ChefSections\Front;
 
-	use \ChefSections\Sections\Section;
-	use \ChefSections\Wrappers\Template;
 	use \stdClass;
+	use \Cuisine\Utilities\Session;
+	use \ChefSections\Wrappers\Template;
+	use \ChefSections\SectionTypes\ContentSection;
+	use \ChefSections\Collections\SectionCollection;
+	use \ChefSections\Collections\InContainerCollection;
 
 	class Walker{
 
+
+		/**
+		 * The current post ID
+		 * 
+		 * @var int
+		 */
+		protected $postId;
+
+		/**
+		 * Section collection
+		 * 
+		 * @var ChefSections\Collections\SectionCollection;
+		 */
+		protected $collection;
+
+
+		public function __construct()
+		{
+			$this->postId = Session::rootPostId();
+			$this->setCollection( $this->postId );
+		}
+
+		/**
+		 * Set the collection
+		 *
+		 * @return void
+		 */
+		public function setCollection( $postId )
+		{
+			$this->collection = new SectionCollection( $postId );	
+		}
+
+		/******************************************/
+		/**           Section Walkers             */
+		/******************************************/
 
 		/**
 		 * Walk through all sections, get templates
@@ -18,11 +56,11 @@
 
 			ob_start();
 
-			foreach( $this->sections as $section ){
+			foreach( $this->collection->getNonContainered() as $section ){
 
 				$section->beforeTemplate();
 
-				Template::section( $section )->display();
+					Template::section( $section )->display();
 
 				$section->afterTemplate();
 			}
@@ -36,42 +74,82 @@
 		}
 
 		/**
+		 * Get all sections in a container
+		 * 
+		 * @param  ChefSections\SectionTypes\Container $container
+		 * 
+		 * @return string (html)
+		 */
+		public function sectionsInContainer( $container )
+		{
+			
+			$collection = new InContainerCollection( $this->postId, $container->id );
+
+			ob_start();
+
+			foreach( $collection->all() as $section ){
+
+				$section->beforeTemplate();
+
+					Template::section( $section )->display();
+
+				$section->afterTemplate();
+			}
+
+			
+			//reset post-data, to be sure:
+			wp_reset_postdata();
+			wp_reset_query();
+
+
+			return apply_filters( 'chef_sections_container_output', ob_get_clean(), $this );	
+		}
+
+
+		/******************************************/
+		/**           Section Getters             */
+		/******************************************/
+
+		/**
 		* Get a single section
 		*
-		* @param int $post_id
-		* @param int $section_id
+		* @param int $postId
+		* @param int $sectionId
+		* @param string $path
+		* 
 		* @return string (html)
 		*/
-		public function get_section( $post_id, $section_id ){
+		public function getSection( $postId, $sectionId = null, $path = null ){
 
 			$template = false;
-			$sections = get_post_meta( $post_id, 'sections', true );
+			$sections = $this->collection;
 
-			if( is_array( $sections ) ){
+			//check if we need to load a new collection:
+			if( $postId !== $this->postId )
+				$sections = new SectionCollection( $postId );
 
-				foreach( $sections as $section ){
 
-					//if this section in the loop matches
-					//the one we're looking for:
-					if( $section['id'] == $section_id ){
+			//if the collection isn't empty:
+			if( !$sections->empty() ){
 
-						$args = $section;
+				//get the section, default the first if section Id turns out to be null
+				$section = ( is_null( $sectionId ) ? $sections->first() : $sections->get( $sectionId ) );
 
-						//setup section object
-						$section = new Section( $args );
+				if( !is_null( $section ) ){
 
-						ob_start();
+					ob_start();
 
-							$section->beforeTemplate();
+						$section->beforeTemplate();
 
-							//render it's template:
+						if( is_null( $path ) ){
 							Template::section( $section )->display();
+						}else{
+							Template::dynamic( $section, $path )->display();
+						}
 
-							$section->afterTemplate();
+						$section->afterTemplate();
 
-						$template = ob_get_clean();
-
-					}
+					$template = ob_get_clean();
 				}
 			}
 
@@ -83,9 +161,11 @@
 		* Get all sections in a template
 		*
 		* @param string $name of the post
+		* @param string $path
+		* 
 		* @return string (html)
 		*/
-		public function get_sections_template( $name ){
+		public function getSectionsTemplate( $name, $path = null ){
 
 			$args = array(
 				'name' => $name,
@@ -99,21 +179,17 @@
 			if( !$posts )
 				return false;
 
+       		$templatePost = $posts[0];
 
-       		$template = $posts[0];
-
-			//set the new post global
-       		$GLOBALS['post'] = $template;
-
-       		$this->postId = $template->ID;
-
-			$this->sections = $this->getSections();
-			$this->highestId = $this->getHighestId();
-
-			return self::walk();
-
+       		//get the first section of templatePost and send the optional path:
+       		return $this->getSection( $templatePost->ID, null, $path );
 		}
 
+
+
+		/******************************************/
+		/**           Column Walkers              */
+		/******************************************/
 
 
 		/**
@@ -151,20 +227,45 @@
 		}
 
 
+		/******************************************/
+		/**           Helper functions            */
+		/******************************************/
+
 		/**
 		 * Returns if this post has sections
 		 *
 		 * @return bool
 		 */
-		public function hasSections(){
+		public function hasSections( $postId = null ){
 
-			if( !empty( $this->sections ) )
-				return true;
+			//set custom collection, if applicable:
+			if( !is_null( $postId ) )
+				$this->setCollection( $postId );
 
-			return false;
+			//check if empty
+			if( $this->collection->empty() )
+				return false;
+
+			return true;
 		}
 
+		/********************************************/
+		/**          Deprecated function            */
+		/********************************************/
 
+		//replaced by getSection in this class
+		public function get_section( $postId, $sectionId  )
+		{
+			_deprecated_function( __METHOD__, '3.0.0', 'getSection' );
+			return $this->getSection( $postId, $sectionId  );
+		}
+
+		//replaced by getSectionsTemplate in this class
+		public function get_sections_template( $name )
+		{
+			_deprecated_function( __METHOD__, '3.0.0', 'getSectionsTemplate' );
+			return $this->getSectionsTemplate( $name );
+		}
 
 	}
 
