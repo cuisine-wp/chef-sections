@@ -2,6 +2,7 @@
 
 	namespace ChefSections\Templates;
 
+	use ChefSections\Collections\ContainerCollection;
 
 	class ContainerTemplate extends BaseSectionTemplate{
 
@@ -57,8 +58,15 @@
 		 */
 		public function default()
 		{
+			//default container template:
 			$base = $this->pluginPath();
 			$default = $base.'Sections/container.php';
+
+			//find the right one dependant on slug, and overwrite it if set:
+			$container = ( new ContainerCollection() )->get( $this->object->slug );
+			if( isset( $container['template'] ) )
+				$default = $container['template'];
+
 			$default = apply_filters( 'chef_sections_default_template', $default, $this->object );
 			return $default;
 		}
