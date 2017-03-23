@@ -193,6 +193,14 @@ var SectionBuilder = new function(){
 
 		});
 
+		console.log( self._sections.length );
+		if( self._sections.length > 0 ){
+			$('.no-section-msg.msg').addClass('hidden');
+
+		}else{
+			$('.no-section-msg.msg').removeClass('hidden');
+		}
+
 		self.setSectionOrder();
 
 

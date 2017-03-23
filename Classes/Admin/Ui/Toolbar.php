@@ -50,7 +50,7 @@
 		public function build()
 		{
 
-			echo '<div class="section-wrapper dotted-bg" id="section-builder-ui">';
+			echo '<div class="section-toolbar dotted-bg" id="section-builder-ui">';
 
 				$this->createSectionButton();
 
