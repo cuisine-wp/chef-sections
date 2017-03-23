@@ -187,7 +187,6 @@
 						properties[ input.attr( 'name' ) ] = value;
 
 					}
-
 				}
 			}
 
