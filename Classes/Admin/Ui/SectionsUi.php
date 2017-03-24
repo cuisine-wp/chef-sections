@@ -65,9 +65,6 @@
 		public function build(){
 
 
-			if( !PostType::isValid( $this->postId ) )
-				return false;
-
 			wp_nonce_field( Session::nonceAction, Session::nonceName );
 
 

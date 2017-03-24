@@ -3,6 +3,7 @@
 	namespace ChefSections\Admin;
 
 	use Cuisine\Utilities\Url;
+	use ChefSections\Helpers\PostType;
 	use ChefSections\Admin\Ui\Toolbar;
 	use ChefSections\Admin\Ui\SectionsUi;
 	use ChefSections\Wrappers\StaticInstance;
@@ -77,14 +78,17 @@
 
 				global $post;
 
-				//allow sections to be turned off on a per-post basis.
-				$dontload = apply_filters( 'chef_sections_dont_load', array() );
-				
-				if( isset( $post ) && !in_array( $post->ID, $dontload ) ){
+				if( PostType::isValid( $post->ID ) ){
 
-					( new Toolbar() )->build();
-					( new SectionsUi() )->build();
+					//allow sections to be turned off on a per-post basis.
+					$dontload = apply_filters( 'chef_sections_dont_load', array() );
 				
+					if( isset( $post ) && !in_array( $post->ID, $dontload ) ){
+
+						( new Toolbar() )->build();
+						( new SectionsUi() )->build();
+				
+					}
 				}
 
 			});

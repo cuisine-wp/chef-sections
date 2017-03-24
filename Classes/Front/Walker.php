@@ -249,6 +249,16 @@
 			return true;
 		}
 
+		/**
+		 * Return this walker's Post ID
+		 * 
+		 * @return int
+		 */
+		public function getPostId()
+		{
+			return $this->postId;
+		}
+
 		/********************************************/
 		/**          Deprecated function            */
 		/********************************************/
