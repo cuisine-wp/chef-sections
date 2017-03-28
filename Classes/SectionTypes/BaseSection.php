@@ -397,6 +397,9 @@
 			$title = $this->getProperty( 'title', false );
 			if( $title && isset( $title['text'] ) && $title['text'] != '' ){
 
+				if( strtolower( $title['text'] ) == strtolower( __( 'Section title', 'chefsections' ) ) )
+					return null;
+
 				$string = '<'.$title['type'].' class="section-title" itemprop="name">';
 					$string .= esc_html( $title['text'] ); 
 				$string .= '</'.$title['type'].'>';
