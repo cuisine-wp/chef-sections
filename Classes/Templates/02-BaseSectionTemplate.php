@@ -74,8 +74,11 @@
 				);
 			}
 
+			$templates[] = $this->constructPath( $this->object->view );
+			$templates[] = $this->constructPath( 'default' );
+
 			$templates[] = $this->constructPath(
-				$this->object->view
+				'default'
 			);
 
 			$templates = $this->removeDuplicates( $templates );
