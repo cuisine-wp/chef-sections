@@ -59,11 +59,8 @@
                 'template'                => 'ChefSections\Front\TemplateFinder',
 
                 'settingspanel'           => 'ChefSections\Admin\Panels\BasePanel',
-
-                //'stencilbuilder'          => 'ChefSections\Builders\StencilBuilder',
-                //'blueprintbuilder'        => 'ChefSections\Builders\BlueprintBuilder',
-                //'referencebuilder'        => 'ChefSections\Builders\ReferenceBuilder',
-
+                'generator'               => 'ChefSections\Generators\GeneratorHandler',
+                
                 'section'                 => 'ChefSections\SectionTypes\ContentSection',
                 'reference'               => 'ChefSections\SectionTypes\Reference',
                 'stencil'                 => 'ChefSections\SectionTypes\Stencil',

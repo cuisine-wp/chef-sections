@@ -35,7 +35,7 @@
 					break;
 
 				default:
-
+					
 					$class = $classes[ $sectionData['type'] ];
 					return new $class( $sectionData );
 					break;

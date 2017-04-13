@@ -161,7 +161,14 @@
 			return $args;
 		}
 
-
+		/**
+		 * Save the new columns for this section
+		 * 
+		 * @param  Array $args  
+		 * @param  Array $parent 
+		 * 
+		 * @return void
+		 */
 		public function saveColumns( $args, $parent )
 		{
 			if( !empty( $args['columns'] ) ){
