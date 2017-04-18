@@ -39,7 +39,7 @@
 
 			echo '<div class="tabbed-content section-data" id="tabContentFor'.$this->container->id.'">';
 
-				if( !$this->container->sections->empty() ){
+				if( !$this->container->sections->isEmpty() ){
 
 					foreach( $this->container->sections->all() as $section ){
 
@@ -60,7 +60,7 @@
 		{
 			echo '<div class="section-sortables tab-nav" id="tabsFor'.$this->container->id.'" data-container_id="'.$this->container->id.'">';
 
-				if( !$this->container->sections->empty() ){
+				if( !$this->container->sections->isEmpty() ){
 
 					$i = 0;
 					foreach( $this->container->sections->all() as $section ){

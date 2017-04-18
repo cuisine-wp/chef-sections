@@ -37,7 +37,7 @@
 
 			echo '<div class="section-sortables" data-container_id="'.$this->container->id.'">';
 
-				if( !$this->container->sections->empty() ){
+				if( !$this->container->sections->isEmpty() ){
 
 					foreach( $this->container->sections->all() as $section ){
 

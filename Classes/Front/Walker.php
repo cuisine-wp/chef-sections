@@ -130,7 +130,7 @@
 
 
 			//if the collection isn't empty:
-			if( !$sections->empty() ){
+			if( !$sections->isEmpty() ){
 
 				//get the section, default the first if section Id turns out to be null
 				$section = ( is_null( $sectionId ) ? $sections->first() : $sections->get( $sectionId ) );
@@ -243,7 +243,7 @@
 				$this->setCollection( $postId );
 
 			//check if empty
-			if( $this->collection->empty() )
+			if( $this->collection->isEmpty() )
 				return false;
 
 			return true;

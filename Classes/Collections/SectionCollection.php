@@ -47,7 +47,7 @@
 
 			$array = array();
 
-			if( !$this->empty() ){
+			if( !$this->isEmpty() ){
 			
 				$sections = Sort::byField( $this->items, 'position', 'ASC' );
 			
