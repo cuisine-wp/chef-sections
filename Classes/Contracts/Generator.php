@@ -5,8 +5,8 @@
 
 	interface Generator{
 
-		public function set( Array $data );
-		public function sanitizeData( Array $data );
+		public function set( $data );
+		public function sanitizeData( $data );
 		
 		public function ran();
 		public function check();

@@ -48,7 +48,7 @@
 		 *
 		 * @return ChefSections\Generators\BaseGenerator
 		 */
-		public function set( Array $data )
+		public function set( $data )
 		{
 			$this->$data = $this->sanitizeData( $data );
 			return $this;
@@ -62,7 +62,7 @@
 		 * 
 		 * @return Array
 		 */
-		public function sanitizeData( Array $data )
+		public function sanitizeData( $data )
 		{
 			return $data;
 		}
