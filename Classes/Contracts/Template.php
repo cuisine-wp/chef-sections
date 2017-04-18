@@ -5,7 +5,7 @@
 
 	interface Template{
 
-		public function default();
+		public function getDefault();
 		public function getHierarchy();
 
 	}

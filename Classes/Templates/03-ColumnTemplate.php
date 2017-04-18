@@ -50,7 +50,7 @@
 		 * 
 		 * @return void
 		 */
-		public function default()
+		public function getDefault()
 		{
 
 			$types = ColumnHelper::getAvailableTypes();
