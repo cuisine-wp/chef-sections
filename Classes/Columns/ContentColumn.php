@@ -25,7 +25,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 	 * @param  string $name
 	 * @return string ( html, echoed )
 	 */
-	public function theField( String $name, $default = null ){
+	public function theField( $name, $default = null ){
 
 		if( $this->getField( $name, $default ) ){
 

@@ -17,7 +17,7 @@
 		 * 
 		 * @return Array
 		 */
-		public function sanitizeData( Array $data ){
+		public function sanitizeData( $data ){
 
 			if( sizeof( $data['sections'] ) > 0 ){
 				
