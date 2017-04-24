@@ -118,10 +118,9 @@ class DefaultColumn implements ColumnContract{
 
 
 		//set the section variable:
-		if( is_int( $section ) ){
+		if( is_numeric( $section ) ){
 			$collection = new SectionCollection( $this->post_id );
 			$section = $collection->get( $section );
-			dd( $section );
 		}
 
 		$this->section = $section;
