@@ -3,7 +3,9 @@
 	namespace ChefSections\Admin\Handlers;
 
 
+	use Cuisine\Wrappers\Record;
 	use Cuisine\Utilities\Session;
+	use ChefSections\Front\Walker;
 	use ChefSections\Helpers\PostType;
 	use ChefSections\SectionTypes\ContentSection;
 	use ChefSections\Admin\Ui\Containers\TabbedUi;
@@ -86,10 +88,29 @@
 				}
 
 				//save the main section meta:
-				update_post_meta( $this->postId, 'sections', $sections );	
+				update_post_meta( $this->postId, 'sections', $sections );
+
+				$this->saveHtmlOutput();
 			}
 				
 			return true;
+		}
+
+		/**
+		 * Creates the searchable html content for this post
+		 * 
+		 * @return void
+		 */
+		public function saveHtmlOutput()
+		{
+			if( apply_filters( 'chef_sections_save_html_output_as_content', true ) ){
+				$walker = new Walker();
+				$walker->setPostId( $this->postId );
+				$html = $walker->walk();
+
+				$data = [ 'post_content' => $html ];
+				$rec = Record::update( 'posts', $this->postId, $data );
+			}
 		}
 
 

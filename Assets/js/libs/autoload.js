@@ -80,7 +80,6 @@
 									self.updating = true;
 									self.updateLoader();
 									self.autoload();
-		
 								}
 							}
 						});
@@ -108,7 +107,8 @@
 					
 						//post with ajax:
 						$.post( Cuisine.ajax, data, function(response) {
-	
+		
+						
 							//Handle a 'no more posts' message:
 							if( response === 0 || response === 'message' ){
 	
@@ -133,6 +133,8 @@
 								$( '.'+self.settings.loaderClass ).remove();
 								$( self.element ).append( response );
 	
+								$( document ).trigger( 'autoloadComplete' );
+
 								if( self.settings.onComplete !== null )
 									self.settings.onComplete( self, response );
 	
