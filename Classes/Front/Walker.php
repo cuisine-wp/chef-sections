@@ -259,6 +259,16 @@
 			return $this->postId;
 		}
 
+		/**
+		 * Set this walker's Post ID
+		 * 
+		 * @return void
+		 */
+		public function setPostId( $post_id )
+		{
+			$this->postId = $post_id;
+		}
+
 		/********************************************/
 		/**          Deprecated function            */
 		/********************************************/

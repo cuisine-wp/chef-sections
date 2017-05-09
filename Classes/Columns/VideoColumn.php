@@ -42,7 +42,7 @@ class VideoColumn extends DefaultColumn implements ColumnContract{
 
 		$still = $this->getField( 'still' );
 
-		$this->theTitle();
+		echo $this->getTitle( 'title' );
 
 		if( $still['thumb'] != '' ){
 
