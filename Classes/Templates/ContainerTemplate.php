@@ -56,7 +56,7 @@
 		 * 
 		 * @return void
 		 */
-		public function default()
+		public function getDefault()
 		{
 			//default container template:
 			$base = $this->pluginPath();

@@ -11,7 +11,7 @@
 
 		public function saveProperties();
 
-		public function sanitizeProperties( Array $props );
+		public function sanitizeProperties( $props );
 
 		public function build();
 
@@ -19,12 +19,12 @@
 
 		public function getFields();
 
-		public function getField( String $name, $default = null );
+		public function getField( $name, $default = null );
 
-		public function theField( String $name, $default = null );
+		public function theField( $name, $default = null );
 
-		public function getTitle( String $name = 'title', String $class = 'column-title' );
+		public function getTitle( $name = 'title', $class = 'column-title' );
 
-		public function theTitle( String $name = 'title', String $class = 'column-title' );
+		public function theTitle( $name = 'title', $class = 'column-title' );
 
 	}

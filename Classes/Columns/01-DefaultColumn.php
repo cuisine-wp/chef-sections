@@ -118,10 +118,9 @@ class DefaultColumn implements ColumnContract{
 
 
 		//set the section variable:
-		if( is_int( $section ) ){
+		if( is_numeric( $section ) ){
 			$collection = new SectionCollection( $this->post_id );
 			$section = $collection->get( $section );
-			dd( $section );
 		}
 
 		$this->section = $section;
@@ -221,7 +220,7 @@ class DefaultColumn implements ColumnContract{
 	 * 
 	 * @return array
 	 */
-	public function sanitizeProperties( Array $props )
+	public function sanitizeProperties( $props )
 	{
 		return $props;
 	}
@@ -249,7 +248,7 @@ class DefaultColumn implements ColumnContract{
 	 * @param  string $default (optional)
 	 * @return string / bool (returns false if this content does not exist )
 	 */
-	public function getField( String $name, $default = null ){
+	public function getField( $name, $default = null ){
 
 		if( !isset( $this->properties[ $name ] ) ){
 
@@ -271,7 +270,7 @@ class DefaultColumn implements ColumnContract{
 	 * @param  string $name
 	 * @return string ( html, echoed )
 	 */
-	public function theField( String $name, $default = null ){
+	public function theField( $name, $default = null ){
 
 		if( $this->getField( $name, $default ) )
 			echo $this->getField( $name, $default );
@@ -285,7 +284,7 @@ class DefaultColumn implements ColumnContract{
 	 * @param  String 		$class 
 	 * @return String
 	 */
-	public function getTitle( String $name = 'title', String $class = 'column-title' )
+	public function getTitle( $name = 'title', $class = 'column-title' )
 	{
 		$title = $this->getField( $name, false );
 		if( $title && isset( $title['text'] ) && $title['text'] != '' ){
@@ -310,7 +309,7 @@ class DefaultColumn implements ColumnContract{
 	 * @param  String 		$class 
 	 * @return String           
 	 */
-	public function theTitle( String $name = 'title', String $class = 'column-title' )
+	public function theTitle( $name = 'title', $class = 'column-title' )
 	{
 		$title = $this->getTitle( $name, $class );
 		if( $title !== null )

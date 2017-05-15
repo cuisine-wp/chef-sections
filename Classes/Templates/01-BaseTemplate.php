@@ -109,7 +109,7 @@
 			$located = apply_filters( 'chef_sections_located_template', $located, $this );
 		
 			if( !$located )
-				$located = $this->default();
+				$located = $this->getDefault();
 
 
 			return $located;
@@ -121,7 +121,7 @@
 		 * 
 		 * @return void
 		 */
-		public function default()
+		public function getDefault()
 		{
 			$base = $this->pluginPath();
 			$default = $base.'Sections/default.php';

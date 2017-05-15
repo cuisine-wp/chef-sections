@@ -26,7 +26,7 @@
 		 * 
 		 * @return void
 		 */
-		public function default()
+		public function getDefault()
 		{
 			$base = $this->pluginPath();
 			$default = $base.'Elements/'.$this->object.'.php';

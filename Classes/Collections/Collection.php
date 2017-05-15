@@ -89,7 +89,7 @@
 
 
 			$highID = 0;
-			if( !$this->empty() ){
+			if( !$this->isEmpty() ){
 
 				foreach( $this->items as $item ){
 

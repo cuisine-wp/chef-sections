@@ -30,7 +30,7 @@ class SocialsColumn extends DefaultColumn implements ColumnContract{
 		 * @param  string $default (optional)
 		 * @return string / bool (returns false if this content does not exist )
 		 */
-		public function getField( String $name, $default = null ){
+		public function getField( $name, $default = null ){
 
 			//check if we're referencing an old key:
 			if( in_array( $name, array_keys( $this->getOldFields() ) ) )

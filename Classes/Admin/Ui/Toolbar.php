@@ -101,7 +101,7 @@
 		public function createTemplateButton()
 		{
 
-			if( !$this->templates->empty() ){
+			if( !$this->templates->isEmpty() ){
 
 				echo '<div class="add-section-btn secondary-btn" ';
 				echo 'data-post_id="'.$this->postId.'" ';
@@ -138,7 +138,7 @@
 		 */
 		public function createContainerButton()
 		{
-			if( !$this->containers->empty() ){
+			if( !$this->containers->isEmpty() ){
 				echo '<div class="add-section-btn secondary-btn" ';
 				echo 'data-post_id="'.$this->postId.'" ';
 				echo 'data-action="addSectionContainer" ';
