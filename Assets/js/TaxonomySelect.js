@@ -15,7 +15,11 @@ highestId: '',
 		self.setChosen();
 		self.setEvents();
 
-		self.taxonomies = JSON.parse( Taxonomies );
+		try{
+			self.taxonomies = JSON.parse( Taxonomies );
+		}catch( e ){
+			self.taxonomies = [];
+		}
 
 	},
 
