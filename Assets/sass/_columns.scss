@@ -75,6 +75,10 @@
 			display:block;
   			width: 100% !important;
 
+  			.chosen-single, .chosen-drop{
+  				width: 100% !important;
+  			}
+
   			.group-result{
   				color: #666;
 			}

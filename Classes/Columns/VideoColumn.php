@@ -32,6 +32,16 @@ class VideoColumn extends DefaultColumn implements ColumnContract{
 
 	}
 
+	/**
+	 * Returns the video using Oembed
+	 * 
+	 * @return String
+	 */
+	public function getVideo()
+	{
+		$url = $this->getField( 'url' );
+		return wp_oembed_get( $url );
+	}
 
 	/**
 	 * Generate a graphic depiction of the collection

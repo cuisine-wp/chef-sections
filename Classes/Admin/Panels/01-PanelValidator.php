@@ -2,7 +2,7 @@
 
 	namespace ChefSections\Admin\Panels;
 
-	use Cuisine\Wrapper\User;
+	use Cuisine\Wrappers\User;
 	use ChefSections\Collections\ContainerCollection;
 
 
@@ -39,8 +39,10 @@
 			'sectionType',
 			'sectionView',
 			'inContainer',
+			'notInContainer',
 			'containerType',
-			'userCap'
+			'userCap',
+			'userRole'
 		];
 
 
@@ -93,7 +95,10 @@
 			if( !isset( $this->rules['sectionType'] ) )
 				return true;
 
-			if( $this->rules['sectionType'] == $this->section->type )
+			if( !is_array( $this->rules['sectionType'] ) )
+				$this->rules['sectionType'] = [ $this->rules['sectionType'] ];
+
+			if( in_array( $this->section->type, $this->rules['sectionType'] ) )
 				return true;
 
 			return false;	
@@ -110,7 +115,10 @@
 			if( !isset( $this->rules['sectionView'] ) )
 				return true;
 
-			if( $this->rules['sectionView'] == $this->section->view )
+			if( !is_array( $this->rules['sectionView'] ) )
+				$this->rules['sectionView'] = [ $this->rules['sectionView'] ];
+
+			if( in_array( $this->section->view, $this->rules['sectionView'] ) )
 				return true;
 
 			return false; 		
@@ -127,8 +135,7 @@
 			//check if there are rules for inside a container
 			if( !isset( $this->rules['inContainer'] ) )
 				return true;
-
-			
+		
 			//set the rules
 			if( !is_array( $this->rules['inContainer'] ) )
 				$this->rules['inContainer'] = [ $this->rules['inContainer'] ];
@@ -154,6 +161,46 @@
 			}
 		
 			return false;
+		}
+
+
+		/**
+		 * Check if this section is not a (specific) container
+		 * 
+		 * @return bool
+		 */
+		protected function validateNotInContainer()
+		{
+			//check if there are rules for not inside a container
+			if( !isset( $this->rules['notInContainer'] ) )
+				return true;
+
+			
+			//set the rules
+			if( !is_array( $this->rules['notInContainer'] ) )
+				$this->rules['notInContainer'] = [ $this->rules['notInContainer'] ];
+
+			//if no container Id; return true
+			if( is_null( $this->section->container_id ) ){
+				return true;
+			
+			//if the rule is for all containered sections, return true:
+			} else if( in_array( 'all', $this->rules['notInContainer'] ) ){
+				return true;
+
+			//else check specific containers:
+			}else{
+
+				$container = new ContainerCollection();
+				$container = $container->getById( $this->section->container_id, $this->section->post_id );
+
+				//check the container 
+				if( in_array( $container['slug'], $this->rules['notInContainer'] ) )
+					return false;
+			
+			}
+		
+			return true;
 		}
 
 
@@ -203,5 +250,19 @@
 
 			return User::hasCap( $this->rules['userCap'] );
 
+		}
+
+
+		/**
+		 * Validate the user role
+		 * 
+		 * @return bool
+		 */
+		protected function validateUserRole(){
+
+			if( !isset( $this->rules['userRole'] ) )
+				return true;
+
+			return User::hasRole( $this->rules['userRole'] );
 		}
 	}

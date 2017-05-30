@@ -5,6 +5,7 @@
 	use ChefSections\SectionTypes\Reference;
 	use ChefSections\Collections\SectionCollection;
 	use ChefSections\Helpers\Section as SectionHelper;
+	use ChefSections\Collections\InContainerCollection;
 	use ChefSections\Helpers\SectionUi as SectionUiHelper;
 	use ChefSections\Collections\SectionBlueprintCollection;
 
@@ -85,11 +86,23 @@
 		 */
 		public function addBlueprintCopy( $args ){
 
+			$originalId = $args['original_id'];
 			unset( $args['template_id'] );
+			unset( $args['original_id'] );
 
 			//save this section:
 			$_sections = $this->pageSections->toArray()->all();
 			$_sections[ $args['id'] ] = $args;
+
+			//support for containers:
+			if( $args['type'] == 'container' ){
+				$_sections = $this->saveContaineredSections( 
+					$originalId, 
+					$args['id'],
+					$_sections
+				);
+			}
+
 			update_post_meta( $this->postId, 'sections', $_sections );
 
 			//create the new Reference object, and build it
@@ -125,15 +138,16 @@
 		 * 
 		 * @return Array
 		 */
-		public function getArguments()
+		public function getArguments( $parent = null )
 		{
 			//up the highest ID
 			$this->pageSections->setHighestId( 1 );
 
 			//find the parent template:
-			$referenceSections = new SectionCollection( $this->templateId );
-			$parent = $referenceSections->toArray()->first();
-
+			if( is_null( $parent ) ){
+				$referenceSections = new SectionCollection( $this->templateId );
+				$parent = $referenceSections->toArray()->first();
+			}
 			
 			//set the section specifics:
 			$specifics = array(
@@ -149,16 +163,55 @@
 			//refill the arguments with the parent data:
 			$args['title'] = $parent['title'];
 			$args['view'] = $parent['view'];
+			$args['name'] = $parent['name'];
 			$args['hide_title'] = $parent['hide_title'];
 			$args['hide_container'] = $parent['hide_container'];
 			$args['template_id'] = $this->templateId;
+			$args['original_id'] = $parent['id'];
 			$args['type'] = $parent['type'];
 			$args['columns'] = $parent['columns'];
+
+			if( $parent['type'] == 'container' )
+				$args['slug'] = $parent['slug']; 
 
 			//copy columns to new instance:
 			$this->saveColumns( $args, $parent );
 
 			return $args;
+		}
+
+
+		/**
+		 * Save the containered sections
+		 * 
+		 * @param  Int    $originalId
+		 * @param  Int 	  $newId
+		 * @param  Array  $sections
+		 * 
+		 * @return Array
+		 */
+		public function saveContaineredSections( $originalId, $newId, $_sections )
+		{
+		
+			$inContainer = ( new InContainerCollection( $this->templateId, $originalId ) );
+
+			if( !$inContainer->isEmpty() ){
+				foreach( $inContainer->toArray()->all() as $containered ){
+					
+					//pass along the containered section as the original
+					$args = $this->getArguments( $containered );
+					unset( $args['template_id'] );
+					unset( $args['original_id'] );
+
+					//set the new container id:
+					$args['container_id'] = $newId;
+
+					//set the new section arguments
+					$_sections[ $args['id'] ] = $args;
+				}
+			}
+			
+			return $_sections;	
 		}
 
 		/**

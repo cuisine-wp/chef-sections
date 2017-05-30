@@ -114,6 +114,7 @@
 			$sectionMeta = [];
 			$attributes = $this->generate();
 
+
 			foreach( $attributes['containers'] as $container ){
 				//set post ID, then build:
 				$sectionMeta = $container->postId( $this->postId )->generate( $sectionMeta );

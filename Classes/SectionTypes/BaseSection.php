@@ -244,7 +244,8 @@
 			//so people can add data-properties and other stuff
 			$html = apply_filters( 'cuisine_section_opening_div', $html );
 
-			echo $html.'>';
+			if( apply_filters( 'chef_sections_display_section_wrapper', true ) )
+				echo $html;
 
 			do_action( 'chef_section_before_section_content', $this );
 
@@ -256,10 +257,11 @@
 		 * @return void
 		 */
 		public function afterTemplate(){
+	
+			do_action( 'chef_section_after_section_content', $this );
 
-				do_action( 'chef_section_after_section_content', $this );
-
-			echo '</div>';
+			if( apply_filters( 'chef_sections_display_section_wrapper', true ) )
+				echo apply_filters( 'chef_sections_closing_div', '</div>' );
 
 			//do something after template
 			do_action( 'section_after_template', $this );
@@ -305,6 +307,42 @@
 			return $schema;
 		}
 
+
+		/**
+		 * Returns a column in this section
+		 *
+		 * @param  String $type
+		 * 
+		 * @return Column object / Array of column objects
+		 */
+		public function getColumn( $type = null )
+		{
+			$cols = [];
+
+			if( !isset( $this->columns[0] ) )
+				return null;
+
+			//if type is null, return the first column
+			if( is_null( $type ) )
+				return $this->columns[0];
+
+			//else, map types
+			foreach( $this->columns as $column ){
+				if( $column->type == $type )
+					$cols[] = $column;
+			}
+
+			//return null on empty
+			if( empty( $cols ) )
+				return null;
+
+			//return column object if we found one
+			if( sizeof( $cols ) == 1 )
+				return $cols[0];
+
+			//return array
+			return $cols;
+		}
 
 
 		/*=============================================================*/

@@ -27,6 +27,25 @@
 
 
 		/**
+		 * Generate a section blueprint container
+		 * 
+		 * @param  String  $name     
+		 * @param  Closure $callback 
+		 * 
+		 * @return void
+		 */
+		public function container( $name, Closure $callback )
+		{
+			$generator = $this->getGenerator( 'containerBlueprint', $name );
+			$generator->create();
+
+			$callback( $generator );
+
+			$this->execute( $generator );
+		}
+
+
+		/**
 		 * Generate a page blueprint
 		 * 
 		 * @param String $name
@@ -58,8 +77,6 @@
 			$generator = $this->getGenerator( 'columnBlueprint', $name );
 			$generator->create();
 
-			$callback( $generator );
-
 			$this->execute( $generator );	
 		}
 
@@ -78,12 +95,9 @@
 		}
 
 
-
-
 		/**
 		 * Execute the generator
-		 * 
-		 * @return void
+		 *
 		 */
 		public function execute( BaseGenerator $generator )
 		{
@@ -110,6 +124,10 @@
 
 				case 'sectionBlueprint':
 					return new SectionGenerator( $attributes );
+					break;
+
+				case 'containerBlueprint':
+					return new ContainerGenerator( $attributes );
 					break;
 
 				case 'columnBlueprint':

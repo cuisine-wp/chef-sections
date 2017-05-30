@@ -81,46 +81,48 @@ class BasePanel{
 	 */
 	public function build( $section ){
 
-		if( $this->checkRules( $section ) ){
+		$class = 'settings-panel '.sanitize_title( $this->slug );
 
-			echo '<div class="settings-panel '.sanitize_title( $this->slug ).'" id="panel-'.esc_attr( $this->slug ).'">';
-				echo '<span class="arrow"></span>';
-				echo '<h2>'.esc_html( $this->title ).'<i id="close-panel">&times;</i></h2>';
+		if( !$this->checkRules( $section ) )
+			$class .= ' no-valid-panel';
 
-				foreach( $this->fields as $field ){
+		echo '<div class="'.$class.'" id="panel-'.esc_attr( $this->slug ).'">';
+			echo '<span class="arrow"></span>';
+			echo '<h2>'.esc_html( $this->title ).'<i id="close-panel">&times;</i></h2>';
 
-					//set values
-					$_name = $field->name;
-					$value = $section->getProperty( $_name );
+			foreach( $this->fields as $field ){
 
-					if( $value ){
-						$field->properties['defaultValue'] = $value;
-					}else{
-						$field->properties['defaultValue'] = '';
-					}
+				//set values
+				$_name = $field->name;
+				$value = $section->getProperty( $_name );
 
-					$field->setName( 'section['.$section->id.']['. $_name .']' );
-					$field->render();
-					$field->setName( $_name );	
-
+				if( $value ){
+					$field->properties['defaultValue'] = $value;
+				}else{
+					$field->properties['defaultValue'] = '';
 				}
 
-				//render the javascript-templates seperate, to prevent doubles
-				$rendered = array();
-								
-				foreach( $this->fields as $field ){
-								
-					if( method_exists( $field, 'renderTemplate' ) && !in_array( $field->name, $rendered ) ){
+				$field->setName( 'section['.$section->id.']['. $_name .']' );
+				$field->render();
+				$field->setName( $_name );	
+
+			}
+
+			//render the javascript-templates seperate, to prevent doubles
+			$rendered = array();
 							
-							echo $field->renderTemplate();
-							$rendered[] = $field->name;
-								
-					}
-				}	
+			foreach( $this->fields as $field ){
+							
+				if( method_exists( $field, 'renderTemplate' ) && !in_array( $field->name, $rendered ) ){
+						
+						echo $field->renderTemplate();
+						$rendered[] = $field->name;
+							
+				}
+			}	
 
 
-			echo '</div>';
-		}
+		echo '</div>';
 	}
 
 	/**

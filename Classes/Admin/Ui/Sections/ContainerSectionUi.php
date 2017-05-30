@@ -116,7 +116,8 @@
 						'placeholder'	=> __( 'Section title', 'chefsections' ),
 						'label'			=> false,
 						'defaultValue'	=> $title,
-						'fieldName'		=> 'section['.$this->section->id.'][title]'
+						'fieldName'		=> 'section['.$this->section->id.'][title]',
+						'userRoles'		=> ['administrator']
 					)
 				)->render();
 

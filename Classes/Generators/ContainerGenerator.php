@@ -6,6 +6,21 @@
 
 	class ContainerGenerator extends SectionGenerator implements GeneratorContract{
 
+		/**
+		 * All generated pages in an Array
+		 * 
+		 * @var Array
+		 */
+		protected $sections;
+
+		/**
+		 * All generated columns in an array
+		 * 
+		 * @var Array
+		 */
+		protected $columns;
+
+
 
 		/**
 		 * Build this object into a section (and it's corresponding post)
@@ -40,5 +55,29 @@
 			unset( $attributes[ 'sections' ] );
 			return $attributes;
 		}
+
+
+		/**
+		 * Add a section
+		 *
+		 * @param String $name
+		 * @param Array $attributes
+		 * 
+		 * @return SectionGenerator
+		 */
+		public function section( $name, $attributes = array() )
+		{
+			$id = ( count( $this->attributes['sections'] ) + 1 );
+			$props = [
+				'id' => $id,
+				'name' => $name,
+				'position' => $id,
+			];
+
+			$section = new SectionGenerator( array_merge( $props, $attributes ) );
+			$this->attributes['sections'][] = $section;
+			return $section;
+		}
+
 
 	}

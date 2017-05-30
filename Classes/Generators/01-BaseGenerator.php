@@ -40,11 +40,10 @@
 			$attributes = $this->getAttributes();
 
 			if( !isset( $attributes['postId'] ) && $this->get( 'createPost', true ) ){
-				
+
 				$postId = $this->generatePost( $attributes );
 				$this->postId( $postId );
 				$attributes['postId'] = $postId;
-
 			}
 
 			return $attributes;
@@ -59,6 +58,7 @@
 		{
 			$defaults = $this->getDefaultAttributes();
 			$attributes = wp_parse_args( $this->attributes, $defaults );
+
 			return $attributes;
 		}
 
@@ -70,11 +70,14 @@
 		 */
 		public function generatePost( Array $attributes )
 		{
-			if( !isset( $attributes['post'] ) || empty( $attributes['post_type'] ) )
+
+			if( !isset( $attributes['post'] ) || empty( $attributes['post_type'] ) ){
+
 				$attributes['post'] = [
 					'title' => $this->get( 'name' ),
 					'type' => $this->defaultPostType,
 				];
+			}
 
 			$postId = Generator::post( $attributes['post'] )->generate();
 

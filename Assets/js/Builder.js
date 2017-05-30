@@ -442,6 +442,7 @@ var SectionBuilder = new function(){
 
 			}catch( e ){
 
+				console.log( response );
 				console.log( e );
 
 			}
