@@ -412,29 +412,38 @@ class DefaultColumn implements ColumnContract{
 	private function buildControls(){
 
 		//create key - label pairs for this dropdown:
-		$keys = array_keys( ColumnHelper::getAvailableTypes() );
-		$labels = Sort::pluck( ColumnHelper::getAvailableTypes(), 'name' );
 
-		$types = array_combine( $keys, $labels );
 		$name = '_column_type_'.$this->fullId;
+		$types = $this->getTypes();
 
 		if( $this->referenceMode )
 			$name = 'reference_'.$this->fullId;
 
 
-		$typeSelector = Field::select(
-			$name,
-			'',
-			$types,
-			array(
-				'defaultValue' => $this->type
-			)
-		);
+		if( sizeof( $types ) > 1 ){
+			
+			$typeSelector = Field::select(
+				$name,
+				'',
+				$types,
+				array(
+					'defaultValue' => $this->type
+				)
+			);
+			
+			$class = 'column-controls column-choices-available';
 
-		echo '<div class="column-controls">';
+		}else{
+			$class = 'column-controls';
+			$key = array_keys( $types );
+			$typeSelector = Field::hidden( $name, [ 'defaultValue' => $this->type ]);
+		}
+
+		echo '<div class="'.$class.'">';
 
 			//render the dropdown:
 			$typeSelector->render();
+			echo '<h3 class="column-type">'.$types[ $this->type ].'</h3>';
 
 			//sorter
 			echo '<span class="sort dashicons dashicons-leftright"></span>';
@@ -568,6 +577,29 @@ class DefaultColumn implements ColumnContract{
 
 	}
 
+
+	/**
+	 * Returns the possible column types available for this column
+	 * 
+	 * @return Array
+	 */
+	public function getTypes()
+	{
+		$keys = array_keys( ColumnHelper::getAvailableTypes() );
+		$labels = Sort::pluck( ColumnHelper::getAvailableTypes(), 'name' );
+
+		$response = [];
+		$types = array_combine( $keys, $labels );
+		$allowed = $this->section->allowedColumns;
+
+		foreach( $types as $key => $type ){
+			if( in_array( $key, $allowed ) )
+				$response[ $key ] = $type;
+		}
+
+		return $response;
+
+	}
 
 
 }

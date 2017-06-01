@@ -56,6 +56,7 @@
 
 				$sections = $_POST['section'];
 
+				
 				//save columns and types
 				foreach( $sections as $section ){
 
@@ -69,7 +70,6 @@
 					if( $section['type'] != 'container' ){
 
 						$count = $types[ $section['view'] ];
-
 
 						for( $i = 1; $i <= $count; $i++ ){
 
