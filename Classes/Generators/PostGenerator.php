@@ -37,6 +37,9 @@
 				return null;
 			
 
+			if( $attributes['post_type'] == 'section-template' )
+				update_post_meta( $postId, 'editable', 'true' );
+
 			return $postId;
 		}
 

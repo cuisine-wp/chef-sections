@@ -111,6 +111,28 @@
 		public $type = 'base';
 
 
+
+		/**
+		 * Allowed columns for this section
+		 * 
+		 * @var array
+		 */
+		public $allowedColumns = [];
+
+
+		/**
+		 * Allowed views
+		 * 
+		 * @var array
+		 */
+		public $allowedViews = [];
+
+
+		/**
+		 * Constructor 
+		 * 
+		 * @param Array $args
+		 */
 		function __construct( $args ){
 			
 			$args = $this->sanitizeArgs( $args );
@@ -184,6 +206,12 @@
 
 			}
 
+			if( is_null( $this->allowedColumns ) )
+				$this->allowedColumns = array_keys( ColumnHelper::getAvailableTypes() );
+
+			if( is_null( $this->allowedViews ) )
+				$this->allowedViews = array_keys( SectionHelper::viewTypes() );
+			
 			//columns
 			$this->columns = $this->getColumns( $args['columns'] );
 			
@@ -212,7 +240,9 @@
 				'position', 
 				'view', 
 				'hide_title', 
-				'hide_container'
+				'hide_container',
+				'allowedColumns',
+				'allowedViews'
 			];
 			
 			$attributes = apply_filters( 'chef_sections_section_attributes', $attributes );

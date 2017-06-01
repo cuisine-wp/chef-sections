@@ -171,8 +171,15 @@
 			$args['type'] = $parent['type'];
 			$args['columns'] = $parent['columns'];
 
+			if( isset( $parent['allowedColumns'] ) )
+				$args['allowedColumns'] = $parent['allowedColumns'];
+
+			if( isset( $parent['allowedViews'] ) )
+				$args['allowedViews'] = $parent['allowedViews'];
+
 			if( $parent['type'] == 'container' )
 				$args['slug'] = $parent['slug']; 
+
 
 			//copy columns to new instance:
 			$this->saveColumns( $args, $parent );

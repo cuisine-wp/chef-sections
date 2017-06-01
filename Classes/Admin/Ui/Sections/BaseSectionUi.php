@@ -295,6 +295,28 @@
 				)
 			
 			)->render();
+
+
+			//allowed columns
+			foreach( $this->section->allowedColumns as $allowedColumn ){
+				Field::hidden(
+					$prefix.'[allowedColumns]['.$allowedColumn.']',
+					array(
+						'defaultValue' => $allowedColumn
+					)
+				)->render();
+			}
+
+			//allowed views:
+			foreach( $this->section->allowedViews as $allowedView ){
+				Field::hidden(
+					$prefix.'[allowedViews]['.$allowedView.']',
+					array(
+						'defaultValue' => $allowedView
+					)
+				)->render();
+			}
+			
 		}
 
 	

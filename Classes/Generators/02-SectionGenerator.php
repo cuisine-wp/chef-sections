@@ -72,7 +72,11 @@
 		{
 			//$column = new ColumnGenerator( array_merge( compact( 'type' ), $parameters ) );
 			$column = new ColumnGenerator( array_merge( compact( 'type' ), $attributes ) );
-			$this->attributes['columns'][] = $column;
+			$count = 1;
+			if( isset( $this->attributes['columns'] ) )
+				$count = count( $this->attributes['columns'] ) + 1;
+			
+			$this->attributes['columns'][ $count ] = $column;
 			return $column;
 				
 		}
@@ -90,7 +94,7 @@
 			if( empty( $parameters ) )
 				$parameters = $this->columns;
 
-			$i = 0;
+			$i = 1;
 			$columns = [];
 			foreach( $parameters as $column ){
 
@@ -104,6 +108,7 @@
 
 			$this->attributes[ 'columns' ] = $columns;
 			$this->columns = $columns;
+
 
         	return $columns;
 		}
@@ -136,8 +141,11 @@
 			//check columns:
 			if( !is_null( $this->columns ) && !empty( $this->columns ) ){
 				$attributes['columns'] = [];
+
+				$i = 1;
 				foreach( $this->columns as $column ){
-					$attributes[ 'columns' ][] = $column->get( 'type', 'content' );
+					$attributes[ 'columns' ][ $i ] = $column->get( 'type', 'content' );
+					$i++;
 				}
 			}
 
