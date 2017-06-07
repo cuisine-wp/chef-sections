@@ -133,12 +133,10 @@
 				
 
 				//view-switcher:
-				$types = SectionHelper::viewTypes();
-
 				Field::radio(
 					'section['.$this->section->id.'][view]',
 					'Weergave',
-					$types,
+					$this->getViewTypes(),
 					array(
 						'defaultValue' => $this->section->view,
 						'userRoles' => ['administrator']
@@ -342,6 +340,25 @@
 			return $tab;
 		}
 
+
+		/**
+		 * Returns the view types applicable for this section
+		 * 
+		 * @return Array
+		 */
+		public function getViewTypes()
+		{
+			$views = SectionHelper::viewTypes();
+			$allowed = $this->section->allowedViews;
+			$types = [];
+
+			foreach( $allowed as $view ){
+				$types[ $view ] = $views[ $view ];
+			}
+
+			return $types;
+
+		}
 
 			
 

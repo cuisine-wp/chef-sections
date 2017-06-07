@@ -25,15 +25,6 @@
 		 */
 		private function enqueues(){
 
-
-			//include the media js in section templates:
-			add_action( 'admin_init', function(){
-				
-				wp_enqueue_media();
-				
-			});
-
-
 			
 			add_action( 'admin_menu', function(){
 
