@@ -273,7 +273,7 @@
 			}
 
 			//else look in these properties:
-			if( !isset( $this->properties[$allowed] ) ){
+			if( isset( $this->properties[$allowed] ) ){
 
 				return $this->properties[ $allowed ];
 
