@@ -355,7 +355,7 @@
 		setChosen: function(){
 
 			var self = this;
-			self.$el.find('.column-controls .type-select').chosen();
+			self.$el.find('.column-controls select.type-select').chosen();
 		},
 
 		destroy: function(){

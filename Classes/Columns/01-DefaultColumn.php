@@ -436,7 +436,13 @@ class DefaultColumn implements ColumnContract{
 		}else{
 			$class = 'column-controls';
 			$key = array_keys( $types );
-			$typeSelector = Field::hidden( $name, [ 'defaultValue' => $this->type ]);
+			$typeSelector = Field::hidden( 
+				$name, 
+				[ 
+					'defaultValue' => $this->type, 
+					'class' => 'type-select'
+				]
+			);
 		}
 
 		echo '<div class="'.$class.'">';
