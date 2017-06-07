@@ -353,7 +353,9 @@
 			$types = [];
 
 			foreach( $allowed as $view ){
-				$types[ $view ] = $views[ $view ];
+
+				if( isset( $views[ $view ] ) )
+					$types[ $view ] = $views[ $view ];
 			}
 
 			return $types;

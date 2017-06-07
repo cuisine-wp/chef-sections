@@ -9,6 +9,7 @@
 	use ChefSections\Wrappers\Column;
 	use ChefSections\Wrappers\Template;
 	use ChefSections\Wrappers\SectionsBuilder;
+	use ChefSections\Collections\SectionCollection;
 	use ChefSections\Helpers\Column as ColumnHelper;
 	use ChefSections\Helpers\Section as SectionHelper;
 	use ChefSections\Contracts\Section as SectionContract;
@@ -206,11 +207,8 @@
 
 			}
 
-			if( is_null( $this->allowedColumns ) )
-				$this->allowedColumns = array_keys( ColumnHelper::getAvailableTypes() );
-
-			if( is_null( $this->allowedViews ) )
-				$this->allowedViews = array_keys( SectionHelper::viewTypes() );
+			$this->allowedColumns = $this->getAllowed( 'Columns' );
+			$this->allowedViews = $this->getAllowed( 'Views' );
 			
 			//columns
 			$this->columns = $this->getColumns( $args['columns'] );
@@ -248,6 +246,48 @@
 			$attributes = apply_filters( 'chef_sections_section_attributes', $attributes );
 
 			return $attributes;
+		}
+
+
+		/**
+		 * Returns an array of allowed columns in this section
+		 * 
+		 * @return Array
+		 */
+		public function getAllowed( $type = 'Columns' )
+		{	
+			
+			$allowed = "allowed{$type}";
+
+			//first, look in the container:
+			if( !is_null( $this->container_id ) ) {
+				
+				$sections = get_post_meta( $this->post_id, 'sections', true );
+
+				if( 
+					isset( $sections[ $this->container_id][ $allowed ] ) &&
+					!empty( $sections[ $this->container_id][ $allowed] )
+				){
+					return $sections[ $this->container_id][ $allowed ];
+				}
+			}
+
+			//else look in these properties:
+			if( !isset( $this->properties[$allowed] ) ){
+
+				return $this->properties[ $allowed ];
+
+			} else {
+
+				if( strtolower( $type ) == 'columns' ){
+					return array_keys( ColumnHelper::getAvailableTypes() );
+				}else{
+					return array_keys( SectionHelper::viewTypes() );
+				}
+			
+			}
+
+			return [];
 		}
 
 		
