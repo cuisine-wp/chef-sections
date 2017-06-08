@@ -388,10 +388,10 @@
 		public function getColumn( $type = null )
 		{
 			$cols = [];
-			$columns = array_values( Sort::byField( $this->columns, 'position' ) );
-
-			if( !isset( $columns[0] ) )
+			if( !is_array( $this->columns ) || !isset( $this->columns[0] ) )
 				return null;
+
+			$columns = array_values( Sort::byField( $this->columns, 'position' ) );
 
 			//if type is null, return the first column
 			if( is_null( $type ) )
