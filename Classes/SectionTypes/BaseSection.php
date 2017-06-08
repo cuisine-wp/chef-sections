@@ -388,16 +388,17 @@
 		public function getColumn( $type = null )
 		{
 			$cols = [];
+			$columns = array_values( Sort::byField( $this->columns, 'position' ) );
 
-			if( !isset( $this->columns[0] ) )
+			if( !isset( $columns[0] ) )
 				return null;
 
 			//if type is null, return the first column
 			if( is_null( $type ) )
-				return $this->columns[0];
+				return $columns[0];
 
 			//else, map types
-			foreach( $this->columns as $column ){
+			foreach( $columns as $column ){
 				if( $column->type == $type )
 					$cols[] = $column;
 			}
