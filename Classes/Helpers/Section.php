@@ -72,7 +72,7 @@
 			$arr = array(
 				'fullwidth' => 1,
 				'half-half' => 2,
-				'sidebar-left' => 2,
+				'sidebar-lef' => 2,
 				'sidebar-right' => 2,
 				'three-columns' => 3,
 				'four-columns' => 4
