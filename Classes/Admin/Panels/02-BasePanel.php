@@ -96,11 +96,8 @@ class BasePanel{
 				$_name = $field->name;
 				$value = $section->getProperty( $_name );
 
-				if( $value ){
+				if( $value && $value != '' )
 					$field->properties['defaultValue'] = $value;
-				}else{
-					$field->properties['defaultValue'] = '';
-				}
 
 				$field->setName( 'section['.$section->id.']['. $_name .']' );
 				$field->render();
