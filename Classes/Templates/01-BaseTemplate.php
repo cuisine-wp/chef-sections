@@ -229,4 +229,25 @@
 		}
 
 
+
+		/**
+		 * Returns the current object
+		 * 
+		 * @return mixed
+		 */
+		public function getObject()
+		{
+			return $this->object;
+		}
+
+		/**
+		 * Returns the type of this template
+		 * 
+		 * @return String
+		 */
+		public function getType()
+		{
+			return $this->type;
+		}
+
 	}

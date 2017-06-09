@@ -597,6 +597,7 @@ class DefaultColumn implements ColumnContract{
 		$response = [];
 		$types = array_combine( $keys, $labels );
 		$allowed = $this->section->allowedColumns;
+		$allowed = apply_filters( 'chef_sections_default_allowed_columns', $allowed, $this, $this->section );
 
 		foreach( $types as $key => $type ){
 			if( in_array( $key, $allowed ) )
