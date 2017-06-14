@@ -18,7 +18,8 @@
 			'click .edit-btn': 'launchLightbox',
 			'click .lightbox-modal-close': 'closeLightbox',
 			'click #save-column': 'saveColumn',
-			'change .column-controls .type-select': 'changeType',
+			'change .column-controls .type-select': 'changeType'
+			//'keyup': 'saveAndClose'
 		},
 
 
@@ -165,7 +166,9 @@
 		saveColumn: function( e ){
 
 			var self = this;
-			e.preventDefault();
+			
+			if( typeof( e ) != 'undefined' )
+				e.preventDefault();
 
 			var properties = {};
 			var inputs = self.$('.lightbox .field-wrapper .field, .lightbox .field-wrapper .subfield:checked');
@@ -217,6 +220,23 @@
 			}
 
 			self.saveProperties( properties );
+		},
+
+		/**
+		 * Save and close the lightbox
+		 * 
+		 * @param  Event event
+		 * 
+		 * @return void
+		 */
+		saveAndClose: function( event ){
+
+			/*var self = this;
+
+			if( self.$('.lightbox').hasClass( 'active' ) && event.keyCode == 13 ){
+				self.saveColumn();
+				self.closeLightbox();
+			}*/
 		},
 
 		/**
