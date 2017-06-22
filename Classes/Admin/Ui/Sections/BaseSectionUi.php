@@ -101,6 +101,9 @@
 
 				//first the title:
 				$title = $this->section->getProperty( 'title' );
+				if( strtolower( $title['text'] ) == strtolower( __( 'Section title', 'chefsections' ) ) )
+					$title = '';
+
 
 				Field::title(
 					'section['.$this->section->id.'][title]',
