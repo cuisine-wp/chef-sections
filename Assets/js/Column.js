@@ -183,11 +183,15 @@
 					if( input.val() !== undefined && input.attr( 'name' ) !== undefined && input.attr('disabled') == undefined ){
 
 						var value = input.val();
+						var name = input.attr('name');
 
 						if( input.hasClass( 'type-checkbox' ) && input.is(':checked') === false )
 							value = 'false';
 
-						properties[ input.attr( 'name' ) ] = value;
+						if(input.hasClass( 'data-name' ) )
+							name = input.data('name');
+
+						properties[ name ] = value;
 
 					}
 				}
@@ -262,7 +266,7 @@
 					continue retloop;
 
 				//overwrite the name for title radio buttons:
-				if( input.hasClass( 'title-radio') == true )
+				if( input.hasClass( 'title-radio') == true || input.hasClass( 'data-name' ) )
 					name = input.data('name');
 
 				if( name !== undefined && disabled == undefined ){

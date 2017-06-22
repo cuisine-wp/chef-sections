@@ -450,7 +450,8 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 				__( 'View', 'chefsections' ),
 				$view,
 				array(
-					'defaultValue' => $this->getField( 'view', 'blocks' )
+					'defaultValue' => $this->getField( 'view', 'blocks' ),
+					'subname' => $this->fullId.'view'
 				)
 			),
 
@@ -460,7 +461,8 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 				__( 'Navigation', 'chefsections' ),
 				$nav,
 				array(
-					'defaultValue'	=> $this->getField( 'nav', 'none' )
+					'defaultValue'	=> $this->getField( 'nav', 'none' ),
+					'subname' => $this->fullId.'nav'
 				)
 			),
 
@@ -469,7 +471,8 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 				__( 'Grid Type', 'chefsections' ),
 				$grid,
 				array(
-					'defaultValue'	=> $this->getField( 'grid', 'stretch' )
+					'defaultValue'	=> $this->getField( 'grid', 'stretch' ),
+					'subname' => $this->fullId.'grid'
 				)
 			)
 
