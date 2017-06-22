@@ -142,7 +142,11 @@
 
                     foreach( $this->taxonomies[ $tax['tax'] ] as $term ){
 
-                        $available = in_array( $term->slug, $tax['terms'] );
+                        $available = false;
+
+                        if( !is_array( $tax['terms'] ) )
+                            $available = in_array( $term->slug, $tax['terms'] );
+
                         $html .= '<option value="'.esc_attr( $term->slug ).'" ';
                         $html .= selected( $available, true, false ).'>';
 
