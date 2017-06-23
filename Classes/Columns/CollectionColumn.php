@@ -72,7 +72,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 			if( $this->getField( 'nav', 'none' ) != 'none' ){
 
 				//get the paged variable from the original global query, else default to 0.
-				$this->page = ( isset( $wp_the_query->query_vars['paged'] ) ? $wp_the_query->	query_vars['paged'] : 0 );
+				$this->page = ( isset( $wp_the_query->query_vars['page'] ) ? $wp_the_query->query_vars['page'] : 0 );
 
 			}else{
 
