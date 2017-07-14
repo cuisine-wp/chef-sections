@@ -1,3 +1,15 @@
+### 3.0.0: 2017-07-14
+
+* Completely refactored
+* Section Collections added
+* Section generators added
+* Section containers added
+* On-the-fly section loading
+* Revamped the template-engine
+* Allowed Views & Allowed Column types added
+* Section panel rights
+* A lot of small bugfixes
+
 ### 1.4.2: 2017-03-15
 
 * Added a new Title Field to most columns
