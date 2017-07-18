@@ -296,29 +296,30 @@
 				display:inline-block;
 				margin-left:10px;
 
-				&.fullwidth, &.half-half, &.sidebar-right, &.sidebar-left, &.three-columns, &.four-columns{
+				&.fullwidth, &.half-half, &.sidebar-right, &.sidebar-left, &.three-columns, &.four-columns,
+				&.valfullwidth, &.valhalf-half, &.valsidebar-right, &.valsidebar-left, &.valthree-columns, &.valfour-columns{
 					label{
 						text-indent: -9999px;
 					}
 				}
 
-				&.half-half{
+				&.half-half, &.valhalf-half{
 					background:url('../images/half-half.png');
 				}
 
-				&.sidebar-right{
+				&.sidebar-right, &.valsidebar-right{
 					background:url('../images/sidebar-right.png');
 				}
 
-				&.sidebar-left{
+				&.sidebar-left, &.valsidebar-left{
 					background:url('../images/sidebar-left.png');
 				}
 
-				&.three-columns{
+				&.three-columns, &.valthree-columns{
 					background:url('../images/three-cols.png');
 				}
 
-				&.four-columns{
+				&.four-columns, &.valfour-columns{
 					background:url('../images/four-cols.png');
 				}
 			}
