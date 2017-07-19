@@ -66,7 +66,8 @@
 
 				//set the edit_sections capability to the administrator role
 				$role = get_role( 'administrator' );
-				$role->add_cap( 'edit_sections' );
+				if( !is_null( $role ) )
+					$role->add_cap( 'edit_sections' );
 
 			});
 
