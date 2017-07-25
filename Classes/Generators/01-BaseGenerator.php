@@ -41,6 +41,7 @@
 
 			if( !isset( $attributes['postId'] ) && $this->get( 'createPost', true ) ){
 
+
 				$postId = $this->generatePost( $attributes );
 				$this->postId( $postId );
 				$attributes['postId'] = $postId;
@@ -78,6 +79,7 @@
 					'type' => $this->defaultPostType,
 				];
 			}
+
 
 			$postId = Generator::post( $attributes['post'] )->generate();
 

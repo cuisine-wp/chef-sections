@@ -159,15 +159,18 @@
 				'original_id'		=> $parent['id']
 			);
 
-
-			if( $parent['type'] == 'container' )
-				$args['slug'] = $parent['slug']; 
+			//set container support
+			if( $parent['type'] == 'container' ){
+				$specifics['slug'] = $parent['slug']; 
+				$specifics['type'] = 'container';
+				$specifics['view'] = $parent['view'];
+			}
 
 			//don't allow the next flow to overwrite these specific values:
-			$dontOverwrite = array_keys( $args );
+			$dontOverwrite = array_keys( $specifics );
 
 			//get default args
-			$args = SectionHelper::defaultArgs() + $specifics;
+			$args = wp_parse_args( $specifics, SectionHelper::defaultArgs() );
 
 			//populate the rest of the arguments:
 			foreach( $parent as $key => $value ){

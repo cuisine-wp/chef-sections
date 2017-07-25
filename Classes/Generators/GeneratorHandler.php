@@ -22,7 +22,7 @@
 
 			$callback( $generator );
 
-			$this->execute( $generator );	
+			return $this->execute( $generator );	
 		}
 
 
@@ -41,7 +41,7 @@
 
 			$callback( $generator );
 
-			$this->execute( $generator );
+			return $this->execute( $generator );
 		}
 
 
@@ -60,7 +60,7 @@
 
 			$callback( $generator );
 
-			$this->execute( $generator );	
+			return $this->execute( $generator );	
 	
 		}
 
@@ -77,7 +77,7 @@
 			$generator = $this->getGenerator( 'columnBlueprint', $name );
 			$generator->create();
 
-			$this->execute( $generator );	
+			return $this->execute( $generator );	
 		}
 
 

@@ -114,28 +114,32 @@
 			$sectionMeta = [];
 			$attributes = $this->generate();
 
-
-			foreach( $attributes['containers'] as $container ){
-				//set post ID, then build:
-				$sectionMeta = $container->postId( $this->postId )->generate( $sectionMeta );
+			if( !empty( $attributes['containers' ] ) ){
+				foreach( $attributes['containers'] as $container ){
+					//set post ID, then build:
+					$sectionMeta = $container->postId( $this->postId )->generate( $sectionMeta );
+				}
 			}
 
 
 			$keys = array_keys( $sectionMeta );
-			foreach( $attributes['sections'] as $section ){
+			
+			if( !empty( $attributes['sections'] ) ){
+				foreach( $attributes['sections'] as $section ){
 
-				//add section meta:
-				if( !in_array( $section->get('id'), $keys ) )
-					$sectionMeta = $section->postId( $this->postId )->generate( $sectionMeta );
+					//add section meta:
+					if( !in_array( $section->get('id'), $keys ) )
+						$sectionMeta = $section->postId( $this->postId )->generate( $sectionMeta );
 
 
-				//check for columns
-				if( !is_null( $section->get( 'columns' ) ) && !empty( $section->get( 'columns' ) ) ){
+					//check for columns
+					if( !is_null( $section->get( 'columns' ) ) && !empty( $section->get( 'columns' ) ) ){
 
-					//set the columns up for this particular section, 
-					//and build 'em:
-					foreach( $section->columns() as $column ){
-						$column->build();
+						//set the columns up for this particular section, 
+						//and build 'em:
+						foreach( $section->columns() as $column ){
+							$column->build();
+						}
 					}
 				}
 			}
