@@ -103,12 +103,18 @@
 		public function saveHtmlOutput()
 		{
 			if( apply_filters( 'chef_sections_save_html_output_as_content', true ) ){
-				$walker = new Walker();
-				$walker->setPostId( $this->postId );
-				$html = $walker->walk();
 
-				$data = [ 'post_content' => $html ];
-				$rec = Record::update( 'posts', $this->postId, $data );
+				$pts = ['section-template', 'page-template'];
+
+				if( !in_array( get_post_type( $this->postId ), $pts ) ){
+
+					$walker = new Walker();
+					$walker->setPostId( $this->postId );
+					$html = $walker->walk();
+
+					$data = [ 'post_content' => strip_tags( $html ) ];
+					$rec = Record::update( 'posts', $this->postId, $data );
+				}
 			}
 		}
 
