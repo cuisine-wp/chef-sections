@@ -151,35 +151,32 @@
 			
 			//set the section specifics:
 			$specifics = array(
-				'id'			=> $this->pageSections->getHighestId(),
-				'position'		=> ( count( $this->pageSections->all() ) + 1 ),
-				'post_id'		=> $this->postId,
-				'container_id'		=> ( isset( $_POST['container_id'] ) ? $_POST['container_id'] : null )
+				'id'				=> $this->pageSections->getHighestId(),
+				'position'			=> ( count( $this->pageSections->all() ) + 1 ),
+				'post_id'			=> $this->postId,
+				'container_id'		=> ( isset( $_POST['container_id'] ) ? $_POST['container_id'] : null ),
+				'template_id'		=> $this->templateId,
+				'original_id'		=> $parent['id']
 			);
 
-			//get default args
-			$args = SectionHelper::defaultArgs() + $specifics;
-
-			//refill the arguments with the parent data:
-			$args['title'] = $parent['title'];
-			$args['view'] = $parent['view'];
-			$args['name'] = $parent['name'];
-			$args['hide_title'] = $parent['hide_title'];
-			$args['hide_container'] = $parent['hide_container'];
-			$args['template_id'] = $this->templateId;
-			$args['original_id'] = $parent['id'];
-			$args['type'] = $parent['type'];
-			$args['columns'] = $parent['columns'];
-
-			if( isset( $parent['allowedColumns'] ) )
-				$args['allowedColumns'] = $parent['allowedColumns'];
-
-			if( isset( $parent['allowedViews'] ) )
-				$args['allowedViews'] = $parent['allowedViews'];
 
 			if( $parent['type'] == 'container' )
 				$args['slug'] = $parent['slug']; 
 
+			//don't allow the next flow to overwrite these specific values:
+			$dontOverwrite = array_keys( $args );
+
+			//get default args
+			$args = SectionHelper::defaultArgs() + $specifics;
+
+			//populate the rest of the arguments:
+			foreach( $parent as $key => $value ){
+
+				if( !in_array( $key, $dontOverwrite ) ){
+					$args[ $key ] = $value;
+				}
+
+			}
 
 			//copy columns to new instance:
 			$this->saveColumns( $args, $parent );
