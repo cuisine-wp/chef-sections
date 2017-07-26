@@ -2,6 +2,7 @@
 
 	namespace ChefSections\Admin\Ui;
 
+	use Cuisine\Wrappers\User;
 	use Cuisine\Utilities\Session;
 	use ChefSections\Collections\ContainerCollection;
 	use ChefSections\Collections\SectionBlueprintCollection;
@@ -86,11 +87,15 @@
 		 */
 		public function createSectionButton()
 		{
-			echo '<div class="add-section-btn" data-action="createSection" data-post_id="'.$this->postId.'">';
-				echo '<span class="dashicons dashicons-plus-alt"></span>';
-				_e( 'Add Section', 'chefsections' );
-			echo '</div>';
-
+			if( 
+				apply_filters( 'chef_sections_show_section_ui', true ) &&
+				$this->checkUserRights()
+			){
+				echo '<div class="add-section-btn" data-action="createSection" data-post_id="'.$this->postId.'">';
+					echo '<span class="dashicons dashicons-plus-alt"></span>';
+					_e( 'Add Section', 'chefsections' );
+				echo '</div>';
+			}
 		}
 
 		/**
@@ -101,7 +106,11 @@
 		public function createTemplateButton()
 		{
 
-			if( !$this->templates->isEmpty() ){
+			if( 
+				!$this->templates->isEmpty() &&
+				apply_filters( 'chef_sections_show_template_ui', true ) &&
+				$this->checkUserRights()
+			){
 
 				echo '<div class="add-section-btn secondary-btn" ';
 				echo 'data-post_id="'.$this->postId.'" ';
@@ -138,7 +147,11 @@
 		 */
 		public function createContainerButton()
 		{
-			if( !$this->containers->isEmpty() ){
+			if( 
+				!$this->containers->isEmpty() &&
+				apply_filters( 'chef_sections_show_container_ui', true ) && 
+				$this->checkUserRights()
+			){
 				echo '<div class="add-section-btn secondary-btn" ';
 				echo 'data-post_id="'.$this->postId.'" ';
 				echo 'data-action="addSectionContainer" ';
@@ -166,7 +179,29 @@
 		}
 
 
+		/**
+		 * Check if a user has ample rights to use a button
+		 */
+		public function checkUserRights( $roles = ['administrator', 'editor'])
+		{
+			//check if thie right user-roles are present:
+        	if( !empty( $roles ) ){
 
+	            foreach( $roles as $role ){
+
+	                if( User::hasRole( $role ) ){
+	                
+	                    return true;
+	                    break;
+	                
+	                }
+	            }
+
+	            return false;
+	        }
+
+	        return true;
+		}
 
 		/**
 		 * Create the Container Json

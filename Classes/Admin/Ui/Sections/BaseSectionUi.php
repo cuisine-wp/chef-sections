@@ -2,6 +2,7 @@
 
 	namespace ChefSections\Admin\Ui\Sections;
 
+	use Cuisine\Wrappers\User;
 	use Cuisine\Wrappers\Field;
 	use ChefSections\Wrappers\Template;
 	use ChefSections\Admin\Ui\Containers\TabbedUi;
@@ -113,7 +114,6 @@
 						'label'			=> false,
 						'defaultValue'	=> $title,
 						'fieldName'		=> 'section['.$this->section->id.'][title]',
-						'userRoles'		=> ['administrator']
 					)
 				)->render();
 
@@ -142,7 +142,7 @@
 					$this->getViewTypes(),
 					array(
 						'defaultValue' => $this->section->view,
-						'userRoles' => ['administrator']
+						'userRoles' => ['administrator', 'editor']
 					)
 				)->render();
 
@@ -164,18 +164,21 @@
 		 */
 		public function bottomControls(){
 
-			echo '<div class="section-footer">';
-				echo '<p class="delete-section">';
-					echo '<span class="dashicons dashicons-trash"></span>';
-				echo __( 'Delete', 'chefsections' ).'</p>';
+			if( User::hasRole( 'administrator' ) ){
 
-				do_action( 'chef_sections_bottom_controls' );
+				echo '<div class="section-footer">';
 
-				$this->buildTemplateSnitch();
-				$this->buildCodeSnitch();
+					echo '<p class="delete-section">';
+						echo '<span class="dashicons dashicons-trash"></span>';
+					echo __( 'Delete', 'chefsections' ).'</p>';
 
-			echo '</div>';
+					do_action( 'chef_sections_bottom_controls' );
 
+					$this->buildTemplateSnitch();
+					$this->buildCodeSnitch();
+
+				echo '</div>';
+			}
 		}
 
 

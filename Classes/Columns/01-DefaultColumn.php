@@ -303,7 +303,7 @@ class DefaultColumn implements ColumnContract{
 	}
 
 	/**
-	 * Echoes the output of getTitle
+	l * Echoes the output of getTitle
 	 * 
 	 * @param  String       $name  
 	 * @param  String 		$class 
@@ -464,7 +464,7 @@ class DefaultColumn implements ColumnContract{
 	 *
 	 * @return string (html, echoed)
 	 */
-	private function buildBottomControls(){
+	protected function buildBottomControls(){
 		echo '<div class="btn-row">';
 
 			$class = 'edit-btn section-btn';
@@ -531,7 +531,7 @@ class DefaultColumn implements ColumnContract{
 	 *
 	 * @return string ( html, echoed )
 	 */
-	private function buildTemplateSnitch(){
+	protected function buildTemplateSnitch(){
 
 		$templates = Template::column( $this )->getHierarchy();
 

@@ -2,6 +2,7 @@
 namespace ChefSections\Columns;
 
 use WP_Query;
+use Cuisine\Wrappers\User;
 use Cuisine\Utilities\Url;
 use Cuisine\Utilities\Sort;
 use Cuisine\Wrappers\Field;
@@ -293,6 +294,31 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 	}
 
 	/**
+	 * Build the edit button
+	 *
+	 * @return string (html, echoed)
+	 */
+	protected function buildBottomControls(){
+
+		echo '<div class="btn-row">';
+
+			$class = 'edit-btn section-btn';
+			if( !$this->hasLightbox )
+				$class .= ' no-lightbox';
+
+			if( User::hasRole( 'administrator' ) ){
+				echo '<button class="'.esc_attr( $class ).'" id="lightbox-btn">';
+					echo '<span class="dashicons dashicons-edit"></span>';
+					_e( 'Edit', 'chefsections' );
+				echo '</button>';
+			}
+
+			$this->buildTemplateSnitch();
+
+		echo '</div>';
+	}
+
+	/**
 	 * Build the contents of the lightbox for this column
 	 *
 	 * @return string ( html, echoed )
@@ -363,7 +389,8 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 				$this->getPostTypes(),
 				array(
 					'label'				=> 'top',
-					'defaultValue' 		=> $this->getField( 'post_type', 'post' )
+					'defaultValue' 		=> $this->getField( 'post_type', 'post' ),
+					'userRoles' 		=> ['administrator']
 				)
 			),
 
@@ -372,7 +399,8 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 				'posts_per_page',
 				__( 'Number of posts', 'chefsections' ),
 				array(
-					'defaultValue'		=> $this->getField( 'posts_per_page', 4 )
+					'defaultValue'		=> $this->getField( 'posts_per_page', 4 ),
+					'userRoles' 		=> ['administrator']
 				)
 			),
 
@@ -381,7 +409,8 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 				'posts_per_row',
 				__( 'Number of posts per row', 'chefsections' ),
 				array(
-					'defaultValue'		=> $this->getField( 'posts_per_row', 4 )
+					'defaultValue'		=> $this->getField( 'posts_per_row', 4 ),
+					'userRoles' 		=> ['administrator']
 				)
 			),
 
@@ -391,7 +420,8 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 				__( 'Sort on', 'chefsections' ),
 				$orderby,
 				array(
-					'defaultValue'		=> $this->getField( 'orderby', 'date' )
+					'defaultValue'		=> $this->getField( 'orderby', 'date' ),
+					'userRoles' 		=> ['administrator']
 
 				)
 			),
@@ -400,7 +430,8 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 				'taxonomies',
 				__( 'Filter', 'chefsections' ),
 				array(
-					'defaultValue'		=> $this->getField( 'taxonomies', array() )
+					'defaultValue'		=> $this->getField( 'taxonomies', array() ),
+					'userRoles' 		=> ['administrator']
 				)
 			)
 		);
@@ -454,7 +485,8 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 				$view,
 				array(
 					'defaultValue' => $this->getField( 'view', 'blocks' ),
-					'subname' => $this->fullId.'view'
+					'subname' => $this->fullId.'view',
+					'userRoles' => ['administrator']
 				)
 			),
 
@@ -465,7 +497,8 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 				$nav,
 				array(
 					'defaultValue'	=> $this->getField( 'nav', 'none' ),
-					'subname' => $this->fullId.'nav'
+					'subname' => $this->fullId.'nav',
+					'userRoles' => ['administrator']
 				)
 			),
 
@@ -475,7 +508,8 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 				$grid,
 				array(
 					'defaultValue'	=> $this->getField( 'grid', 'stretch' ),
-					'subname' => $this->fullId.'grid'
+					'subname' => $this->fullId.'grid',
+					'userRoles' => ['administrator']
 				)
 			)
 

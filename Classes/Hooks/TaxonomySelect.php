@@ -52,7 +52,8 @@
                 $iteration = count( $value ) - 1;
             }
 
-            $html = '<div class="taxonomy-select-field field-wrapper" data-highest-id="'.esc_attr( $iteration ).'">';
+            $class = $this->getWrapperClass();
+            $html = '<div class="taxonomy-select-field '.$class.'" data-highest-id="'.esc_attr( $iteration ).'">';
 
 
 

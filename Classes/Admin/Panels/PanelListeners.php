@@ -29,15 +29,17 @@
 			add_action( 'init', function(){
 
 				$fields = $this->getSectionSettingFields();
+				$args = [
+					'position' => -1,
+					'icon' => 'dashicons-admin-generic'
+				];
+
 
 				Panel::make( 
 
 					__( 'Settings', 'chefsections' ),
 					'settings',
-					array(
-						'position' 	=> -1,
-						'icon'		=> 'dashicons-admin-generic'
-					)
+					apply_filters( 'chef_sections_base_panel_args', $args )
 
 				)->set( $fields );
 
