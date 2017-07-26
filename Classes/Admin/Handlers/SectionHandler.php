@@ -112,10 +112,26 @@
 					$walker->setPostId( $this->postId );
 					$html = $walker->walk();
 
-					$data = [ 'post_content' => strip_tags( $html ) ];
+					$data = [ 'post_content' => $this->prepareHtmlOutput( $html ) ];
 					$rec = Record::update( 'posts', $this->postId, $data );
 				}
 			}
+		}
+
+
+		/**
+		 * Prepare HTML output for saving
+		 *
+		 * @param  String $html
+		 * 
+		 * @return String
+		 */
+		public function prepareHtmlOutput( $html )
+		{
+			global $wpdb;	
+			$html = strip_tags( $html );
+			$html = $wpdb->_real_escape( $html );
+			return $html;
 		}
 
 
