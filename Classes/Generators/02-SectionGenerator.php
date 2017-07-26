@@ -166,7 +166,7 @@
 		public function getDefaultAttributes()
 		{
 			return [
-				'title' => [ 'text' => $this->get( 'name' ), 'type' => 'h2' ],
+				'title' => [ 'text' => '', 'type' => 'h2' ],
 				'view' => 'fullwidth',
 				'name' => sanitize_title( $this->get( 'name' ) ),
 				'classes' => [],
