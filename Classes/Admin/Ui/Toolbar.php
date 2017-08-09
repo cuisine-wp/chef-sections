@@ -50,6 +50,7 @@
 		 */
 		public function build()
 		{
+			do_action( 'chef_sections_before_section_toolbar' );
 
 			echo '<div class="section-toolbar dotted-bg" id="section-builder-ui">';
 
@@ -77,6 +78,8 @@
 				echo 'var SectionTemplates = '.$this->templateJson().';';
 				echo 'var SectionContainers = '.$this->containerJson().';';
 			echo '</script>';
+
+			do_action( 'chef_sections_after_section_toolbar' );
 
 		}
 
