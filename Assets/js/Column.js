@@ -134,7 +134,8 @@
 					full:   ( attachment.sizes.full !== undefined ) ?
 							  attachment.sizes.full.url : 'false',
 
-					orientation: attachment.sizes.full.orientation
+					orientation: attachment.sizes.full.orientation,
+					position: self.$('.column-position').val()
 
 				}
 				options.self.saveProperties( properties );
