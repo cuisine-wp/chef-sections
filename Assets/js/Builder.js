@@ -476,9 +476,9 @@ var SectionBuilder = new function(){
 		jQuery('#tempSearchSelect').on('chosen:ready', function(event, data){
 			
 			jQuery( '#tempSearchSelect' ).trigger('chosen:open').trigger('chosen:activate');
-			jQuery( '#tempSearch .active-result').on( 'click tap', function(){
+			/*jQuery( '#tempSearch .active-result').on( 'click tap', function(){
 				jQuery( '#tempSearchSelect' ).trigger('change');
-			});
+			});*/
 
 		}).chosen({
 			placeholder_text_single: 'Select your preference',
