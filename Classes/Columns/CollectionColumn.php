@@ -564,6 +564,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 		unset( $arr['form'] );
 		unset( $arr['section-template'] );
 
+		$arr = apply_filters( 'chef_sections_collection_post_types', $arr );
 		return $arr;
 
 	}
