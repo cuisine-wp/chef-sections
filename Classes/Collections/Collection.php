@@ -55,7 +55,13 @@
 		 */
 		public function getItems()
 		{
-			return get_post_meta( $this->postId, $this->metaName, true );
+			$items = get_post_meta( $this->postId, $this->metaName, true );
+			$response = [];
+			foreach( $items as $item ){
+				$response[ $item['id'] ] = $item;
+			}
+
+			return $response;
 		}
 
 
