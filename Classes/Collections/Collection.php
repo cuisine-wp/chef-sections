@@ -57,8 +57,11 @@
 		{
 			$items = get_post_meta( $this->postId, $this->metaName, true );
 			$response = [];
-			foreach( $items as $item ){
-				$response[ $item['id'] ] = $item;
+			
+			if( !empty( $items ) ){
+				foreach( $items as $item ){
+					$response[ $item['id'] ] = $item;
+				}
 			}
 
 			return $response;
