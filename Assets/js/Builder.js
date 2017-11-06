@@ -311,17 +311,24 @@ var SectionBuilder = new function(){
 
 			e.preventDefault();
 
+
 			//create the placeholder:
-			var _html = '<div id="section-container" class="add-section-btn.ui-draggable-handle"></div>';
-			$('#main-section-container').append( _html );
-
+			var _html = '<div id="section-container" class="add-section-btn ui-draggable-handle"></div>';
+            $('#main-section-container').append( _html );
+            
+            
 			var _placeholder = $('#main-section-container .add-section-btn.ui-draggable-handle' );
-				_placeholder.addClass('placeholder-block');
-				_placeholder.html( '<span class="spinner"></span> Adding section...' );
+            _placeholder.addClass('placeholder-block');
+			_placeholder.html( '<span class="spinner"></span> Adding section...' );
 
-
-			//gather data:
-			var data = $( this ).data();
+            
+            //gather data:
+            var _data = $(this).data();
+			var data = {
+                'action': _data['action'],
+                'post_id': _data['post_id'],
+            }
+            
 
 			if( data.type == 'search' ){
 					
@@ -402,12 +409,13 @@ var SectionBuilder = new function(){
 	 * @return void
 	 */
 	this.updateSections = function( data, _placeholder ){
-		
+        
+        console.log( data );
 		//remove the spinner:
 		$('#section-builder-ui .spinner').addClass( 'show' );
 		
 		var self = this;
-		jQuery.post( ajaxurl, data, function( response ){
+		$.post( ajaxurl, data, function( response ){
 
 			try{
 
