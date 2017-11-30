@@ -355,9 +355,9 @@
 		public function getViewTypes()
 		{
 			$views = SectionHelper::viewTypes();
-			$allowed = $this->section->allowedViews;
+            $allowed = $this->section->allowedViews;
 			$allowed = apply_filters( 'chef_sections_default_allowed_views', $allowed, $this->section );
-			$types = [];
+            $types = [];
 
 			foreach( $allowed as $view ){
 
