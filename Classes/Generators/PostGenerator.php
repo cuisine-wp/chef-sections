@@ -1,6 +1,6 @@
 <?php
 	
-	namespace ChefSections\Generators;
+	namespace CuisineSections\Generators;
 
 	class PostGenerator{
 

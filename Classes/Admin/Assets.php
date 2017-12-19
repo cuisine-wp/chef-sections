@@ -1,11 +1,11 @@
 <?php
 
-	namespace ChefSections\Admin;
+	namespace CuisineSections\Admin;
 
 	use _WP_Editors;
 	use Cuisine\Utilities\Url;
 	use Cuisine\Utilities\Session;
-	use ChefSections\Wrappers\StaticInstance;
+	use CuisineSections\Wrappers\StaticInstance;
 
 	class Assets extends StaticInstance{
 
@@ -79,7 +79,7 @@
 
 				wp_localize_script(
 					'taxonomySelect',
-					'ChefSections',
+					'CuisineSections',
 					array(
 						'postId' => Session::postId()
 					)
@@ -116,7 +116,3 @@
 
 
 	}
-	
-	if( is_admin() )
-		\ChefSections\Admin\Assets::getInstance();
-

@@ -1,8 +1,8 @@
 <?php
 
-	namespace ChefSections\Templates;
+	namespace CuisineSections\Templates;
 
-	use ChefSections\Collections\ContainerCollection;
+	use CuisineSections\Collections\ContainerCollection;
 
 	class ContainerTemplate extends BaseSectionTemplate{
 

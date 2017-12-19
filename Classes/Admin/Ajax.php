@@ -1,16 +1,16 @@
 <?php
 
-	namespace ChefSections\Admin;
+	namespace CuisineSections\Admin;
 
 	use Cuisine\Wrappers\PostType;
-	use ChefSections\Wrappers\Column;
-	use ChefSections\Wrappers\Walker;
-	use ChefSections\Wrappers\AjaxInstance;
-	use ChefSections\Wrappers\ReferenceBuilder;
-	use ChefSections\Admin\Handlers\ColumnHandler;
-	use ChefSections\Admin\Handlers\SectionHandler;
-	use ChefSections\Admin\Handlers\ContainerHandler;
-	use ChefSections\Admin\Handlers\SectionBlueprintHandler;
+	use CuisineSections\Wrappers\Column;
+	use CuisineSections\Wrappers\Walker;
+	use CuisineSections\Wrappers\AjaxInstance;
+	use CuisineSections\Wrappers\ReferenceBuilder;
+	use CuisineSections\Admin\Handlers\ColumnHandler;
+	use CuisineSections\Admin\Handlers\SectionHandler;
+	use CuisineSections\Admin\Handlers\ContainerHandler;
+	use CuisineSections\Admin\Handlers\SectionBlueprintHandler;
 
 	class Ajax extends AjaxInstance{
 
@@ -178,7 +178,3 @@
 
 		}
 	}
-
-
-	if( is_admin() )
-		\ChefSections\Admin\Ajax::getInstance();

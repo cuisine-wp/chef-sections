@@ -1,12 +1,12 @@
 <?php
 
-	namespace ChefSections\Admin;
+	namespace CuisineSections\Admin;
 
 	use \Cuisine\Wrappers\Metabox;
 	use \Cuisine\Wrappers\Field;
 	use \Cuisine\Wrappers\PostType;
 	use \Cuisine\Utilities\Session;
-	use \ChefSections\Wrappers\StaticInstance;
+	use \CuisineSections\Wrappers\StaticInstance;
 
 	class MetaboxListeners extends StaticInstance{
 
@@ -30,7 +30,7 @@
 
 			add_action( 'admin_init', function(){
 
-				$name = __( 'Settings', 'chefsections');
+				$name = __( 'Settings', 'CuisineSections');
 
 				//section templates:
 				Metabox::make( 
@@ -43,7 +43,7 @@
 
 					Field::checkbox(
 						'editable',
-						__( 'Is this section template editable?', 'chefsections' )
+						__( 'Is this section template editable?', 'CuisineSections' )
 					)
 				
 				]);
@@ -59,7 +59,7 @@
 				)->set([
 					Field::select(
 						'apply_to',
-						__( 'Apply as default to', 'chefsections' ),
+						__( 'Apply as default to', 'CuisineSections' ),
 						$this->getPostTypes(),
 						array(
 							'defaultValue'	=> 'none',
@@ -85,7 +85,7 @@
 
 
 			$postTypes = array(
-				'none'	=> __( 'No specific post types', 'chefsections' )
+				'none'	=> __( 'No specific post types', 'CuisineSections' )
 			);
 
 			foreach( $pts as $type ){
@@ -100,7 +100,3 @@
 
 
 	}
-
-	if( is_admin() )
-		\ChefSections\Admin\MetaboxListeners::getInstance();
-

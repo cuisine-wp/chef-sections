@@ -1,9 +1,9 @@
 <?php
 
-	namespace ChefSections\Admin\Panels;
+	namespace CuisineSections\Admin\Panels;
 
 	use Cuisine\Wrappers\User;
-	use ChefSections\Collections\ContainerCollection;
+	use CuisineSections\Collections\ContainerCollection;
 
 
 	class PanelValidator{
@@ -11,14 +11,14 @@
 		/**
 		 * Panel which rules we're validating
 		 * 
-		 * @var ChefSections\Admin\Panels\BasePanel
+		 * @var CuisineSections\Admin\Panels\BasePanel
 		 */
 		protected $panel;
 
 		/**
 		 * Section we're checking against
 		 * 
-		 * @var ChefSections\SectionTypes\BaseSection;
+		 * @var CuisineSections\SectionTypes\BaseSection;
 		 */
 		protected $section;
 

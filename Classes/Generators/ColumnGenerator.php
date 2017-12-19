@@ -1,8 +1,8 @@
 <?php
 
-	namespace ChefSections\Generators;
+	namespace CuisineSections\Generators;
 
-	use ChefSections\Contracts\Generator as GeneratorContract;
+	use CuisineSections\Contracts\Generator as GeneratorContract;
 
 	class ColumnGenerator extends BaseGenerator implements GeneratorContract{
 

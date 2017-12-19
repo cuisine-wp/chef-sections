@@ -1,9 +1,9 @@
 <?php
 	
-	namespace ChefSections\Admin\Handlers;
+	namespace CuisineSections\Admin\Handlers;
 
-	use ChefSections\Wrappers\Column;
-	use ChefSections\Collections\SectionCollection;
+	use CuisineSections\Wrappers\Column;
+	use CuisineSections\Collections\SectionCollection;
 
 	class ColumnHandler extends BaseHandler{
 

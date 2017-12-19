@@ -1,8 +1,8 @@
 <?php 
 	
-	namespace ChefSections\Containers;
+	namespace CuisineSections\Containers;
 
-	use ChefSections\SectionTypes\Container;
+	use CuisineSections\SectionTypes\Container;
 
 
 	class GroupContainer extends Container{

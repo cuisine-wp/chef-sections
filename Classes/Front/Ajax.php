@@ -1,10 +1,10 @@
 <?php
 
-	namespace ChefSections\Front;
+	namespace CuisineSections\Front;
 
-	use ChefSections\Wrappers\AjaxInstance;
-	use ChefSections\Wrappers\Column;
-	use ChefSections\Wrappers\Template;
+	use CuisineSections\Wrappers\AjaxInstance;
+	use CuisineSections\Wrappers\Column;
+	use CuisineSections\Wrappers\Template;
 	use stdClass;
 
 	class Ajax extends AjaxInstance{
@@ -65,4 +65,4 @@
 	}
 
 
-	\ChefSections\Front\Ajax::getInstance();
+	\CuisineSections\Front\Ajax::getInstance();

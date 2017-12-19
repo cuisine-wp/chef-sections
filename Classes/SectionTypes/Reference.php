@@ -1,12 +1,12 @@
 <?php
 
-	namespace ChefSections\SectionTypes;
+	namespace CuisineSections\SectionTypes;
 
 	use Cuisine\Wrappers\User;
 	use Cuisine\Wrappers\Field;
 	use Cuisine\Utilities\Sort;
-	use ChefSections\Wrappers\Column;
-	use ChefSections\Collections\SectionCollection;
+	use CuisineSections\Wrappers\Column;
+	use CuisineSections\Collections\SectionCollection;
 
 	/**
 	 * References are meant for use in 'regular' section-flows.
@@ -32,7 +32,7 @@
 		/**
 		 * Parent for this reference
 		 * 
-		 * @var ChefSections\SectionTypes\BaseSection;
+		 * @var CuisineSections\SectionTypes\BaseSection;
 		 */
 		public $parent;
 

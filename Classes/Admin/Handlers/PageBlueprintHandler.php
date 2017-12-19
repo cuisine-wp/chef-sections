@@ -1,9 +1,9 @@
 <?php
 
-	namespace ChefSections\Admin\Handlers;
+	namespace CuisineSections\Admin\Handlers;
 
 	use WP_Query;
-	use ChefSections\SectionTypes\PageBlueprint as BlueprintSection;
+	use CuisineSections\SectionTypes\PageBlueprint as BlueprintSection;
 
 	class PageBlueprintHandler extends BaseHandler{
 

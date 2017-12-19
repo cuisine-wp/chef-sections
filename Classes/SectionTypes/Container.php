@@ -1,8 +1,8 @@
 <?php
 
-	namespace ChefSections\SectionTypes;
+	namespace CuisineSections\SectionTypes;
 
-	use ChefSections\Collections\InContainerCollection;
+	use CuisineSections\Collections\InContainerCollection;
 
 	class Container extends BaseSection{
 
@@ -93,7 +93,7 @@
 		/**
 		 * Returns a collection of sections in this container
 		 * 
-		 * @return ChefSections\Collections\InContainerCollection;
+		 * @return CuisineSections\Collections\InContainerCollection;
 		 */
 		public function getSections(){
 			return $this->sections;

@@ -1,6 +1,6 @@
 <?php
 
-	namespace ChefSections\Contracts;
+	namespace CuisineSections\Contracts;
 
 
 	interface Column{

@@ -1,17 +1,17 @@
 <?php
 
-	namespace ChefSections\Admin;
+	namespace CuisineSections\Admin;
 
 	use Cuisine\Utilities\Url;
-	use ChefSections\Helpers\PostType;
-	use ChefSections\Admin\Ui\Toolbar;
-	use ChefSections\Admin\Ui\SectionsUi;
-	use ChefSections\Wrappers\StaticInstance;
-	use ChefSections\Admin\Handlers\SectionHandler;
-	use ChefSections\Admin\Handlers\ContainerHandler;
-	use ChefSections\Admin\Handlers\PageBlueprintHandler;
+	use CuisineSections\Helpers\PostType;
+	use CuisineSections\Admin\Ui\Toolbar;
+	use CuisineSections\Admin\Ui\SectionsUi;
+	use CuisineSections\Wrappers\StaticInstance;
+	use CuisineSections\Admin\Handlers\SectionHandler;
+	use CuisineSections\Admin\Handlers\ContainerHandler;
+	use CuisineSections\Admin\Handlers\PageBlueprintHandler;
 
-	use ChefSections\Helpers\Section as SectionHelper;
+	use CuisineSections\Helpers\Section as SectionHelper;
 
 	class EventListeners extends StaticInstance{
 
@@ -134,6 +134,3 @@
 		}
 
 	}
-
-	if( is_admin() )
-		\ChefSections\Admin\EventListeners::getInstance();

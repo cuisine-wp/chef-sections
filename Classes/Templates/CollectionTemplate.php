@@ -1,8 +1,8 @@
 <?php
 
-	namespace ChefSections\Templates;
+	namespace CuisineSections\Templates;
 
-	use ChefSections\Helpers\Column as ColumnHelper;
+	use CuisineSections\Helpers\Column as ColumnHelper;
 
 	class CollectionTemplate extends ColumnTemplate{
 

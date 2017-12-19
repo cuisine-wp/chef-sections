@@ -165,14 +165,14 @@ highestId: '',
 var _taxSelect = [];
 
 jQuery( document ).ready( function( $ ){
-	chefSectionsSetTaxonomySelect();
+	CuisineSectionsSetTaxonomySelect();
 });
 
 jQuery( document ).on( 'refreshFields', function(){
-	chefSectionsSetTaxonomySelect();
+	CuisineSectionsSetTaxonomySelect();
 });
 
-function chefSectionsSetTaxonomySelect(){
+function CuisineSectionsSetTaxonomySelect(){
 
 	if( _taxSelect.length > 0 ){
 		for( var i = 0; _taxSelect.length > i; i++ ){

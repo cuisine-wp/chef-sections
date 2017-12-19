@@ -1,10 +1,10 @@
 <?php
 
-	namespace ChefSections\Admin\Ui\Sections;
+	namespace CuisineSections\Admin\Ui\Sections;
 
 	use Cuisine\Wrappers\Field;
-	use ChefSections\Collections\SectionCollection;
-	use ChefSections\Helpers\SectionUi as SectionUiHelper;
+	use CuisineSections\Collections\SectionCollection;
+	use CuisineSections\Helpers\SectionUi as SectionUiHelper;
 
 	class ReferenceSectionUi extends BaseSectionUi{
 
@@ -12,7 +12,7 @@
 		/**
 		 * Parent section
 		 * 
-		 * @var ChefSections\SectionTypes\BaseSection
+		 * @var CuisineSections\SectionTypes\BaseSection
 		 */
 		protected $parent;
 
@@ -27,7 +27,7 @@
 		/**
 		 * Constructor
 		 * 
-		 * @param ChefSections\SectionTypes\BaseSection $section
+		 * @param CuisineSections\SectionTypes\BaseSection $section
 		 *
 		 * @return void
 		 */
@@ -84,13 +84,13 @@
 				if( $this->edittingOriginal === false ){
 
 					echo '<p class="template-txt">';
-						printf( __( 'This is the template "%s." When editting this template, it get\'s changed on every page.', 'chefsections' ), get_the_title( $this->section->template_id ) );
+						printf( __( 'This is the template "%s." When editting this template, it get\'s changed on every page.', 'CuisineSections' ), get_the_title( $this->section->template_id ) );
 					echo '</p>';
 
 
 					echo '<a href="'.esc_url( admin_url( 'post.php?post='.$this->section->template_id.'&action=edit' ) ).'" class="button button-primary">';
 
-						_e( 'Edit this template', 'chefsections' );
+						_e( 'Edit this template', 'CuisineSections' );
 
 					echo '</a>';
 
@@ -126,9 +126,9 @@
 
 				Field::title(
 					'section['.$this->section->id.'][title]',
-					__( 'Titel', 'chefsections' ),
+					__( 'Titel', 'CuisineSections' ),
 					array(
-						'placeholder'	=> __( 'Section title', 'chefsections' ),
+						'placeholder'	=> __( 'Section title', 'CuisineSections' ),
 						'label'			=> false,
 						'defaultValue'	=> $title,
 						'fieldName'		=> 'section['.$this->section->id.'][title]'

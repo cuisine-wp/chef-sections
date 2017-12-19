@@ -1,11 +1,11 @@
 <?php
 
-	namespace ChefSections\Admin\Ui\Sections;
+	namespace CuisineSections\Admin\Ui\Sections;
 
 	use Cuisine\Wrappers\Field;
-	use ChefSections\Admin\Ui\Containers\TabbedUi;
-	use ChefSections\Admin\Ui\Containers\GroupedUi;
-	use ChefSections\Helpers\SectionUi as SectionUiHelper;
+	use CuisineSections\Admin\Ui\Containers\TabbedUi;
+	use CuisineSections\Admin\Ui\Containers\GroupedUi;
+	use CuisineSections\Helpers\SectionUi as SectionUiHelper;
 
 	class ContainerSectionUi extends BaseSectionUi{
 
@@ -19,7 +19,7 @@
 		/**
 		 * Constructor
 		 * 
-		 * @param ChefSections\SectionTypes\BaseSection $section
+		 * @param CuisineSections\SectionTypes\BaseSection $section
 		 *
 		 * @return void
 		 */
@@ -111,9 +111,9 @@
 
 				Field::title(
 					'section['.$this->section->id.'][title]',
-					__( 'Titel', 'chefsections' ),
+					__( 'Titel', 'CuisineSections' ),
 					array(
-						'placeholder'	=> __( 'Section title', 'chefsections' ),
+						'placeholder'	=> __( 'Section title', 'CuisineSections' ),
 						'label'			=> false,
 						'defaultValue'	=> $title,
 						'fieldName'		=> 'section['.$this->section->id.'][title]',
@@ -173,7 +173,7 @@
 			echo '<div class="section-footer container-footer">';
 				echo '<p class="delete-section">';
 					echo '<span class="dashicons dashicons-trash"></span>';
-				echo __( 'Delete', 'chefsections' ).'</p>';
+				echo __( 'Delete', 'CuisineSections' ).'</p>';
 
 				do_action( 'chef_sections_bottom_controls' );
 

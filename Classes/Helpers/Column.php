@@ -1,6 +1,6 @@
 <?php
 
-	namespace ChefSections\Helpers;
+	namespace CuisineSections\Helpers;
 
 	class Column{
 
@@ -16,30 +16,30 @@
 
 				'content' 		=> array(
 
-					'name'		=> __( 'Textual content', 'chefsections' ),
-					'class' 	=> 'ChefSections\\Columns\\ContentColumn'
+					'name'		=> __( 'Textual content', 'CuisineSections' ),
+					'class' 	=> 'CuisineSections\\Columns\\ContentColumn'
 				),
 
 				'image'			=> array(
-					'name'		=> __( 'Image', 'chefsections' ),
-					'class' 	=> 'ChefSections\\Columns\\ImageColumn',			
+					'name'		=> __( 'Image', 'CuisineSections' ),
+					'class' 	=> 'CuisineSections\\Columns\\ImageColumn',			
 				),
 
 				'video'			=> array(
 
-					'name'		=> __( 'Video', 'chefsections' ),
-					'class' 	=> 'ChefSections\\Columns\\VideoColumn',
+					'name'		=> __( 'Video', 'CuisineSections' ),
+					'class' 	=> 'CuisineSections\\Columns\\VideoColumn',
 				),
 
 				'collection'	=> array(
 
-					'name'		=> __( 'Collection', 'chefsections' ),
-					'class'		=> 'ChefSections\\Columns\\CollectionColumn'
+					'name'		=> __( 'Collection', 'CuisineSections' ),
+					'class'		=> 'CuisineSections\\Columns\\CollectionColumn'
 				),
 
 				'socials' 		=> array(
-					'name'		=> __( 'Social buttons', 'chefsections' ),
-					'class'		=> 'ChefSections\\Columns\\SocialsColumn'
+					'name'		=> __( 'Social buttons', 'CuisineSections' ),
+					'class'		=> 'CuisineSections\\Columns\\SocialsColumn'
 				),
 			);
 

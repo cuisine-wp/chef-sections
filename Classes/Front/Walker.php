@@ -1,13 +1,13 @@
 <?php
 
-	namespace ChefSections\Front;
+	namespace CuisineSections\Front;
 
 	use \stdClass;
 	use \Cuisine\Utilities\Session;
-	use \ChefSections\Wrappers\Template;
-	use \ChefSections\SectionTypes\ContentSection;
-	use \ChefSections\Collections\SectionCollection;
-	use \ChefSections\Collections\InContainerCollection;
+	use \CuisineSections\Wrappers\Template;
+	use \CuisineSections\SectionTypes\ContentSection;
+	use \CuisineSections\Collections\SectionCollection;
+	use \CuisineSections\Collections\InContainerCollection;
 
 	class Walker{
 
@@ -22,7 +22,7 @@
 		/**
 		 * Section collection
 		 * 
-		 * @var ChefSections\Collections\SectionCollection;
+		 * @var CuisineSections\Collections\SectionCollection;
 		 */
 		protected $collection;
 
@@ -76,7 +76,7 @@
 		/**
 		 * Get all sections in a container
 		 * 
-		 * @param  ChefSections\SectionTypes\Container $container
+		 * @param  CuisineSections\SectionTypes\Container $container
 		 * 
 		 * @return string (html)
 		 */
@@ -195,7 +195,7 @@
 		/**
 		 * Walk through all columns of this section & get templates
 		 *
-		 * @param  \ChefSections\Columns\Column
+		 * @param  \CuisineSections\Columns\Column
 		 * @return string ( html )
 		 */
 		public function columns( $section ){
@@ -218,7 +218,7 @@
 		/**
 		 * Get a template for a collection-block
 		 *
-		 * @param  \ChefSections\Columns\Column
+		 * @param  \CuisineSections\Columns\Column
 		 * @return string ( html )
 		 */
 		public function block( $column ){

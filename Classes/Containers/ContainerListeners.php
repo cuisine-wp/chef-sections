@@ -1,8 +1,8 @@
 <?php
 
-	namespace ChefSections\Containers;
+	namespace CuisineSections\Containers;
 
-	use ChefSections\Wrappers\StaticInstance;
+	use CuisineSections\Wrappers\StaticInstance;
 
 
 	class ContainerListeners extends StaticInstance{
@@ -28,7 +28,7 @@
 					$data[ 'group' ] = [
 						'label' => 'Section Group',
 						'view' => 'grouped',
-						'class' => '\ChefSections\Containers\GroupContainer'
+						'class' => '\CuisineSections\Containers\GroupContainer'
 					];
 
 					return $data;
@@ -39,4 +39,4 @@
 
 	}
 
-	\ChefSections\Containers\ContainerListeners::getInstance();
+	\CuisineSections\Containers\ContainerListeners::getInstance();

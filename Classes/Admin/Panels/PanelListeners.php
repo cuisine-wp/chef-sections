@@ -1,10 +1,10 @@
 <?php
 
-	namespace ChefSections\Admin\Panels;
+	namespace CuisineSections\Admin\Panels;
 
 	use Cuisine\Wrappers\Field;
-	use ChefSections\Wrappers\StaticInstance;
-	use ChefSections\Wrappers\SettingsPanel as Panel;
+	use CuisineSections\Wrappers\StaticInstance;
+	use CuisineSections\Wrappers\SettingsPanel as Panel;
 
 	class PanelListener extends StaticInstance{
 
@@ -37,7 +37,7 @@
 
 				Panel::make( 
 
-					__( 'Settings', 'chefsections' ),
+					__( 'Settings', 'CuisineSections' ),
 					'settings',
 					apply_filters( 'chef_sections_base_panel_args', $args )
 
@@ -57,20 +57,20 @@
 
 				Field::text(
 					'name',
-					__( 'Template name', 'chefsections' )
+					__( 'Template name', 'CuisineSections' )
 				),
 
 				Field::text( 
 					'classes',
-					__( 'CSS Classes', 'chefsections' ),
+					__( 'CSS Classes', 'CuisineSections' ),
 					array( 
-						'placeholder'  => __( 'Seperate with commas\'s', 'chefsections' ),
+						'placeholder'  => __( 'Seperate with commas\'s', 'CuisineSections' ),
 					)
 				),
 
 				Field::checkbox(
 					'hide_container',
-					__( 'Hide Container', 'chefsections' )
+					__( 'Hide Container', 'CuisineSections' )
 				),
 
 			);
@@ -82,4 +82,4 @@
 
 	}
 
-	\ChefSections\Admin\Panels\PanelListener::getInstance();
+	\CuisineSections\Admin\Panels\PanelListener::getInstance();

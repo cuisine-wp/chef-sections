@@ -1,6 +1,6 @@
 <?php
 
-namespace ChefSections\Wrappers;
+namespace CuisineSections\Wrappers;
 
 class Blueprint extends Wrapper {
 

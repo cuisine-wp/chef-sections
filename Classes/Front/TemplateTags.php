@@ -1,10 +1,10 @@
 <?php
 /**
  * All template tags for Chef Sections
- * @package ChefSections
+ * @package CuisineSections
  */
 
-use ChefSections\Wrappers\Walker;
+use CuisineSections\Wrappers\Walker;
 
 /**
  * Echoes get_sections
@@ -24,7 +24,7 @@ if( !function_exists( 'the_sections' ) ){
 
 /**
  * Get current sections
- * @return ChefSections\Front\Walker ( html )
+ * @return CuisineSections\Front\Walker ( html )
  */
 if( !function_exists( 'get_sections' ) ){
 
@@ -112,7 +112,7 @@ if( !function_exists( 'has_sections' ) ){
 /**
  * Echo the columns:
  *
- * @param \ChefSections\SectionTypes\BaseSection
+ * @param \CuisineSections\SectionTypes\BaseSection
  * 
  * @return void
  */
@@ -130,9 +130,9 @@ if( !function_exists( 'the_columns' ) ){
 /**
  * Get columns in a section 
  *
- * @param  \ChefSections\SectionTypes\BaseSection
+ * @param  \CuisineSections\SectionTypes\BaseSection
  * 
- * @return ChefSections\Front\Walker ( html )
+ * @return CuisineSections\Front\Walker ( html )
  */
 if( !function_exists( 'get_columns' ) ){
 
@@ -148,9 +148,9 @@ if( !function_exists( 'get_columns' ) ){
 /**
  * Echo all sections inside a container
  * 
- * @param  \ChefSections\SectionTypes\Container $section
+ * @param  \CuisineSections\SectionTypes\Container $section
  * 
- * @return ChefSections\Front\Walker
+ * @return CuisineSections\Front\Walker
  */
 if( !function_exists( 'the_containered_sections' ) ){
 
@@ -166,9 +166,9 @@ if( !function_exists( 'the_containered_sections' ) ){
 /**
  * Returns all sections inside a container
  * 
- * @param  \ChefSections\SectionTypes\Container $section
+ * @param  \CuisineSections\SectionTypes\Container $section
  * 
- * @return ChefSections\Front\Walker
+ * @return CuisineSections\Front\Walker
  */
 if( !function_exists( 'get_containered_sections' ) ){
 
@@ -184,8 +184,8 @@ if( !function_exists( 'get_containered_sections' ) ){
 /**
  * Needs to be called inside a loop, and needs column information.
  * 
- * @param  \ChefSections\Columns\Column $column
- * @return ChefSections\Front\Walker ( html )
+ * @param  \CuisineSections\Columns\Column $column
+ * @return CuisineSections\Front\Walker ( html )
  */
 if( !function_exists('get_block_template' ) ){
 

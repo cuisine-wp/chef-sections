@@ -1,8 +1,8 @@
 <?php
 
-	namespace ChefSections\Front;
+	namespace CuisineSections\Front;
 
-	use ChefSections\Wrappers\StaticInstance;
+	use CuisineSections\Wrappers\StaticInstance;
 	use Cuisine\Utilities\Url;
 	use Cuisine\Wrappers\Script;
 	use Cuisine\Wrappers\Sass;
@@ -63,4 +63,4 @@
 		}
 	}
 
-	\ChefSections\Front\Assets::getInstance();
+	\CuisineSections\Front\Assets::getInstance();

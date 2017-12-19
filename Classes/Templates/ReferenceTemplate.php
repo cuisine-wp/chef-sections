@@ -1,6 +1,6 @@
-<?php
+w<?php
 
-	namespace ChefSections\Templates;
+	namespace CuisineSections\Templates;
 
 
 	class ReferenceTemplate extends BaseSectionTemplate{

@@ -1,12 +1,12 @@
 <?php
 
-	namespace ChefSections\Helpers;
+	namespace CuisineSections\Helpers;
 
-	use ChefSections\Collections\ContainerCollection;
-	use ChefSections\Admin\Ui\Sections\ContentSectionUi;
-	use ChefSections\Admin\Ui\Sections\ContainerSectionUi;
-	use ChefSections\Admin\Ui\Sections\ReferenceSectionUi;
-	use ChefSections\Admin\Ui\Sections\BlueprintSectionUi;
+	use CuisineSections\Collections\ContainerCollection;
+	use CuisineSections\Admin\Ui\Sections\ContentSectionUi;
+	use CuisineSections\Admin\Ui\Sections\ContainerSectionUi;
+	use CuisineSections\Admin\Ui\Sections\ReferenceSectionUi;
+	use CuisineSections\Admin\Ui\Sections\BlueprintSectionUi;
 
 	class SectionUi{
 
@@ -36,9 +36,9 @@
 		/**
 		 * Returns an instance of the right UI Class
 		 *
-		 * @param ChefSections\SectionTypes\BaseSection $section
+		 * @param CuisineSections\SectionTypes\BaseSection $section
 		 * 
-		 * @return ChefSections\Admin\Ui\Sections\BaseSectionUI
+		 * @return CuisineSections\Admin\Ui\Sections\BaseSectionUI
 		 */
 		public static function getClass( $section )
 		{

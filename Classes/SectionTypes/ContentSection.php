@@ -1,6 +1,6 @@
 <?php
 
-namespace ChefSections\SectionTypes;
+namespace CuisineSections\SectionTypes;
 
 class ContentSection extends BaseSection{
 

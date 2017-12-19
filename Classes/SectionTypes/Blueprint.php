@@ -1,8 +1,8 @@
 <?php
 
-	namespace ChefSections\SectionTypes;
+	namespace CuisineSections\SectionTypes;
 
-	use ChefSections\Wrappers\Column;
+	use CuisineSections\Wrappers\Column;
 	use Cuisine\Wrappers\User;
 
 	/**

@@ -1,11 +1,11 @@
 <?php
 
 
-	namespace ChefSections\Templates;
+	namespace CuisineSections\Templates;
 
 	use Cuisine\Utilities\Url;
 	use Cuisine\Utilities\Sort;
-	use ChefSections\Contracts\Template as TemplateContract;
+	use CuisineSections\Contracts\Template as TemplateContract;
 
 	class BaseTemplate implements TemplateContract{
 

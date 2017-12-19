@@ -1,13 +1,13 @@
 <?php
-namespace ChefSections\Columns;
+namespace CuisineSections\Columns;
 
 use Cuisine\View\Excerpt;
 use Cuisine\Wrappers\Field;
-use ChefSections\Contracts\Column as ColumnContract;
+use CuisineSections\Contracts\Column as ColumnContract;
 
 /**
  * Content column.
- * @package ChefSections\Columns
+ * @package CuisineSections\Columns
  */
 class ContentColumn extends DefaultColumn implements ColumnContract{
 
@@ -109,7 +109,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 				'',
 				array(
 					'label' 				=> false,
-					'placeholder' 			=> __('Title','chefsections'),
+					'placeholder' 			=> __('Title','CuisineSections'),
 					'defaultValue'			=> $this->getField( 'title', ['text' => '', 'type' => 'h2'] ),
 				)
 			),

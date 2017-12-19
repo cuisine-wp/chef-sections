@@ -1,11 +1,11 @@
 <?php
 
-	namespace ChefSections\Generators;
+	namespace CuisineSections\Generators;
 
 	use Exception;
 	use Cuisine\Utilities\Fluent;
-	use ChefSections\Wrappers\Generator;
-	use ChefSections\Contracts\Generator as GeneratorContract;
+	use CuisineSections\Wrappers\Generator;
+	use CuisineSections\Contracts\Generator as GeneratorContract;
 
 	class BaseGenerator extends Fluent implements GeneratorContract{
 

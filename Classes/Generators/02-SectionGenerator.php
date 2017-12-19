@@ -1,9 +1,9 @@
 <?php
 	
-	namespace ChefSections\Generators;
+	namespace CuisineSections\Generators;
 
 	use Cuisine\Utilities\Fluent;
-	use ChefSections\Wrappers\Generators;
+	use CuisineSections\Wrappers\Generators;
 
 	class SectionGenerator extends BaseGenerator{
 
@@ -84,7 +84,7 @@
 		/**
 		 * Set the columns variable
 		 * 
-		 * @return ChefSections\Generators\SectionGenerator
+		 * @return CuisineSections\Generators\SectionGenerator
 		 */
 		public function columns( $parameters = array() )
 		{

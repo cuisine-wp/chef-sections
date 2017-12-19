@@ -1,13 +1,13 @@
 <?php
 
-    namespace ChefSections\Wrappers;
+    namespace CuisineSections\Wrappers;
     
     class StaticInstance {
     
         /**
          * Static bootstrapped instance.
          *
-         * @var \ChefSections\Wrappers\StaticInstance
+         * @var \CuisineSections\Wrappers\StaticInstance
          */
         public static $instance = null;
     
@@ -15,7 +15,7 @@
         /**
          * Init the Assets Class
          *
-         * @return \ChefSections\Admin\StaticInstance
+         * @return \CuisineSections\Admin\StaticInstance
          */
         public static function getInstance(){
     

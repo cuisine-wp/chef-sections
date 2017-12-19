@@ -1,7 +1,7 @@
 <?php
-namespace ChefSections\Columns;
+namespace CuisineSections\Columns;
 
-use ChefSections\Helpers\Column as ColumnHelper;
+use CuisineSections\Helpers\Column as ColumnHelper;
 
 class ColumnBuilder {
 
@@ -17,7 +17,7 @@ class ColumnBuilder {
 	 * @param string $class The custom field class name.
 	 * @param array $colProperties The defined field properties. Muse be an associative array.
 	 * @throws Exception
-	 * @return object ChefSections\Columns\ColumnBuilder
+	 * @return object CuisineSections\Columns\ColumnBuilder
 	 */
 	public function make( $class, $id, $section, array $colProperties ){
 
@@ -41,11 +41,11 @@ class ColumnBuilder {
 	 *
 	 * @param int $id The ID for this column.
 	 * @param array $extras Extra column properties.
-	 * @return \ChefSections\Columns\ContentColumn
+	 * @return \CuisineSections\Columns\ContentColumn
 	 */
 	public function content( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\ContentColumn', $id, $section, $properties );
+	    return $this->make( 'CuisineSections\\Columns\\ContentColumn', $id, $section, $properties );
 
 	}
 
@@ -55,11 +55,11 @@ class ColumnBuilder {
 	 *
 	 * @param int $id The ID for this column.
 	 * @param array $extras Extra column properties.
-	 * @return \ChefSections\Columns\ImageColumn
+	 * @return \CuisineSections\Columns\ImageColumn
 	 */
 	public function image( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\ImageColumn', $id, $section, $properties );
+	    return $this->make( 'CuisineSections\\Columns\\ImageColumn', $id, $section, $properties );
 
 	}
 
@@ -69,11 +69,11 @@ class ColumnBuilder {
 	 *
 	 * @param int $id The ID for this column.
 	 * @param array $extras Extra column properties.
-	 * @return \ChefSections\Columns\VideoColumn
+	 * @return \CuisineSections\Columns\VideoColumn
 	 */
 	public function video( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\VideoColumn', $id, $section, $properties );
+	    return $this->make( 'CuisineSections\\Columns\\VideoColumn', $id, $section, $properties );
 
 	}
 
@@ -83,11 +83,11 @@ class ColumnBuilder {
 	 *
 	 * @param int $id The ID for this column.
 	 * @param array $extras Extra column properties.
-	 * @return \ChefSections\Columns\CollectionColumn
+	 * @return \CuisineSections\Columns\CollectionColumn
 	 */
 	public function collection( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\CollectionColumn', $id, $section, $properties );
+	    return $this->make( 'CuisineSections\\Columns\\CollectionColumn', $id, $section, $properties );
 
 	}
 
@@ -98,11 +98,11 @@ class ColumnBuilder {
 	 *
 	 * @param int $id The ID for this column.
 	 * @param array $extras Extra column properties.
-	 * @return \ChefSections\Columns\SocialsColumn
+	 * @return \CuisineSections\Columns\SocialsColumn
 	 */
 	public function socials( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\SocialsColumn', $id, $section, $properties );
+	    return $this->make( 'CuisineSections\\Columns\\SocialsColumn', $id, $section, $properties );
 
 	}
 
@@ -112,11 +112,11 @@ class ColumnBuilder {
 	 *
 	 * @param int $id The ID for this column.
 	 * @param array $extras Extra column properties.
-	 * @return \ChefSections\Columns\EmptyColumn
+	 * @return \CuisineSections\Columns\EmptyColumn
 	 */
 	public function clear( $id, $section, array $properties = array() ){
 
-	    return $this->make( 'ChefSections\\Columns\\ClearColumn', $id, $section, $properties );
+	    return $this->make( 'CuisineSections\\Columns\\ClearColumn', $id, $section, $properties );
 
 	}
 

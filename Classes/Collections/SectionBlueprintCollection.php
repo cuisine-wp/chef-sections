@@ -1,10 +1,10 @@
 <?php
 
-	namespace ChefSections\Collections;
+	namespace CuisineSections\Collections;
 
 	use WP_Query;
 	use Cuisine\Utilities\Sort;
-	use ChefSections\SectionTypes\Reference;
+	use CuisineSections\SectionTypes\Reference;
 
 	class SectionBlueprintCollection extends Collection{
 

@@ -1,6 +1,6 @@
 <?php
 
-	namespace ChefSections\Generators;
+	namespace CuisineSections\Generators;
 
 	use Closure;
 
@@ -110,7 +110,7 @@
 		 * @param  String $type
 		 * @param  String $subType
 		 * 
-		 * @return ChefSections\Generators\BaseGenerator
+		 * @return CuisineSections\Generators\BaseGenerator
 		 */
 		public function getGenerator( $type, $name, $parameters = [] )
 		{

@@ -1,13 +1,13 @@
 <?php
-namespace ChefSections\Columns;
+namespace CuisineSections\Columns;
 
 use Cuisine\Wrapper\Image;
-use ChefSections\Contracts\Column as ColumnContract;
+use CuisineSections\Contracts\Column as ColumnContract;
 
 
 /**
  * Image column.
- * @package ChefSections\Columns
+ * @package CuisineSections\Columns
  */
 class ImageColumn extends DefaultColumn implements ColumnContract{
 

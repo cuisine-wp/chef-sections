@@ -1,26 +1,22 @@
 <?php
 /**
- * Plugin Name: Chef Sections
+ * Plugin Name: Cuisine Sections
  * Plugin URI: http://chefduweb.nl/cuisine
  * Description: Easily transform boring pages into exciting section-based layouts!
  * Version: 3.0.0
  * Author: Luc Princen
- * Author URI: http://www.chefduweb.nl/
+ * Author URI: http://get-cuisine.cooking/
  * License: GPLv2
- * Bitbucket Plugin URI: https://LucPrincen@bitbucket.org/chefduweb/chef-sections
- * Bitbucket Branch:     master
  *
- * Text Domain: chefsections
+ * Text Domain: cuisinesections
  * Domain Path: /Languages/
  *
- * @package ChefSections
+ * @package CuisineSections
  * @category Core
- * @author Chef du Web
+ * @author Cuisine
  */
 
-namespace ChefSections;
-
-use Cuisine\Wrappers\StaticInstance;
+namespace CuisineSections;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 defined('DS') ? DS : define('DS', DIRECTORY_SEPARATOR);
@@ -29,15 +25,15 @@ defined('DS') ? DS : define('DS', DIRECTORY_SEPARATOR);
 /**
  * Main class that bootstraps Chef Sections.
  */
-if (!class_exists('ChefSections')) {
+if (!class_exists('CuisineSections')) {
 
 
-    class ChefSections{
+    class CuisineSections{
 
         /**
-         * Static bootstrapped ChefSections instance.
+         * Static bootstrapped CuisineSections instance.
          *
-         * @var \ChefSections\ChefSections
+         * @var \CuisineSections\CuisineSections
          */
         public static $instance = null;
 
@@ -77,50 +73,16 @@ if (!class_exists('ChefSections')) {
 
             //load text-domain:
             $path = dirname( plugin_basename( __FILE__ ) ).'/Languages/';
-            load_plugin_textdomain( 'chefsections', false, $path );
+            load_plugin_textdomain( 'cuisinesections', false, $path );
 
-            //auto-loads all .php files in these directories.
-            $includes = array(
-                'Classes/Wrappers',
-                'Classes/Contracts',
-                'Classes/Helpers',
-                'Classes/Hooks',
+            //require the autoloader:
+            require( __DIR__ . DS . 'autoloader.php');
 
-                'Classes/Collections',
+            //initiate the autoloader:
+            ( new \CuisineSections\Autoloader() )->register()->load();
 
-                'Classes/Generators/Database',
-                'Classes/Generators',
-
-                'Classes/Admin/Containers',
-                'Classes/Admin/Handlers',
-                'Classes/Admin/Panels',
-                'Classes/Admin/Ui/Containers',
-                'Classes/Admin/Ui/Sections',
-                'Classes/Admin/Ui',
-                'Classes/Admin',
-
-                'Classes/SectionTypes',
-                'Classes/Containers',
-                'Classes/Columns',
-
-                'Classes/Templates',
-                'Classes/Front'
-            );
-
-            $includes = apply_filters( 'chef_sections_autoload_dirs', $includes );
-
-
-            foreach( $includes as $inc ){
-
-                $root = static::getPluginPath();
-                $files = glob( $root.$inc.'/*.php' );
-
-                foreach ( $files as $file ){
-
-                    require_once( $file );
-
-                }
-            }
+            //new-up a deprecated class, to catch old filters & hooks:
+            new \CuisineSections\Deprecated();
 
             do_action( 'chef_sections_loaded' );
 
@@ -135,9 +97,9 @@ if (!class_exists('ChefSections')) {
 
 
         /**
-         * Init the ChefSections Class
+         * Init the CuisineSections Class
          *
-         * @return \ChefSections\ChefSections
+         * @return \CuisineSections\CuisineSections
          */
         public static function getInstance(){
 
@@ -212,6 +174,6 @@ if (!class_exists('ChefSections')) {
  */
 add_action('cuisine_loaded', function(){
 
-	ChefSections::getInstance();
+	CuisineSections::getInstance();
 
 }, 0, 200 );

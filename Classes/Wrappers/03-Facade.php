@@ -1,6 +1,6 @@
 <?php
 
-    namespace ChefSections\Wrappers;
+    namespace CuisineSections\Wrappers;
     
     abstract class Wrapper {
     
@@ -54,17 +54,17 @@
         private static function getFacadeName( $name ) {
             
             $aliases = array(
-                'column'                  => 'ChefSections\Columns\ColumnBuilder',
-                'walker'                  => 'ChefSections\Front\Walker',
-                'template'                => 'ChefSections\Front\TemplateFinder',
+                'column'                  => 'CuisineSections\Columns\ColumnBuilder',
+                'walker'                  => 'CuisineSections\Front\Walker',
+                'template'                => 'CuisineSections\Front\TemplateFinder',
 
-                'settingspanel'           => 'ChefSections\Admin\Panels\BasePanel',
-                'generator'               => 'ChefSections\Generators\GeneratorHandler',
+                'settingspanel'           => 'CuisineSections\Admin\Panels\BasePanel',
+                'generator'               => 'CuisineSections\Generators\GeneratorHandler',
                 
-                'section'                 => 'ChefSections\SectionTypes\ContentSection',
-                'reference'               => 'ChefSections\SectionTypes\Reference',
-                'stencil'                 => 'ChefSections\SectionTypes\Stencil',
-                'blueprint'               => 'ChefSections\SectionTypes\Blueprint'
+                'section'                 => 'CuisineSections\SectionTypes\ContentSection',
+                'reference'               => 'CuisineSections\SectionTypes\Reference',
+                'stencil'                 => 'CuisineSections\SectionTypes\Stencil',
+                'blueprint'               => 'CuisineSections\SectionTypes\Blueprint'
             );
     
             return $aliases[ $name ];

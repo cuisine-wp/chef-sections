@@ -1,19 +1,19 @@
 <?php
-namespace ChefSections\Columns;
+namespace CuisineSections\Columns;
 
 use Cuisine\Utilities\Url;
 use Cuisine\Utilities\Sort;
 use Cuisine\Wrappers\Field;
 use Cuisine\Wrappers\User;
-use ChefSections\Wrappers\Column;
-use ChefSections\Wrappers\Template;
-use ChefSections\Collections\SectionCollection;
-use ChefSections\Helpers\Column as ColumnHelper;
-use ChefSections\Contracts\Column as ColumnContract;
+use CuisineSections\Wrappers\Column;
+use CuisineSections\Wrappers\Template;
+use CuisineSections\Collections\SectionCollection;
+use CuisineSections\Helpers\Column as ColumnHelper;
+use CuisineSections\Contracts\Column as ColumnContract;
 
 /**
  * Default column.
- * @package ChefSections\Columns
+ * @package CuisineSections\Columns
  */
 class DefaultColumn implements ColumnContract{
 
@@ -58,7 +58,7 @@ class DefaultColumn implements ColumnContract{
 	/**
 	 * Full section object
 	 * 
-	 * @var ChefSections\Sections\BaseSection
+	 * @var CuisineSections\Sections\BaseSection
 	 */
 	public $section;
 
@@ -100,7 +100,7 @@ class DefaultColumn implements ColumnContract{
 	 * Start the column and feed it the right ID's
 	 *
 	 * @param Int $id      Column ID
-	 * @param Int $post_id \ChefSections\Sections\Section
+	 * @param Int $post_id \CuisineSections\Sections\Section
 	 */
 	function __construct( $id, $section, $props = array() ){
 
@@ -473,7 +473,7 @@ class DefaultColumn implements ColumnContract{
 
 			echo '<button class="'.esc_attr( $class ).'" id="lightbox-btn">';
 				echo '<span class="dashicons dashicons-edit"></span>';
-				_e( 'Edit', 'chefsections' );
+				_e( 'Edit', 'CuisineSections' );
 			echo '</button>';
 
 			$this->buildTemplateSnitch();

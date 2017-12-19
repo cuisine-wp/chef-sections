@@ -1,6 +1,6 @@
 <?php
 
-	namespace ChefSections\Helpers;
+	namespace CuisineSections\Helpers;
 
 
 	class PostType{

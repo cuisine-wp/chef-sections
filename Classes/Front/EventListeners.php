@@ -1,14 +1,14 @@
 <?php
 
-	namespace ChefSections\Front;
+	namespace CuisineSections\Front;
 
-	use ChefSections\Wrappers\StaticInstance;
+	use CuisineSections\Wrappers\StaticInstance;
 	use Cuisine\Wrappers\PostType;
 	use Cuisine\Wrappers\Field;
 	use Cuisine\Utilities\Url;
 
-	use \ChefSections\Wrappers\Generator;
-	use \ChefSections\Generators\SectionGenerator;
+	use \CuisineSections\Wrappers\Generator;
+	use \CuisineSections\Generators\SectionGenerator;
 
 
 	class EventListeners extends StaticInstance{
@@ -43,12 +43,12 @@
 
 				);
 
-				PostType::make( 'section-template', __( 'Templates', 'chefsections' ), __( 'Template', 'chefsections' ) )->set( $args );
+				PostType::make( 'section-template', __( 'Templates', 'CuisineSections' ), __( 'Template', 'CuisineSections' ) )->set( $args );
 
 				//set page-templates
 				$args['menu_icon'] = 'dashicons-media-spreadsheet';
 				$args['menu_position'] = 76;
-				PostType::make( 'page-template', __( 'Page templates', 'chefsections'), __( 'Page template', 'chefsections' ) )->set( $args );
+				PostType::make( 'page-template', __( 'Page templates', 'CuisineSections'), __( 'Page template', 'CuisineSections' ) )->set( $args );
 
 
 				//custom field type:
@@ -56,12 +56,12 @@
 
 					$types['taxonomySelect'] = array(
 								'name'		=> 'TaxonomySelect',
-								'class'		=> 'ChefSections\Hooks\TaxonomySelect'
+								'class'		=> 'CuisineSections\Hooks\TaxonomySelect'
 					);
 
 					$types['title'] = array(
 								'name'		=> 'TitleField',
-								'class'		=> 'ChefSections\Hooks\TitleField'
+								'class'		=> 'CuisineSections\Hooks\TitleField'
 					);
 
 					return $types;
@@ -72,4 +72,4 @@
 		}
 	}
 
-	\ChefSections\Front\EventListeners::getInstance();
+	\CuisineSections\Front\EventListeners::getInstance();

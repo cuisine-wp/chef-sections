@@ -1,12 +1,12 @@
 <?php
-namespace ChefSections\Columns;
+namespace CuisineSections\Columns;
 
 use Cuisine\Wrappers\Field;
-use ChefSections\Contracts\Column as ColumnContract;
+use CuisineSections\Contracts\Column as ColumnContract;
 
 /**
  * Gallery column.
- * @package ChefSections\Columns
+ * @package CuisineSections\Columns
  */
 class SocialsColumn extends DefaultColumn implements ColumnContract{
 
@@ -156,15 +156,15 @@ class SocialsColumn extends DefaultColumn implements ColumnContract{
 			$icons = $this->getIcons();
 
 			$repeaters = array(
-				Field::text( 'link', __( 'Link', 'chefsections' ) ),
-				Field::select( 'icon', __( 'Icon', 'chefsections' ), $icons )
+				Field::text( 'link', __( 'Link', 'CuisineSections' ) ),
+				Field::select( 'icon', __( 'Icon', 'CuisineSections' ), $icons )
 			);
 	
 			$fields = array(
 	
 				Field::title( 
 					'title', 
-					__('Title', 'chefsections'),
+					__('Title', 'CuisineSections'),
 					array(
 						'defaultValue'	=> $this->getField( 'title', ['text' => '', 'type' => 'h2'] )
 					)

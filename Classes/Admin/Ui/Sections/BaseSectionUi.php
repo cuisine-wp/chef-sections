@@ -1,20 +1,20 @@
 <?php
 
-	namespace ChefSections\Admin\Ui\Sections;
+	namespace CuisineSections\Admin\Ui\Sections;
 
 	use Cuisine\Wrappers\User;
 	use Cuisine\Wrappers\Field;
-	use ChefSections\Wrappers\Template;
-	use ChefSections\Admin\Ui\Containers\TabbedUi;
-	use ChefSections\Helpers\Section as SectionHelper;
-	use ChefSections\Helpers\SectionUi as SectionUiHelper;
+	use CuisineSections\Wrappers\Template;
+	use CuisineSections\Admin\Ui\Containers\TabbedUi;
+	use CuisineSections\Helpers\Section as SectionHelper;
+	use CuisineSections\Helpers\SectionUi as SectionUiHelper;
 
 	class BaseSectionUi{
 
 		/**
 		 * Section object
 		 * 
-		 * @var ChefSections\SectionTypes\BaseSection;
+		 * @var CuisineSections\SectionTypes\BaseSection;
 		 */
 		protected $section;
 
@@ -22,7 +22,7 @@
 		/**
 		 * Constructor
 		 * 
-		 * @param ChefSections\SectionTypes\BaseSection $section
+		 * @param CuisineSections\SectionTypes\BaseSection $section
 		 *
 		 * @return void
 		 */
@@ -102,15 +102,15 @@
 
 				//first the title:
 				$title = $this->section->getProperty( 'title' );
-				if( strtolower( $title['text'] ) == strtolower( __( 'Section title', 'chefsections' ) ) )
+				if( strtolower( $title['text'] ) == strtolower( __( 'Section title', 'CuisineSections' ) ) )
 					$title = '';
 
 
 				Field::title(
 					'section['.$this->section->id.'][title]',
-					__( 'Titel', 'chefsections' ),
+					__( 'Titel', 'CuisineSections' ),
 					array(
-						'placeholder'	=> __( 'Section title', 'chefsections' ),
+						'placeholder'	=> __( 'Section title', 'CuisineSections' ),
 						'label'			=> false,
 						'defaultValue'	=> $title,
 						'fieldName'		=> 'section['.$this->section->id.'][title]',
@@ -170,7 +170,7 @@
 
 					echo '<p class="delete-section">';
 						echo '<span class="dashicons dashicons-trash"></span>';
-					echo __( 'Delete', 'chefsections' ).'</p>';
+					echo __( 'Delete', 'CuisineSections' ).'</p>';
 
 					do_action( 'chef_sections_bottom_controls' );
 

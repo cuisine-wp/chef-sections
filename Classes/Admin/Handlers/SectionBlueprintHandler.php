@@ -1,13 +1,13 @@
 <?php
 
-	namespace ChefSections\Admin\Handlers;
+	namespace CuisineSections\Admin\Handlers;
 
-	use ChefSections\SectionTypes\Reference;
-	use ChefSections\Collections\SectionCollection;
-	use ChefSections\Helpers\Section as SectionHelper;
-	use ChefSections\Collections\InContainerCollection;
-	use ChefSections\Helpers\SectionUi as SectionUiHelper;
-	use ChefSections\Collections\SectionBlueprintCollection;
+	use CuisineSections\SectionTypes\Reference;
+	use CuisineSections\Collections\SectionCollection;
+	use CuisineSections\Helpers\Section as SectionHelper;
+	use CuisineSections\Collections\InContainerCollection;
+	use CuisineSections\Helpers\SectionUi as SectionUiHelper;
+	use CuisineSections\Collections\SectionBlueprintCollection;
 
 	class SectionBlueprintHandler extends BaseHandler{
 
@@ -15,7 +15,7 @@
 		/**
 		 * Collection holding all sections in current Section Flow
 		 * 
-		 * @var ChefSections\Collections\SectionCollection
+		 * @var CuisineSections\Collections\SectionCollection
 		 */
 		protected $pageSections;
 		

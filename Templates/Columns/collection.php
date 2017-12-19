@@ -1,6 +1,6 @@
 <?php
 
-	use ChefSections\Wrappers\Template;
+	use CuisineSections\Wrappers\Template;
 	use Cuisine\Wrappers\Pagination;
 
 	$query = $column->getQuery();

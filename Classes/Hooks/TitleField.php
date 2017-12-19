@@ -1,6 +1,6 @@
 <?php
 
-    namespace ChefSections\Hooks;
+    namespace CuisineSections\Hooks;
     
     use Cuisine\Fields\DefaultField;
     use Cuisine\Wrappers\Field;

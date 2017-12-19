@@ -22,7 +22,7 @@ var SectionBuilder = new function(){
 		self._columns = new Array();
 		self._sections = new Array();
 		self._htmlOutput = '';
-		self._postId = ChefSections.postId;
+		self._postId = CuisineSections.postId;
 
 
 		//yoast support:
@@ -599,8 +599,8 @@ var SectionBuilder = new function(){
 			$('#main-section-container').append( '<span style="display:none" id="YoastSEO-plugin-loading"></span>' );
 
 
-		YoastSEO.app.registerPlugin( 'chefSections', {status: 'loading'} );
-		YoastSEO.app.pluginReady( 'chefSections' );
+		YoastSEO.app.registerPlugin( 'CuisineSections', {status: 'loading'} );
+		YoastSEO.app.pluginReady( 'CuisineSections' );
 
 		//register the content modification:
 		YoastSEO.app.registerModification( 'content', function( _data ){
@@ -611,7 +611,7 @@ var SectionBuilder = new function(){
 
 			return _data;
 
-		}, 'chefSections', 5 );
+		}, 'CuisineSections', 5 );
 
 
 		self.updateHtmlOutput();
@@ -638,7 +638,7 @@ var SectionBuilder = new function(){
 
 			//reload the plugin:
 			if( typeof( YoastSEO ) != 'undefined' )
-				YoastSEO.app.pluginReloaded( 'chefSections' );
+				YoastSEO.app.pluginReloaded( 'CuisineSections' );
 
 
 		});

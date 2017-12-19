@@ -1,7 +1,7 @@
 <?php
 
 
-	namespace ChefSections\Templates;
+	namespace CuisineSections\Templates;
 
 
 	class BaseSectionTemplate extends BaseTemplate{

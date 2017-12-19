@@ -1,6 +1,6 @@
 <?php
 
-	namespace ChefSections\Templates;
+	namespace CuisineSections\Templates;
 
 	class BlockTemplate extends BaseTemplate{
 

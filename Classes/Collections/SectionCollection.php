@@ -1,9 +1,9 @@
 <?php
 
-	namespace ChefSections\Collections;
+	namespace CuisineSections\Collections;
 
 	use Cuisine\Utilities\Sort;
-	use ChefSections\Helpers\Section as SectionHelper;
+	use CuisineSections\Helpers\Section as SectionHelper;
 
 	class SectionCollection extends Collection{
 

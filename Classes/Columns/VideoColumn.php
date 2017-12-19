@@ -1,14 +1,14 @@
 <?php
-namespace ChefSections\Columns;
+namespace CuisineSections\Columns;
 
 use Cuisine\Utilities\Url;
 use Cuisine\Wrappers\Field;
 use Cuisine\Wrappers\Script;
-use ChefSections\Contracts\Column as ColumnContract;
+use CuisineSections\Contracts\Column as ColumnContract;
 
 /**
  * Video column.
- * @package ChefSections\Columns
+ * @package CuisineSections\Columns
  */
 class VideoColumn extends DefaultColumn implements ColumnContract{
 
@@ -75,25 +75,25 @@ class VideoColumn extends DefaultColumn implements ColumnContract{
 
 			'title' => Field::title( 
 				'title', 
-				__('Title','chefsections'),
+				__('Title','CuisineSections'),
 				array(
 					'label' 				=> false,
-					'placeholder' 			=> __('Title','chefsections'),
+					'placeholder' 			=> __('Title','CuisineSections'),
 					'defaultValue'			=> $this->getField( 'title', ['text' => '', 'type' => 'h2'] ),
 				)
 			),
 			'url'	=> Field::text(
 				'url',
-				__('Video url','chefsections'),
+				__('Video url','CuisineSections'),
 				array(
 					'label' 				=> false,
-					'placeholder' 			=> __('Video url','chefsections'),
+					'placeholder' 			=> __('Video url','CuisineSections'),
 					'defaultValue'			=> $this->getField( 'url' ),
 				)
 			),
 			'still' => Field::image(
 				'still',
-				__('Video still','chefsections'),
+				__('Video still','CuisineSections'),
 				array(
 					'defaultValue'			=> $this->getField( 'still' ),
 				)

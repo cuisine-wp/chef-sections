@@ -1,6 +1,6 @@
 <?php
 
-	namespace ChefSections\Admin\Handlers;
+	namespace CuisineSections\Admin\Handlers;
 
 	use Cuisine\Utilities\Session;
 
@@ -18,7 +18,7 @@
 		/**
 		 * The collection of this manager
 		 * 
-		 * @var ChefSections\Collections\BaseCollection
+		 * @var CuisineSections\Collections\BaseCollection
 		 */
 		protected $collection;
 

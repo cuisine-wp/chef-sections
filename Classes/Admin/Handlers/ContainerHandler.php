@@ -1,18 +1,18 @@
 <?php
 
-	namespace ChefSections\Admin\Handlers;
+	namespace CuisineSections\Admin\Handlers;
 
-	use ChefSections\Collections\SectionCollection;
-	use ChefSections\Collections\ContainerCollection;
-	use ChefSections\Helpers\Section as SectionHelper;
-	use ChefSections\Admin\Ui\Sections\ContainerSectionUi;
+	use CuisineSections\Collections\SectionCollection;
+	use CuisineSections\Collections\ContainerCollection;
+	use CuisineSections\Helpers\Section as SectionHelper;
+	use CuisineSections\Admin\Ui\Sections\ContainerSectionUi;
 
 	class ContainerHandler extends BaseHandler{
 
 		/**
 		 * Collection of all registered containers
 		 * 
-		 * @var ChefSections\Collections\ContainerCollection;
+		 * @var CuisineSections\Collections\ContainerCollection;
 		 */
 		protected $containers;
 

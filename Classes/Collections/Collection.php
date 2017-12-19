@@ -1,6 +1,6 @@
 <?php
 
-	namespace ChefSections\Collections;
+	namespace CuisineSections\Collections;
 
 	use Cuisine\Utilities\Collection as BaseCollection;
 

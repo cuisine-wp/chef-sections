@@ -1,9 +1,9 @@
 <?php
 	
-	namespace ChefSections\Helpers;
+	namespace CuisineSections\Helpers;
 
-	use ChefSections\SectionTypes\Container;
-	use ChefSections\Collections\ContainerCollection;
+	use CuisineSections\SectionTypes\Container;
+	use CuisineSections\Collections\ContainerCollection;
 
 	class Section{
 
@@ -13,7 +13,7 @@
 		 * 
 		 * @param  Array $sectionData
 		 * 
-		 * @return ChefSections\Sections\BaseSection
+		 * @return CuisineSections\Sections\BaseSection
 		 */
 		public static function getClass( $sectionData )
 		{
@@ -50,12 +50,12 @@
 		public static function getClasses(){
 
 			$classes = [
-				'section' 			=> '\ChefSections\SectionTypes\ContentSection',
-				'contentSection'	=> '\ChefSections\SectionTypes\ContentSection',
-				'stencil'			=> '\ChefSections\SectionTypes\ContentSection',
-				'reference'			=> '\ChefSections\SectionTypes\Reference',
-				'blueprint'			=> '\ChefSections\SectionTypes\Blueprint',
-				'container'			=> '\ChefSections\SectionTypes\Container'
+				'section' 			=> '\CuisineSections\SectionTypes\ContentSection',
+				'contentSection'	=> '\CuisineSections\SectionTypes\ContentSection',
+				'stencil'			=> '\CuisineSections\SectionTypes\ContentSection',
+				'reference'			=> '\CuisineSections\SectionTypes\Reference',
+				'blueprint'			=> '\CuisineSections\SectionTypes\Blueprint',
+				'container'			=> '\CuisineSections\SectionTypes\Container'
 			];
 
 			return apply_filters( 'chef_sections_section_type_classes', $classes );
@@ -92,7 +92,7 @@
 		{
 
 			$args = array(
-				'title'				=> __( 'Sectie titel', 'chefsections' ),
+				'title'				=> __( 'Sectie titel', 'CuisineSections' ),
 				'hide_title'		=> apply_filters('chef_sections_hide_title', false ),
 				'hide_container'	=> apply_filters('chef_sections_hide_container', true ),
 				'view'				=> 'fullwidth',
@@ -114,7 +114,7 @@
 		{
 
 			$args = array(
-				'title'				=> __( 'Sectie container title', 'chefsections' ),
+				'title'				=> __( 'Sectie container title', 'CuisineSections' ),
 				'hide_title'		=> apply_filters('chef_sections_hide_title', false ),
 				'hide_container'	=> apply_filters('chef_sections_hide_container', true ),
 				'view'				=> 'grouped',

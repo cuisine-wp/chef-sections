@@ -1,11 +1,11 @@
 <?php
 
-	namespace ChefSections\Admin\Ui;
+	namespace CuisineSections\Admin\Ui;
 
 	use Cuisine\Utilities\Session;
-	use ChefSections\Helpers\PostType;
-	use ChefSections\Helpers\SectionUi as SectionUiHelper;
-	use ChefSections\Collections\SectionCollection;
+	use CuisineSections\Helpers\PostType;
+	use CuisineSections\Helpers\SectionUi as SectionUiHelper;
+	use CuisineSections\Collections\SectionCollection;
 
 
 	class SectionsUi{
@@ -14,7 +14,7 @@
 		/**
 		 * Sections Walker
 		 * 
-		 * @var ChefSections\Walkers\Admin
+		 * @var CuisineSections\Walkers\Admin
 		 */
 		protected $sections;
 
@@ -29,7 +29,7 @@
 		/**
 		 * Call the methods on construct
 		 *
-		 * @return \ChefSections\Admin
+		 * @return \CuisineSections\Admin
 		 */
 		function __construct(){
 
@@ -72,7 +72,7 @@
 
 
 				echo '<div class="no-section-msg msg hidden">';
-					echo '<p>'.__('No sections yet.', 'chefsections').'</p>';
+					echo '<p>'.__('No sections yet.', 'CuisineSections').'</p>';
 				echo '</div>';
 
 

@@ -1,15 +1,15 @@
 <?php
 
-	namespace ChefSections\Admin\Ui\Containers;
+	namespace CuisineSections\Admin\Ui\Containers;
 
-	use ChefSections\Helpers\SectionUi as SectionUiHelper;
+	use CuisineSections\Helpers\SectionUi as SectionUiHelper;
 
 	class TabbedUi{
 
 		/**
 		 * Container class
 		 * 
-		 * @var ChefSections\SectionTypes\
+		 * @var CuisineSections\SectionTypes\
 		 */
 		protected $container;
 
@@ -17,7 +17,7 @@
 		/**
 		 * Constructor
 		 * 
-		 * @param ChefSections\SectionTypes\Container
+		 * @param CuisineSections\SectionTypes\Container
 		 *
 		 * @return void
 		 */

@@ -1,6 +1,6 @@
 <?php
 
-    namespace ChefSections\Hooks;
+    namespace CuisineSections\Hooks;
     
     use Cuisine\Fields\DefaultField;
     use Cuisine\Fields\SelectField;
@@ -66,8 +66,8 @@
                 }else{
 
                     //$html .= $this->makeItem( 0 );
-                    $html .= '<p>'.__( 'Currently there are no filters active', 'chefsections' ).'</p>';
-                    $html .= '<span class="add-remove-btn add-tax msg-add-remove">'.__( 'Create a filter', 'chefsections' ).'</span>';
+                    $html .= '<p>'.__( 'Currently there are no filters active', 'CuisineSections' ).'</p>';
+                    $html .= '<span class="add-remove-btn add-tax msg-add-remove">'.__( 'Create a filter', 'CuisineSections' ).'</span>';
 
                 }
         
@@ -138,7 +138,7 @@
             
                 $html .= '</select>';
             
-                $html .= '<select name="'.$prefix.'[terms]" class="term-selector multi" data-placeholder="'.__( 'Select one or multiple items', 'chefsections' ).'" multiple>';
+                $html .= '<select name="'.$prefix.'[terms]" class="term-selector multi" data-placeholder="'.__( 'Select one or multiple items', 'CuisineSections' ).'" multiple>';
                     
 
                     foreach( $this->taxonomies[ $tax['tax'] ] as $term ){

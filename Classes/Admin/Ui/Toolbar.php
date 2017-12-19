@@ -1,11 +1,11 @@
 <?php
 
-	namespace ChefSections\Admin\Ui;
+	namespace CuisineSections\Admin\Ui;
 
 	use Cuisine\Wrappers\User;
 	use Cuisine\Utilities\Session;
-	use ChefSections\Collections\ContainerCollection;
-	use ChefSections\Collections\SectionBlueprintCollection;
+	use CuisineSections\Collections\ContainerCollection;
+	use CuisineSections\Collections\SectionBlueprintCollection;
 
 
 	class Toolbar{
@@ -20,14 +20,14 @@
 		/**
 		 * Template collection
 		 * 
-		 * @var ChefSections\Collections\ReferenceCollection
+		 * @var CuisineSections\Collections\ReferenceCollection
 		 */
 		protected $templates;
 
 		/**
 		 * Container collection
 		 * 
-		 * @var ChefSections\Collections\ContainerCollection
+		 * @var CuisineSections\Collections\ContainerCollection
 		 */
 		protected $containers;
 
@@ -96,7 +96,7 @@
 			){
 				echo '<div class="add-section-btn" data-action="createSection" data-post_id="'.$this->postId.'">';
 					echo '<span class="dashicons dashicons-plus-alt"></span>';
-					_e( 'Add Section', 'chefsections' );
+					_e( 'Add Section', 'CuisineSections' );
 				echo '</div>';
 			}
 		}
@@ -122,7 +122,7 @@
 				if( $this->templates->count() > 1 ){				
 					echo 'data-type="search" ';
 					echo 'data-content="SectionTemplates" ';
-					echo 'data-label="'.__( 'Please select your template', 'chefsections' ).'" ';
+					echo 'data-label="'.__( 'Please select your template', 'CuisineSections' ).'" ';
 
 				}else{
 					$template = $this->templates->toArray()->first();
@@ -133,7 +133,7 @@
 				echo '>';
 
 					echo '<span class="dashicons dashicons-media-document"></span>';
-					_e( 'Add a Template', 'chefsections' );
+					_e( 'Add a Template', 'CuisineSections' );
 
 					if( $this->templates->count() > 1 )
 						echo '<small><span class="dashicons dashicons-arrow-down"></span></small>';
@@ -162,7 +162,7 @@
 				if( $this->containers->count() > 1 ){
 					echo 'data-type="search" ';
 					echo 'data-content="SectionContainers" ';
-					echo 'data-label="'.__( 'Please select your container', 'chefsections' ).'" ';
+					echo 'data-label="'.__( 'Please select your container', 'CuisineSections' ).'" ';
 
 				}else{
 					$container = array_keys( $this->containers->all() );
@@ -172,7 +172,7 @@
 				echo '>';
 
 					echo '<span class="dashicons dashicons-feedback"></span>';
-					_e( 'Add a Container', 'chefsections' );
+					_e( 'Add a Container', 'CuisineSections' );
 
 					if( $this->containers->count() > 1 )
 						echo '<small><span class="dashicons dashicons-arrow-down"></span></small>';

@@ -1,6 +1,6 @@
 <?php
 
-namespace ChefSections\Admin\Panels;
+namespace CuisineSections\Admin\Panels;
 
 use Cuisine\Utilities\Session;
 use Cuisine\Wrappers\Field;

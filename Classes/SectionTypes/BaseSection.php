@@ -1,18 +1,18 @@
 <?php
 
-	namespace ChefSections\SectionTypes;
+	namespace CuisineSections\SectionTypes;
 
 	use Exception;
 	use Cuisine\Wrappers\User;
 	use Cuisine\Wrappers\Field;
 	use Cuisine\Utilities\Sort;
-	use ChefSections\Wrappers\Column;
-	use ChefSections\Wrappers\Template;
-	use ChefSections\Wrappers\SectionsBuilder;
-	use ChefSections\Collections\SectionCollection;
-	use ChefSections\Helpers\Column as ColumnHelper;
-	use ChefSections\Helpers\Section as SectionHelper;
-	use ChefSections\Contracts\Section as SectionContract;
+	use CuisineSections\Wrappers\Column;
+	use CuisineSections\Wrappers\Template;
+	use CuisineSections\Wrappers\SectionsBuilder;
+	use CuisineSections\Collections\SectionCollection;
+	use CuisineSections\Helpers\Column as ColumnHelper;
+	use CuisineSections\Helpers\Section as SectionHelper;
+	use CuisineSections\Contracts\Section as SectionContract;
 
 
 	class BaseSection implements SectionContract{
@@ -506,7 +506,7 @@
 			$title = $this->getProperty( 'title', false );
 			if( $title && isset( $title['text'] ) && $title['text'] != '' ){
 
-				if( strtolower( $title['text'] ) == strtolower( __( 'Section title', 'chefsections' ) ) )
+				if( strtolower( $title['text'] ) == strtolower( __( 'Section title', 'CuisineSections' ) ) )
 					return null;
 
 				$string = '<'.$title['type'].' class="section-title" itemprop="name">';

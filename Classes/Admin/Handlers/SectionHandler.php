@@ -1,18 +1,18 @@
 <?php
 
-	namespace ChefSections\Admin\Handlers;
+	namespace CuisineSections\Admin\Handlers;
 
 
 	use Cuisine\Wrappers\Record;
 	use Cuisine\Utilities\Session;
-	use ChefSections\Front\Walker;
-	use ChefSections\Helpers\PostType;
-	use ChefSections\SectionTypes\ContentSection;
-	use ChefSections\Admin\Ui\Containers\TabbedUi;
-	use ChefSections\Collections\SectionCollection;
-	use ChefSections\Helpers\Section as SectionHelper;
-	use ChefSections\Admin\Ui\Sections\ContentSectionUi;
-	use ChefSections\Helpers\SectionUi as SectionUiHelper;
+	use CuisineSections\Front\Walker;
+	use CuisineSections\Helpers\PostType;
+	use CuisineSections\SectionTypes\ContentSection;
+	use CuisineSections\Admin\Ui\Containers\TabbedUi;
+	use CuisineSections\Collections\SectionCollection;
+	use CuisineSections\Helpers\Section as SectionHelper;
+	use CuisineSections\Admin\Ui\Sections\ContentSectionUi;
+	use CuisineSections\Helpers\SectionUi as SectionUiHelper;
 
 	class SectionHandler extends BaseHandler{
 

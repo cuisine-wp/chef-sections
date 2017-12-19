@@ -1,30 +1,30 @@
 <?php
-namespace ChefSections\Front;
+namespace CuisineSections\Front;
 
-use \ChefSections\Wrappers\Walker;
-use \ChefSections\Wrappers\Column;
-use \ChefSections\Wrappers\SectionsBuilder;
+use \CuisineSections\Wrappers\Walker;
+use \CuisineSections\Wrappers\Column;
+use \CuisineSections\Wrappers\SectionsBuilder;
 use \Cuisine\Utilities\Url;
 use \Cuisine\Utilities\Sort;
 use \Cuisine\Utilities\Session;
 
-use \ChefSections\Templates\BlockTemplate;
-use \ChefSections\Templates\ColumnTemplate;
-use \ChefSections\Templates\ElementTemplate;
-use \ChefSections\Templates\CollectionTemplate;
-use \ChefSections\Templates\DynamicSectionTemplate;
+use \CuisineSections\Templates\BlockTemplate;
+use \CuisineSections\Templates\ColumnTemplate;
+use \CuisineSections\Templates\ElementTemplate;
+use \CuisineSections\Templates\CollectionTemplate;
+use \CuisineSections\Templates\DynamicSectionTemplate;
 
 /**
  * The Template class locates templates
- * @package ChefSections\Front
+ * @package CuisineSections\Front
  */
 class TemplateFinder {
 
 	/**
 	 * Get the template for a column
 	 * 
-	 * @param  \ChefSections\Columns\Column 	$column
-	 * @return \ChefSections\Front\TemplateFinder ( chainable )
+	 * @param  \CuisineSections\Columns\Column 	$column
+	 * @return \CuisineSections\Front\TemplateFinder ( chainable )
 	 */
 	public function column( $column ){
 		
@@ -38,8 +38,8 @@ class TemplateFinder {
 	/**
 	 * Get the template for a single collection block
 	 * 
-	 * @param  \ChefSections\Columns\Column 	$column
-	 * @return \ChefSections\Front\TemplateFinder ( chainable )
+	 * @param  \CuisineSections\Columns\Column 	$column
+	 * @return \CuisineSections\Front\TemplateFinder ( chainable )
 	 */
 	public function block( $column ){
 		return new BlockTemplate( $column );
@@ -49,16 +49,16 @@ class TemplateFinder {
 	/**
 	 * Get the template for a section
 	 * 
-	 * @param  \ChefSections\SectionTypes\BaseSection 	$section
+	 * @param  \CuisineSections\SectionTypes\BaseSection 	$section
 	 * 
-	 * @return \ChefSections\TemplateClasses/ContentSection
+	 * @return \CuisineSections\TemplateClasses/ContentSection
 	 */
 	public function section( $section ){
 
 		$classes = [
-			'reference' => '\ChefSections\Templates\ReferenceTemplate',
-			'container' => '\ChefSections\Templates\ContainerTemplate',
-			'default' 	=> '\ChefSections\Templates\ContentSectionTemplate'
+			'reference' => '\CuisineSections\Templates\ReferenceTemplate',
+			'container' => '\CuisineSections\Templates\ContainerTemplate',
+			'default' 	=> '\CuisineSections\Templates\ContentSectionTemplate'
 		];
 
 		$key = $section->type;
@@ -74,10 +74,10 @@ class TemplateFinder {
 	/**
 	 * Returns a dynamic section template
 	 * 
-	 * @param  \ChefSections\SectionTypes\BaseSection $section
+	 * @param  \CuisineSections\SectionTypes\BaseSection $section
 	 * @param  String $path
 	 * 
-	 * @return ChefSections\TemplateClasses/DynamicSectionTemplate
+	 * @return CuisineSections\TemplateClasses/DynamicSectionTemplate
 	 */
 	public function dynamic( $section, $path )
 	{
@@ -89,7 +89,7 @@ class TemplateFinder {
 	 * Get a template for a regular element
 	 * 
 	 * @param  string $name name of the template
-	 * @return ChefSections\Front\TemplateFinderFinder
+	 * @return CuisineSections\Front\TemplateFinderFinder
 	 */
 	public function element( $name ){
 		return new ElementTemplate( $name );
