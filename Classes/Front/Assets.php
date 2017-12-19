@@ -31,7 +31,7 @@
 			add_action( 'init', function(){
 
 				//scripts:
-				$url = Url::plugin( 'chef-sections', true ).'Assets/js/libs/';
+				$url = Url::plugin( 'cuisine-sections', true ).'Assets/js/libs/';
 				
 				Script::register( 'isotope', $url.'isotope.min', false );
 				Script::register( 'imagesloaded', $url.'imagesloaded.min', false );
@@ -41,7 +41,7 @@
 				//sass:
 				if( !Sass::ignore() ){
 					
-					$url = 'chef-sections/Assets/sass/front/';
+					$url = 'cuisine-sections/Assets/sass/front/';
 					
 					Sass::register( 'sections-columns', $url.'_columns', false );
 					Sass::register( 'sections-collection', $url.'_collection', false );
@@ -54,7 +54,7 @@
 					//we need to ignore sass and enqueue a regular css file:
 					add_action( 'wp_enqueue_scripts', function(){
 
-						wp_enqueue_style( 'chef_sections', Url::plugin( 'chef-sections', true ).'Assets/css/compiled.css' );
+						wp_enqueue_style( 'chef_sections', Url::plugin( 'cuisine-sections', true ).'Assets/css/compiled.css' );
 
 					});
 

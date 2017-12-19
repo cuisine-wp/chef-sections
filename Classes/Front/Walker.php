@@ -70,7 +70,7 @@
 			wp_reset_query();
 
 
-			return apply_filters( 'chef_sections_output', ob_get_clean(), $this );
+			return apply_filters( 'cuisine_sections_output', ob_get_clean(), $this );
 		}
 
 		/**
@@ -102,7 +102,7 @@
 			wp_reset_query();
 
 
-			return apply_filters( 'chef_sections_container_output', ob_get_clean(), $this );	
+			return apply_filters( 'cuisine_sections_container_output', ob_get_clean(), $this );	
 		}
 
 

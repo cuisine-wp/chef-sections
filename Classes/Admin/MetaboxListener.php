@@ -8,7 +8,7 @@
 	use \Cuisine\Utilities\Session;
 	use \CuisineSections\Wrappers\StaticInstance;
 
-	class MetaboxListeners extends StaticInstance{
+	class MetaboxListener extends StaticInstance{
 
 
 		/**
@@ -81,7 +81,7 @@
 		private function getPostTypes(){
 			
 			$pts = array( 'page' );
-			$pts = apply_filters( 'chef_sections_post_types', $pts );
+			$pts = apply_filters( 'cuisine_sections_post_types', $pts );
 
 
 			$postTypes = array(

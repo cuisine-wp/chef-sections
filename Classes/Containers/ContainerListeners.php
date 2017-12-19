@@ -21,9 +21,9 @@
 		 */
 		public function listen()
 		{
-			if( apply_filters( 'chef_sections_enable_group_container', true ) ){
+			if( apply_filters( 'cuisine_sections_enable_group_container', true ) ){
 
-				add_filter( 'chef_sections_containers', function( $data ){
+				add_filter( 'cuisine_sections_containers', function( $data ){
 
 					$data[ 'group' ] = [
 						'label' => 'Section Group',

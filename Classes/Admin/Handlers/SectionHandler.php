@@ -102,7 +102,7 @@
 		 */
 		public function saveHtmlOutput()
 		{
-			if( apply_filters( 'chef_sections_save_html_output_as_content', true ) ){
+			if( apply_filters( 'cuisine_sections_save_html_output_as_content', true ) ){
 
 				$pts = ['section-template', 'page-template'];
 
@@ -149,7 +149,7 @@
 		public function addSection( $datas = array() ){
 
 			//up the highest ID
-			$this->collection->setHighestId( 1 );
+            $this->collection->setHighestId( 1 );
 
 			//get the defaults:
 			$args = $this->getDefaultSectionArgs();
@@ -166,7 +166,7 @@
 			$_sections = $this->collection->toArray()->all();
 			$_sections[ $args['id'] ] = $args;
 			update_post_meta( $this->postId, 'sections', $_sections );
-			
+            
 			$this->sectionResponse( $args );
 		}
 
@@ -295,7 +295,9 @@
 			$sectionUi = SectionUiHelper::getClass( $section );
 
 			$response['html'] = $sectionUi->get();
-			$response['tab'] = $sectionUi->getTab();			
+            $response['tab'] = $sectionUi->getTab();
+            
+            dd( $response );
 
 			return $this->response( $response );
 		}
@@ -304,7 +306,7 @@
 		/**
 		 * Returns a filterable array of default settings
 		 *
-	     * @filter 'chef_sections_default_section_args'
+	     * @filter 'cuisine_sections_default_section_args'
 		 * @return array
 		 */
 		public function getDefaultSectionArgs(){

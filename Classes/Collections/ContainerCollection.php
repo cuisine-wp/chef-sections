@@ -28,7 +28,7 @@
 		 */
 		public function getItems()
 		{
-			$items = apply_filters( 'chef_sections_containers', [] );
+			$items = apply_filters( 'cuisine_sections_containers', [] );
 			$this->objects = $items;
 			return $items;
 		}

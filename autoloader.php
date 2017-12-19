@@ -17,7 +17,7 @@ class Autoloader
         Front\EventListeners::getInstance();
 
         //and the admin:
-        if (is_admin()) {
+        if( is_admin() ){
             Admin\Ajax::getInstance();
             Admin\Assets::getInstance();
             Admin\EventListeners::getInstance();

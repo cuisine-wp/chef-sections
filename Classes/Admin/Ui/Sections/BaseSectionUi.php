@@ -172,7 +172,7 @@
 						echo '<span class="dashicons dashicons-trash"></span>';
 					echo __( 'Delete', 'CuisineSections' ).'</p>';
 
-					do_action( 'chef_sections_bottom_controls' );
+					do_action( 'cuisine_sections_bottom_controls' );
 
 					$this->buildTemplateSnitch();
 					$this->buildCodeSnitch();
@@ -356,7 +356,7 @@
 		{
 			$views = SectionHelper::viewTypes();
             $allowed = $this->section->allowedViews;
-			$allowed = apply_filters( 'chef_sections_default_allowed_views', $allowed, $this->section );
+			$allowed = apply_filters( 'cuisine_sections_default_allowed_views', $allowed, $this->section );
             $types = [];
 
 			foreach( $allowed as $view ){

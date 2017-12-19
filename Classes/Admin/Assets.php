@@ -28,7 +28,7 @@
 			
 			add_action( 'admin_menu', function(){
 
-				$url = Url::plugin( 'chef-sections', true ).'Assets';
+				$url = Url::plugin( 'cuisine-sections/Assets' );
 				wp_enqueue_script( 
 					'sections_section', 
 					$url.'/js/Section.js', 

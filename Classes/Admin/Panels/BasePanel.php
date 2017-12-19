@@ -68,7 +68,7 @@ class BasePanel{
 
 		$this->fields = $fields;
 
-		add_filter( 'chef_sections_panel_buttons', array( &$this, 'button' ), 100, 2 );
+		add_filter( 'cuisine_sections_panel_buttons', array( &$this, 'button' ), 100, 2 );
 		add_action( 'chef_section_setting_panels', array( &$this, 'build' ) );
 
 	}

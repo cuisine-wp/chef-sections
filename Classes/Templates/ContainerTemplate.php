@@ -47,7 +47,7 @@
 
 			$templates = $this->removeDuplicates( $templates );
 			$this->baseFolder = $base; //reset the base
-			return apply_filters( 'chef_sections_container_template_hierarchy', $templates );;
+			return apply_filters( 'cuisine_sections_container_template_hierarchy', $templates );;
 		}
 
 
@@ -67,7 +67,7 @@
 			if( isset( $container['template'] ) )
 				$default = $container['template'];
 
-			$default = apply_filters( 'chef_sections_default_template', $default, $this->object );
+			$default = apply_filters( 'cuisine_sections_default_template', $default, $this->object );
 			return $default;
 		}
 

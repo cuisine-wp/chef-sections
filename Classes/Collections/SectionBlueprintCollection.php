@@ -63,7 +63,7 @@
 				'posts_per_page' => -1
 			);
 
-			$args = apply_filters( 'chef_sections_section_blueprint_collection_query', $args, $this );
+			$args = apply_filters( 'cuisine_sections_section_blueprint_collection_query', $args, $this );
 			return $args;
 		}
 

@@ -66,7 +66,7 @@ class TemplateFinder {
 		if( !isset( $classes[ $key ] ) )
 			$key = 'default';
 
-		$class = apply_filters( 'chef_sections_section_template_class', $classes[ $key ], $section );
+		$class = apply_filters( 'cuisine_sections_section_template_class', $classes[ $key ], $section );
 		return new $class( $section );
 	}
 

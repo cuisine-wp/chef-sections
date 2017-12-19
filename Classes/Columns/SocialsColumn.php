@@ -131,7 +131,7 @@ class SocialsColumn extends DefaultColumn implements ColumnContract{
 
 			//run default sanitation and filters
 			$props = $this->sanitizeProperties( $props );
-			$props = apply_filters( 'chef_sections_save_column_properties', $props, $this );
+			$props = apply_filters( 'cuisine_sections_save_column_properties', $props, $this );
 
 			$saved = update_post_meta( 
 				$this->post_id, 
@@ -215,7 +215,7 @@ class SocialsColumn extends DefaultColumn implements ColumnContract{
 
 			);
 
-			return apply_filters( 'chef_sections_social_icons', $icons );
+			return apply_filters( 'cuisine_sections_social_icons', $icons );
 			
 		}
 }

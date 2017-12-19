@@ -33,11 +33,11 @@
 			$type = 'column';
 			$column = $this->object;
 
-			add_action( 'chef_sections_before_'.$this->type.'_template', $this->object );
+			add_action( 'cuisine_sections_before_'.$this->type.'_template', $this->object );
 
 			include( $this->located );
 
-			add_action( 'chef_sections_after_'.$this->type.'_template', $this->object );		
+			add_action( 'cuisine_sections_after_'.$this->type.'_template', $this->object );		
 		}
 
 
@@ -66,7 +66,7 @@
 
 			}
 			
-			$default = apply_filters( 'chef_sections_default_template', $default, $this->object );
+			$default = apply_filters( 'cuisine_sections_default_template', $default, $this->object );
 			return $default;
 		}
 
@@ -123,7 +123,7 @@
 			);
 
 			$templates = $this->removeDuplicates( $templates );
-			return apply_filters( 'chef_sections_section_template_hierarchy', $templates );
+			return apply_filters( 'cuisine_sections_section_template_hierarchy', $templates );
 		}
 
 
@@ -138,7 +138,7 @@
 		 */
 		public function getPost()
 		{
-			return apply_filters( 'chef_sections_template_post_getter', get_post( $this->object->post_id ) );
+			return apply_filters( 'cuisine_sections_template_post_getter', get_post( $this->object->post_id ) );
 		}
 
 

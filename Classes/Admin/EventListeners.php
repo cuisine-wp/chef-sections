@@ -39,8 +39,8 @@
 
 				//remove editors from the post-types:
 				$post_types = array( 'page', 'section-template', 'page-template' );
-				$include = apply_filters( 'chef_sections_remove_editor', $post_types );
-				$post_types = apply_filters( 'chef_sections_post_types', $post_types );
+				$include = apply_filters( 'cuisine_sections_remove_editor', $post_types );
+				$post_types = apply_filters( 'cuisine_sections_post_types', $post_types );
 
 				foreach( $post_types as $type ){
 
@@ -82,7 +82,7 @@
 				if( PostType::isValid( $post->ID ) ){
 
 					//allow sections to be turned off on a per-post basis.
-					$dontload = apply_filters( 'chef_sections_dont_load', array() );
+					$dontload = apply_filters( 'cuisine_sections_dont_load', array() );
 				
 					if( isset( $post ) && !in_array( $post->ID, $dontload ) ){
 

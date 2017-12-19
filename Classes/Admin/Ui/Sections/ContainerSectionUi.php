@@ -175,7 +175,7 @@
 					echo '<span class="dashicons dashicons-trash"></span>';
 				echo __( 'Delete', 'CuisineSections' ).'</p>';
 
-				do_action( 'chef_sections_bottom_controls' );
+				do_action( 'cuisine_sections_bottom_controls' );
 
 				$this->buildTemplateSnitch();
 				$this->buildCodeSnitch();

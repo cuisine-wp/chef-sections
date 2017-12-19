@@ -198,9 +198,9 @@ class DefaultColumn implements ColumnContract{
 
 		$props = $_POST['properties'];
 		$props = $this->sanitizeProperties( $props );
-		$props = apply_filters( 'chef_sections_save_column_properties', $props, $this );
+		$props = apply_filters( 'cuisine_sections_save_column_properties', $props, $this );
 
-		do_action( 'chef_sections_before_column_save', $this );
+		do_action( 'cuisine_sections_before_column_save', $this );
 
 		$saved = update_post_meta(
 			$this->post_id,
@@ -208,7 +208,7 @@ class DefaultColumn implements ColumnContract{
 			$props
 		);
 
-		do_action( 'chef_sections_after_column_save', $this );
+		do_action( 'cuisine_sections_after_column_save', $this );
 
 		//set the new properties in this class
 		$this->properties = $props;
@@ -566,7 +566,7 @@ class DefaultColumn implements ColumnContract{
 	/**
 	 * Get the default arguments for this column
 	 *
-	 * @filter 'chef_sections_default_column_args'
+	 * @filter 'cuisine_sections_default_column_args'
 	 * @return array
 	 */
 	private function getDefaultColumnArgs(){
@@ -577,7 +577,7 @@ class DefaultColumn implements ColumnContract{
 				'buttonText'	=> __( 'Save Column', 'cuisinesections' )
 		);
 
-		$args = apply_filters( 'chef_sections_default_column_args', $args );
+		$args = apply_filters( 'cuisine_sections_default_column_args', $args );
 
 		return $args;
 
@@ -597,7 +597,7 @@ class DefaultColumn implements ColumnContract{
 		$response = [];
 		$types = array_combine( $keys, $labels );
 		$allowed = $this->section->allowedColumns;
-		$allowed = apply_filters( 'chef_sections_default_allowed_columns', $allowed, $this, $this->section );
+		$allowed = apply_filters( 'cuisine_sections_default_allowed_columns', $allowed, $this, $this->section );
 
 		foreach( $types as $key => $type ){
 			if( in_array( $key, $allowed ) )

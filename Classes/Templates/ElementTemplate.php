@@ -30,7 +30,7 @@
 		{
 			$base = $this->pluginPath();
 			$default = $base.'Elements/'.$this->object.'.php';
-			$default = apply_filters( 'chef_sections_default_template', $default, $this->object );
+			$default = apply_filters( 'cuisine_sections_default_template', $default, $this->object );
 			return $default;
 		}
 
@@ -49,7 +49,7 @@
 				)
 			];
 
-			return apply_filters( 'chef_sections_element_template_hierarchy', $templates );
+			return apply_filters( 'cuisine_sections_element_template_hierarchy', $templates );
 		}
 
 

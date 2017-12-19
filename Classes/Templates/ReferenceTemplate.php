@@ -46,7 +46,7 @@ w<?php
 
 			$templates = $this->removeDuplicates( $templates );
 			$this->baseFolder = $base; //reset the base
-			return apply_filters( 'chef_sections_reference_template_hierarchy', $templates );;
+			return apply_filters( 'cuisine_sections_reference_template_hierarchy', $templates );;
 		}
 
 		/**
@@ -56,7 +56,7 @@ w<?php
 		 */
 		public function getPost()
 		{
-			return apply_filters( 'chef_sections_template_post_getter', get_post( $this->object->template_id ) );
+			return apply_filters( 'cuisine_sections_template_post_getter', get_post( $this->object->template_id ) );
 		}
 
 	}

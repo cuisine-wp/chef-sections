@@ -58,7 +58,7 @@
 				'container'			=> '\CuisineSections\SectionTypes\Container'
 			];
 
-			return apply_filters( 'chef_sections_section_type_classes', $classes );
+			return apply_filters( 'cuisine_sections_section_type_classes', $classes );
 		}
 
 		/**
@@ -78,7 +78,7 @@
 				'four-columns' => 4
 			);
 
-			$arr = apply_filters( 'chef_sections_section_types', $arr );
+			$arr = apply_filters( 'cuisine_sections_section_types', $arr );
 			return $arr;
 		}
 
@@ -93,13 +93,13 @@
 
 			$args = array(
 				'title'				=> __( 'Sectie titel', 'CuisineSections' ),
-				'hide_title'		=> apply_filters('chef_sections_hide_title', false ),
-				'hide_container'	=> apply_filters('chef_sections_hide_container', true ),
+				'hide_title'		=> apply_filters('cuisine_sections_hide_title', false ),
+				'hide_container'	=> apply_filters('cuisine_sections_hide_container', true ),
 				'view'				=> 'fullwidth',
 				'type'				=> 'section'
 			);
 
-			$args = apply_filters( 'chef_sections_default_section_args', $args );
+			$args = apply_filters( 'cuisine_sections_default_section_args', $args );
 
 			return $args;	
 		}
@@ -115,13 +115,13 @@
 
 			$args = array(
 				'title'				=> __( 'Sectie container title', 'CuisineSections' ),
-				'hide_title'		=> apply_filters('chef_sections_hide_title', false ),
-				'hide_container'	=> apply_filters('chef_sections_hide_container', true ),
+				'hide_title'		=> apply_filters('cuisine_sections_hide_title', false ),
+				'hide_container'	=> apply_filters('cuisine_sections_hide_container', true ),
 				'view'				=> 'grouped',
 				'type'				=> 'container'
 			);
 
-			$args = apply_filters( 'chef_sections_default_section_container_args', $args );
+			$args = apply_filters( 'cuisine_sections_default_section_container_args', $args );
 			return $args;	
 		}
 

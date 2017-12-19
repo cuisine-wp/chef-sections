@@ -125,7 +125,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 			)
 		);
 
-		$fields = apply_filters( 'chef_sections_content_column_fields', $fields );
+		$fields = apply_filters( 'cuisine_sections_content_column_fields', $fields );
 		return $fields;
 
 	}

@@ -44,7 +44,7 @@
 			);
 
 
-			$arr = apply_filters( 'chef_sections_column_types', $arr );
+			$arr = apply_filters( 'cuisine_sections_column_types', $arr );
 			return $arr;	
 		}
 

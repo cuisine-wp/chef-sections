@@ -39,7 +39,7 @@
 
 					__( 'Settings', 'CuisineSections' ),
 					'settings',
-					apply_filters( 'chef_sections_base_panel_args', $args )
+					apply_filters( 'cuisine_sections_base_panel_args', $args )
 
 				)->set( $fields );
 
@@ -75,7 +75,7 @@
 
 			);
 
-			$fields = apply_filters( 'chef_sections_setting_fields', $fields, $this );
+			$fields = apply_filters( 'cuisine_sections_setting_fields', $fields, $this );
 
 			return $fields;
 		}

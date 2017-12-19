@@ -75,7 +75,7 @@
 		 */
 		public static function getPanelButtons( $section )
 		{
-			return apply_filters( 'chef_sections_panel_buttons', array(), $section );
+			return apply_filters( 'cuisine_sections_panel_buttons', array(), $section );
 		}
 
 	}

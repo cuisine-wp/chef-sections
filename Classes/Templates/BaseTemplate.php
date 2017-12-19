@@ -51,7 +51,7 @@
 		public function __construct( $object )
 		{
 			$this->object = $object;
-			$this->baseFolder = apply_filters( 'chef_sections_'.$this->type.'_template_base', $this->baseFolder );
+			$this->baseFolder = apply_filters( 'cuisine_sections_'.$this->type.'_template_base', $this->baseFolder );
 
 			$this->located = $this->locate();
 		}
@@ -70,11 +70,11 @@
 		public function display()
 		{
 
-			add_action( 'chef_sections_before_'.$this->type.'_template', $this->object );
+			add_action( 'cuisine_sections_before_'.$this->type.'_template', $this->object );
 
 			include( $this->located );
 
-			add_action( 'chef_sections_after_'.$this->type.'_template', $this->object );		
+			add_action( 'cuisine_sections_after_'.$this->type.'_template', $this->object );		
 		}	
 
 
@@ -106,7 +106,7 @@
 		{
 			$templates = $this->getThemeLocations();
 			$located = locate_template( $templates );
-			$located = apply_filters( 'chef_sections_located_template', $located, $this );
+			$located = apply_filters( 'cuisine_sections_located_template', $located, $this );
 		
 			if( !$located )
 				$located = $this->getDefault();
@@ -125,7 +125,7 @@
 		{
 			$base = $this->pluginPath();
 			$default = $base.'Sections/default.php';
-			$default = apply_filters( 'chef_sections_default_template', $default, $this->object );
+			$default = apply_filters( 'cuisine_sections_default_template', $default, $this->object );
 			return $default;
 		}
 
@@ -178,14 +178,14 @@
 				
 				//general filter:
 				$templates = apply_filters( 
-								'chef_sections_template_files', 
+								'cuisine_sections_template_files', 
 								$templates, 
 								$this->object
 				);
 
 				//type based filter:
         		$templates = apply_filters( 
-        						'chef_sections_'.$this->type.'_template_files', 
+        						'cuisine_sections_'.$this->type.'_template_files', 
         						$templates, 
         						$this->object
         		);

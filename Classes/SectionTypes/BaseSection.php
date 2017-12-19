@@ -243,7 +243,7 @@
 				'allowedViews'
 			];
 			
-			$attributes = apply_filters( 'chef_sections_section_attributes', $attributes );
+			$attributes = apply_filters( 'cuisine_sections_section_attributes', $attributes );
 
 			return $attributes;
 		}
@@ -314,7 +314,7 @@
 			//so people can add data-properties and other stuff
 			$html = apply_filters( 'cuisine_section_opening_div', $html );
 
-			if( apply_filters( 'chef_sections_display_section_wrapper', true ) )
+			if( apply_filters( 'cuisine_sections_display_section_wrapper', true ) )
 				echo $html;
 
 			do_action( 'chef_section_before_section_content', $this );
@@ -330,8 +330,8 @@
 	
 			do_action( 'chef_section_after_section_content', $this );
 
-			if( apply_filters( 'chef_sections_display_section_wrapper', true ) )
-				echo apply_filters( 'chef_sections_closing_div', '</div>' );
+			if( apply_filters( 'cuisine_sections_display_section_wrapper', true ) )
+				echo apply_filters( 'cuisine_sections_closing_div', '</div>' );
 
 			//do something after template
 			do_action( 'section_after_template', $this );

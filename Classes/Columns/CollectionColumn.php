@@ -86,7 +86,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 		}
 
 		//force the 'publish' post-status
-		$_status = apply_filters( 'chef_sections_collection_post_status', 'publish' );
+		$_status = apply_filters( 'cuisine_sections_collection_post_status', 'publish' );
 
 		$args = array(
 			'paged'				=> $this->page,
@@ -139,7 +139,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 		}
 
-		$args = apply_filters( 'chef_sections_collection_query', $args, $this );
+		$args = apply_filters( 'cuisine_sections_collection_query', $args, $this );
 
 		$this->query = new WP_Query( $args );
 
@@ -235,7 +235,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 		$type = ( !is_array( $post_type ) ? $types[ $post_type ] : 'berichten' );
 
 		$msg = sprintf( __('No more %s found','CuisineSections'), strtolower( $type ) );
-		$msg = apply_filters( 'chef_sections_autoload_message', $msg, $this );
+		$msg = apply_filters( 'cuisine_sections_autoload_message', $msg, $this );
 
 		$html = '';
 
@@ -439,7 +439,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 		//make fields filterable
 		$fields = apply_filters(
-			'chef_sections_collection_column_fields',
+			'cuisine_sections_collection_column_fields',
 			$fields,
 			$this
 		);
@@ -518,7 +518,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 		//make filterable
 		$fields = apply_filters(
-			'chef_sections_collection_side_fields',
+			'cuisine_sections_collection_side_fields',
 			$fields,
 			$this
 		);
@@ -565,7 +565,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 		unset( $arr['section-template'] );
 		unset( $arr['page-template'] );
 		
-		$arr = apply_filters( 'chef_sections_collection_post_types', $arr );
+		$arr = apply_filters( 'cuisine_sections_collection_post_types', $arr );
 		return $arr;
 
 	}

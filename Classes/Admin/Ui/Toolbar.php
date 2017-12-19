@@ -50,7 +50,7 @@
 		 */
 		public function build()
 		{
-			do_action( 'chef_sections_before_section_toolbar' );
+			do_action( 'cuisine_sections_before_section_toolbar' );
 
 			echo '<div class="section-toolbar dotted-bg" id="section-builder-ui">';
 
@@ -79,7 +79,7 @@
 				echo 'var SectionContainers = '.$this->containerJson().';';
 			echo '</script>';
 
-			do_action( 'chef_sections_after_section_toolbar' );
+			do_action( 'cuisine_sections_after_section_toolbar' );
 
 		}
 
@@ -91,7 +91,7 @@
 		public function createSectionButton()
 		{
 			if( 
-				apply_filters( 'chef_sections_show_section_ui', true ) &&
+				apply_filters( 'cuisine_sections_show_section_ui', true ) &&
 				$this->checkUserRights()
 			){
 				echo '<div class="add-section-btn" data-action="createSection" data-post_id="'.$this->postId.'">';
@@ -111,7 +111,7 @@
 
 			if( 
 				!$this->templates->isEmpty() &&
-				apply_filters( 'chef_sections_show_template_ui', true ) &&
+				apply_filters( 'cuisine_sections_show_template_ui', true ) &&
 				$this->checkUserRights()
 			){
 
@@ -152,7 +152,7 @@
 		{
 			if( 
 				!$this->containers->isEmpty() &&
-				apply_filters( 'chef_sections_show_container_ui', true ) && 
+				apply_filters( 'cuisine_sections_show_container_ui', true ) && 
 				$this->checkUserRights()
 			){
 				echo '<div class="add-section-btn secondary-btn" ';
