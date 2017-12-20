@@ -225,7 +225,7 @@
 		 */
 		public function pluginPath()
 		{
-			return Url::path( 'plugin', 'chef-sections/Templates', true );
+			return Url::path( 'plugin', 'cuisine-sections/Templates', true );
 		}
 
 

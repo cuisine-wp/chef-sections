@@ -26,13 +26,13 @@
 
             $this->testDrive();
 
-		    foreach ( $this->filterMap as $new => $old ) {
+		    /*foreach ( $this->filterMap as $new => $old ) {
 			    add_filter( $new, [ $this, 'deprecatedFilterMapping' ] );
             }
             
             foreach( $this->actionMap as $new => $old ) {
                 add_action( $new, [ $this, 'deprecatedActionMapping' ] );
-            }
+            }*/
         }
 
         /**

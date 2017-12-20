@@ -16,6 +16,9 @@ class Autoloader
         Front\Assets::getInstance();
         Front\EventListeners::getInstance();
 
+        //manually include the template tags on the frontend:
+        include( __DIR__ . DS . 'Classes' . DS . 'Front' . DS . 'TemplateTags.php' );
+
         //and the admin:
         if( is_admin() ){
             Admin\Ajax::getInstance();

@@ -84,6 +84,7 @@ if (!class_exists('CuisineSections')) {
             //new-up a deprecated class, to catch old filters & hooks:
             new \CuisineSections\Deprecated();
 
+
             do_action( 'cuisine_sections_loaded' );
 
         }
