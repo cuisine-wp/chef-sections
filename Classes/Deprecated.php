@@ -24,6 +24,8 @@
             $this->setDeprecatedFilterMap();
             $this->setDeprecatedActionMap();
 
+            $this->testDrive();
+
 		    foreach ( $this->filterMap as $new => $old ) {
 			    add_filter( $new, [ $this, 'deprecatedFilterMapping' ] );
             }
@@ -156,5 +158,24 @@
                 }
             }
             return $data;
+        }
+
+        public function testDrive()
+        {
+            /*$test = new \CuisineSections\SectionTypes\ContentSection([
+                'id' => 1,
+                'position' => 1,
+                'post_id' => 19,
+                'container_id' => 0, 
+                'title' => 'Section title',
+                'hide_title' => 0,
+                'hide_container' => 1,
+                'view' => 'fullwidth',
+                'type' => 'section',
+                'columns' => array(
+                    1 => 'content'
+                )
+            ]);
+            dd( $test );*/
         }
     }

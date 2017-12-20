@@ -35,8 +35,8 @@
 					break;
 
 				default:
-					
-					$class = $classes[ $sectionData['type'] ];
+                    
+                    $class = $classes[ $sectionData['type'] ];
 					return new $class( $sectionData );
 					break;
 			}
@@ -92,7 +92,7 @@
 		{
 
 			$args = array(
-				'title'				=> __( 'Sectie titel', 'CuisineSections' ),
+				'title'				=> __( 'Section title', 'CuisineSections' ),
 				'hide_title'		=> apply_filters('cuisine_sections_hide_title', false ),
 				'hide_container'	=> apply_filters('cuisine_sections_hide_container', true ),
 				'view'				=> 'fullwidth',
@@ -114,7 +114,7 @@
 		{
 
 			$args = array(
-				'title'				=> __( 'Sectie container title', 'CuisineSections' ),
+				'title'				=> __( 'Section container title', 'CuisineSections' ),
 				'hide_title'		=> apply_filters('cuisine_sections_hide_title', false ),
 				'hide_container'	=> apply_filters('cuisine_sections_hide_container', true ),
 				'view'				=> 'grouped',

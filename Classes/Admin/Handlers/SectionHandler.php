@@ -2,7 +2,6 @@
 
 	namespace CuisineSections\Admin\Handlers;
 
-
 	use Cuisine\Wrappers\Record;
 	use Cuisine\Utilities\Session;
 	use CuisineSections\Front\Walker;
@@ -153,20 +152,23 @@
 
 			//get the defaults:
 			$args = $this->getDefaultSectionArgs();
-			$args = wp_parse_args( $datas, $args );
+            $args = wp_parse_args( $datas, $args );
 
 			$columns = $this->getDefaultColumns( $args['view'] );
 			if( isset( $datas['columns'] ) ){
 				$args['columns'] = wp_parse_args( $datas['columns'], $columns );
 			}else{
 				$args['columns'] = $columns;
-			}
+            }
+            
+
 
 			//save this section:
 			$_sections = $this->collection->toArray()->all();
-			$_sections[ $args['id'] ] = $args;
-			update_post_meta( $this->postId, 'sections', $_sections );
-            
+
+            $_sections[ $args['id'] ] = $args;
+            update_post_meta( $this->postId, 'sections', $_sections );
+
 			$this->sectionResponse( $args );
 		}
 
@@ -291,14 +293,13 @@
 		public function sectionResponse( $args )
 		{
 			$response = [];
-			$section = SectionHelper::getClass( $args );
+
+            $section = SectionHelper::getClass( $args );
 			$sectionUi = SectionUiHelper::getClass( $section );
 
 			$response['html'] = $sectionUi->get();
             $response['tab'] = $sectionUi->getTab();
             
-            dd( $response );
-
 			return $this->response( $response );
 		}
 

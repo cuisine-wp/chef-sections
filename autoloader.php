@@ -29,16 +29,22 @@ class Autoloader
     /**
      * Register the autoloader
      *
-     * @return Crouton\Autoloader
+     * @return CuisineSections\Autoloader
      */
     public function register()
     {
         spl_autoload_register(function ($class) {
 
-            if ( stripos( $class, __NAMESPACE__ ) === 0 ) {
+            try{
+                if ( stripos( $class, __NAMESPACE__ ) === 0 ) {
 
-                $filePath = str_replace( '\\', DS, substr( $class, strlen( __NAMESPACE__ ) ) );
-                include( __DIR__ . DS . 'Classes' . $filePath . '.php' );
+                    $filePath = str_replace( '\\', DS, substr( $class, strlen( __NAMESPACE__ ) ) );
+                    include( __DIR__ . DS . 'Classes' . $filePath . '.php' );
+
+                }
+            }catch( Exception $e ){
+                
+                dd( $e->getMessage() );
 
             }
 

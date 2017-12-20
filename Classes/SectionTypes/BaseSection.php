@@ -8,14 +8,13 @@
 	use Cuisine\Utilities\Sort;
 	use CuisineSections\Wrappers\Column;
 	use CuisineSections\Wrappers\Template;
-	use CuisineSections\Wrappers\SectionsBuilder;
 	use CuisineSections\Collections\SectionCollection;
 	use CuisineSections\Helpers\Column as ColumnHelper;
 	use CuisineSections\Helpers\Section as SectionHelper;
 	use CuisineSections\Contracts\Section as SectionContract;
 
 
-	class BaseSection implements SectionContract{
+	abstract class BaseSection implements SectionContract{
 
 		/**
 		 * Unique Id for this section, prefixed by the post_id

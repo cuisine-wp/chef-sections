@@ -40,7 +40,7 @@
 			add_action( 'wp_ajax_createSection', function(){
 
                 parent::setPostGlobal();
-
+                
 				( new SectionHandler() )->addSection();
 
 				die();
