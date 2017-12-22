@@ -7,6 +7,7 @@ define([
 
 	$( document ).ready( function(){
 
+
 		$('.video-wrapper').fitVids();
 	
 		$('.video-still').on( 'click tap', function( evt ){

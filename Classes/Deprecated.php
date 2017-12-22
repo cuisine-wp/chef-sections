@@ -2,6 +2,8 @@
 
     namespace CuisineSections;
 
+    use Cuisine\Utilities\Logger;
+
     class Deprecated{
 
         /**
@@ -26,13 +28,13 @@
 
             $this->testDrive();
 
-		    /*foreach ( $this->filterMap as $new => $old ) {
+		    foreach ( $this->filterMap as $new => $old ) {
 			    add_filter( $new, [ $this, 'deprecatedFilterMapping' ] );
             }
             
             foreach( $this->actionMap as $new => $old ) {
                 add_action( $new, [ $this, 'deprecatedActionMapping' ] );
-            }*/
+            }
         }
 
         /**
@@ -81,7 +83,7 @@
                 'cuisine_section_opening_div' => 'chef_section_opening_div',
                 'cuisine_sections_display_section_wrapper' => 'chef_sections_display_section_wrapper',
                 'cuisine_sections_closing_div' => 'chef_sections_closing_div',
-                'chef_section_classes' => 'chef_section_classes',
+                'cuisine_section_classes' => 'chef_section_classes',
                 'cuisine_sections_section_template_base' => 'chef_sections_section_template_base',
                 'cuisine_sections_column_template_base' => 'chef_sections_column_template_base',
                 'cuisine_sections_located_template' => 'chef_sections_located_template',
@@ -104,7 +106,7 @@
         public function setDeprecatedActionMap()
         {
             $this->actionMap = [
-
+                'cuisine_sections_loaded' => 'chef_sections_loaded'
             ];
         }
 
@@ -122,12 +124,13 @@
         {
             $actionMap = $this->actionMap;
         
-            $filter = current_filter();
-            if ( isset( $actionMap[ $filter ] ) ) {
-                if ( has_action( $actionMap[ $filter ] ) ) {
-                    $data = do_action( $actionMap[ $filter ], $data, $arg_1, $arg_2, $arg_3 );
+            $action = current_action();
+            if ( isset( $actionMap[ $action ] ) ) {
+                if ( has_action( $actionMap[ $action ] ) ) {
+                    $data = do_action( $actionMap[ $action ], $data, $arg_1, $arg_2, $arg_3 );
                     if ( ! defined( 'DOING_AJAX' ) ) {
-                        _deprecated_function( 'The ' . $actionMap[ $filter ] . ' action', '', $filter );
+                        //_deprecated_function( 'The ' . $actionMap[ $action ] . ' action', '', $filter );
+                        Logger::error( "The $actionMap[$action] action is deprecated!" );
                     }
                 }
             }
@@ -153,7 +156,8 @@
                 if ( has_filter( $filterMap[ $filter ] ) ) {
                     $data = apply_filters( $filterMap[ $filter ], $data, $arg_1, $arg_2, $arg_3 );
                     if ( ! defined( 'DOING_AJAX' ) ) {
-                        _deprecated_function( 'The ' . $filterMap[ $filter ] . ' filter', '', $filter );
+                        Logger::error( "The $filterMap[$filter] action is deprecated!" );
+                        //_deprecated_function( 'The ' . $filterMap[ $filter ] . ' filter', '', $filter );
                     }
                 }
             }

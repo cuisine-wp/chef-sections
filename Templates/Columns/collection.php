@@ -1,7 +1,6 @@
 <?php
 
 	use CuisineSections\Wrappers\Template;
-	use Cuisine\Wrappers\Pagination;
 
 	$query = $column->getQuery();
 	$maxRow = $column->getField( 'posts_per_row' );
@@ -53,7 +52,7 @@
 	
 	if( $column->getField( 'nav', 'pagination' ) == 'pagination' ){
 
-		Pagination::display( $query );
+        //todo add pagination
 
 	}else if( $column->getField( 'nav' ) == 'autoload' ){
 

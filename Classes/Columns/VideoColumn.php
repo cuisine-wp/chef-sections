@@ -27,8 +27,8 @@ class VideoColumn extends DefaultColumn implements ColumnContract{
 	 */
 	public function afterTemplate(){
 
-		$url = Url::plugin( 'chef-sections', true ).'Assets/js/collections/';
-		Script::register( 'video_column', $url.'video', true );	
+		$url = Url::plugin( 'cuisine-sections/Assets/js/collections/video' );
+		Script::register( 'video_column', $url, true );	
 
 	}
 

@@ -1,8 +1,8 @@
 {
-  "name": "chefduweb/chef-sections",
+  "name": "cuisine/cuisine-sections",
   "description": "Create sections with content-columns in your WordPress pages",
   "keywords": ["wordpress", "plugin", "sections", "flexible", "layouts"],
-  "homepage": "http://www.chefduweb.nl/plugins/chef-sections",
+  "homepage": "http://get-cuisine.cooking/sections",
   "license": "GPLv3",
   "authors": [
     {

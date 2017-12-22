@@ -191,7 +191,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 	 */
 	public function afterTemplate(){
 
-		$url = Url::plugin( 'chef-sections', true ).'Assets/js/collections/';
+		$url = Url::plugin( 'cuisine-sections/Assets/js/collections/' );
 		$grid = $this->getField( 'grid', 'grid' );
 		$nav = $this->getField( 'nav', 'pagination' );
 

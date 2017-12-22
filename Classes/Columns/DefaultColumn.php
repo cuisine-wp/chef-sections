@@ -15,7 +15,7 @@ use CuisineSections\Contracts\Column as ColumnContract;
  * Default column.
  * @package CuisineSections\Columns
  */
-class DefaultColumn implements ColumnContract{
+abstract class DefaultColumn implements ColumnContract{
 
 	/**
 	 * The unique number for this column, on this page

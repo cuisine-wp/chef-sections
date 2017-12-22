@@ -27,9 +27,9 @@ WordPress sucks at content-layouting. This plugin fixes that with rows and colum
 
 ## Installing
 
-Clone the git repo - `git clone https://github.com/cuisine-wp/chef-sections.git` or install with composer:
+Clone the git repo - `git clone https://github.com/cuisine-wp/cuisine-sections.git` or install with composer:
 
-`composer require chefduweb/chef-sections`
+`composer require cuisine/cuisine-sections`
 
 After you have all the files you need to install Cuisine Sections like a regular WordPress plugin:
 

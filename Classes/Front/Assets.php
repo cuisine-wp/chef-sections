@@ -31,7 +31,7 @@
 			add_action( 'init', function(){
 
 				//scripts:
-				$url = Url::plugin( 'cuisine-sections', true ).'Assets/js/libs/';
+				$url = Url::plugin( 'cuisine-sections/Assets/js/libs/' );
 				
 				Script::register( 'isotope', $url.'isotope.min', false );
 				Script::register( 'imagesloaded', $url.'imagesloaded.min', false );
