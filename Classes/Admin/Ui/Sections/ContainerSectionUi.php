@@ -111,9 +111,9 @@
 
 				Field::title(
 					'section['.$this->section->id.'][title]',
-					__( 'Titel', 'CuisineSections' ),
+					__( 'Titel', 'cuisinesections' ),
 					array(
-						'placeholder'	=> __( 'Section title', 'CuisineSections' ),
+						'placeholder'	=> __( 'Section title', 'cuisinesections' ),
 						'label'			=> false,
 						'defaultValue'	=> $title,
 						'fieldName'		=> 'section['.$this->section->id.'][title]',
@@ -173,7 +173,7 @@
 			echo '<div class="section-footer container-footer">';
 				echo '<p class="delete-section">';
 					echo '<span class="dashicons dashicons-trash"></span>';
-				echo __( 'Delete', 'CuisineSections' ).'</p>';
+				echo __( 'Delete', 'cuisinesections' ).'</p>';
 
 				do_action( 'cuisine_sections_bottom_controls' );
 

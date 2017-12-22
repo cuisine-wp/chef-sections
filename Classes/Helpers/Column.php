@@ -16,29 +16,29 @@
 
 				'content' 		=> array(
 
-					'name'		=> __( 'Textual content', 'CuisineSections' ),
+					'name'		=> __( 'Textual content', 'cuisinesections' ),
 					'class' 	=> 'CuisineSections\\Columns\\ContentColumn'
 				),
 
 				'image'			=> array(
-					'name'		=> __( 'Image', 'CuisineSections' ),
+					'name'		=> __( 'Image', 'cuisinesections' ),
 					'class' 	=> 'CuisineSections\\Columns\\ImageColumn',			
 				),
 
 				'video'			=> array(
 
-					'name'		=> __( 'Video', 'CuisineSections' ),
+					'name'		=> __( 'Video', 'cuisinesections' ),
 					'class' 	=> 'CuisineSections\\Columns\\VideoColumn',
 				),
 
 				'collection'	=> array(
 
-					'name'		=> __( 'Collection', 'CuisineSections' ),
+					'name'		=> __( 'Collection', 'cuisinesections' ),
 					'class'		=> 'CuisineSections\\Columns\\CollectionColumn'
 				),
 
 				'socials' 		=> array(
-					'name'		=> __( 'Social buttons', 'CuisineSections' ),
+					'name'		=> __( 'Social buttons', 'cuisinesections' ),
 					'class'		=> 'CuisineSections\\Columns\\SocialsColumn'
 				),
 			);

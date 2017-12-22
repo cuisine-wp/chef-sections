@@ -37,7 +37,7 @@
 
 				Panel::make( 
 
-					__( 'Settings', 'CuisineSections' ),
+					__( 'Settings', 'cuisinesections' ),
 					'settings',
 					apply_filters( 'cuisine_sections_base_panel_args', $args )
 
@@ -57,20 +57,20 @@
 
 				Field::text(
 					'name',
-					__( 'Template name', 'CuisineSections' )
+					__( 'Template name', 'cuisinesections' )
 				),
 
 				Field::text( 
 					'classes',
-					__( 'CSS Classes', 'CuisineSections' ),
+					__( 'CSS Classes', 'cuisinesections' ),
 					array( 
-						'placeholder'  => __( 'Seperate with commas\'s', 'CuisineSections' ),
+						'placeholder'  => __( 'Seperate with commas\'s', 'cuisinesections' ),
 					)
 				),
 
 				Field::checkbox(
 					'hide_container',
-					__( 'Hide Container', 'CuisineSections' )
+					__( 'Hide Container', 'cuisinesections' )
 				),
 
 			);

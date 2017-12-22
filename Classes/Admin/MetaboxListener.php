@@ -30,7 +30,7 @@
 
 			add_action( 'admin_init', function(){
 
-				$name = __( 'Settings', 'CuisineSections');
+				$name = __( 'Settings', 'cuisinesections');
 
 				//section templates:
 				Metabox::make( 
@@ -43,7 +43,7 @@
 
 					Field::checkbox(
 						'editable',
-						__( 'Is this section template editable?', 'CuisineSections' )
+						__( 'Is this section template editable?', 'cuisinesections' )
 					)
 				
 				]);
@@ -59,7 +59,7 @@
 				)->set([
 					Field::select(
 						'apply_to',
-						__( 'Apply as default to', 'CuisineSections' ),
+						__( 'Apply as default to', 'cuisinesections' ),
 						$this->getPostTypes(),
 						array(
 							'defaultValue'	=> 'none',
@@ -85,7 +85,7 @@
 
 
 			$postTypes = array(
-				'none'	=> __( 'No specific post types', 'CuisineSections' )
+				'none'	=> __( 'No specific post types', 'cuisinesections' )
 			);
 
 			foreach( $pts as $type ){

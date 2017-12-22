@@ -156,15 +156,15 @@ class SocialsColumn extends DefaultColumn implements ColumnContract{
 			$icons = $this->getIcons();
 
 			$repeaters = array(
-				Field::text( 'link', __( 'Link', 'CuisineSections' ) ),
-				Field::select( 'icon', __( 'Icon', 'CuisineSections' ), $icons )
+				Field::text( 'link', __( 'Link', 'cuisinesections' ) ),
+				Field::select( 'icon', __( 'Icon', 'cuisinesections' ), $icons )
 			);
 	
 			$fields = array(
 	
 				Field::title( 
 					'title', 
-					__('Title', 'CuisineSections'),
+					__('Title', 'cuisinesections'),
 					array(
 						'defaultValue'	=> $this->getField( 'title', ['text' => '', 'type' => 'h2'] )
 					)

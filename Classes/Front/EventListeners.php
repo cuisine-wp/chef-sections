@@ -43,12 +43,12 @@
 
 				);
 
-				PostType::make( 'section-template', __( 'Templates', 'CuisineSections' ), __( 'Template', 'CuisineSections' ) )->set( $args );
+				PostType::make( 'section-template', __( 'Templates', 'cuisinesections' ), __( 'Template', 'cuisinesections' ) )->set( $args );
 
 				//set page-templates
 				$args['menu_icon'] = 'dashicons-media-spreadsheet';
 				$args['menu_position'] = 76;
-				PostType::make( 'page-template', __( 'Page templates', 'CuisineSections'), __( 'Page template', 'CuisineSections' ) )->set( $args );
+				PostType::make( 'page-template', __( 'Page templates', 'cuisinesections'), __( 'Page template', 'cuisinesections' ) )->set( $args );
 
 
 				//custom field type:

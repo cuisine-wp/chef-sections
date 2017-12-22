@@ -96,7 +96,7 @@
 			){
 				echo '<div class="add-section-btn" data-action="createSection" data-post_id="'.$this->postId.'">';
 					echo '<span class="dashicons dashicons-plus-alt"></span>';
-					_e( 'Add Section', 'CuisineSections' );
+					_e( 'Add Section', 'cuisinesections' );
 				echo '</div>';
 			}
 		}
@@ -122,7 +122,7 @@
 				if( $this->templates->count() > 1 ){				
 					echo 'data-type="search" ';
 					echo 'data-content="SectionTemplates" ';
-					echo 'data-label="'.__( 'Please select your template', 'CuisineSections' ).'" ';
+					echo 'data-label="'.__( 'Please select your template', 'cuisinesections' ).'" ';
 
 				}else{
 					$template = $this->templates->toArray()->first();
@@ -133,7 +133,7 @@
 				echo '>';
 
 					echo '<span class="dashicons dashicons-media-document"></span>';
-					_e( 'Add a Template', 'CuisineSections' );
+					_e( 'Add a Template', 'cuisinesections' );
 
 					if( $this->templates->count() > 1 )
 						echo '<small><span class="dashicons dashicons-arrow-down"></span></small>';
@@ -162,7 +162,7 @@
 				if( $this->containers->count() > 1 ){
 					echo 'data-type="search" ';
 					echo 'data-content="SectionContainers" ';
-					echo 'data-label="'.__( 'Please select your container', 'CuisineSections' ).'" ';
+					echo 'data-label="'.__( 'Please select your container', 'cuisinesections' ).'" ';
 
 				}else{
 					$container = array_keys( $this->containers->all() );
@@ -172,7 +172,7 @@
 				echo '>';
 
 					echo '<span class="dashicons dashicons-feedback"></span>';
-					_e( 'Add a Container', 'CuisineSections' );
+					_e( 'Add a Container', 'cuisinesections' );
 
 					if( $this->containers->count() > 1 )
 						echo '<small><span class="dashicons dashicons-arrow-down"></span></small>';

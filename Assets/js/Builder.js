@@ -599,8 +599,8 @@ var SectionBuilder = new function(){
 			$('#main-section-container').append( '<span style="display:none" id="YoastSEO-plugin-loading"></span>' );
 
 
-		YoastSEO.app.registerPlugin( 'CuisineSections', {status: 'loading'} );
-		YoastSEO.app.pluginReady( 'CuisineSections' );
+		YoastSEO.app.registerPlugin( 'cuisinesections', {status: 'loading'} );
+		YoastSEO.app.pluginReady( 'cuisinesections' );
 
 		//register the content modification:
 		YoastSEO.app.registerModification( 'content', function( _data ){
@@ -611,7 +611,7 @@ var SectionBuilder = new function(){
 
 			return _data;
 
-		}, 'CuisineSections', 5 );
+		}, 'cuisinesections', 5 );
 
 
 		self.updateHtmlOutput();
@@ -638,7 +638,7 @@ var SectionBuilder = new function(){
 
 			//reload the plugin:
 			if( typeof( YoastSEO ) != 'undefined' )
-				YoastSEO.app.pluginReloaded( 'CuisineSections' );
+				YoastSEO.app.pluginReloaded( 'cuisinesections' );
 
 
 		});

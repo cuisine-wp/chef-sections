@@ -79,7 +79,7 @@
 
 				wp_localize_script(
 					'taxonomySelect',
-					'CuisineSections',
+					'cuisinesections',
 					array(
 						'postId' => Session::postId()
 					)

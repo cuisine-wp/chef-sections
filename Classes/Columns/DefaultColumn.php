@@ -473,7 +473,7 @@ abstract class DefaultColumn implements ColumnContract{
 
 			echo '<button class="'.esc_attr( $class ).'" id="lightbox-btn">';
 				echo '<span class="dashicons dashicons-edit"></span>';
-				_e( 'Edit', 'CuisineSections' );
+				_e( 'Edit', 'cuisinesections' );
 			echo '</button>';
 
 			$this->buildTemplateSnitch();

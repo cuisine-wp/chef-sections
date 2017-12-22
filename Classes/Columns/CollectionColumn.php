@@ -234,7 +234,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 		$type = ( !is_array( $post_type ) ? $types[ $post_type ] : 'berichten' );
 
-		$msg = sprintf( __('No more %s found','CuisineSections'), strtolower( $type ) );
+		$msg = sprintf( __('No more %s found','cuisinesections'), strtolower( $type ) );
 		$msg = apply_filters( 'cuisine_sections_autoload_message', $msg, $this );
 
 		$html = '';
@@ -309,7 +309,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 			if( User::hasRole( 'administrator' ) ){
 				echo '<button class="'.esc_attr( $class ).'" id="lightbox-btn">';
 					echo '<span class="dashicons dashicons-edit"></span>';
-					_e( 'Edit', 'CuisineSections' );
+					_e( 'Edit', 'cuisinesections' );
 				echo '</button>';
 			}
 
@@ -365,9 +365,9 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 		$orderby = array(
 
-				'date'			=> __( 'Datum', 'CuisineSections' ),
-				'title'			=> __( 'Titel', 'CuisineSections' ),
-				'rand'			=> __( 'Random', 'CuisineSections' )
+				'date'			=> __( 'Datum', 'cuisinesections' ),
+				'title'			=> __( 'Titel', 'cuisinesections' ),
+				'rand'			=> __( 'Random', 'cuisinesections' )
 
 		);
 
@@ -385,7 +385,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 			Field::select(
 				'post_type', //this needs a unique id
-				__( 'Content type', 'CuisineSections' ),
+				__( 'Content type', 'cuisinesections' ),
 				$this->getPostTypes(),
 				array(
 					'label'				=> 'top',
@@ -397,7 +397,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 			Field::number(
 				'posts_per_page',
-				__( 'Number of posts', 'CuisineSections' ),
+				__( 'Number of posts', 'cuisinesections' ),
 				array(
 					'defaultValue'		=> $this->getField( 'posts_per_page', 4 ),
 					'userRoles' 		=> ['administrator']
@@ -407,7 +407,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 			Field::number(
 				'posts_per_row',
-				__( 'Number of posts per row', 'CuisineSections' ),
+				__( 'Number of posts per row', 'cuisinesections' ),
 				array(
 					'defaultValue'		=> $this->getField( 'posts_per_row', 4 ),
 					'userRoles' 		=> ['administrator']
@@ -417,7 +417,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 			Field::select(
 				'orderby',
-				__( 'Sort on', 'CuisineSections' ),
+				__( 'Sort on', 'cuisinesections' ),
 				$orderby,
 				array(
 					'defaultValue'		=> $this->getField( 'orderby', 'date' ),
@@ -428,7 +428,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 			Field::taxonomySelect(
 				'taxonomies',
-				__( 'Filter', 'CuisineSections' ),
+				__( 'Filter', 'cuisinesections' ),
 				array(
 					'defaultValue'		=> $this->getField( 'taxonomies', array() ),
 					'userRoles' 		=> ['administrator']
@@ -458,22 +458,22 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 	private function getSubFields(){
 
 		$view = array(
-					'list' 		=> __( 'List', 'CuisineSections' ),
-					'blocks'	=> __( 'Blocks', 'CuisineSections' ),
-					'overview'	=> __( 'Blocks & rows', 'CuisineSections' )
+					'list' 		=> __( 'List', 'cuisinesections' ),
+					'blocks'	=> __( 'Blocks', 'cuisinesections' ),
+					'overview'	=> __( 'Blocks & rows', 'cuisinesections' )
 		);
 
 		$nav = array(
-					'none'			=> __( 'None', 'CuisineSections' ),
-					'pagination'	=> __( 'Pagination', 'CuisineSections' ),
-					'autoload'		=> __( 'Endless Scroll', 'CuisineSections' )
+					'none'			=> __( 'None', 'cuisinesections' ),
+					'pagination'	=> __( 'Pagination', 'cuisinesections' ),
+					'autoload'		=> __( 'Endless Scroll', 'cuisinesections' )
 		);
 
 
 		$grid = array(
-					'stretch'		=> __( 'Stretch', 'CuisineSections' ),
-					'grid'			=> __( 'Regular', 'CuisineSections' ),
-					'masonry'		=> __( 'Masonry', 'CuisineSections' )
+					'stretch'		=> __( 'Stretch', 'cuisinesections' ),
+					'grid'			=> __( 'Regular', 'cuisinesections' ),
+					'masonry'		=> __( 'Masonry', 'cuisinesections' )
 		);
 
 
@@ -481,7 +481,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 			'view'	=> Field::radio(
 				'view',
-				__( 'View', 'CuisineSections' ),
+				__( 'View', 'cuisinesections' ),
 				$view,
 				array(
 					'defaultValue' => $this->getField( 'view', 'blocks' ),
@@ -493,7 +493,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 			'nav'	=> Field::radio(
 				'nav',
-				__( 'Navigation', 'CuisineSections' ),
+				__( 'Navigation', 'cuisinesections' ),
 				$nav,
 				array(
 					'defaultValue'	=> $this->getField( 'nav', 'none' ),
@@ -504,7 +504,7 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 
 			'grid'	=> Field::radio(
 				'grid',
-				__( 'Grid Type', 'CuisineSections' ),
+				__( 'Grid Type', 'cuisinesections' ),
 				$grid,
 				array(
 					'defaultValue'	=> $this->getField( 'grid', 'stretch' ),

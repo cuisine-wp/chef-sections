@@ -66,8 +66,8 @@
                 }else{
 
                     //$html .= $this->makeItem( 0 );
-                    $html .= '<p>'.__( 'Currently there are no filters active', 'CuisineSections' ).'</p>';
-                    $html .= '<span class="add-remove-btn add-tax msg-add-remove">'.__( 'Create a filter', 'CuisineSections' ).'</span>';
+                    $html .= '<p>'.__( 'Currently there are no filters active', 'cuisinesections' ).'</p>';
+                    $html .= '<span class="add-remove-btn add-tax msg-add-remove">'.__( 'Create a filter', 'cuisinesections' ).'</span>';
 
                 }
         
@@ -138,7 +138,7 @@
             
                 $html .= '</select>';
             
-                $html .= '<select name="'.$prefix.'[terms]" class="term-selector multi" data-placeholder="'.__( 'Select one or multiple items', 'CuisineSections' ).'" multiple>';
+                $html .= '<select name="'.$prefix.'[terms]" class="term-selector multi" data-placeholder="'.__( 'Select one or multiple items', 'cuisinesections' ).'" multiple>';
                     
 
                     foreach( $this->taxonomies[ $tax['tax'] ] as $term ){

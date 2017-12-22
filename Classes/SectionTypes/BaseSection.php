@@ -505,7 +505,7 @@
 			$title = $this->getProperty( 'title', false );
 			if( $title && isset( $title['text'] ) && $title['text'] != '' ){
 
-				if( strtolower( $title['text'] ) == strtolower( __( 'Section title', 'CuisineSections' ) ) )
+				if( strtolower( $title['text'] ) == strtolower( __( 'Section title', 'cuisinesections' ) ) )
 					return null;
 
 				$string = '<'.$title['type'].' class="section-title" itemprop="name">';

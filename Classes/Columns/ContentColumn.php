@@ -109,7 +109,7 @@ class ContentColumn extends DefaultColumn implements ColumnContract{
 				'',
 				array(
 					'label' 				=> false,
-					'placeholder' 			=> __('Title','CuisineSections'),
+					'placeholder' 			=> __('Title','cuisinesections'),
 					'defaultValue'			=> $this->getField( 'title', ['text' => '', 'type' => 'h2'] ),
 				)
 			),

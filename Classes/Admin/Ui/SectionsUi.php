@@ -72,7 +72,7 @@
 
 
 				echo '<div class="no-section-msg msg hidden">';
-					echo '<p>'.__('No sections yet.', 'CuisineSections').'</p>';
+					echo '<p>'.__('No sections yet.', 'cuisinesections').'</p>';
 				echo '</div>';
 
 

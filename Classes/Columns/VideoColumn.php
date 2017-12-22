@@ -75,25 +75,25 @@ class VideoColumn extends DefaultColumn implements ColumnContract{
 
 			'title' => Field::title( 
 				'title', 
-				__('Title','CuisineSections'),
+				__('Title','cuisinesections'),
 				array(
 					'label' 				=> false,
-					'placeholder' 			=> __('Title','CuisineSections'),
+					'placeholder' 			=> __('Title','cuisinesections'),
 					'defaultValue'			=> $this->getField( 'title', ['text' => '', 'type' => 'h2'] ),
 				)
 			),
 			'url'	=> Field::text(
 				'url',
-				__('Video url','CuisineSections'),
+				__('Video url','cuisinesections'),
 				array(
 					'label' 				=> false,
-					'placeholder' 			=> __('Video url','CuisineSections'),
+					'placeholder' 			=> __('Video url','cuisinesections'),
 					'defaultValue'			=> $this->getField( 'url' ),
 				)
 			),
 			'still' => Field::image(
 				'still',
-				__('Video still','CuisineSections'),
+				__('Video still','cuisinesections'),
 				array(
 					'defaultValue'			=> $this->getField( 'still' ),
 				)

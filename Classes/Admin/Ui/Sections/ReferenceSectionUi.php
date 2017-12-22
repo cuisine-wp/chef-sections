@@ -84,13 +84,13 @@
 				if( $this->edittingOriginal === false ){
 
 					echo '<p class="template-txt">';
-						printf( __( 'This is the template "%s." When editting this template, it get\'s changed on every page.', 'CuisineSections' ), get_the_title( $this->section->template_id ) );
+						printf( __( 'This is the template "%s." When editting this template, it get\'s changed on every page.', 'cuisinesections' ), get_the_title( $this->section->template_id ) );
 					echo '</p>';
 
 
 					echo '<a href="'.esc_url( admin_url( 'post.php?post='.$this->section->template_id.'&action=edit' ) ).'" class="button button-primary">';
 
-						_e( 'Edit this template', 'CuisineSections' );
+						_e( 'Edit this template', 'cuisinesections' );
 
 					echo '</a>';
 
@@ -126,9 +126,9 @@
 
 				Field::title(
 					'section['.$this->section->id.'][title]',
-					__( 'Titel', 'CuisineSections' ),
+					__( 'Titel', 'cuisinesections' ),
 					array(
-						'placeholder'	=> __( 'Section title', 'CuisineSections' ),
+						'placeholder'	=> __( 'Section title', 'cuisinesections' ),
 						'label'			=> false,
 						'defaultValue'	=> $title,
 						'fieldName'		=> 'section['.$this->section->id.'][title]'
