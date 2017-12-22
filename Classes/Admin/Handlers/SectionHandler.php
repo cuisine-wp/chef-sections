@@ -199,11 +199,12 @@
 			$section_id = $_POST['section_id'];
 			$view = $_POST['view'];
 
-			$_sections = $this->collection->toArray()->all();
+            $_sections = $this->collection->toArray()->all();
+            $_section = $_sections[ $section_id ];
 			$_sections[ $section_id ]['view'] = $view;
 
 			//add columns if needed:
-			$default = $this->getDefaultColumns( $view );
+			$default = $this->getDefaultColumns( $view, $_section );
 			$existing = $_sections[ $section_id ]['columns'];
 			$new = array();
 
@@ -326,19 +327,27 @@
 		 * Get the default columns, based on the view
 		 * 
 		 * @param  string $view
+         * @param  Array $section (nullable)
+         * 
 		 * @return array
 		 */
-		protected function getDefaultColumns( $view ){
+		protected function getDefaultColumns( $view, $section = null ){
 
 			$viewTypes = SectionHelper::viewTypes();
 			$colCount = $viewTypes[ $view ];
+            $type = 'content';
+
+            //make sure a section only adds allowed column types:
+            if( !is_null( $section ) && isset( $section['allowedColumns'] ) && sizeof( $section['allowedColumns'] ) > 0 ){
+                $type = $section['allowedColumns'][0];
+            }
 
 			$arr = array();
 
 			for( $i = 0; $i < $colCount; $i++ ){
 
 				$key = $i + 1;
-				$arr[ $key ] = 'content';
+				$arr[ $key ] = $type;
 
 			}
 
