@@ -410,17 +410,22 @@ var SectionBuilder = new function(){
 	 */
 	this.updateSections = function( data, _placeholder ){
         
-        console.log( data );
 		//remove the spinner:
 		$('#section-builder-ui .spinner').addClass( 'show' );
 		
 		var self = this;
-		$.post( ajaxurl, data, function( response ){
+		$.post( ajaxurl, data, function( response, text, xhr ){
 
 			try{
 
-				response = JSON.parse( response );
-			
+                response = JSON.parse( response );
+                
+                self.checkAjaxResponse( response, xhr );
+
+                if (typeof (response.html) == 'undefined')
+                    throw "Bad response";
+
+
 				if( response.tab != null && response.tab != 'null' && response.tab != '' ){
 
 					var _target = $( '#tabContentFor'+data['container_id'] );
@@ -632,18 +637,43 @@ var SectionBuilder = new function(){
 		}
 
 
-		$.post( ajaxurl, data, function( response ){
+		$.post( ajaxurl, data, function( response, text, xhr ){
 
-			self._htmlOutput = response;
+            try{
 
-			//reload the plugin:
-			if( typeof( YoastSEO ) != 'undefined' )
-				YoastSEO.app.pluginReloaded( 'chefSections' );
+                self.checkAjaxResponse(response, xhr );
 
+
+                self._htmlOutput = response;
+
+                //reload the plugin:
+                if( typeof( YoastSEO ) != 'undefined' )
+                    YoastSEO.app.pluginReloaded( 'chefSections' );
+            
+            }catch( e ){
+                console.log( response );
+                console.log( e );
+            }
 
 		});
 	}
 
+    this.checkAjaxResponse = function( response, xhr ){
+
+        if (typeof (xhr) !== 'undefined' && typeof (xhr.status) !== 'undefined') {
+            if (parseInt(xhr.status) !== 200) {
+                throw ('Status: ' + xhr.status);
+            }
+        }
+
+        if( typeof( response.error ) !== 'undefined' && response.error == true ){
+            
+            if( typeof( response.message ) !== 'undefined' )
+               throw( response.message );
+
+            throw( 'General ajax error' );
+        }
+    }
 
 
 }	

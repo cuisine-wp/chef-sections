@@ -90,19 +90,23 @@
 			var view = jQuery( el.target ).val();
 			
 			var data = {
-
 				action: 'changeView',
 				section_id: self.sectionId,
 				post_id: self.postId,
 				view: view
-
 			}
 
 			jQuery.post( ajaxurl, data, function( response ){
 
 				try{
 
-					response = JSON.parse( response );
+                    response = JSON.parse( response );
+                    
+                    self.checkAjaxResponse( response );
+
+                    if( self.isHtml( response.html ) == false ){
+                        throw( 'No valid HTML' );
+                    }
 					
 					//console.log( response );				
 					self.$el.replaceWith( response.html );
@@ -112,12 +116,11 @@
 					
 
 				}catch( e ){
-					
+
+                    console.log(response);
 					console.log( e );
 
 				}
-				console.log( response );
-				
 
 			});
 		},
@@ -149,7 +152,9 @@
 										
 					try{
 
-						response = JSON.parse( response );
+                        response = JSON.parse( response );
+                        self.checkAjaxResponse(response);
+
 						if( response.error == false || response.error == 'fase' ){
 
 							self.$el.slideUp( 'fast', function(){
@@ -173,6 +178,7 @@
 
 					} catch( e ){
 
+                        console.log(response);
 						console.log( e );
 
 					}
@@ -280,6 +286,45 @@
 			jQuery( '#temp' ).remove();
 		},
 
+
+        /**
+         * Check if the returned ajax responses are okay:
+         */
+        checkAjaxResponse: function (response, xhr) {
+
+            var self = this;
+
+            if (typeof (xhr) !== 'undefined' && typeof (xhr.status) !== 'undefined') {
+                if (parseInt(xhr.status) !== 200) {
+                    throw ('Status: ' + xhr.status);
+                }
+            }
+
+            if (typeof (response.error) !== 'undefined' && response.error == true) {
+
+                if (typeof (response.message) !== 'undefined')
+                    throw (response.message);
+
+                throw ('General ajax error');
+            }
+
+            return true;
+        },
+
+        /**
+         * Check HTML:
+         */
+        isHtml: function (response) {
+            var a = document.createElement('div');
+            a.innerHTML = response;
+
+            for (var c = a.childNodes, i = c.length; i--;) {
+                if (c[i].nodeType == 1) return true;
+            }
+
+            return false;
+        }
+
 		/**
 		 * Remove section-events
 		 * 
@@ -287,7 +332,8 @@
 		 */
 		destroy: function(){
 			this.undelegateEvents();
-		}
+        }
+        
 
 
 	});

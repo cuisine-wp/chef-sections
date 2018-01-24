@@ -64,11 +64,19 @@
 
 			jQuery.post( ajaxurl, data, function( response ){
 
+                try{
 
-				self.$el.replaceWith( response );
+                    self.checkAjaxResponse( response );
+                    self.$el.replaceWith(response);
 
-				SectionBuilder.refresh();
-				refreshFields();
+                    SectionBuilder.refresh();
+                    refreshFields();
+
+                }catch( e ){
+
+                    console.log(response);
+                    console.log( e );
+                }
 
 			});
 
@@ -318,27 +326,34 @@
 			self.$( '.loader' ).addClass( 'show' );
 
 			var data = {
-						'action' 		: 'saveColumnProperties',
-						'column_id'		: self.columnId,
-						'post_id'		: self.postId,
-						'section_id'	: self.sectionId,
-						'full_id'		: self.fullId,
-						'type' 			: self.$( '.column-controls .type-select' ).val(),
-						'properties'	: properties
+                'action' 		: 'saveColumnProperties',
+                'column_id'		: self.columnId,
+                'post_id'		: self.postId,
+                'section_id'	: self.sectionId,
+                'full_id'		: self.fullId,
+                'type' 			: self.$( '.column-controls .type-select' ).val(),
+                'properties'	: properties
 			};
 
 
-			
+			jQuery.post( ajaxurl, data, function( response, text, xhr ){
 
-			jQuery.post( ajaxurl, data, function( response ){
+                try{
 
-				self.closeLightbox();
+                    self.checkAjaxResponse( response, xhr );
+                
+                    self.closeLightbox();
 
-				self.$el.replaceWith( response );
+                    self.$el.replaceWith( response );
 
-				SectionBuilder.refresh();
-				refreshFields();
+                    SectionBuilder.refresh();
+                    refreshFields();
+                
+                }catch( e ){
 
+                    console.log(response);
+                    console.log( e );
+                }
 			});
 		},
 
@@ -385,7 +400,48 @@
 
 		destroy: function(){
 			this.undelegateEvents();
-		}
+		},
+
+
+        checkAjaxResponse: function (response, xhr) {
+
+            var self = this;
+
+            if (typeof (xhr) !== 'undefined' && typeof( xhr.status ) !== 'undefined' ){
+                if( parseInt( xhr.status ) !== 200 ){
+                    throw( 'Status: '+xhr.status );
+                } 
+            }
+
+
+            /**
+             * Check if the string is html:
+             */
+            if( self.isHtml( response ) === false ){
+                throw( 'No valid html' );
+            }
+            
+            if( typeof(response.error) !== 'undefined' && response.error == true) {
+
+                if (typeof (response.message) !== 'undefined')
+                    throw (response.message);
+
+                throw ('General ajax error');
+            }
+
+            return true;
+        },
+
+        isHtml: function( response ){
+            var a = document.createElement('div');
+            a.innerHTML = response;
+
+            for (var c = a.childNodes, i = c.length; i--;) {
+                if (c[i].nodeType == 1) return true;
+            }
+
+            return false;
+        }
 
 	});
 
