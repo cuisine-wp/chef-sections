@@ -17,278 +17,324 @@
 
 		},
 
-		/**
-		 * Init the section object
-		 * 
-		 * @return void
-		 */
-		initialize: function(){
-
-			var self = this;
-			
-			self.sectionId = self.$el.data( 'section_id' );
-			self.postId = self.$el.data( 'post_id' );
-
-			self.setEvents();
-		},
-
-		/**
-		 * Make columns sortable:
-		 *
-		 * @return void
-		 */
-		setEvents: function(){
-
-			var self = this;
-
-			self.$('.section-columns').sortable({
-				handle: '.sort',
-				tolerance: 'pointer',
-				placeholder: 'placeholder-column',
-				update: function (event, ui) {
-					
-					//self.setSectionOrder();
-					var positions = new Array();
-					var i = 1;
-
-					self.$el.find('.section-columns .column').each(function(){
-						positions.push( $( this ).data('column_id') );
-						$( this ).find( '.column-position' ).val( i );
-						i++;
-					});
-
-
-					var data = {
-						action: 'sortColumns',
-						post_id: self.$el.data( 'post_id' ),
-						column_ids: positions,
-						section_id: self.sectionId
-					}
-
-
-					$.post( ajaxurl, data, function( response ){
-						
-						//console.log( response );
-					
-					});
-				}
-			});
-
-		},
-
-		/**
-		 * Change the view of a section
-		 * 
-		 * @param  Element el
-		 * @return void
-		 */
-		changeView: function( el ){
-
-			var self = this;
-			self.showLoader( jQuery );
-			
-			var view = jQuery( el.target ).val();
-			
-			var data = {
-
-				action: 'changeView',
-				section_id: self.sectionId,
-				post_id: self.postId,
-				view: view
-
-			}
-
-			jQuery.post( ajaxurl, data, function( response ){
-
-				try{
-
-					response = JSON.parse( response );
-					
-					//console.log( response );				
-					self.$el.replaceWith( response.html );
-
-					SectionBuilder.refresh();
-					refreshFields();
-					
-
-				}catch( e ){
-					
-					console.log( e );
-
-				}
-				console.log( response );
-				
+        /**
+         * Init the section object
+         * 
+         * @return void
+         */
+        initialize: function () {
 
-			});
-		},
+            var self = this;
 
+            self.sectionId = self.$el.data('section_id');
+            self.postId = self.$el.data('post_id');
 
-		/**
-		 * Delete a section
-		 * 
-		 * @return void
-		 */
-		deleteSection: function(){
+            self.setEvents();
+        },
 
-			var self = this;
+        /**
+         * Make columns sortable:
+         *
+         * @return void
+         */
+        setEvents: function () {
 
-			self.initialize();
-			var data = {
+            var self = this;
 
-				action: 'deleteSection',
-				section_id: self.sectionId,
-				post_id: self.postId,
+            self.$('.section-columns').sortable({
+                handle: '.sort',
+                tolerance: 'pointer',
+                placeholder: 'placeholder-column',
+                update: function (event, ui) {
 
-			}
+                    //self.setSectionOrder();
+                    var positions = new Array();
+                    var i = 1;
 
-			if( confirm( "Weet je zeker dat je deze sectie wil verwijderen?" ) ){
-				
-				self.$el.addClass('deleting');
+                    self.$el.find('.section-columns .column').each(function () {
+                        positions.push($(this).data('column_id'));
+                        $(this).find('.column-position').val(i);
+                        i++;
+                    });
 
-				jQuery.post( ajaxurl, data, function( response ){
-										
-					try{
 
-						response = JSON.parse( response );
-						if( response.error == false || response.error == 'fase' ){
+                    var data = {
+                        action: 'sortColumns',
+                        post_id: self.$el.data('post_id'),
+                        column_ids: positions,
+                        section_id: self.sectionId
+                    }
 
-							self.$el.slideUp( 'fast', function(){
 
-								if( typeof( self.$el.data('tab') ) != 'undefined' ){
+                    $.post(ajaxurl, data, function (response) {
 
-									//set first tab as active:
-									self.$el.parent().parent().find('.section-sortables > .tab').first().addClass( 'active' );
-									
-									//remove old tab:
-									$( '#'+ self.$el.data('tab') ).remove();
-								}
+                        //console.log( response );
 
-								self.$el.remove();
+                    });
+                }
+            });
 
-								SectionBuilder.refresh();
-								refreshFields();
-							});
-		
-						}
+        },
 
-					} catch( e ){
+        /**
+         * Change the view of a section
+         * 
+         * @param  Element el
+         * @return void
+         */
+        changeView: function (el) {
 
-						console.log( e );
+            var self = this;
+            self.showLoader(jQuery);
 
-					}
-	
-				});
-			}
-		},
+            var view = jQuery(el.target).val();
 
-		/**
-		 * Show the loader
-		 * 
-		 * @param  jQuery $
-		 * @return void
-		 */
-		showLoader: function( $ ){
-
-			var self = this;
-			self.$( '> .loader' ).addClass( 'show' );
-		},
+            var data = {
+                action: 'changeView',
+                section_id: self.sectionId,
+                post_id: self.postId,
+                view: view
+            }
 
-		/**
-		 * Show a settings panel
-		 * 
-		 * @param  Event evt
-		 * @return void
-		 */
-		toggleSettingPanel: function( evt ){
+            jQuery.post(ajaxurl, data, function (response) {
 
-			var self = this;
-			var _id = $( evt.target ).data('id');
-			
-			var _offset = $( evt.target ).position().left;
-			_offset = parseInt( _offset ) + 27;
+                try {
 
-			var _panel = self.$el.find('> .section-setting-panels #panel-'+_id);
+                    response = JSON.parse(response);
 
-			if( _panel.hasClass('active' ) === false ){
+                    self.checkAjaxResponse(response);
 
-				$('.section-setting-panels > div' ).removeClass( 'active' );
+                    if (self.isHtml(response.html) == false) {
+                        throw ('No valid HTML');
+                    }
 
-				_panel.addClass( 'active' );
-				_panel.find('.arrow').css({
-					left: _offset+'px'
-				})
+                    //console.log( response );				
+                    self.$el.replaceWith(response.html);
 
-			}else{
-				_panel.removeClass( 'active' );
-			}
+                    SectionBuilder.refresh();
+                    refreshFields();
 
 
-		},
+                } catch (e) {
 
-		/**
-		 * Show a settings panel
-		 * 
-		 * @param  Event evt
-		 * @return void
-		 */
-		hideSettingPanel: function( evt ){
+                    console.log(response);
+                    console.log(e);
 
-			$('.section-setting-panels > div' ).removeClass( 'active' );
+                }
 
-		},
+            });
+        },
 
-		/**
-		 * Set the header tag type
-		 * 
-		 * @param Event evt
-		 * @return void
-		 */
-		setHeaderType: function( evt ){
 
-			var _item = $( evt.target );
-			var _val = _item.val();
+        /**
+         * Delete a section
+         * 
+         * @return void
+         */
+        deleteSection: function () {
 
-			_item.parent().parent().parent().find( '.icon' ).html( _val );
+            var self = this;
 
-		},
+            self.initialize();
+            var data = {
 
+                action: 'deleteSection',
+                section_id: self.sectionId,
+                post_id: self.postId,
 
-		/**
-		 * Code copy event function
-		 * 
-		 * @param  Event evt
-		 * @return void
-		 */
-		copyCode: function( evt ){
+            }
 
-			var self = this;
-			var string = self.$el.find( '.copy' ).html();
-			self.copyToClipboard( string );
+            if (confirm("Weet je zeker dat je deze sectie wil verwijderen?")) {
 
-		},
+                self.$el.addClass('deleting');
 
-		/**
-		 * Copy the contents to your clipboard
-		 * 
-		 * @param  string _value
-		 * @return void
-		 */
-		copyToClipboard: function( _value ){
-			jQuery( 'body' ).append("<input type='text' id='temp' style='position:absolute;opacity:0;'>");
-			jQuery( '#temp' ).val( _value ).select();
-			document.execCommand( 'copy' );
-			jQuery( '#temp' ).remove();
-		},
+                jQuery.post(ajaxurl, data, function (response) {
 
-		/**
-		 * Remove section-events
-		 * 
-		 * @return void
-		 */
-		destroy: function(){
-			this.undelegateEvents();
-		}
+                    try {
 
+                        response = JSON.parse(response);
+                        self.checkAjaxResponse(response);
 
-	});
+                        if (response.error == false || response.error == 'fase') {
+
+                            self.$el.slideUp('fast', function () {
+
+                                if (typeof (self.$el.data('tab')) != 'undefined') {
+
+                                    //set first tab as active:
+                                    self.$el.parent().parent().find('.section-sortables > .tab').first().addClass('active');
+
+                                    //remove old tab:
+                                    $('#' + self.$el.data('tab')).remove();
+                                }
+
+                                self.$el.remove();
+
+                                SectionBuilder.refresh();
+                                refreshFields();
+                            });
+
+                        }
+
+                    } catch (e) {
+
+                        console.log(response);
+                        console.log(e);
+
+                    }
+
+                });
+            }
+        },
+
+        /**
+         * Show the loader
+         * 
+         * @param  jQuery $
+         * @return void
+         */
+        showLoader: function ($) {
+
+            var self = this;
+            self.$('> .loader').addClass('show');
+        },
+
+        /**
+         * Show a settings panel
+         * 
+         * @param  Event evt
+         * @return void
+         */
+        toggleSettingPanel: function (evt) {
+
+            var self = this;
+            var _id = $(evt.target).data('id');
+
+            var _offset = $(evt.target).position().left;
+            _offset = parseInt(_offset) + 27;
+
+            var _panel = self.$el.find('> .section-setting-panels #panel-' + _id);
+
+            if (_panel.hasClass('active') === false) {
+
+                $('.section-setting-panels > div').removeClass('active');
+
+                _panel.addClass('active');
+                _panel.find('.arrow').css({
+                    left: _offset + 'px'
+                })
+
+            } else {
+                _panel.removeClass('active');
+            }
+
+
+        },
+
+        /**
+         * Show a settings panel
+         * 
+         * @param  Event evt
+         * @return void
+         */
+        hideSettingPanel: function (evt) {
+
+            $('.section-setting-panels > div').removeClass('active');
+
+        },
+
+        /**
+         * Set the header tag type
+         * 
+         * @param Event evt
+         * @return void
+         */
+        setHeaderType: function (evt) {
+
+            var _item = $(evt.target);
+            var _val = _item.val();
+
+            _item.parent().parent().parent().find('.icon').html(_val);
+
+        },
+
+
+        /**
+         * Code copy event function
+         * 
+         * @param  Event evt
+         * @return void
+         */
+        copyCode: function (evt) {
+
+            var self = this;
+            var string = self.$el.find('.copy').html();
+            self.copyToClipboard(string);
+
+        },
+
+        /**
+         * Copy the contents to your clipboard
+         * 
+         * @param  string _value
+         * @return void
+         */
+        copyToClipboard: function (_value) {
+            jQuery('body').append("<input type='text' id='temp' style='position:absolute;opacity:0;'>");
+            jQuery('#temp').val(_value).select();
+            document.execCommand('copy');
+            jQuery('#temp').remove();
+        },
+
+
+        /**
+         * Check if the returned ajax responses are okay:
+         */
+        checkAjaxResponse: function (response, xhr) {
+
+            var self = this;
+
+            if (typeof (xhr) !== 'undefined' && typeof (xhr.status) !== 'undefined') {
+                if (parseInt(xhr.status) !== 200) {
+                    throw ('Status: ' + xhr.status);
+                }
+            }
+
+            if (typeof (response.error) !== 'undefined' && response.error == true) {
+
+                if (typeof (response.message) !== 'undefined')
+                    throw (response.message);
+
+                throw ('General ajax error');
+            }
+
+            return true;
+        },
+
+        /**
+         * Check HTML:
+         */
+        isHtml: function (response) {
+            var a = document.createElement('div');
+            a.innerHTML = response;
+
+            for (var c = a.childNodes, i = c.length; i--;) {
+                if (c[i].nodeType == 1) return true;
+            }
+
+            return false;
+        }
+
+            /**
+             * Remove section-events
+             * 
+             * @return void
+             */
+            destroy: function () {
+            this.undelegateEvents();
+        }
+
+
+
+    });
 

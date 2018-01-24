@@ -95,6 +95,12 @@ abstract class DefaultColumn implements ColumnContract{
 	 */
 	public $referenceMode = false;
 
+    /**
+     * Render in the post_content preview
+     *
+     * @var boolean
+     */
+    public $renderInContent = true;
 
 	/**
 	 * Start the column and feed it the right ID's
@@ -303,7 +309,7 @@ abstract class DefaultColumn implements ColumnContract{
 	}
 
 	/**
-	l * Echoes the output of getTitle
+	 * Echoes the output of getTitle
 	 * 
 	 * @param  String       $name  
 	 * @param  String 		$class 
@@ -314,7 +320,20 @@ abstract class DefaultColumn implements ColumnContract{
 		$title = $this->getTitle( $name, $class );
 		if( $title !== null )
 			echo $title;
-	}
+    }
+    
+    /**
+     * Returns wether we should currently render this column:
+     *
+     * @return boolean
+     */
+    public function canRender()
+    {
+        if( $this->renderInContent == false && defined( 'SAVING_SECTION_HTML_OUTPUT' ) )
+            return false;
+
+        return true;
+    }
 
 
 	/*=============================================================*/

@@ -103,6 +103,8 @@
 		{
 			if( apply_filters( 'cuisine_sections_save_html_output_as_content', true ) ){
 
+                define( 'SAVING_SECTION_HTML_OUTPUT', true );
+                
 				$pts = ['section-template', 'page-template'];
 
 				if( !in_array( get_post_type( $this->postId ), $pts ) ){

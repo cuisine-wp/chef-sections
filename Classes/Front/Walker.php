@@ -204,12 +204,14 @@
 
 			foreach( $section->columns as $column ){
 
-				$column->beforeTemplate();
+                if( $column->canRender() ){
 
-				Template::column( $column )->display();
+                    $column->beforeTemplate();
 
-				$column->afterTemplate();
+                    Template::column( $column )->display();
 
+                    $column->afterTemplate();
+                }
 			}
 
 			return ob_get_clean();

@@ -1,6 +1,9 @@
 
-
-
+    /**
+     * Column class
+     * handles all backend UI logic
+     * 
+     */
 	var Column = Backbone.View.extend({
 
 		hasLightbox: true,
@@ -22,370 +25,425 @@
 			//'keyup': 'saveAndClose'
 		},
 
+        /**
+         * Events for this View
+         * @return this
+         */
+        initialize: function () {
 
-		/**
-		 * Events for this View
-		 * @return this
-		 */
-		initialize: function(){
+            var self = this;
 
-			var self = this;
+            self.fullId = self.$el.data('id');
+            self.columnId = self.$el.data('column_id');
+            self.sectionId = self.$el.data('section_id');
+            self.postId = self.$el.data('post_id');
 
-			self.fullId = self.$el.data('id');
-			self.columnId = self.$el.data( 'column_id' );
-			self.sectionId = self.$el.data( 'section_id' );
-			self.postId = self.$el.data( 'post_id' );
-			
-			self.setChosen();
+            self.setChosen();
 
-			return this;
-		},
+            return this;
+        },
 
 
-		/**
-		 * Refresh the column html
-		 *
-		 * @return void
-		 */
-		refresh: function(){
+        /**
+         * Refresh the column html
+         *
+         * @return void
+         */
+        refresh: function () {
 
-			var self = this;
+            var self = this;
 
-			self.$( '.loader' ).addClass( 'show' );
+            self.$('.loader').addClass('show');
 
-			var data = {
+            var data = {
 
-				action: 'refreshColumn',
-				column_id: self.columnId,
-				post_id: self.postId,
-				section_id: self.sectionId,
-				type: self.$( '.column-controls .type-select' ).val()
-			}
+                action: 'refreshColumn',
+                column_id: self.columnId,
+                post_id: self.postId,
+                section_id: self.sectionId,
+                type: self.$('.column-controls .type-select').val()
+            }
 
-			jQuery.post( ajaxurl, data, function( response ){
+            jQuery.post(ajaxurl, data, function (response) {
 
+                try {
 
-				self.$el.replaceWith( response );
+                    self.checkAjaxResponse(response);
+                    self.$el.replaceWith(response);
 
-				SectionBuilder.refresh();
-				refreshFields();
+                    SectionBuilder.refresh();
+                    refreshFields();
 
-			});
+                } catch (e) {
 
-		},
+                    console.log(response);
+                    console.log(e);
+                }
 
+            });
 
-		/**
-		 * Launch this columns lightbox
-		 * @param  event e
-		 * @return void
-		 */
-		launchLightbox: function( e ){
+        },
 
-			var self = this;
-			e.preventDefault();
 
-			
+        /**
+         * Launch this columns lightbox
+         * @param  event e
+         * @return void
+         */
+        launchLightbox: function (e) {
 
+            var self = this;
+            e.preventDefault();
 
-			if( self.$('.edit-btn' ).hasClass( 'no-lightbox' ) ){
 
-				self.mediaLightbox();
 
-			}else{
 
-				self.$('.lightbox').addClass('active');
+            if (self.$('.edit-btn').hasClass('no-lightbox')) {
 
-			}
+                self.mediaLightbox();
 
-		},
+            } else {
 
-		/**
-		 * Show a media lightbox
-		 *
-		 * @return void
-		 */
-		mediaLightbox: function(){
+                self.$('.lightbox').addClass('active');
 
-			var self = this;
+            }
 
-			var options = {
-				title:'Uploaden',
-				button:'Opslaan',
-				//media_type:'image',
-				multiple:false,
-				self: self,
-			}
+        },
 
+        /**
+         * Show a media lightbox
+         *
+         * @return void
+         */
+        mediaLightbox: function () {
 
-			var properties = {};
-			var fullId = self.fullId;
+            var self = this;
 
-			Media.uploader( options, function( attachment, options ){
-				var properties = {
+            var options = {
+                title: 'Uploaden',
+                button: 'Opslaan',
+                //media_type:'image',
+                multiple: false,
+                self: self,
+            }
 
-					id: attachment.id,
-					thumb:  ( attachment.sizes.thumbnail !== undefined ) ?
-							  attachment.sizes.thumbnail.url : 'false',
-					medium: ( attachment.sizes.medium !== undefined ) ?
-							  attachment.sizes.medium.url : 'false',
-					large:  ( attachment.sizes.large !== undefined ) ?
-							  attachment.sizes.large.url : 'false',
-					full:   ( attachment.sizes.full !== undefined ) ?
-							  attachment.sizes.full.url : 'false',
 
-					orientation: attachment.sizes.full.orientation,
-					position: self.$('.column-position').val()
+            var properties = {};
+            var fullId = self.fullId;
 
-				}
-				options.self.saveProperties( properties );
-			});
-		},
+            Media.uploader(options, function (attachment, options) {
+                var properties = {
 
-		/**
-		 * Close this columns lightbox
-		 * @param  event e
-		 * @return void
-		 */
-		closeLightbox: function( e ){
+                    id: attachment.id,
+                    thumb: (attachment.sizes.thumbnail !== undefined) ?
+                        attachment.sizes.thumbnail.url : 'false',
+                    medium: (attachment.sizes.medium !== undefined) ?
+                        attachment.sizes.medium.url : 'false',
+                    large: (attachment.sizes.large !== undefined) ?
+                        attachment.sizes.large.url : 'false',
+                    full: (attachment.sizes.full !== undefined) ?
+                        attachment.sizes.full.url : 'false',
 
-			var self = this;
+                    orientation: attachment.sizes.full.orientation,
+                    position: self.$('.column-position').val()
 
-			if( e !== undefined )
-				e.preventDefault();
+                }
+                options.self.saveProperties(properties);
+            });
+        },
 
-			self.$('.lightbox').removeClass( 'active' );
+        /**
+         * Close this columns lightbox
+         * @param  event e
+         * @return void
+         */
+        closeLightbox: function (e) {
 
-		},
+            var self = this;
 
+            if (e !== undefined)
+                e.preventDefault();
 
-		/**
-		 * Save this columns contents
-		 * @param  event e
-		 * @return bool
-		 */
-		saveColumn: function( e ){
+            self.$('.lightbox').removeClass('active');
 
-			var self = this;
-			
-			if( typeof( e ) != 'undefined' )
-				e.preventDefault();
+        },
 
-			var properties = {};
-			var inputs = self.$('.lightbox .field-wrapper .field, .lightbox .field-wrapper .subfield:checked');
 
-			for( var i = 0; i <= inputs.length; i++ ){
+        /**
+         * Save this columns contents
+         * @param  event e
+         * @return bool
+         */
+        saveColumn: function (e) {
 
-				var input = jQuery( inputs[ i ] );
+            var self = this;
 
-				//multi dimensional inputs we'll handle later
-				if( input.hasClass( 'multi') == false ){
+            if (typeof (e) != 'undefined')
+                e.preventDefault();
 
-					if( input.val() !== undefined && input.attr( 'name' ) !== undefined && input.attr('disabled') == undefined ){
+            var properties = {};
+            var inputs = self.$('.lightbox .field-wrapper .field, .lightbox .field-wrapper .subfield:checked');
 
-						var value = input.val();
-						var name = input.attr('name');
+            for (var i = 0; i <= inputs.length; i++) {
 
-						if( input.hasClass( 'type-checkbox' ) && input.is(':checked') === false )
-							value = 'false';
+                var input = jQuery(inputs[i]);
 
-						if(input.hasClass( 'data-name' ) )
-							name = input.data('name');
+                //multi dimensional inputs we'll handle later
+                if (input.hasClass('multi') == false) {
 
-						properties[ name ] = value;
+                    if (input.val() !== undefined && input.attr('name') !== undefined && input.attr('disabled') == undefined) {
 
-					}
-				}
-			}
+                        var value = input.val();
+                        var name = input.attr('name');
 
-			//add the position:
-			var _val = self.$('.column-position').val();
-			properties[ 'position' ] = _val;
+                        if (input.hasClass('type-checkbox') && input.is(':checked') === false)
+                            value = 'false';
 
-			//add the editor content
-			if( self.$( '.lightbox .editor-wrapper' ).length > 0 ){
+                        if (input.hasClass('data-name'))
+                            name = input.data('name');
 
-				self.$( '.lightbox .editor-wrapper' ).each( function( item ){
+                        properties[name] = value;
 
-					var _id = jQuery( this ).data( 'id' );
-					var _name = jQuery( this ).data( 'name' );
-					properties[ _name ] = tinyMCE.get( _id ).getContent({ format : 'raw' });
+                    }
+                }
+            }
 
-				});
+            //add the position:
+            var _val = self.$('.column-position').val();
+            properties['position'] = _val;
 
+            //add the editor content
+            if (self.$('.lightbox .editor-wrapper').length > 0) {
 
-			}
+                self.$('.lightbox .editor-wrapper').each(function (item) {
 
+                    var _id = jQuery(this).data('id');
+                    var _name = jQuery(this).data('name');
+                    properties[_name] = tinyMCE.get(_id).getContent({ format: 'raw' });
 
-			//add multi-dimensional arrays:
-			if( self.$('.multi').length > 0 ){
+                });
 
-				properties = self.getMultiFields( properties );
 
-			}
+            }
 
-			self.saveProperties( properties );
-		},
 
-		/**
-		 * Save and close the lightbox
-		 * 
-		 * @param  Event event
-		 * 
-		 * @return void
-		 */
-		saveAndClose: function( event ){
+            //add multi-dimensional arrays:
+            if (self.$('.multi').length > 0) {
 
-			/*var self = this;
+                properties = self.getMultiFields(properties);
 
-			if( self.$('.lightbox').hasClass( 'active' ) && event.keyCode == 13 ){
-				self.saveColumn();
-				self.closeLightbox();
-			}*/
-		},
+            }
 
-		/**
-		 * Save multidimensional arrays of fields
-		 *
-		 * @param  object properties
-		 * @return multidimensional object
-		 */
-		getMultiFields: function( properties ){
+            self.saveProperties(properties);
+        },
 
-			var self = this;
-			var inputs = self.$('.lightbox .field-wrapper .multi');
-			retloop: for( var a = 0; a <= inputs.length; a++ ){
+        /**
+         * Save and close the lightbox
+         * 
+         * @param  Event event
+         * 
+         * @return void
+         */
+        saveAndClose: function (event) {
 
-				var input = jQuery( inputs[ a ] );
-				var val = input.val();
-				var type = input.attr('type');
-				var disabled = input.attr('disabled');
-				var name = input.attr('name');
+            /*var self = this;
 
-				//check if checked:
-				if( ( type == 'checkbox' || type == 'radio' ) && input.is( ':checked' ) === false )
-					continue retloop;
+            if( self.$('.lightbox').hasClass( 'active' ) && event.keyCode == 13 ){
+                self.saveColumn();
+                self.closeLightbox();
+            }*/
+        },
 
-				//overwrite the name for title radio buttons:
-				if( input.hasClass( 'title-radio') == true || input.hasClass( 'data-name' ) )
-					name = input.data('name');
+        /**
+         * Save multidimensional arrays of fields
+         *
+         * @param  object properties
+         * @return multidimensional object
+         */
+        getMultiFields: function (properties) {
 
-				if( name !== undefined && disabled == undefined ){
+            var self = this;
+            var inputs = self.$('.lightbox .field-wrapper .multi');
+            retloop: for (var a = 0; a <= inputs.length; a++) {
 
-       				var parts = name.split('[');
-       				var last = properties;
+                var input = jQuery(inputs[a]);
+                var val = input.val();
+                var type = input.attr('type');
+                var disabled = input.attr('disabled');
+                var name = input.attr('name');
 
-        			for (var i in parts) {
+                //check if checked:
+                if ((type == 'checkbox' || type == 'radio') && input.is(':checked') === false)
+                    continue retloop;
 
-        			    var part = parts[i];
-        			    if (part.substr(-1) == ']') {
-        			        part = part.substr(0, part.length - 1);
-        			    }
+                //overwrite the name for title radio buttons:
+                if (input.hasClass('title-radio') == true || input.hasClass('data-name'))
+                    name = input.data('name');
 
-        			    if (i == parts.length - 1) {
+                if (name !== undefined && disabled == undefined) {
 
-        			    	if( last[part] === undefined )
-        			    		last[part] = {}
+                    var parts = name.split('[');
+                    var last = properties;
 
-        			        last[part] = val;
-        			        continue retloop;
+                    for (var i in parts) {
 
-        			    } else if (!last.hasOwnProperty(part)) {
-        			        last[part] = {}
+                        var part = parts[i];
+                        if (part.substr(-1) == ']') {
+                            part = part.substr(0, part.length - 1);
+                        }
 
-        			    }
+                        if (i == parts.length - 1) {
 
-        			    last = last[part];
+                            if (last[part] === undefined)
+                                last[part] = {}
 
-        			}
-       			}
-			}
+                            last[part] = val;
+                            continue retloop;
 
-			return properties;
-		},
+                        } else if (!last.hasOwnProperty(part)) {
+                            last[part] = {}
 
+                        }
 
+                        last = last[part];
 
-		/**
-		 * Save a media column
-		 *
-		 * @param  {[type]} properties [description]
-		 * @return {[type]}            [description]
-		 */
-		saveProperties: function( properties ){
+                    }
+                }
+            }
 
-			var self = this;
-			self.$( '.loader' ).addClass( 'show' );
+            return properties;
+        },
 
-			var data = {
-						'action' 		: 'saveColumnProperties',
-						'column_id'		: self.columnId,
-						'post_id'		: self.postId,
-						'section_id'	: self.sectionId,
-						'full_id'		: self.fullId,
-						'type' 			: self.$( '.column-controls .type-select' ).val(),
-						'properties'	: properties
-			};
 
 
-			
+        /**
+         * Save a media column
+         *
+         * @param  {[type]} properties [description]
+         * @return {[type]}            [description]
+         */
+        saveProperties: function (properties) {
 
-			jQuery.post( ajaxurl, data, function( response ){
+            var self = this;
+            self.$('.loader').addClass('show');
 
-				self.closeLightbox();
+            var data = {
+                'action': 'saveColumnProperties',
+                'column_id': self.columnId,
+                'post_id': self.postId,
+                'section_id': self.sectionId,
+                'full_id': self.fullId,
+                'type': self.$('.column-controls .type-select').val(),
+                'properties': properties
+            };
 
-				self.$el.replaceWith( response );
 
-				SectionBuilder.refresh();
-				refreshFields();
+            jQuery.post(ajaxurl, data, function (response, text, xhr) {
 
-			});
-		},
+                try {
 
+                    self.checkAjaxResponse(response, xhr);
 
+                    self.closeLightbox();
 
-		/**
-		 * Change the type of a column
-		 *
-		 * @return void
-		 */
-		changeType: function( el ){
+                    self.$el.replaceWith(response);
 
-			var self = this;
-			var type = jQuery( el.target ).val();
+                    SectionBuilder.refresh();
+                    refreshFields();
 
-			self.$( '.loader' ).addClass( 'show' );
+                } catch (e) {
 
-			var data = {
-				'action' 		: 'saveColumnType',
-				'post_id' 		: self.postId,
-				'column_id'		: self.columnId,
-				'section_id'	: self.sectionId,
-				'type'			: type
-			};
+                    console.log(response);
+                    console.log(e);
+                }
+            });
+        },
 
-			jQuery.post( ajaxurl, data, function( response ){
 
-				self.$el.replaceWith( response );
-				SectionBuilder.refresh();
-				refreshFields();
 
-			});
+        /**
+         * Change the type of a column
+         *
+         * @return void
+         */
+        changeType: function (el) {
 
-		},
+            var self = this;
+            var type = jQuery(el.target).val();
 
-		/**
-		 * Set the chosen library for column selection
-		 */
-		setChosen: function(){
+            self.$('.loader').addClass('show');
 
-			var self = this;
-			self.$el.find('.column-controls select.type-select').chosen();
-		},
+            var data = {
+                'action': 'saveColumnType',
+                'post_id': self.postId,
+                'column_id': self.columnId,
+                'section_id': self.sectionId,
+                'type': type
+            };
 
-		destroy: function(){
-			this.undelegateEvents();
-		}
+            jQuery.post(ajaxurl, data, function (response) {
 
-	});
+                self.$el.replaceWith(response);
+                SectionBuilder.refresh();
+                refreshFields();
+
+            });
+
+        },
+
+        /**
+         * Set the chosen library for column selection
+         */
+        setChosen: function () {
+
+            var self = this;
+            self.$el.find('.column-controls select.type-select').chosen();
+        },
+
+        destroy: function () {
+            this.undelegateEvents();
+        },
+
+
+        checkAjaxResponse: function (response, xhr) {
+
+            var self = this;
+
+            if (typeof (xhr) !== 'undefined' && typeof (xhr.status) !== 'undefined') {
+                if (parseInt(xhr.status) !== 200) {
+                    throw ('Status: ' + xhr.status);
+                }
+            }
+
+
+            /**
+             * Check if the string is html:
+             */
+            if (self.isHtml(response) === false) {
+                throw ('No valid html');
+            }
+
+            if (typeof (response.error) !== 'undefined' && response.error == true) {
+
+                if (typeof (response.message) !== 'undefined')
+                    throw (response.message);
+
+                throw ('General ajax error');
+            }
+
+            return true;
+        },
+
+        isHtml: function (response) {
+            var a = document.createElement('div');
+            a.innerHTML = response;
+
+            for (var c = a.childNodes, i = c.length; i--;) {
+                if (c[i].nodeType == 1) return true;
+            }
+
+            return false;
+        }
+
+    });
 
