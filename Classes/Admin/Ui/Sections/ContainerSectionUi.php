@@ -2,6 +2,7 @@
 
 	namespace ChefSections\Admin\Ui\Sections;
 
+    use Cuisine\Wrappers\User;
 	use Cuisine\Wrappers\Field;
 	use ChefSections\Admin\Ui\Containers\TabbedUi;
 	use ChefSections\Admin\Ui\Containers\GroupedUi;
@@ -170,17 +171,19 @@
 		 */
 		public function bottomControls(){
 
-			echo '<div class="section-footer container-footer">';
-				echo '<p class="delete-section">';
-					echo '<span class="dashicons dashicons-trash"></span>';
-				echo __( 'Delete', 'chefsections' ).'</p>';
+            if( User::hasRole( 'administrator' ) ){
+                echo '<div class="section-footer container-footer">';
+                    echo '<p class="delete-section">';
+                        echo '<span class="dashicons dashicons-trash"></span>';
+                    echo __( 'Delete', 'chefsections' ).'</p>';
 
-				do_action( 'chef_sections_bottom_controls' );
+                    do_action( 'chef_sections_bottom_controls' );
 
-				$this->buildTemplateSnitch();
-				$this->buildCodeSnitch();
+                    $this->buildTemplateSnitch();
+                    $this->buildCodeSnitch();
 
-			echo '</div>';
+                echo '</div>';
+            }
 
 		}
 		

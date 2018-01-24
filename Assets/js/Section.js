@@ -323,7 +323,7 @@
             }
 
             return false;
-        }
+        },
 
 		/**
 		 * Remove section-events
