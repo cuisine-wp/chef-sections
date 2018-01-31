@@ -164,21 +164,20 @@
 		 */
 		public function bottomControls(){
 
-			if( User::hasRole( 'administrator' ) ){
+            echo '<div class="section-footer">';
 
-				echo '<div class="section-footer">';
+                echo '<p class="delete-section">';
+                    echo '<span class="dashicons dashicons-trash"></span>';
+                echo __( 'Delete', 'chefsections' ).'</p>';
 
-					echo '<p class="delete-section">';
-						echo '<span class="dashicons dashicons-trash"></span>';
-					echo __( 'Delete', 'chefsections' ).'</p>';
+                if( User::hasRole( 'administrator' ) ){
+                    do_action( 'chef_sections_bottom_controls' );
 
-					do_action( 'chef_sections_bottom_controls' );
+                    $this->buildTemplateSnitch();
+                    $this->buildCodeSnitch();
+                }
 
-					$this->buildTemplateSnitch();
-					$this->buildCodeSnitch();
-
-				echo '</div>';
-			}
+            echo '</div>';
 		}
 
 
