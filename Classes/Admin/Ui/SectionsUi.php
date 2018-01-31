@@ -67,7 +67,6 @@
 
 			wp_nonce_field( Session::nonceAction, Session::nonceName );
 
-
 			echo '<div class="section-flow section-sortables" id="main-section-container">';
 
 

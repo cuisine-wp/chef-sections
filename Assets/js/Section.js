@@ -94,7 +94,8 @@
 				section_id: self.sectionId,
 				post_id: self.postId,
 				view: view
-			}
+            }
+            
 
 			jQuery.post( ajaxurl, data, function( response ){
 
@@ -106,6 +107,7 @@
 
                     if( self.isHtml( response.html ) == false ){
                         throw( 'No valid HTML' );
+                        console.log( 'no html');
                     }
 					
 					//console.log( response );				
