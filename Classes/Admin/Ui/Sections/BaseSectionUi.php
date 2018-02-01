@@ -169,8 +169,8 @@
                 echo '<p class="delete-section">';
                     echo '<span class="dashicons dashicons-trash"></span>';
                 echo __( 'Delete', 'chefsections' ).'</p>';
-
-                if( User::hasRole( 'administrator' ) ){
+            
+                if( User::hasRole( 'administrator' ) && apply_filters('chef_sections_show_bottom_controls', true ) ){
                     do_action( 'chef_sections_bottom_controls' );
 
                     $this->buildTemplateSnitch();

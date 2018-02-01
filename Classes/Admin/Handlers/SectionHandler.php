@@ -208,7 +208,6 @@
 			$existing = $_sections[ $section_id ]['columns'];
 			$new = array();
 
-
 			foreach( $default as $key => $col ){
 
 				if( !isset( $existing[ $key ] ) ){
@@ -216,8 +215,8 @@
 				}else{
 					$new[ $key ] = $existing[ $key ];
 				}
-			}
-			
+            }
+            			
 
 			$_sections[ $section_id ]['columns'] = $new;
 			update_post_meta( $this->postId, 'sections', $_sections );
@@ -335,11 +334,12 @@
 
 			$viewTypes = SectionHelper::viewTypes();
 			$colCount = $viewTypes[ $view ];
-            $type = 'content';
+            $type = 'content'; 
+            $allowed = array_values( $section['allowedColumns'] );
 
             //make sure a section only adds allowed column types:
             if( !is_null( $section ) && isset( $section['allowedColumns'] ) && sizeof( $section['allowedColumns'] ) > 0 ){
-                $type = $section['allowedColumns'][0];
+                $type = $allowed[0];
             }
 
 			$arr = array();
