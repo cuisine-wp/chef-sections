@@ -309,7 +309,7 @@
 			$class = $this->getClass();
 			
 			//base html of a section-starting div
-			$html = '<div '.$schema.' class="'.esc_attr( $class ).'"';
+			$html = '<div '.$schema.' class="'.esc_attr( $class ).'">';
 
 			//so people can add data-properties and other stuff
 			$html = apply_filters( 'cuisine_section_opening_div', $html );
