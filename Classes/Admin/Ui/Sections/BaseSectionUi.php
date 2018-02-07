@@ -4,7 +4,8 @@
 
 	use Cuisine\Wrappers\User;
 	use Cuisine\Wrappers\Field;
-	use ChefSections\Wrappers\Template;
+    use Cuisine\Utilities\Session;
+    use ChefSections\Wrappers\Template;
 	use ChefSections\Admin\Ui\Containers\TabbedUi;
 	use ChefSections\Helpers\Section as SectionHelper;
 	use ChefSections\Helpers\SectionUi as SectionUiHelper;
@@ -28,7 +29,12 @@
 		 */
 		public function __construct( $section )
 		{
-			$this->section = $section;
+            $this->section = $section;
+            
+            //always re-check the current post-id we're on:
+            if( $this->section->post_id !== Session::postId() )
+                $this->section->setPostId( Session::postId() );
+            
 		}
 
 		/*=============================================================*/
