@@ -25,7 +25,7 @@
 		 */
 		public function __construct( $section )
 		{
-			$this->section = $section;
+			parent::__construct( $section );
 			$this->container = $section;
 		}
 

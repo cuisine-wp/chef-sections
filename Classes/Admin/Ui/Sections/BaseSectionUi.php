@@ -4,7 +4,8 @@
 
 	use Cuisine\Wrappers\User;
 	use Cuisine\Wrappers\Field;
-	use CuisineSections\Wrappers\Template;
+    use Cuisine\Utilities\Session;
+    use CuisineSections\Wrappers\Template;
 	use CuisineSections\Admin\Ui\Containers\TabbedUi;
 	use CuisineSections\Helpers\Section as SectionHelper;
 	use CuisineSections\Helpers\SectionUi as SectionUiHelper;
@@ -28,7 +29,11 @@
 		 */
 		public function __construct( $section )
 		{
-			$this->section = $section;
+            $this->section = $section;
+            
+            //always re-check the current post-id we're on:
+            if( $this->section->post_id !== Session::postId() )
+                $this->section->setPostId( Session::postId() );
 		}
 
 		/*=============================================================*/
@@ -164,21 +169,21 @@
 		 */
 		public function bottomControls(){
 
-			if( User::hasRole( 'administrator' ) ){
+            echo '<div class="section-footer">';
 
-				echo '<div class="section-footer">';
+                echo '<p class="delete-section">';
+                    echo '<span class="dashicons dashicons-trash"></span>';
+                echo __( 'Delete', 'cuisinesections' ).'</p>';
 
-					echo '<p class="delete-section">';
-						echo '<span class="dashicons dashicons-trash"></span>';
-					echo __( 'Delete', 'cuisinesections' ).'</p>';
+                if( User::hasRole( 'administrator' ) && apply_filters('cuisine_sections_show_bottom_controls', true ) ){
+                    do_action( 'chef_sections_bottom_controls' );
 
-					do_action( 'cuisine_sections_bottom_controls' );
+                    $this->buildTemplateSnitch();
+                    $this->buildCodeSnitch();
+                }
 
-					$this->buildTemplateSnitch();
-					$this->buildCodeSnitch();
 
-				echo '</div>';
-			}
+            echo '</div>';
 		}
 
 

@@ -532,4 +532,18 @@
 				echo $title;
 		}
 
+        /**
+         * Reset the section post-id
+         *
+         * @param Int $postId
+         * 
+         * @return void
+         */
+        public function setPostId( $postId )
+        {
+            $this->post_id = $postId;
+
+            //reset columns
+			$this->columns = $this->getColumns( $this->properties['columns'] );
+        }
 	}

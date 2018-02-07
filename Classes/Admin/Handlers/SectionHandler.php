@@ -328,23 +328,16 @@
 		}
 
 
-		/**
-		 * Get the default columns, based on the view
-		 * 
-		 * @param  string $view
-		  * @param  Array $section (nullable)
-         * 
-		 * @return array
-		 */
 		protected function getDefaultColumns( $view, $section = null ){
 
 			$viewTypes = SectionHelper::viewTypes();
 			$colCount = $viewTypes[ $view ];
-            $type = 'content';
+            $type = 'content'; 
+            $allowed = array_values( $section['allowedColumns'] );
 
             //make sure a section only adds allowed column types:
             if( !is_null( $section ) && isset( $section['allowedColumns'] ) && sizeof( $section['allowedColumns'] ) > 0 ){
-                $type = $section['allowedColumns'][0];
+                $type = $allowed[0];
             }
 
 			$arr = array();
