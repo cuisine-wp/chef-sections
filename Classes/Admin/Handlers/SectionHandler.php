@@ -155,9 +155,13 @@
 			$args = $this->getDefaultSectionArgs();
 			$args = wp_parse_args( $datas, $args );
 
-			$columns = $this->getDefaultColumns( $args['view'] );
+            $columns = $this->getDefaultColumns( $args['view'] );
+
+
 			if( isset( $datas['columns'] ) ){
-				$args['columns'] = wp_parse_args( $datas['columns'], $columns );
+                $args['columns'] = wp_parse_args( $datas['columns'], $columns );
+            }else if( isset( $_POST['columns'] ) ){
+                $args['columns'] = $_POST['columns'];
 			}else{
 				$args['columns'] = $columns;
 			}

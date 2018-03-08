@@ -19,7 +19,41 @@
         	flex-wrap: wrap;
      		-webkit-align-items: flex-start;
         	-ms-flex-align: start;
-        	align-items: flex-start;
+            align-items: flex-start;
+            .tab-nav-container{
+                position: relative;
+                width: 100%;
+                position: relative;
+            }
+
+            .tab-nav{
+                overflow: scroll;
+                overflow-y: hidden;
+            }
+            
+            .add-single-tab{
+                padding: 5px 10px;
+                align-self: center;
+                border-radius: 3px;
+                box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5), 0 1px 0 rgba(0, 0, 0, 0.15);
+                border-radius: 1px solid #0074a2;
+                background: #2ea2cc;
+                color: white;
+                border: 0;
+                line-height:100%;
+                cursor:pointer;
+                position: absolute;
+                top: -75px;
+                right: 75px;
+                z-index: 30;
+                &:hover{
+                    opacity: .8;
+                }
+
+                .dashicons{
+                    height: 16px;
+                }
+            }
 
         	.section-sortables, .tabbed-content{
         		-webkit-flex: 1 0 100%;

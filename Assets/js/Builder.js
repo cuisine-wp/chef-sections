@@ -53,8 +53,10 @@ var SectionBuilder = new function(){
 		self.setSections();
 		self.setTabs();
 		self.setTabsClickable();
+        self.setAddTab();
 
-		self.setSectionsSortable();
+        self.setSectionsSortable();
+        
 
 		//update the eventual output:
 		self.updateHtmlOutput();
@@ -74,7 +76,8 @@ var SectionBuilder = new function(){
 		self.setAddSectionButton();
 		self.setAddSectionDraggbles();
 		self.setSectionsSortable();
-		self.setTabsClickable();
+        self.setTabsClickable();
+        self.setAddTab();
 		//self.setScrollLockForLightbox();
 
 	}
@@ -380,8 +383,8 @@ var SectionBuilder = new function(){
 
 
 					//delete extra information, not needed:
-					delete data['sortableItem'];
-
+                    delete data['sortableItem'];
+                    
 					if( data.type == 'search' ){
 						
 						self.launchSearchWindow( data, _placeholder, function( _newData ){
@@ -415,6 +418,8 @@ var SectionBuilder = new function(){
 		
 		var self = this;
 		$.post( ajaxurl, data, function( response, text, xhr ){
+
+            console.log( response );
 
 			try{
 
@@ -579,7 +584,32 @@ var SectionBuilder = new function(){
 
 			self.setTabs();	
 		});
-	}
+    }
+    
+    this.setAddTab = function(){
+        
+        var self = this;
+
+        $('.add-single-tab').off('click tap').on( 'click tap', function(){
+
+            var _el = $( this );
+            var _post_id = _el.data('post_id');
+            var _container_id = _el.data('container_id');
+            var _column = _el.data('column');
+
+            var placeholder = '<div class="add-section-btn ui-draggable ui-draggable-handle placeholder-block" style="position: relative; width: 130px; right: auto; height: 38px; bottom: auto; left: 0px; top: 0px; z-index: 1000;"><span class="spinner"></span> Adding section...</div>';
+            $(this).parent().find('.tab-nav').append( placeholder );
+            
+            var data = {
+                action: "createSection",
+                container_id: _container_id,
+                post_id: _post_id,
+                columns: [ _column ]
+            }
+
+            self.updateSections(data, $(this).parent().find('.tab-nav .placeholder-block') );
+        });
+    }
 
 	//this.setScrollLockForLightbox = function(){
 		

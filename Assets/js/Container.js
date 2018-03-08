@@ -11,7 +11,7 @@
 			'click .container-footer .delete-section': 'deleteSection',
 			'click > .section-controls .buttons-wrapper .button' : 'toggleSettingPanel',
 			'click #close-panel' : 'hideSettingPanel',
-			'change .title-radio .multi' : 'setHeaderType'
+            'change .title-radio .multi' : 'setHeaderType',
 		},
 
 		/**
@@ -26,8 +26,7 @@
 			self.sectionId = self.$el.data( 'section_id' );
 			self.postId = self.$el.data( 'post_id' );
 
-		},
-
+        },
 
 		/**
 		 * Delete a section

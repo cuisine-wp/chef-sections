@@ -58,23 +58,35 @@
 		 */
 		public function buildNav()
 		{
-			echo '<div class="section-sortables tab-nav" id="tabsFor'.$this->container->id.'" data-container_id="'.$this->container->id.'">';
+			echo '<nav class="tab-nav-container"><div class="section-sortables tab-nav" id="tabsFor'.$this->container->id.'" data-container_id="'.$this->container->id.'">';
 
 				if( !$this->container->sections->isEmpty() ){
 
+                    echo '';
 					$i = 0;
 					foreach( $this->container->sections->all() as $section ){
 
 						echo static::getTab( $section, ( $i == 0 ) );
 						$i++;
-					}
+                    }
 
 				}
 
-			echo '</div>';
+            echo '</div>';
+                if( sizeof( $this->container->allowedColumns ) == 1 ){
+                    $this->renderAddTabButton();
+                }
+            echo '</nav>';
 		}
 
 
+        /**
+         * Get a single tab
+         *
+         * @param Section $section
+         * @param boolean $active
+         * @return String (html)
+         */
 		public static function getTab( $section, $active = false )
 		{
 			$title = $section->getProperty( 'tabTitle', $section->title );
@@ -97,5 +109,19 @@
 			return $html;
 		}
 
+
+        /**
+         * Add a single tab button
+         *
+         * @return String
+         */
+        public function renderAddTabButton()
+        {
+            $column = array_values( $this->container->allowedColumns );
+            echo '<div class="add-single-tab" data-container_id="'.esc_attr($this->container->id).'" data-post_id="'.esc_attr($this->container->post_id).'" data-column="'.esc_attr($column[0]).'">';
+                echo '<span class="dashicons dashicons-plus"></span> '.__('New tab', 'chefsections' ).'</span>';
+            echo '</div>';
+            
+        }
 
 	}

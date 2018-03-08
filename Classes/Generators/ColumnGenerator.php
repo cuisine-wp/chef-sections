@@ -14,7 +14,7 @@
 		public function build()
 		{
 			$key = $this->get( 'sectionId' ).'_'.$this->get( 'id' );
-			$props = $this->generate();
+            $props = $this->generate();
 
 			update_post_meta( $this->postId, '_column_props_'.$key, $props );
 			update_post_meta( $this->postId, '_column_type_'.$key, $this->get( 'type' ) );
