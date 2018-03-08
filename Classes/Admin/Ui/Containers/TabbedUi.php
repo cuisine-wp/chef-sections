@@ -58,7 +58,12 @@
 		 */
 		public function buildNav()
 		{
-			echo '<nav class="tab-nav-container"><div class="section-sortables tab-nav" id="tabsFor'.$this->container->id.'" data-container_id="'.$this->container->id.'">';
+            $class = 'tab-nav';
+            if( sizeof( $this->container->allowedColumns ) > 1 ){
+                $class .= ' section-sortables';
+            }
+            
+			echo '<nav class="tab-nav-container"><div class="'.$class.'" id="tabsFor'.$this->container->id.'" data-container_id="'.$this->container->id.'">';
 
 				if( !$this->container->sections->isEmpty() ){
 
@@ -117,9 +122,10 @@
          */
         public function renderAddTabButton()
         {
+            $label = apply_filters( 'chef_sections_tab_container_button_label', __('New tab', 'chefsections' ), $this->container );
             $column = array_values( $this->container->allowedColumns );
             echo '<div class="add-single-tab" data-container_id="'.esc_attr($this->container->id).'" data-post_id="'.esc_attr($this->container->post_id).'" data-column="'.esc_attr($column[0]).'">';
-                echo '<span class="dashicons dashicons-plus"></span> '.__('New tab', 'chefsections' ).'</span>';
+                echo '<span class="dashicons dashicons-plus"></span> '.$label.'</span>';
             echo '</div>';
             
         }

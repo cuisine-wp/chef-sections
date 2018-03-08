@@ -55,7 +55,7 @@
                 }
             }
 
-        	.section-sortables, .tabbed-content{
+        	.tab-nav, .tabbed-content{
         		-webkit-flex: 1 0 100%;
     		    -ms-flex: 1 0 100%;
     		    flex: 1 0 100%;
@@ -74,7 +74,7 @@
         		}
         	}
 
-        	.section-sortables{
+        	.tab-nav{
         		height: auto;
         		max-height: 80px;
                 min-height: 50px;
