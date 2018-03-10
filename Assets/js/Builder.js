@@ -221,15 +221,23 @@ var SectionBuilder = new function(){
 	this.setSectionsSortable = function(){
 
 		var self = this;
-		$('.section-sortables').sortable({
+		$('.section-sortables, .tab-nav').sortable({
 			handle: '.pin',
 			connectWith: '.section-sortables',
 			placeholder: 'section-placeholder',
 			update: function (event, ui) {
 				self.setSectionOrder();
 			}
-		});
-
+        });
+        
+        //handle tabbed sortables:
+        $('.tab-nav').not('.section-sortables').sortable({
+            handle: '.pin',
+            placeholder: 'section-placeholder',
+            update: function (event, ui) {
+                self.setSectionOrder();
+            }
+        });
 	}
 
 	/**
@@ -419,8 +427,6 @@ var SectionBuilder = new function(){
 		var self = this;
 		$.post( ajaxurl, data, function( response, text, xhr ){
 
-            console.log( response );
-
 			try{
 
                 response = JSON.parse( response );
@@ -604,7 +610,7 @@ var SectionBuilder = new function(){
                 action: "createSection",
                 container_id: _container_id,
                 post_id: _post_id,
-                columns: [ _column ]
+                columns: { 1: _column }
             }
 
             self.updateSections(data, $(this).parent().find('.tab-nav .placeholder-block') );

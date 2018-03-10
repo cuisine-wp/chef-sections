@@ -168,7 +168,8 @@
 
 			//save this section:
 			$_sections = $this->collection->toArray()->all();
-			$_sections[ $args['id'] ] = $args;
+            $_sections[ $args['id'] ] = $args;
+
 			update_post_meta( $this->postId, 'sections', $_sections );
 			
 			$this->sectionResponse( $args );
