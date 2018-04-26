@@ -97,8 +97,9 @@ class BasePanel{
 				$value = $section->getProperty( $_name, null );
 
 				if( !is_null( $value ) && $value != '' ){
-					if( $_name == 'paddingTop' );
-						$field->properties['defaultValue'] = $value;
+					$field->properties['defaultValue'] = $value;
+				}else{
+					$field->properties['defaultValue'] = '';
 				}
 
 
