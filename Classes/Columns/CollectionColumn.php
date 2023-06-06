@@ -93,7 +93,8 @@ class CollectionColumn extends DefaultColumn implements ColumnContract{
 			'post_type'			=> $this->getField( 'post_type', 'post' ),
 			'posts_per_page'	=> $this->getField( 'posts_per_page', 4 ),
 			'orderby'			=> $this->getField( 'orderby', 'date' ),
-			'post_status'		=> $_status
+			'post_status'		=> $_status,
+            'post__not_in'      => [ $this->post_id ]
 		);
 
 
