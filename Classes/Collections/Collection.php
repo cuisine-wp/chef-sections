@@ -60,7 +60,9 @@
 			
 			if( !empty( $items ) ){
 				foreach( $items as $item ){
-					$response[ $item['id'] ] = $item;
+                    if( isset( $item['id'] ) ){
+                        $response[ $item['id'] ] = $item;
+                    }
 				}
 			}
 

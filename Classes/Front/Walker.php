@@ -58,11 +58,13 @@
 
 			foreach( $this->collection->getNonContainered() as $section ){
 
-				$section->beforeTemplate();
+                if( !is_null( $section ) ){
+				    $section->beforeTemplate();
 
 					Template::section( $section )->display();
 
-				$section->afterTemplate();
+				    $section->afterTemplate();
+                }
 			}
 
 			//reset post-data, to be sure:

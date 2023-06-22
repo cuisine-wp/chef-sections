@@ -20,7 +20,9 @@
 			$classes = static::getClasses();
 
 			switch( $sectionData['type'] ){
-
+                case null:
+                    return null;
+                    break;
 				case 'container':
 
 					//check if there's a container slug set:
@@ -36,8 +38,14 @@
 
 				default:
 					
-					$class = $classes[ $sectionData['type'] ];
-					return new $class( $sectionData );
+                    if( !is_null( $sectionData['type'] ) ){
+                        $class = $classes[ $sectionData['type'] ];
+                        
+                        if( class_exists( $class ) ){
+                            return new $class( $sectionData );
+                        }
+                    }
+
 					break;
 			}
 		}

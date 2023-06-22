@@ -43,8 +43,10 @@
 
 					foreach( $this->container->sections->all() as $section ){
 
-						SectionUiHelper::getClass( $section )->build();
-
+						$instance = SectionUiHelper::getClass( $section );
+                        if( !is_null( $instance ) ){
+                            $instance->build();
+                        }
 					}
 				}
 

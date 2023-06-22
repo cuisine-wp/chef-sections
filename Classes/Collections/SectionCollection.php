@@ -54,9 +54,10 @@
 				if( $sections ){
 
 					foreach( $sections as $section ){
-						
-						$array[ $section['id'] ] = SectionHelper::getClass( $section );
-					
+						$instance = SectionHelper::getClass( $section );
+                        if( !is_null( $instance ) ){
+						    $array[ $section['id'] ] = $instance;
+                        }
 					}
 				}
 			}

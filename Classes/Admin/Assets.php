@@ -78,7 +78,7 @@
 				);
 
 				wp_localize_script(
-					'taxonomySelect',
+					'sections_section',
 					'ChefSections',
 					array(
 						'postId' => Session::postId()

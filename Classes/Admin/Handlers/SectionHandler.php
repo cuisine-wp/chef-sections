@@ -155,8 +155,8 @@
 			$args = $this->getDefaultSectionArgs();
 			$args = wp_parse_args( $datas, $args );
 
-            $columns = $this->getDefaultColumns( $args['view'] );
 
+            $columns = $this->getDefaultColumns( $args['view'] );
 
 			if( isset( $datas['columns'] ) ){
                 $args['columns'] = wp_parse_args( $datas['columns'], $columns );
@@ -169,7 +169,6 @@
 			//save this section:
 			$_sections = $this->collection->toArray()->all();
             $_sections[ $args['id'] ] = $args;
-
 			update_post_meta( $this->postId, 'sections', $_sections );
 			
 			$this->sectionResponse( $args );
@@ -297,12 +296,14 @@
 		{
 			$response = [];
 			$section = SectionHelper::getClass( $args );
-			$sectionUi = SectionUiHelper::getClass( $section );
+            if( !is_null( $section ) ){
+                $sectionUi = SectionUiHelper::getClass( $section );
 
-			$response['html'] = $sectionUi->get();
-			$response['tab'] = $sectionUi->getTab();			
+                $response['html'] = $sectionUi->get();
+                $response['tab'] = $sectionUi->getTab();			
 
-			return $this->response( $response );
+                return $this->response( $response );
+            }
 		}
 
 
@@ -340,10 +341,11 @@
 			$viewTypes = SectionHelper::viewTypes();
 			$colCount = $viewTypes[ $view ];
             $type = 'content'; 
-            $allowed = array_values( $section['allowedColumns'] );
+            $allowed = $section['allowedColumns'] ?? [];
+            $allowed = array_values( $allowed );
 
             //make sure a section only adds allowed column types:
-            if( !is_null( $section ) && isset( $section['allowedColumns'] ) && sizeof( $section['allowedColumns'] ) > 0 ){
+            if( !is_null( $section ) && isset( $allowed ) && sizeof( $allowed ) > 0 ){
                 $type = $allowed[0];
             }
 

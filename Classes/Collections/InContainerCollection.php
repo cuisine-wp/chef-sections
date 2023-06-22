@@ -79,7 +79,10 @@
 					foreach( $sections as $section ){
 
 						if( $section['type'] != 'container' )
-							$array[ $section['id'] ] = SectionHelper::getClass( $section );
+                            $instance = SectionHelper::getClass( $section );
+                            if( !is_null( $instance ) ){
+							    $array[ $section['id'] ] = $instance;
+                            }
 					
 					}
 				}

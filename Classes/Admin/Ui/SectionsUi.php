@@ -81,8 +81,10 @@
 			foreach( $sections as $section ){
 
 				//find the right section UI class and run the build command
-				SectionUiHelper::getClass( $section )->build();
-
+				$instance = SectionUiHelper::getClass( $section );
+                if( !is_null( $instance ) ){
+                    $instance->build();
+                }
 			}
 
 			echo '</div>';

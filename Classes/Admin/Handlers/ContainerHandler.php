@@ -69,8 +69,10 @@
 
 			//return a new Container Section UI:
 			$container = SectionHelper::getClass( $args );
-			$html = ( new ContainerSectionUi( $container ) )->get();
-			$this->response( $html );
+            if( !is_null( $container ) ){
+                $html = ( new ContainerSectionUi( $container ) )->get();
+                $this->response( $html );
+            }
 		}
 
 
