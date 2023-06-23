@@ -102,4 +102,21 @@ class VideoColumn extends DefaultColumn implements ColumnContract{
 
 		return $fields;
 	}
+
+    /**
+     * Automatically get a still for a video
+     *
+     * @return void
+     */
+    public function getStill()
+    {
+        $url = $this->getField( 'url' );
+        parse_str( parse_url( $url, PHP_URL_QUERY ), $vars );
+        $id = $vars['v'];
+        if( !is_null( $id ) ){
+            return [ 'full' => 'https://img.youtube.com/vi/'.$id.'/maxresdefault.jpg' ];
+        }
+        
+        return '';
+    }
 }

@@ -180,7 +180,6 @@
 				$args['columns'] = [];
 
 
-			//set the name	
 			$args['name'] = sanitize_title( $this->getName( $args ) );
 
 			return $args;
@@ -489,7 +488,7 @@
 			if( isset( $args['title']['text'] ) && $args['title']['text'] != '' )
 				return sanitize_title( $args['title']['text'] ).'-'.$args['id'];
 
-			return null;
+			return '';
 		}
 
 

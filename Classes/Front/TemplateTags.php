@@ -196,3 +196,19 @@ if( !function_exists('get_block_template' ) ){
 	}
 
 }
+
+/**
+ * Needs to be called inside a loop, and needs column information.
+ * 
+ * @param  \ChefSections\Columns\Column $column
+ * @return ChefSections\Front\Walker ( html )
+ */
+if( !function_exists('get_chef_block_template' ) ){
+
+	function get_chef_block_template( $column ){
+
+		return Walker::block( $column );
+
+	}
+
+}
